@@ -1,3 +1,4 @@
+import 'package:aronnax/src/Pages/Consultations/clinic_history_consultation/pdf/pdf_export.dart';
 import 'package:aronnax/src/Pages/Consultations/clinic_history_consultation/verification_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -224,7 +225,9 @@ class _ClinicHistoryViewState extends State<ClinicHistoryView> {
                           color: Colors.white,
                           iconSize: 50,
                           tooltip: "Guardar como PDF",
-                          onPressed: () {},
+                          onPressed: () {
+                            pdfExport();
+                          },
                           icon: const Icon(Icons.picture_as_pdf_outlined),
                         ),
                         Padding(
