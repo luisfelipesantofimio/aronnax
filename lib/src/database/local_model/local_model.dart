@@ -11,7 +11,7 @@ class Patients extends Table {
   TextColumn get names => text()();
   TextColumn get lastNames => text()();
   IntColumn get idNumber => integer().unique()();
-  DateTimeColumn get birthDate => dateTime()();
+  TextColumn get birthDate => text()();
   IntColumn get contactNumber => integer()();
   TextColumn get mail => text()();
   TextColumn get city => text()();
@@ -27,7 +27,7 @@ class Patients extends Table {
 class ClinicHistory extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get registerNumber => text()();
-  DateTimeColumn get currentDate => dateTime()();
+  TextColumn get currentDate => text()();
   TextColumn get consultationReason => text()();
   TextColumn get mentalExamination => text()();
   TextColumn get treatment => text()();
@@ -37,11 +37,12 @@ class ClinicHistory extends Table {
   TextColumn get personalHistory => text()();
   TextColumn get diagnostic => text()();
   IntColumn get idNumber => integer().references(Patients, #idNumber)();
+  TextColumn get createdBy => text()();
 }
 
 class Sessions extends Table {
   IntColumn get sessionId => integer().autoIncrement()();
-  DateTimeColumn get sessionDate => dateTime()();
+  TextColumn get sessionDate => text()();
   TextColumn get sessionSummary => text()();
   TextColumn get sessionObjectives => text()();
   TextColumn get therapeuticArchievements => text()();
@@ -57,6 +58,9 @@ class Professional extends Table {
   IntColumn get professionalID => integer()();
   TextColumn get userName => text()();
   TextColumn get password => text()();
+
+  @override
+  Set<Column> get primaryKey => {professionalID};
 }
 
 @DriftDatabase(tables: [Patients, ClinicHistory, Sessions, Professional])
@@ -65,12 +69,74 @@ class LocalDatabase extends _$LocalDatabase {
 
   @override
   int get schemaVersion => 1;
+
+  Future<void> insertPatient(PatientsCompanion data) {
+    return into(patients).insert(data);
+  }
+
+  Future<void> insertClinicHistory(ClinicHistoryCompanion data) {
+    return into(clinicHistory).insert(data);
+  }
+
+  Future<void> insertSession(SessionsCompanion data) {
+    return into(sessions).insert(data);
+  }
+
+  Future<void> insertProfessional(ProfessionalCompanion data) {
+    return into(professional).insert(data);
+  }
+
+  Stream<List<Patient>> userConsultation(String userNames) {
+    return (select(patients)
+          ..where(
+            (tbl) => tbl.names.contains(userNames),
+          ))
+        .watch();
+  }
+
+  Stream<List<ClinicHistoryData>> clinicHistoryConsultation(String userNames) {
+    final patientInClinicHistory = alias(clinicHistory, "clinicHistoryPatient");
+    final query = select(patientInClinicHistory).join([
+      innerJoin(
+        clinicHistory,
+        clinicHistory.idNumber.equalsExp(patients.idNumber),
+        useColumns: false,
+      ),
+      innerJoin(
+        patients,
+        patients.idNumber.equalsExp(patientInClinicHistory.idNumber),
+        useColumns: false,
+      ),
+    ])
+      ..where(
+        patients.names.contains(userNames),
+      );
+    return query.map((row) => row.readTable(patientInClinicHistory)).watch();
+  }
+
+  Stream<List<Session>> patientSessionsConsultation(String userNames) {
+    final patientSessions = alias(sessions, "clinicHistoryPatient");
+    final query = select(patientSessions).join([
+      innerJoin(
+        sessions,
+        sessions.idNumber.equalsExp(patients.idNumber),
+        useColumns: false,
+      ),
+      innerJoin(
+        patients,
+        patients.idNumber.equalsExp(patientSessions.idNumber),
+        useColumns: false,
+      ),
+    ])
+      ..where(
+        patients.names.contains(userNames),
+      );
+    return query.map((row) => row.readTable(patientSessions)).watch();
+  }
 }
 
 LazyDatabase _openConnection() {
   return LazyDatabase(() async {
-    // put the database file, called db.sqlite here, into the documents folder
-    // for your app.
     final dbFolder = await getApplicationDocumentsDirectory();
     final file = File(
       p.join(dbFolder.path, 'aronnax_localDB.sqlite'),

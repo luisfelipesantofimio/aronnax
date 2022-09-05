@@ -12,7 +12,7 @@ class Patient extends DataClass implements Insertable<Patient> {
   final String names;
   final String lastNames;
   final int idNumber;
-  final DateTime birthDate;
+  final String birthDate;
   final int contactNumber;
   final String mail;
   final String city;
@@ -50,7 +50,7 @@ class Patient extends DataClass implements Insertable<Patient> {
           .mapFromDatabaseResponse(data['${effectivePrefix}last_names'])!,
       idNumber: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}id_number'])!,
-      birthDate: const DateTimeType()
+      birthDate: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}birth_date'])!,
       contactNumber: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}contact_number'])!,
@@ -81,7 +81,7 @@ class Patient extends DataClass implements Insertable<Patient> {
     map['names'] = Variable<String>(names);
     map['last_names'] = Variable<String>(lastNames);
     map['id_number'] = Variable<int>(idNumber);
-    map['birth_date'] = Variable<DateTime>(birthDate);
+    map['birth_date'] = Variable<String>(birthDate);
     map['contact_number'] = Variable<int>(contactNumber);
     map['mail'] = Variable<String>(mail);
     map['city'] = Variable<String>(city);
@@ -123,7 +123,7 @@ class Patient extends DataClass implements Insertable<Patient> {
       names: serializer.fromJson<String>(json['names']),
       lastNames: serializer.fromJson<String>(json['lastNames']),
       idNumber: serializer.fromJson<int>(json['idNumber']),
-      birthDate: serializer.fromJson<DateTime>(json['birthDate']),
+      birthDate: serializer.fromJson<String>(json['birthDate']),
       contactNumber: serializer.fromJson<int>(json['contactNumber']),
       mail: serializer.fromJson<String>(json['mail']),
       city: serializer.fromJson<String>(json['city']),
@@ -146,7 +146,7 @@ class Patient extends DataClass implements Insertable<Patient> {
       'names': serializer.toJson<String>(names),
       'lastNames': serializer.toJson<String>(lastNames),
       'idNumber': serializer.toJson<int>(idNumber),
-      'birthDate': serializer.toJson<DateTime>(birthDate),
+      'birthDate': serializer.toJson<String>(birthDate),
       'contactNumber': serializer.toJson<int>(contactNumber),
       'mail': serializer.toJson<String>(mail),
       'city': serializer.toJson<String>(city),
@@ -165,7 +165,7 @@ class Patient extends DataClass implements Insertable<Patient> {
           String? names,
           String? lastNames,
           int? idNumber,
-          DateTime? birthDate,
+          String? birthDate,
           int? contactNumber,
           String? mail,
           String? city,
@@ -259,7 +259,7 @@ class PatientsCompanion extends UpdateCompanion<Patient> {
   final Value<String> names;
   final Value<String> lastNames;
   final Value<int> idNumber;
-  final Value<DateTime> birthDate;
+  final Value<String> birthDate;
   final Value<int> contactNumber;
   final Value<String> mail;
   final Value<String> city;
@@ -292,7 +292,7 @@ class PatientsCompanion extends UpdateCompanion<Patient> {
     required String names,
     required String lastNames,
     required int idNumber,
-    required DateTime birthDate,
+    required String birthDate,
     required int contactNumber,
     required String mail,
     required String city,
@@ -322,7 +322,7 @@ class PatientsCompanion extends UpdateCompanion<Patient> {
     Expression<String>? names,
     Expression<String>? lastNames,
     Expression<int>? idNumber,
-    Expression<DateTime>? birthDate,
+    Expression<String>? birthDate,
     Expression<int>? contactNumber,
     Expression<String>? mail,
     Expression<String>? city,
@@ -360,7 +360,7 @@ class PatientsCompanion extends UpdateCompanion<Patient> {
       Value<String>? names,
       Value<String>? lastNames,
       Value<int>? idNumber,
-      Value<DateTime>? birthDate,
+      Value<String>? birthDate,
       Value<int>? contactNumber,
       Value<String>? mail,
       Value<String>? city,
@@ -407,7 +407,7 @@ class PatientsCompanion extends UpdateCompanion<Patient> {
       map['id_number'] = Variable<int>(idNumber.value);
     }
     if (birthDate.present) {
-      map['birth_date'] = Variable<DateTime>(birthDate.value);
+      map['birth_date'] = Variable<String>(birthDate.value);
     }
     if (contactNumber.present) {
       map['contact_number'] = Variable<int>(contactNumber.value);
@@ -498,9 +498,9 @@ class $PatientsTable extends Patients with TableInfo<$PatientsTable, Patient> {
       defaultConstraints: 'UNIQUE');
   final VerificationMeta _birthDateMeta = const VerificationMeta('birthDate');
   @override
-  late final GeneratedColumn<DateTime?> birthDate = GeneratedColumn<DateTime?>(
+  late final GeneratedColumn<String?> birthDate = GeneratedColumn<String?>(
       'birth_date', aliasedName, false,
-      type: const IntType(), requiredDuringInsert: true);
+      type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _contactNumberMeta =
       const VerificationMeta('contactNumber');
   @override
@@ -695,7 +695,7 @@ class ClinicHistoryData extends DataClass
     implements Insertable<ClinicHistoryData> {
   final int id;
   final String registerNumber;
-  final DateTime currentDate;
+  final String currentDate;
   final String consultationReason;
   final String mentalExamination;
   final String treatment;
@@ -705,6 +705,7 @@ class ClinicHistoryData extends DataClass
   final String personalHistory;
   final String diagnostic;
   final int idNumber;
+  final String createdBy;
   ClinicHistoryData(
       {required this.id,
       required this.registerNumber,
@@ -717,7 +718,8 @@ class ClinicHistoryData extends DataClass
       required this.familyHistory,
       required this.personalHistory,
       required this.diagnostic,
-      required this.idNumber});
+      required this.idNumber,
+      required this.createdBy});
   factory ClinicHistoryData.fromData(Map<String, dynamic> data,
       {String? prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -726,7 +728,7 @@ class ClinicHistoryData extends DataClass
           .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
       registerNumber: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}register_number'])!,
-      currentDate: const DateTimeType()
+      currentDate: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}current_date'])!,
       consultationReason: const StringType().mapFromDatabaseResponse(
           data['${effectivePrefix}consultation_reason'])!,
@@ -746,6 +748,8 @@ class ClinicHistoryData extends DataClass
           .mapFromDatabaseResponse(data['${effectivePrefix}diagnostic'])!,
       idNumber: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}id_number'])!,
+      createdBy: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}created_by'])!,
     );
   }
   @override
@@ -753,7 +757,7 @@ class ClinicHistoryData extends DataClass
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['register_number'] = Variable<String>(registerNumber);
-    map['current_date'] = Variable<DateTime>(currentDate);
+    map['current_date'] = Variable<String>(currentDate);
     map['consultation_reason'] = Variable<String>(consultationReason);
     map['mental_examination'] = Variable<String>(mentalExamination);
     map['treatment'] = Variable<String>(treatment);
@@ -763,6 +767,7 @@ class ClinicHistoryData extends DataClass
     map['personal_history'] = Variable<String>(personalHistory);
     map['diagnostic'] = Variable<String>(diagnostic);
     map['id_number'] = Variable<int>(idNumber);
+    map['created_by'] = Variable<String>(createdBy);
     return map;
   }
 
@@ -780,6 +785,7 @@ class ClinicHistoryData extends DataClass
       personalHistory: Value(personalHistory),
       diagnostic: Value(diagnostic),
       idNumber: Value(idNumber),
+      createdBy: Value(createdBy),
     );
   }
 
@@ -789,7 +795,7 @@ class ClinicHistoryData extends DataClass
     return ClinicHistoryData(
       id: serializer.fromJson<int>(json['id']),
       registerNumber: serializer.fromJson<String>(json['registerNumber']),
-      currentDate: serializer.fromJson<DateTime>(json['currentDate']),
+      currentDate: serializer.fromJson<String>(json['currentDate']),
       consultationReason:
           serializer.fromJson<String>(json['consultationReason']),
       mentalExamination: serializer.fromJson<String>(json['mentalExamination']),
@@ -800,6 +806,7 @@ class ClinicHistoryData extends DataClass
       personalHistory: serializer.fromJson<String>(json['personalHistory']),
       diagnostic: serializer.fromJson<String>(json['diagnostic']),
       idNumber: serializer.fromJson<int>(json['idNumber']),
+      createdBy: serializer.fromJson<String>(json['createdBy']),
     );
   }
   @override
@@ -808,7 +815,7 @@ class ClinicHistoryData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'registerNumber': serializer.toJson<String>(registerNumber),
-      'currentDate': serializer.toJson<DateTime>(currentDate),
+      'currentDate': serializer.toJson<String>(currentDate),
       'consultationReason': serializer.toJson<String>(consultationReason),
       'mentalExamination': serializer.toJson<String>(mentalExamination),
       'treatment': serializer.toJson<String>(treatment),
@@ -818,13 +825,14 @@ class ClinicHistoryData extends DataClass
       'personalHistory': serializer.toJson<String>(personalHistory),
       'diagnostic': serializer.toJson<String>(diagnostic),
       'idNumber': serializer.toJson<int>(idNumber),
+      'createdBy': serializer.toJson<String>(createdBy),
     };
   }
 
   ClinicHistoryData copyWith(
           {int? id,
           String? registerNumber,
-          DateTime? currentDate,
+          String? currentDate,
           String? consultationReason,
           String? mentalExamination,
           String? treatment,
@@ -833,7 +841,8 @@ class ClinicHistoryData extends DataClass
           String? familyHistory,
           String? personalHistory,
           String? diagnostic,
-          int? idNumber}) =>
+          int? idNumber,
+          String? createdBy}) =>
       ClinicHistoryData(
         id: id ?? this.id,
         registerNumber: registerNumber ?? this.registerNumber,
@@ -847,6 +856,7 @@ class ClinicHistoryData extends DataClass
         personalHistory: personalHistory ?? this.personalHistory,
         diagnostic: diagnostic ?? this.diagnostic,
         idNumber: idNumber ?? this.idNumber,
+        createdBy: createdBy ?? this.createdBy,
       );
   @override
   String toString() {
@@ -862,7 +872,8 @@ class ClinicHistoryData extends DataClass
           ..write('familyHistory: $familyHistory, ')
           ..write('personalHistory: $personalHistory, ')
           ..write('diagnostic: $diagnostic, ')
-          ..write('idNumber: $idNumber')
+          ..write('idNumber: $idNumber, ')
+          ..write('createdBy: $createdBy')
           ..write(')'))
         .toString();
   }
@@ -880,7 +891,8 @@ class ClinicHistoryData extends DataClass
       familyHistory,
       personalHistory,
       diagnostic,
-      idNumber);
+      idNumber,
+      createdBy);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -896,13 +908,14 @@ class ClinicHistoryData extends DataClass
           other.familyHistory == this.familyHistory &&
           other.personalHistory == this.personalHistory &&
           other.diagnostic == this.diagnostic &&
-          other.idNumber == this.idNumber);
+          other.idNumber == this.idNumber &&
+          other.createdBy == this.createdBy);
 }
 
 class ClinicHistoryCompanion extends UpdateCompanion<ClinicHistoryData> {
   final Value<int> id;
   final Value<String> registerNumber;
-  final Value<DateTime> currentDate;
+  final Value<String> currentDate;
   final Value<String> consultationReason;
   final Value<String> mentalExamination;
   final Value<String> treatment;
@@ -912,6 +925,7 @@ class ClinicHistoryCompanion extends UpdateCompanion<ClinicHistoryData> {
   final Value<String> personalHistory;
   final Value<String> diagnostic;
   final Value<int> idNumber;
+  final Value<String> createdBy;
   const ClinicHistoryCompanion({
     this.id = const Value.absent(),
     this.registerNumber = const Value.absent(),
@@ -925,11 +939,12 @@ class ClinicHistoryCompanion extends UpdateCompanion<ClinicHistoryData> {
     this.personalHistory = const Value.absent(),
     this.diagnostic = const Value.absent(),
     this.idNumber = const Value.absent(),
+    this.createdBy = const Value.absent(),
   });
   ClinicHistoryCompanion.insert({
     this.id = const Value.absent(),
     required String registerNumber,
-    required DateTime currentDate,
+    required String currentDate,
     required String consultationReason,
     required String mentalExamination,
     required String treatment,
@@ -939,6 +954,7 @@ class ClinicHistoryCompanion extends UpdateCompanion<ClinicHistoryData> {
     required String personalHistory,
     required String diagnostic,
     required int idNumber,
+    required String createdBy,
   })  : registerNumber = Value(registerNumber),
         currentDate = Value(currentDate),
         consultationReason = Value(consultationReason),
@@ -949,11 +965,12 @@ class ClinicHistoryCompanion extends UpdateCompanion<ClinicHistoryData> {
         familyHistory = Value(familyHistory),
         personalHistory = Value(personalHistory),
         diagnostic = Value(diagnostic),
-        idNumber = Value(idNumber);
+        idNumber = Value(idNumber),
+        createdBy = Value(createdBy);
   static Insertable<ClinicHistoryData> custom({
     Expression<int>? id,
     Expression<String>? registerNumber,
-    Expression<DateTime>? currentDate,
+    Expression<String>? currentDate,
     Expression<String>? consultationReason,
     Expression<String>? mentalExamination,
     Expression<String>? treatment,
@@ -963,6 +980,7 @@ class ClinicHistoryCompanion extends UpdateCompanion<ClinicHistoryData> {
     Expression<String>? personalHistory,
     Expression<String>? diagnostic,
     Expression<int>? idNumber,
+    Expression<String>? createdBy,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -977,13 +995,14 @@ class ClinicHistoryCompanion extends UpdateCompanion<ClinicHistoryData> {
       if (personalHistory != null) 'personal_history': personalHistory,
       if (diagnostic != null) 'diagnostic': diagnostic,
       if (idNumber != null) 'id_number': idNumber,
+      if (createdBy != null) 'created_by': createdBy,
     });
   }
 
   ClinicHistoryCompanion copyWith(
       {Value<int>? id,
       Value<String>? registerNumber,
-      Value<DateTime>? currentDate,
+      Value<String>? currentDate,
       Value<String>? consultationReason,
       Value<String>? mentalExamination,
       Value<String>? treatment,
@@ -992,7 +1011,8 @@ class ClinicHistoryCompanion extends UpdateCompanion<ClinicHistoryData> {
       Value<String>? familyHistory,
       Value<String>? personalHistory,
       Value<String>? diagnostic,
-      Value<int>? idNumber}) {
+      Value<int>? idNumber,
+      Value<String>? createdBy}) {
     return ClinicHistoryCompanion(
       id: id ?? this.id,
       registerNumber: registerNumber ?? this.registerNumber,
@@ -1006,6 +1026,7 @@ class ClinicHistoryCompanion extends UpdateCompanion<ClinicHistoryData> {
       personalHistory: personalHistory ?? this.personalHistory,
       diagnostic: diagnostic ?? this.diagnostic,
       idNumber: idNumber ?? this.idNumber,
+      createdBy: createdBy ?? this.createdBy,
     );
   }
 
@@ -1019,7 +1040,7 @@ class ClinicHistoryCompanion extends UpdateCompanion<ClinicHistoryData> {
       map['register_number'] = Variable<String>(registerNumber.value);
     }
     if (currentDate.present) {
-      map['current_date'] = Variable<DateTime>(currentDate.value);
+      map['current_date'] = Variable<String>(currentDate.value);
     }
     if (consultationReason.present) {
       map['consultation_reason'] = Variable<String>(consultationReason.value);
@@ -1048,6 +1069,9 @@ class ClinicHistoryCompanion extends UpdateCompanion<ClinicHistoryData> {
     if (idNumber.present) {
       map['id_number'] = Variable<int>(idNumber.value);
     }
+    if (createdBy.present) {
+      map['created_by'] = Variable<String>(createdBy.value);
+    }
     return map;
   }
 
@@ -1065,7 +1089,8 @@ class ClinicHistoryCompanion extends UpdateCompanion<ClinicHistoryData> {
           ..write('familyHistory: $familyHistory, ')
           ..write('personalHistory: $personalHistory, ')
           ..write('diagnostic: $diagnostic, ')
-          ..write('idNumber: $idNumber')
+          ..write('idNumber: $idNumber, ')
+          ..write('createdBy: $createdBy')
           ..write(')'))
         .toString();
   }
@@ -1093,9 +1118,9 @@ class $ClinicHistoryTable extends ClinicHistory
   final VerificationMeta _currentDateMeta =
       const VerificationMeta('currentDate');
   @override
-  late final GeneratedColumn<DateTime?> currentDate =
-      GeneratedColumn<DateTime?>('current_date', aliasedName, false,
-          type: const IntType(), requiredDuringInsert: true);
+  late final GeneratedColumn<String?> currentDate = GeneratedColumn<String?>(
+      'current_date', aliasedName, false,
+      type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _consultationReasonMeta =
       const VerificationMeta('consultationReason');
   @override
@@ -1149,6 +1174,11 @@ class $ClinicHistoryTable extends ClinicHistory
       type: const IntType(),
       requiredDuringInsert: true,
       defaultConstraints: 'REFERENCES patients (id_number)');
+  final VerificationMeta _createdByMeta = const VerificationMeta('createdBy');
+  @override
+  late final GeneratedColumn<String?> createdBy = GeneratedColumn<String?>(
+      'created_by', aliasedName, false,
+      type: const StringType(), requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -1162,7 +1192,8 @@ class $ClinicHistoryTable extends ClinicHistory
         familyHistory,
         personalHistory,
         diagnostic,
-        idNumber
+        idNumber,
+        createdBy
       ];
   @override
   String get aliasedName => _alias ?? 'clinic_history';
@@ -1260,6 +1291,12 @@ class $ClinicHistoryTable extends ClinicHistory
     } else if (isInserting) {
       context.missing(_idNumberMeta);
     }
+    if (data.containsKey('created_by')) {
+      context.handle(_createdByMeta,
+          createdBy.isAcceptableOrUnknown(data['created_by']!, _createdByMeta));
+    } else if (isInserting) {
+      context.missing(_createdByMeta);
+    }
     return context;
   }
 
@@ -1279,7 +1316,7 @@ class $ClinicHistoryTable extends ClinicHistory
 
 class Session extends DataClass implements Insertable<Session> {
   final int sessionId;
-  final DateTime sessionDate;
+  final String sessionDate;
   final String sessionSummary;
   final String sessionObjectives;
   final String therapeuticArchievements;
@@ -1298,7 +1335,7 @@ class Session extends DataClass implements Insertable<Session> {
     return Session(
       sessionId: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}session_id'])!,
-      sessionDate: const DateTimeType()
+      sessionDate: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}session_date'])!,
       sessionSummary: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}session_summary'])!,
@@ -1316,7 +1353,7 @@ class Session extends DataClass implements Insertable<Session> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['session_id'] = Variable<int>(sessionId);
-    map['session_date'] = Variable<DateTime>(sessionDate);
+    map['session_date'] = Variable<String>(sessionDate);
     map['session_summary'] = Variable<String>(sessionSummary);
     map['session_objectives'] = Variable<String>(sessionObjectives);
     map['therapeutic_archievements'] =
@@ -1343,7 +1380,7 @@ class Session extends DataClass implements Insertable<Session> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Session(
       sessionId: serializer.fromJson<int>(json['sessionId']),
-      sessionDate: serializer.fromJson<DateTime>(json['sessionDate']),
+      sessionDate: serializer.fromJson<String>(json['sessionDate']),
       sessionSummary: serializer.fromJson<String>(json['sessionSummary']),
       sessionObjectives: serializer.fromJson<String>(json['sessionObjectives']),
       therapeuticArchievements:
@@ -1357,7 +1394,7 @@ class Session extends DataClass implements Insertable<Session> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'sessionId': serializer.toJson<int>(sessionId),
-      'sessionDate': serializer.toJson<DateTime>(sessionDate),
+      'sessionDate': serializer.toJson<String>(sessionDate),
       'sessionSummary': serializer.toJson<String>(sessionSummary),
       'sessionObjectives': serializer.toJson<String>(sessionObjectives),
       'therapeuticArchievements':
@@ -1369,7 +1406,7 @@ class Session extends DataClass implements Insertable<Session> {
 
   Session copyWith(
           {int? sessionId,
-          DateTime? sessionDate,
+          String? sessionDate,
           String? sessionSummary,
           String? sessionObjectives,
           String? therapeuticArchievements,
@@ -1417,7 +1454,7 @@ class Session extends DataClass implements Insertable<Session> {
 
 class SessionsCompanion extends UpdateCompanion<Session> {
   final Value<int> sessionId;
-  final Value<DateTime> sessionDate;
+  final Value<String> sessionDate;
   final Value<String> sessionSummary;
   final Value<String> sessionObjectives;
   final Value<String> therapeuticArchievements;
@@ -1434,7 +1471,7 @@ class SessionsCompanion extends UpdateCompanion<Session> {
   });
   SessionsCompanion.insert({
     this.sessionId = const Value.absent(),
-    required DateTime sessionDate,
+    required String sessionDate,
     required String sessionSummary,
     required String sessionObjectives,
     required String therapeuticArchievements,
@@ -1448,7 +1485,7 @@ class SessionsCompanion extends UpdateCompanion<Session> {
         professionalName = Value(professionalName);
   static Insertable<Session> custom({
     Expression<int>? sessionId,
-    Expression<DateTime>? sessionDate,
+    Expression<String>? sessionDate,
     Expression<String>? sessionSummary,
     Expression<String>? sessionObjectives,
     Expression<String>? therapeuticArchievements,
@@ -1469,7 +1506,7 @@ class SessionsCompanion extends UpdateCompanion<Session> {
 
   SessionsCompanion copyWith(
       {Value<int>? sessionId,
-      Value<DateTime>? sessionDate,
+      Value<String>? sessionDate,
       Value<String>? sessionSummary,
       Value<String>? sessionObjectives,
       Value<String>? therapeuticArchievements,
@@ -1494,7 +1531,7 @@ class SessionsCompanion extends UpdateCompanion<Session> {
       map['session_id'] = Variable<int>(sessionId.value);
     }
     if (sessionDate.present) {
-      map['session_date'] = Variable<DateTime>(sessionDate.value);
+      map['session_date'] = Variable<String>(sessionDate.value);
     }
     if (sessionSummary.present) {
       map['session_summary'] = Variable<String>(sessionSummary.value);
@@ -1545,9 +1582,9 @@ class $SessionsTable extends Sessions with TableInfo<$SessionsTable, Session> {
   final VerificationMeta _sessionDateMeta =
       const VerificationMeta('sessionDate');
   @override
-  late final GeneratedColumn<DateTime?> sessionDate =
-      GeneratedColumn<DateTime?>('session_date', aliasedName, false,
-          type: const IntType(), requiredDuringInsert: true);
+  late final GeneratedColumn<String?> sessionDate = GeneratedColumn<String?>(
+      'session_date', aliasedName, false,
+      type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _sessionSummaryMeta =
       const VerificationMeta('sessionSummary');
   @override
@@ -1824,14 +1861,13 @@ class ProfessionalCompanion extends UpdateCompanion<ProfessionalData> {
     required String names,
     required String lastNames,
     required String profession,
-    required int professionalID,
+    this.professionalID = const Value.absent(),
     required String userName,
     required String password,
   })  : personalID = Value(personalID),
         names = Value(names),
         lastNames = Value(lastNames),
         profession = Value(profession),
-        professionalID = Value(professionalID),
         userName = Value(userName),
         password = Value(password);
   static Insertable<ProfessionalData> custom({
@@ -1948,7 +1984,7 @@ class $ProfessionalTable extends Professional
   @override
   late final GeneratedColumn<int?> professionalID = GeneratedColumn<int?>(
       'professional_i_d', aliasedName, false,
-      type: const IntType(), requiredDuringInsert: true);
+      type: const IntType(), requiredDuringInsert: false);
   final VerificationMeta _userNameMeta = const VerificationMeta('userName');
   @override
   late final GeneratedColumn<String?> userName = GeneratedColumn<String?>(
@@ -2011,8 +2047,6 @@ class $ProfessionalTable extends Professional
           _professionalIDMeta,
           professionalID.isAcceptableOrUnknown(
               data['professional_i_d']!, _professionalIDMeta));
-    } else if (isInserting) {
-      context.missing(_professionalIDMeta);
     }
     if (data.containsKey('user_name')) {
       context.handle(_userNameMeta,
@@ -2030,7 +2064,7 @@ class $ProfessionalTable extends Professional
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => <GeneratedColumn>{};
+  Set<GeneratedColumn> get $primaryKey => {professionalID};
   @override
   ProfessionalData map(Map<String, dynamic> data, {String? tablePrefix}) {
     return ProfessionalData.fromData(data,
