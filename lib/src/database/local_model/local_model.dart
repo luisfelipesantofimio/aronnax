@@ -89,7 +89,7 @@ class LocalDatabase extends _$LocalDatabase {
   Stream<List<Patient>> userConsultation(String userNames) {
     return (select(patients)
           ..where(
-            (tbl) => tbl.names.contains(userNames),
+            (tbl) => tbl.names.equals(userNames),
           ))
         .watch();
   }
@@ -109,7 +109,7 @@ class LocalDatabase extends _$LocalDatabase {
       ),
     ])
       ..where(
-        patients.names.contains(userNames),
+        patients.names.equals(userNames),
       );
     return query.map((row) => row.readTable(patientInClinicHistory)).watch();
   }
@@ -129,7 +129,7 @@ class LocalDatabase extends _$LocalDatabase {
       ),
     ])
       ..where(
-        patients.names.contains(userNames),
+        patients.names.equals(userNames),
       );
     return query.map((row) => row.readTable(patientSessions)).watch();
   }
