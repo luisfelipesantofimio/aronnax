@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'model.dart';
+part of 'settings_model.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
@@ -55,23 +55,23 @@ class ServerSettingsAdapter extends TypeAdapter<ServerSettings> {
           typeId == other.typeId;
 }
 
-class LocalSettingsAdapter extends TypeAdapter<LocalSettings> {
+class GlobalThemeModeAdapter extends TypeAdapter<GlobalThemeMode> {
   @override
   final int typeId = 1;
 
   @override
-  LocalSettings read(BinaryReader reader) {
+  GlobalThemeMode read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return LocalSettings(
+    return GlobalThemeMode(
       fields[0] as bool,
     );
   }
 
   @override
-  void write(BinaryWriter writer, LocalSettings obj) {
+  void write(BinaryWriter writer, GlobalThemeMode obj) {
     writer
       ..writeByte(1)
       ..writeByte(0)
@@ -84,7 +84,41 @@ class LocalSettingsAdapter extends TypeAdapter<LocalSettings> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is LocalSettingsAdapter &&
+      other is GlobalThemeModeAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class LocalDatabaseModeAdapter extends TypeAdapter<LocalDatabaseMode> {
+  @override
+  final int typeId = 2;
+
+  @override
+  LocalDatabaseMode read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return LocalDatabaseMode(
+      fields[0] as bool,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, LocalDatabaseMode obj) {
+    writer
+      ..writeByte(1)
+      ..writeByte(0)
+      ..write(obj.offlineModeEnabled);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is LocalDatabaseModeAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../main.dart';
-import '../database/model.dart';
+import '../database/settings_model.dart';
 
-LocalSettings settings = settingsdb.get("SettingsDB");
+GlobalThemeMode settings = themeDB.get("SettingsDB");
 
 ValueNotifier<bool> darkThemeEnabled = ValueNotifier(settings.darkModeEnabled);
 
@@ -15,19 +15,19 @@ class GlobalThemes with ChangeNotifier {
 
   void changeCurrentTheme() {
     darkThemeEnabled.value = !darkThemeEnabled.value;
-    settingsdb.put(
+    themeDB.put(
       "SettingsDB",
-      LocalSettings(darkThemeEnabled.value),
+      GlobalThemeMode(darkThemeEnabled.value),
     );
 
     notifyListeners();
   }
 
   areSettingsEmpty() {
-    if (settingsdb.isEmpty) {
-      settingsdb.put(
+    if (themeDB.isEmpty) {
+      themeDB.put(
         "SettingsDB",
-        LocalSettings(false),
+        GlobalThemeMode(false),
       );
     }
     notifyListeners();

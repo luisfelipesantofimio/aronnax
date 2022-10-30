@@ -1,31 +1,39 @@
 import 'package:aronnax/src/Pages/settings/ServerConfigForms/Welcome/Views/first.dart';
-import 'package:aronnax/src/database/model.dart';
+import 'package:aronnax/src/database/settings_model.dart';
 import 'package:aronnax/src/themes/custom_themes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'src/Pages/LoginScreen/login_main_view.dart';
 
 late Box localdb;
-late Box settingsdb;
+late Box themeDB;
+late Box offlineModeDB;
 
 void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(ServerSettingsAdapter());
-  Hive.registerAdapter(LocalSettingsAdapter());
+  Hive.registerAdapter(GlobalThemeModeAdapter());
+  Hive.registerAdapter(LocalDatabaseModeAdapter());
   localdb = await Hive.openBox<ServerSettings>("ServerSettings");
-  settingsdb = await Hive.openBox<LocalSettings>("SettingsDB");
-  runApp(const MyApp());
+  themeDB = await Hive.openBox<GlobalThemeMode>("SettingsDB");
+  offlineModeDB = await Hive.openBox<LocalDatabaseMode>("offlineModeDB");
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends ConsumerStatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  MyAppState createState() => MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class MyAppState extends ConsumerState<MyApp> {
   @override
   void initState() {
     super.initState();
