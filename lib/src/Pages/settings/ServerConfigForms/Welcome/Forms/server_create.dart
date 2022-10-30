@@ -1,6 +1,6 @@
 import 'package:aronnax/main.dart';
 import 'package:aronnax/src/Pages/settings/ServerConfigForms/Welcome/Views/third.dart';
-import 'package:aronnax/src/database/model.dart';
+import 'package:aronnax/src/database/settings_model.dart';
 import 'package:flutter/material.dart';
 
 class NewServerForm extends StatefulWidget {
