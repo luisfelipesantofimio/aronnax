@@ -49,7 +49,7 @@ dependencies:
   font_awesome_flutter: ^10.1.0
   path_provider: ^2.0.11
   drift: ^2.2.0
-  sqlite3_flutter_libs: ^0.5.8
+  sqlite3_flutter_libs: ^0.5.10
   flutter_riverpod: ^2.0.2
   
 
