@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../misc/global_constants.dart';
+import '../../misc/global_values.dart';
 import '../../themes/custom_themes.dart';
 
 class LegalInfo extends StatelessWidget {

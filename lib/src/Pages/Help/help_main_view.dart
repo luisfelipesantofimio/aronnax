@@ -1,5 +1,4 @@
 import 'package:aronnax/src/Pages/Help/legal_info.dart';
-import 'package:aronnax/src/misc/global_constants.dart';
 import 'package:aronnax/src/themes/custom_themes.dart';
 import 'package:flutter/material.dart';
 
