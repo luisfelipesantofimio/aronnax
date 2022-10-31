@@ -94,6 +94,18 @@ class LocalDatabase extends _$LocalDatabase {
         .watch();
   }
 
+  Stream<List<ProfessionalData>> loginProfessional(int userID) {
+    return (select(professional)
+          ..where(
+            (tbl) => tbl.personalID.equals(userID),
+          ))
+        .watch();
+  }
+
+  Stream<List<ProfessionalData>> initalProfessionalFetch() {
+    return (select(professional)).watch();
+  }
+
   Stream<List<ClinicHistoryData>> clinicHistoryConsultation(String userNames) {
     final patientInClinicHistory = alias(clinicHistory, "clinicHistoryPatient");
     final query = select(patientInClinicHistory).join([

@@ -39,7 +39,7 @@ addLocalPatient(
   localDB.insertPatient(entity);
 }
 
-addLocalClinicHistory(
+Future<void> addLocalClinicHistory(
   registerCode,
   dateTime,
   consultationReason,
@@ -52,7 +52,7 @@ addLocalClinicHistory(
   diagnostic,
   idNumber,
   createdBy,
-) {
+) async {
   final entity = ClinicHistoryCompanion(
     registerNumber: Value(registerCode),
     currentDate: Value(dateTime),
@@ -68,11 +68,32 @@ addLocalClinicHistory(
     createdBy: Value(createdBy),
   );
 
-  localDB.insertClinicHistory(entity);
+  await localDB.insertClinicHistory(entity);
 }
 
-addLocalSession() {}
+addLocalProfessional(int personalID, String names, String lastNames,
+    String profession, int professionalID, String userName, String password) {
+  final entity = ProfessionalCompanion(
+    userName: Value(userName),
+    names: Value(names),
+    lastNames: Value(lastNames),
+    personalID: Value(personalID),
+    professionalID: Value(professionalID),
+    profession: Value(profession),
+    password: Value(password),
+  );
 
-searchPatient(String user) {
-  localDB.userConsultation(user);
+  localDB.insertProfessional(entity);
+}
+
+Stream<List<Patient>> searchPatient(String user) {
+  return localDB.userConsultation(user);
+}
+
+Stream<List<ProfessionalData>> loginExistingProfessional(int userID) {
+  return localDB.loginProfessional(userID);
+}
+
+Stream<List<ProfessionalData>> fetchInitialRegisterUsers() {
+  return localDB.initalProfessionalFetch();
 }
