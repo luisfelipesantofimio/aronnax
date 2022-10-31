@@ -1,5 +1,4 @@
 import 'package:aronnax/src/misc/global_values.dart';
-import 'package:aronnax/src/themes/color_scheme.dart';
 import 'package:aronnax/src/themes/custom_themes.dart';
 import "package:flutter/material.dart";
 import 'package:google_fonts/google_fonts.dart';
