@@ -1,3 +1,4 @@
+import 'package:aronnax/src/Pages/Formulary/professionalForm/local_professional_register_view.dart';
 import 'package:aronnax/src/Pages/settings/ServerConfigForms/Welcome/Views/create_server.dart';
 import 'package:aronnax/src/Pages/settings/ServerConfigForms/Welcome/Views/server_config.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,14 @@ class SecondWelcome extends StatelessWidget {
               "¿Qué deseas hacer?",
               style: GoogleFonts.montserrat(
                   fontSize: 35, fontWeight: FontWeight.bold),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(
+                left: 30,
+                right: 30,
+              ),
+              child: Text(
+                  "Aronnax requiere de una base de datos para guardar toda la información que registras en tus consultas. Puedes conectarte a un servidor externo con una basde datos SQL ya configurada o simplemente almacenar la base de datos directamente en tu computadora."),
             ),
             const Image(
               height: 300,
@@ -94,6 +103,33 @@ class SecondWelcome extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LocalProfessionalRegisterView(),
+                  ),
+                );
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: const [
+                  Text(
+                    "Almacenaré la información en mi computadora.",
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(
+                      10,
+                    ),
+                  ),
+                  Icon(Icons.arrow_forward),
+                ],
+              ),
             )
           ],
         ),
