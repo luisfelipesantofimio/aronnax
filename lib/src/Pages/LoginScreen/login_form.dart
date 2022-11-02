@@ -1,4 +1,5 @@
 import 'package:aronnax/main.dart';
+import 'package:aronnax/src/providers/login_provider.dart';
 import 'package:aronnax/src/database/local_model/local_model.dart';
 import 'package:aronnax/src/database/local_model/local_queries.dart';
 import 'package:aronnax/src/database/settings_model.dart';
@@ -122,11 +123,18 @@ class LoginFormState extends ConsumerState<LoginForm> {
   Widget build(BuildContext context) {
     bool isOfflineEnabled = ref.watch(globalOfflineStatusProvider);
 
-    isOfflineEnabled = currentLocalDBstatus.offlineModeEnabled;
-    log(isOfflineEnabled.toString());
+    AsyncValue<List<ProfessionalData>> loginProvider = ref.watch(
+      localLoginStateProvider(
+        userID == ""
+            ? 0
+            : int.parse(
+                userID,
+              ),
+      ),
+    );
 
-    Stream<List<ProfessionalData>> currentProfessionalQuery =
-        loginExistingProfessional(int.parse(userID));
+    isOfflineEnabled = currentLocalDBstatus.offlineModeEnabled;
+    log("Base de datos local activada? $isOfflineEnabled");
 
     return Form(
       key: _loginKey,
@@ -136,102 +144,43 @@ class LoginFormState extends ConsumerState<LoginForm> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            isOfflineEnabled
-                ? StreamBuilder(
-                    stream: currentProfessionalQuery,
-                    builder: (context,
-                        AsyncSnapshot<List<ProfessionalData>> snapshot) {
-                      return TextFormField(
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly
-                        ],
-                        style: Theme.of(context).textTheme.bodyText2,
-                        onFieldSubmitted: (value) {
-                          _loginKey.currentState!.validate();
-                        },
-                        onChanged: (value) {
-                          setState(() {
-                            userID = value;
-                          });
-                          loginExistingProfessional(int.parse(userID));
+            TextFormField(
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              style: Theme.of(context).textTheme.bodyText2,
+              onFieldSubmitted: (value) {
+                _loginKey.currentState!.validate();
+              },
+              onChanged: (value) {
+                setState(() {
+                  userID = value;
+                });
+                !isOfflineEnabled ? loginUser(userID) : "";
+                setState(() {});
+              },
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return "Inserta número de documento";
+                }
+                if (userVerified != true) {
+                  return "El usuario no existe";
+                }
 
-                          setState(() {
-                            passwordInServer = snapshot.data!
-                                .map((e) => e.password)
-                                .toList()
-                                .single;
-                            globalUserName = snapshot.data!
-                                .map((e) => e.names)
-                                .toList()
-                                .single;
-                          });
-                          log(passwordInServer);
-                        },
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return "Inserta número de documento";
-                          }
-                          if (userVerified != true) {
-                            return "El usuario no existe";
-                          }
-
-                          return null;
-                        },
-                        autofocus: true,
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.all(0),
-                          labelText: "Número de documento",
-                          hintText: "Ingresa tu número de cédula registrado",
-                          labelStyle: Theme.of(context).textTheme.bodyText2,
-                          hintStyle: Theme.of(context).textTheme.bodyText2,
-                          prefixIcon: const Icon(
-                            Icons.person_outline,
-                            color: Color.fromARGB(255, 225, 225, 225),
-                          ),
-                          floatingLabelStyle:
-                              Theme.of(context).textTheme.bodyText2,
-                        ),
-                      );
-                    },
-                  )
-                : TextFormField(
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    style: Theme.of(context).textTheme.bodyText2,
-                    onFieldSubmitted: (value) {
-                      _loginKey.currentState!.validate();
-                    },
-                    onChanged: (value) {
-                      setState(() {
-                        userID = value;
-                      });
-                      isOfflineEnabled
-                          ? loginExistingProfessional(int.parse(userID))
-                          : loginUser(userID);
-                    },
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Inserta número de documento";
-                      }
-                      if (userVerified != true) {
-                        return "El usuario no existe";
-                      }
-
-                      return null;
-                    },
-                    autofocus: true,
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.all(0),
-                      labelText: "Número de documento",
-                      hintText: "Ingresa tu número de cédula registrado",
-                      labelStyle: Theme.of(context).textTheme.bodyText2,
-                      hintStyle: Theme.of(context).textTheme.bodyText2,
-                      prefixIcon: const Icon(
-                        Icons.person_outline,
-                        color: Color.fromARGB(255, 225, 225, 225),
-                      ),
-                      floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
-                    ),
-                  ),
+                return null;
+              },
+              autofocus: true,
+              decoration: InputDecoration(
+                contentPadding: const EdgeInsets.all(0),
+                labelText: "Número de documento",
+                hintText: "Ingresa tu número de cédula registrado",
+                labelStyle: Theme.of(context).textTheme.bodyText2,
+                hintStyle: Theme.of(context).textTheme.bodyText2,
+                prefixIcon: const Icon(
+                  Icons.person_outline,
+                  color: Color.fromARGB(255, 225, 225, 225),
+                ),
+                floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.only(top: 20),
               child: TextFormField(
@@ -291,6 +240,41 @@ class LoginFormState extends ConsumerState<LoginForm> {
                       wasPressed ? Icons.visibility : Icons.visibility_off),
                 ),
               ],
+            ),
+            const Padding(
+              padding: EdgeInsets.all(20),
+            ),
+            Visibility(
+              visible: isOfflineEnabled,
+              child: SizedBox(
+                height: 20,
+                child: loginProvider.when(
+                  data: (data) {
+                    data.isNotEmpty
+                        ? setState(() {
+                            passwordInServer =
+                                data.map((e) => e.password).toList().single;
+                            globalUserName =
+                                data.map((e) => e.names).toList().single;
+                          })
+                        : passwordInServer = "";
+                    //globalUserName = "";
+
+                    log(passwordInServer);
+                    return const Visibility(
+                        visible: false,
+                        child: SizedBox(
+                          height: 1,
+                        ));
+                  },
+                  error: (error, stackTrace) => const Center(
+                    child: Text("Algo salió mal :("),
+                  ),
+                  loading: () => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+              ),
             ),
           ],
         ),
