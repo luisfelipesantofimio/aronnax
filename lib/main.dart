@@ -1,8 +1,5 @@
 import 'package:aronnax/src/Pages/settings/ServerConfigForms/Welcome/Views/first.dart';
-import 'package:aronnax/src/database/local_model/local_model.dart';
-import 'package:aronnax/src/database/local_model/local_queries.dart';
 import 'package:aronnax/src/database/settings_model.dart';
-import 'package:aronnax/src/providers/global_providers.dart';
 import 'package:aronnax/src/themes/custom_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -49,7 +46,6 @@ class MyAppState extends ConsumerState<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    // bool currentOfflineModeState = ref.watch(globalOfflineStatusProvider);
     verifyLocalData() {
       if (offlineModeDB.isEmpty) {
         return const FirstWelcome();
