@@ -89,7 +89,7 @@ class LocalDatabase extends _$LocalDatabase {
   Stream<List<Patient>> userConsultation(String userNames) {
     return (select(patients)
           ..where(
-            (tbl) => tbl.names.equals(userNames),
+            (tbl) => tbl.names.contains(userNames),
           ))
         .watch();
   }
@@ -106,7 +106,7 @@ class LocalDatabase extends _$LocalDatabase {
     return (select(professional)).watch();
   }
 
-  Stream<List<ClinicHistoryData>> clinicHistoryConsultation(String userNames) {
+  Stream<List<ClinicHistoryData>> clinicHistoryConsultation(int idNumber) {
     final patientInClinicHistory = alias(clinicHistory, "clinicHistoryPatient");
     final query = select(patientInClinicHistory).join([
       innerJoin(
@@ -121,12 +121,12 @@ class LocalDatabase extends _$LocalDatabase {
       ),
     ])
       ..where(
-        patients.names.equals(userNames),
+        patients.idNumber.equals(idNumber),
       );
     return query.map((row) => row.readTable(patientInClinicHistory)).watch();
   }
 
-  Stream<List<Session>> patientSessionsConsultation(String userNames) {
+  Stream<List<Session>> patientSessionsConsultation(int idNumber) {
     final patientSessions = alias(sessions, "clinicHistoryPatient");
     final query = select(patientSessions).join([
       innerJoin(
@@ -141,7 +141,7 @@ class LocalDatabase extends _$LocalDatabase {
       ),
     ])
       ..where(
-        patients.names.equals(userNames),
+        patients.idNumber.equals(idNumber),
       );
     return query.map((row) => row.readTable(patientSessions)).watch();
   }
