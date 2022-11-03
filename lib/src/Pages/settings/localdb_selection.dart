@@ -1,3 +1,7 @@
+import 'dart:developer';
+
+import 'package:aronnax/main.dart';
+import 'package:aronnax/src/database/settings_model.dart';
 import 'package:aronnax/src/providers/global_providers.dart';
 import 'package:aronnax/src/themes/custom_themes.dart';
 import "package:flutter/material.dart";
@@ -14,8 +18,11 @@ class LocalDBActivationScreenState
     extends ConsumerState<LocalDBActivationScreen> {
   @override
   Widget build(BuildContext context) {
-    bool isLocaldbEnabled = ref.watch(globalOfflineStatusProvider);
+    bool isOfflineEnabled = ref.watch(globalOfflineStatusProvider);
+    LocalDatabaseMode currentLocalDBstatus = offlineModeDB.get("offlineModeDB");
+    isOfflineEnabled = currentLocalDBstatus.offlineModeEnabled;
 
+    log(isOfflineEnabled.toString());
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -27,7 +34,7 @@ class LocalDBActivationScreenState
           Column(
             children: [
               Switch(
-                value: ref.watch(globalOfflineStatusProvider),
+                value: isOfflineEnabled,
                 onChanged: (switchVal) {
                   ref
                       .read(globalOfflineStatusProvider.notifier)
@@ -37,7 +44,7 @@ class LocalDBActivationScreenState
                 activeTrackColor: Colors.green,
               ),
               Text(
-                isLocaldbEnabled
+                isOfflineEnabled
                     ? "Aronnax está funcionando offline"
                     : "Aronnax está conectado a tu base de datos",
                 style: Theme.of(context).textTheme.bodyText2,
