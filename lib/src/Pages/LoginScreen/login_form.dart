@@ -24,6 +24,9 @@ bool userVerified = false;
 
 final _loginKey = GlobalKey<FormState>();
 
+LocalDatabaseMode currentLocalDBstatus = offlineModeDB.get("offlineModeDB");
+bool isOfflineEnabled = currentLocalDBstatus.offlineModeEnabled;
+
 class LoginForm extends ConsumerStatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
 
@@ -32,22 +35,6 @@ class LoginForm extends ConsumerStatefulWidget {
 }
 
 class LoginFormState extends ConsumerState<LoginForm> {
-  LocalDatabaseMode currentLocalDBstatus = offlineModeDB.get("offlineModeDB");
-
-  @override
-  void initState() {
-    _loginKey.currentState?.initState();
-
-    log(currentLocalDBstatus.offlineModeEnabled.toString());
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _loginKey.currentState!.dispose();
-    super.dispose();
-  }
-
   bool isPasswordVisible = false;
   bool wasPressed = false;
 
@@ -121,8 +108,6 @@ class LoginFormState extends ConsumerState<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    bool isOfflineEnabled = ref.watch(globalOfflineStatusProvider);
-
     AsyncValue<List<ProfessionalData>> loginProvider = ref.watch(
       localLoginStateProvider(
         userID == ""
@@ -133,8 +118,10 @@ class LoginFormState extends ConsumerState<LoginForm> {
       ),
     );
 
-    isOfflineEnabled = currentLocalDBstatus.offlineModeEnabled;
     log("Base de datos local activada? $isOfflineEnabled");
+
+    String currentUserName = "";
+    globalUserName = currentUserName;
 
     return Form(
       key: _loginKey,
@@ -254,11 +241,11 @@ class LoginFormState extends ConsumerState<LoginForm> {
                         ? setState(() {
                             passwordInServer =
                                 data.map((e) => e.password).toList().single;
-                            globalUserName =
+                            currentUserName =
                                 data.map((e) => e.names).toList().single;
+                            globalUserName = currentUserName;
                           })
                         : passwordInServer = "";
-                    //globalUserName = "";
 
                     log(passwordInServer);
                     return const Visibility(
