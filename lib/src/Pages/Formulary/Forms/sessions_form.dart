@@ -1,4 +1,5 @@
 import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
+import 'package:aronnax/src/database/local_model/local_queries.dart';
 import 'package:flutter/material.dart';
 import 'package:aronnax/src/API/server_api.dart';
 import 'package:intl/intl.dart';
@@ -136,13 +137,21 @@ class _SessionsFormState extends State<SessionsForm> {
                     if (sessionKey.currentState!.validate()) {
                       sessionKey.currentState!.save();
 
-                      insertSessionData(
-                          currentDate,
-                          sessionSummary,
-                          sessionObjectives,
-                          therapeuticArchievements,
-                          idNumber,
-                          professionalName);
+                      isOfflineEnabled
+                          ? addLocalSession(
+                              sessionSummary,
+                              sessionObjectives,
+                              therapeuticArchievements,
+                              int.parse(idNumber),
+                              professionalName,
+                              currentDate)
+                          : insertSessionData(
+                              currentDate,
+                              sessionSummary,
+                              sessionObjectives,
+                              therapeuticArchievements,
+                              idNumber,
+                              professionalName);
                     }
                   },
                   child: const Text("Guardar información"),
