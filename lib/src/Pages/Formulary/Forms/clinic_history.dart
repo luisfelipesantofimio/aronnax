@@ -1,7 +1,13 @@
+import 'dart:developer';
+
 import 'package:aronnax/src/API/server_api.dart';
 import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
+import 'package:aronnax/src/database/local_model/local_model.dart';
+import 'package:aronnax/src/database/local_model/local_queries.dart';
 import 'package:aronnax/src/misc/passwd_generator.dart';
+import 'package:aronnax/src/providers/patient_search_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 DateTime dateFormat = DateTime.now();
@@ -11,14 +17,15 @@ String codeDate = DateFormat("ddMM").format(dateFormat);
 String registerNewCode = registerGen(8);
 String registerCode = "HC-$registerNewCode-$codeDate";
 
-class ClinicHistory extends StatefulWidget {
+class ClinicHistory extends ConsumerStatefulWidget {
   const ClinicHistory({Key? key}) : super(key: key);
 
   @override
-  _ClinicHistoryState createState() => _ClinicHistoryState();
+  ClinicHistoryState createState() => ClinicHistoryState();
 }
 
-class _ClinicHistoryState extends State<ClinicHistory> {
+class ClinicHistoryState extends ConsumerState<ClinicHistory> {
+  String dataForQuery = "";
   newRegisterCode() {
     String newCode = registerGen(8);
     setState(() {
@@ -42,8 +49,11 @@ class _ClinicHistoryState extends State<ClinicHistory> {
 
   @override
   Widget build(BuildContext context) {
+    AsyncValue<List<Patient>> userConsultationProvider = ref.watch(
+      localPatientSearchProvider(dataForQuery),
+    );
+
     return ListView(
-      controller: ScrollController(),
       children: [
         Form(
           key: _clinicHistoryKey,
@@ -249,25 +259,128 @@ class _ClinicHistoryState extends State<ClinicHistory> {
                   },
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.all(20),
-                child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    labelText: "Documento asociado a esta historia clínica:",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
-                    floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
-                  ),
-                  onChanged: (valID) {
-                    setState(
-                      () {
-                        ID = valID;
-                      },
-                    );
-                  },
-                ),
-              ),
+              isOfflineEnabled
+                  ? Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            style: Theme.of(context).textTheme.bodyText2,
+                            autofocus: true,
+                            decoration: InputDecoration(
+                              labelText:
+                                  "Documento asociado a esta historia clínica:",
+                              labelStyle: Theme.of(context).textTheme.bodyText2,
+                              floatingLabelStyle:
+                                  Theme.of(context).textTheme.bodyText2,
+                            ),
+                            onChanged: (valID) {
+                              setState(
+                                () {
+                                  dataForQuery = valID;
+                                },
+                              );
+                            },
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              top: 10,
+                              bottom: 10,
+                            ),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: RichText(
+                                text: TextSpan(
+                                  text: "Número de documento seleccionado: ",
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                      text: ID,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Visibility(
+                            visible: dataForQuery != "",
+                            child: userConsultationProvider.when(
+                              data: (data) {
+                                log(data.toString());
+                                return ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: data.length,
+                                  itemBuilder: (context, index) => InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        ID = data
+                                            .map((e) => e.idNumber)
+                                            .toList()[index]
+                                            .toString();
+                                        dataForQuery = ID;
+                                      });
+                                      log("ID seleccionado: $ID");
+                                    },
+                                    child: Container(
+                                      width: 100,
+                                      color: Colors.white,
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            "${data.map((e) => e.names).toList()[index]} ${data.map((e) => e.lastNames).toList()[index]}",
+                                            textAlign: TextAlign.left,
+                                            style: const TextStyle(
+                                                color: Colors.black),
+                                          ),
+                                          Text(
+                                            data
+                                                .map((e) => e.idNumber)
+                                                .toList()[index]
+                                                .toString(),
+                                            textAlign: TextAlign.left,
+                                            style: const TextStyle(
+                                                color: Colors.black),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                              error: (error, stackTrace) =>
+                                  Text("Ocurrió un error: $error"),
+                              loading: () => const CircularProgressIndicator(),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  : Container(
+                      margin: const EdgeInsets.all(20),
+                      child: TextFormField(
+                        style: Theme.of(context).textTheme.bodyText2,
+                        autofocus: true,
+                        decoration: InputDecoration(
+                          labelText:
+                              "Documento asociado a esta historia clínica:",
+                          labelStyle: Theme.of(context).textTheme.bodyText2,
+                          floatingLabelStyle:
+                              Theme.of(context).textTheme.bodyText2,
+                        ),
+                        onChanged: (valID) {
+                          setState(
+                            () {
+                              ID = valID;
+                            },
+                          );
+                        },
+                      ),
+                    ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
@@ -275,19 +388,33 @@ class _ClinicHistoryState extends State<ClinicHistory> {
                     if (_clinicHistoryKey.currentState!.validate()) {
                       _clinicHistoryKey.currentState!.save();
 
-                      insertClinicHistory(
-                          registerCode,
-                          currentDate,
-                          reasonConsultation,
-                          mentalExamination,
-                          treatmentPurpouse,
-                          medAntecedents,
-                          psiAntecedents,
-                          familyHistory,
-                          personalHistory,
-                          diagnosticImpression,
-                          ID,
-                          createdBy);
+                      isOfflineEnabled
+                          ? addLocalClinicHistory(
+                              registerCode,
+                              currentDate,
+                              reasonConsultation,
+                              mentalExamination,
+                              treatmentPurpouse,
+                              medAntecedents,
+                              psiAntecedents,
+                              familyHistory,
+                              personalHistory,
+                              diagnosticImpression,
+                              int.parse(ID),
+                              createdBy)
+                          : insertClinicHistory(
+                              registerCode,
+                              currentDate,
+                              reasonConsultation,
+                              mentalExamination,
+                              treatmentPurpouse,
+                              medAntecedents,
+                              psiAntecedents,
+                              familyHistory,
+                              personalHistory,
+                              diagnosticImpression,
+                              ID,
+                              createdBy);
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text("Historia guardada"),
