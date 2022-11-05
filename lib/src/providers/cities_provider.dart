@@ -13,7 +13,7 @@ class CitiesProvider extends StateNotifier<List<String>> {
       if (currentString.contains("Department")) {
         List a = currentString.split(" ");
         a.removeWhere((element) => element == "Department");
-        String b = a.join();
+        String b = a.join(" ");
         currentString = b;
 
         state.add(currentString);

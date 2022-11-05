@@ -15,7 +15,7 @@ void getStates() async {
       List a = currentString.split(" ");
       log(a.toString());
       a.removeWhere((element) => element == "Department");
-      String b = a.join();
+      String b = a.join(" ");
       currentString = b;
 
       departmentsList.add(currentString);
