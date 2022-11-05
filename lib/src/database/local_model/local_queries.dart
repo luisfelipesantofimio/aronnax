@@ -4,20 +4,20 @@ import 'local_model.dart';
 LocalDatabase localDB = LocalDatabase();
 
 addLocalPatient(
-  names,
-  lastNames,
-  birthDate,
-  idNumber,
-  contactNumber,
-  mail,
-  city,
-  state,
-  adress,
-  insurance,
-  education,
-  ocupation,
-  emergencyContactName,
-  emergencyContactNumber,
+  String names,
+  String lastNames,
+  String birthDate,
+  int idNumber,
+  int contactNumber,
+  String mail,
+  String city,
+  String state,
+  String adress,
+  String insurance,
+  String education,
+  String ocupation,
+  String emergencyContactName,
+  int emergencyContactNumber,
 ) {
   final entity = PatientsCompanion(
     names: Value(names),
@@ -40,18 +40,18 @@ addLocalPatient(
 }
 
 Future<void> addLocalClinicHistory(
-  registerCode,
-  dateTime,
-  consultationReason,
-  mentalExamn,
-  treatment,
-  medAntecedents,
-  psiAntecedents,
-  familyHistory,
-  personalHistory,
-  diagnostic,
-  idNumber,
-  createdBy,
+  String registerCode,
+  String dateTime,
+  String consultationReason,
+  String mentalExamn,
+  String treatment,
+  String medAntecedents,
+  String psiAntecedents,
+  String familyHistory,
+  String personalHistory,
+  String diagnostic,
+  int idNumber,
+  String createdBy,
 ) async {
   final entity = ClinicHistoryCompanion(
     registerNumber: Value(registerCode),
@@ -69,6 +69,25 @@ Future<void> addLocalClinicHistory(
   );
 
   await localDB.insertClinicHistory(entity);
+}
+
+Future<void> addLocalSession(
+  String sessionSummary,
+  String sessionObjectives,
+  String therapeuticArchievements,
+  int idNumber,
+  String professionalName,
+  String sessionDate,
+) async {
+  final entity = SessionsCompanion(
+    idNumber: Value(idNumber),
+    professionalName: Value(professionalName),
+    sessionDate: Value(sessionDate),
+    sessionObjectives: Value(sessionObjectives),
+    sessionSummary: Value(sessionSummary),
+    therapeuticArchievements: Value(therapeuticArchievements),
+  );
+  await localDB.insertSession(entity);
 }
 
 addLocalProfessional(int personalID, String names, String lastNames,
