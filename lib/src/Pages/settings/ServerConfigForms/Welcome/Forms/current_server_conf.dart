@@ -155,6 +155,10 @@ class _ExistingServerFormState extends State<ExistingServerForm> {
                     ServerSettings(_databaseUser, _databasePassword,
                         _databaseName, _serverAdress, _serverPort, true),
                   );
+                  offlineModeDB.put(
+                    "offlineModeDB",
+                    LocalDatabaseMode(false),
+                  );
 
                   Navigator.push(
                     context,

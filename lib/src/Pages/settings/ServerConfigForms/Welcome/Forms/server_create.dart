@@ -155,7 +155,10 @@ class _NewServerFormState extends State<NewServerForm> {
                     ServerSettings(_databaseUser, _databasePassword,
                         _databaseName, _serverAdress, _serverPort, true),
                   );
-
+                  offlineModeDB.put(
+                    "offlineModeDB",
+                    LocalDatabaseMode(false),
+                  );
                   //createTables();
                   Navigator.push(
                     context,
