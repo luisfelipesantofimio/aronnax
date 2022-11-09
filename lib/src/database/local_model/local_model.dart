@@ -151,7 +151,7 @@ LazyDatabase _openConnection() {
   return LazyDatabase(() async {
     final dbFolder = await getApplicationDocumentsDirectory();
     final file = File(
-      p.join(dbFolder.path, 'aronnax_localDB.sqlite'),
+      p.join(dbFolder.path, 'aronnax/aronnax_localDB.sqlite'),
     );
     return NativeDatabase(file);
   });
