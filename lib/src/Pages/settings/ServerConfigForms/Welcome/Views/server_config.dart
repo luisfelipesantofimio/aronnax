@@ -31,6 +31,7 @@ class ServerConfig extends StatelessWidget {
                   ),
                 ),
                 Visibility(
+                  visible: localdb.isNotEmpty,
                   child: Row(
                     children: [
                       const Text(

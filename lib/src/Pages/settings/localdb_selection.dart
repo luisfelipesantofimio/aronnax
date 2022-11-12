@@ -1,6 +1,9 @@
 import 'dart:developer';
 
 import 'package:aronnax/main.dart';
+import 'package:aronnax/src/Pages/settings/widgets/no_server_dialog.dart';
+import 'package:aronnax/src/database/local_model/local_model.dart';
+import 'package:aronnax/src/database/local_model/local_queries.dart';
 import 'package:aronnax/src/database/settings_model.dart';
 import 'package:aronnax/src/providers/global_providers.dart';
 import 'package:aronnax/src/themes/custom_themes.dart';
@@ -35,10 +38,25 @@ class LocalDBActivationScreenState
             children: [
               Switch(
                 value: isOfflineEnabled,
-                onChanged: (switchVal) {
-                  ref
-                      .read(globalOfflineStatusProvider.notifier)
-                      .updateCurrentStatus();
+                onChanged: (switchVal) async {
+                  List<ProfessionalData> currentLocalUserList =
+                      await localDB.isProfessionalsListEmpty();
+                  if (isOfflineEnabled && localdb.isEmpty) {
+                    showDialog(
+                      context: context,
+                      builder: (context) => const NoServerDialog(),
+                    );
+                  } else if (localdb.isNotEmpty &&
+                      currentLocalUserList.isEmpty) {
+                    showDialog(
+                      context: context,
+                      builder: (context) => const NoLocalDBConfiguredDialog(),
+                    );
+                  } else {
+                    ref
+                        .read(globalOfflineStatusProvider.notifier)
+                        .updateCurrentStatus();
+                  }
                 },
                 activeColor: Colors.blueGrey,
                 activeTrackColor: Colors.green,

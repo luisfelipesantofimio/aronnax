@@ -49,10 +49,10 @@ class MyAppState extends ConsumerState<MyApp> {
   @override
   Widget build(BuildContext context) {
     verifyLocalData() {
-      if (offlineModeDB.isEmpty) {
-        return const FirstWelcome();
-      } else {
+      if (offlineModeDB.isNotEmpty) {
         return const LoginScreen();
+      } else {
+        return const FirstWelcome();
       }
     }
 

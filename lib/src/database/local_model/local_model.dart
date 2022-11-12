@@ -145,6 +145,10 @@ class LocalDatabase extends _$LocalDatabase {
       );
     return query.map((row) => row.readTable(patientSessions)).watch();
   }
+
+  Future<List<ProfessionalData>> isProfessionalsListEmpty() async {
+    return (select(professional)).get();
+  }
 }
 
 LazyDatabase _openConnection() {

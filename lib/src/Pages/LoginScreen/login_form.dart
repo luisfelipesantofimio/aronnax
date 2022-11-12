@@ -1,9 +1,7 @@
 import 'package:aronnax/main.dart';
 import 'package:aronnax/src/providers/login_provider.dart';
 import 'package:aronnax/src/database/local_model/local_model.dart';
-import 'package:aronnax/src/database/local_model/local_queries.dart';
 import 'package:aronnax/src/database/settings_model.dart';
-import 'package:aronnax/src/providers/global_providers.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer';
 import 'package:aronnax/src/Pages/MainMenu/main_menu.dart';
@@ -46,6 +44,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
   }
 
   isPasswordValid(String serverPassword, String inputPassword) {
+    log("Contraseña recibida: $serverPassword");
     bool result = Crypt(serverPassword).match(inputPassword);
     if (result == true) {
       setState(() {
@@ -237,15 +236,15 @@ class LoginFormState extends ConsumerState<LoginForm> {
                 height: 20,
                 child: loginProvider.when(
                   data: (data) {
-                    data.isNotEmpty
-                        ? setState(() {
-                            passwordInServer =
-                                data.map((e) => e.password).toList().single;
-                            currentUserName =
-                                data.map((e) => e.names).toList().single;
-                            globalUserName = currentUserName;
-                          })
-                        : passwordInServer = "";
+                    if (data.isNotEmpty && isOfflineEnabled) {
+                      setState(() {
+                        passwordInServer =
+                            data.map((e) => e.password).toList().single;
+                        currentUserName =
+                            data.map((e) => e.names).toList().single;
+                        globalUserName = currentUserName;
+                      });
+                    }
 
                     log(passwordInServer);
                     return const Visibility(
