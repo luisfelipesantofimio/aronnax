@@ -1,4 +1,5 @@
 import 'package:aronnax/src/Pages/Formulary/professionalForm/professional_form.dart';
+import 'package:aronnax/src/Pages/settings/localdb_selection.dart';
 import 'package:aronnax/src/Pages/settings/setting_options_view_profile.dart';
 import 'package:aronnax/src/Pages/settings/theme_select.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,8 @@ class _SettingsMainState extends State<SettingsMain> {
         return const ProfessionalForm();
       case 2:
         return const ThemeSelector();
+      case 3:
+        return const LocalDBActivationScreen();
 
       default:
         return const SettingsOptionsProfile();

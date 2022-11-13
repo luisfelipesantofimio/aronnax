@@ -1,43 +1,42 @@
+import 'package:aronnax/main.dart';
+import 'package:aronnax/src/providers/login_provider.dart';
+import 'package:aronnax/src/database/local_model/local_model.dart';
+import 'package:aronnax/src/database/settings_model.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer';
 import 'package:aronnax/src/Pages/MainMenu/main_menu.dart';
 import 'package:aronnax/src/API/server_api.dart';
 import 'package:crypt/crypt.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 var db = MySQL();
 String userPassword = "";
 String passwordInServer = "";
 String userID = "";
-bool isAbleToLogin = false;
+
 String globalUserName = "";
 String globalUserLastNames = "";
 String globalProfessionalID = "";
-bool userVerified = false;
 
 final _loginKey = GlobalKey<FormState>();
 
-class LoginForm extends StatefulWidget {
+LocalDatabaseMode currentLocalDBstatus = offlineModeDB.get("offlineModeDB");
+bool isOfflineEnabled = currentLocalDBstatus.offlineModeEnabled;
+
+class LoginForm extends ConsumerStatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
 
   @override
-  State<LoginForm> createState() => _LoginFormState();
+  LoginFormState createState() => LoginFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
-  @override
-  void initState() {
-    _loginKey.currentState?.initState();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _loginKey.currentState!.dispose();
-    super.dispose();
-  }
-
+class LoginFormState extends ConsumerState<LoginForm> {
   bool isPasswordVisible = false;
   bool wasPressed = false;
+
+  bool userVerified = false;
+  bool isAbleToLogin = false;
 
   passwordVisivility() {
     setState(() {
@@ -47,68 +46,88 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   isPasswordValid(String serverPassword, String inputPassword) {
+    log("Contraseña recibida: $serverPassword");
     bool result = Crypt(serverPassword).match(inputPassword);
     if (result == true) {
       setState(() {
         isAbleToLogin = true;
       });
-    } else {
-      return null;
     }
-  }
-
-  loginUser(inputID) {
-    db.getConnection().then((conn) {
-      String loginQuery =
-          "select password from professional where personalID = $inputID";
-
-      String namesQuery =
-          "select names from professional where personalID = $inputID";
-      String lastNamesQuery =
-          "select lastNames from professional where personalID = $inputID";
-      String professionalIdQuery =
-          "select professionalID from professional where personalID = $inputID";
-
-      conn.query(loginQuery).then((results) {
-        for (var row in results) {
-          setState(() {
-            passwordInServer = row[0];
-            log(passwordInServer);
-            if (passwordInServer != "") {
-              setState(() {
-                userVerified = true;
-              });
-            }
-          });
-        }
-      });
-
-      conn.query(namesQuery).then((results) {
-        for (var row in results) {
-          setState(() {
-            globalUserName = row[0];
-          });
-        }
-      });
-      conn.query(lastNamesQuery).then((results) {
-        for (var row in results) {
-          setState(() {
-            globalUserLastNames = row[0];
-          });
-        }
-      });
-      conn.query(professionalIdQuery).then((results) {
-        for (var row in results) {
-          setState(() {
-            globalProfessionalID = row[0].toString();
-          });
-        }
-      });
-    });
   }
 
   @override
   Widget build(BuildContext context) {
+    AsyncValue<List<ProfessionalData>> loginProvider = ref.watch(
+      localLoginStateProvider(
+        userID == ""
+            ? 0
+            : int.parse(
+                userID,
+              ),
+      ),
+    );
+
+    log("Base de datos local activada? $isOfflineEnabled");
+
+    String currentUserName = "";
+    String currentUserLastNames = "";
+    String currentProfessionalID = "";
+    String currentPasswordInServer = "";
+    globalUserName = currentUserName;
+    globalUserLastNames = currentUserLastNames;
+    globalProfessionalID = currentProfessionalID;
+
+    loginUser(inputID) {
+      db.getConnection().then((conn) {
+        String loginQuery =
+            "select password from professional where personalID = $inputID";
+
+        String namesQuery =
+            "select names from professional where personalID = $inputID";
+        String lastNamesQuery =
+            "select lastNames from professional where personalID = $inputID";
+        String professionalIdQuery =
+            "select professionalID from professional where personalID = $inputID";
+
+        conn.query(loginQuery).then((results) {
+          for (var row in results) {
+            setState(() {
+              currentPasswordInServer = row[0];
+              passwordInServer = currentPasswordInServer;
+              log(currentPasswordInServer);
+              if (currentPasswordInServer != "") {
+                setState(() {
+                  userVerified = true;
+                });
+              }
+            });
+          }
+        });
+
+        conn.query(namesQuery).then((results) {
+          for (var row in results) {
+            setState(() {
+              globalUserName = row[0];
+            });
+          }
+        });
+        conn.query(lastNamesQuery).then((results) {
+          for (var row in results) {
+            setState(() {
+              globalUserLastNames = row[0];
+            });
+          }
+        });
+        conn.query(professionalIdQuery).then((results) {
+          for (var row in results) {
+            setState(() {
+              globalProfessionalID = row[0].toString();
+            });
+          }
+        });
+      });
+    }
+
     return Form(
       key: _loginKey,
       child: Padding(
@@ -118,6 +137,7 @@ class _LoginFormState extends State<LoginForm> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             TextFormField(
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               style: Theme.of(context).textTheme.bodyText2,
               onFieldSubmitted: (value) {
                 _loginKey.currentState!.validate();
@@ -126,7 +146,20 @@ class _LoginFormState extends State<LoginForm> {
                 setState(() {
                   userID = value;
                 });
-                loginUser(userID);
+                !isOfflineEnabled
+                    ? loginUser(userID)
+                    : ref.watch(
+                        localLoginStateProvider(
+                          userID == ""
+                              ? 0
+                              : int.parse(
+                                  userID,
+                                ),
+                        ),
+                      );
+
+                setState(() {});
+                _loginKey.currentState!.validate();
               },
               validator: (value) {
                 if (value!.isEmpty) {
@@ -135,8 +168,6 @@ class _LoginFormState extends State<LoginForm> {
                 if (userVerified != true) {
                   return "El usuario no existe";
                 }
-
-                return null;
               },
               autofocus: true,
               decoration: InputDecoration(
@@ -165,9 +196,7 @@ class _LoginFormState extends State<LoginForm> {
                 },
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "Inserta tu contraseña";
-                  } else {
-                    null;
+                    return "Ingresa tu contraseña";
                   }
                   if (isAbleToLogin != true) {
                     return "Contraseña incorrecta";
@@ -188,7 +217,7 @@ class _LoginFormState extends State<LoginForm> {
                   contentPadding: const EdgeInsets.all(0),
                   labelText: "Contraseña",
                   hintText:
-                      "Contraseña para $globalUserName $globalUserLastNames",
+                      "Contraseña para $currentUserName $currentUserLastNames",
                   labelStyle: Theme.of(context).textTheme.bodyText2,
                   hintStyle: Theme.of(context).textTheme.bodyText2,
                   prefixIcon: const Icon(
@@ -211,6 +240,62 @@ class _LoginFormState extends State<LoginForm> {
                       wasPressed ? Icons.visibility : Icons.visibility_off),
                 ),
               ],
+            ),
+            const Padding(
+              padding: EdgeInsets.all(20),
+            ),
+            Visibility(
+              visible: isOfflineEnabled,
+              child: SizedBox(
+                height: 20,
+                child: loginProvider.when(
+                  data: (data) {
+                    if (data.isNotEmpty && isOfflineEnabled) {
+                      setState(() {
+                        currentPasswordInServer =
+                            data.map((e) => e.password).toList().single;
+                        currentUserName =
+                            data.map((e) => e.names).toList().single;
+                        currentUserLastNames =
+                            data.map((e) => e.lastNames).toList().single;
+                        currentProfessionalID = data
+                            .map((e) => e.professionalID)
+                            .toList()
+                            .single
+                            .toString();
+                        globalUserName = currentUserName;
+                        globalUserLastNames = currentUserLastNames;
+                        globalProfessionalID = currentProfessionalID;
+                        passwordInServer = currentPasswordInServer;
+                      });
+                      if (currentPasswordInServer != "") {
+                        setState(() {
+                          userVerified = true;
+                        });
+                      } else {
+                        setState(() {
+                          userVerified = false;
+                        });
+                      }
+                      setState(() {});
+                      _loginKey.currentState!.validate();
+                    }
+
+                    log(passwordInServer);
+                    return const Visibility(
+                        visible: false,
+                        child: SizedBox(
+                          height: 1,
+                        ));
+                  },
+                  error: (error, stackTrace) => const Center(
+                    child: Text("Algo salió mal :("),
+                  ),
+                  loading: () => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+              ),
             ),
           ],
         ),

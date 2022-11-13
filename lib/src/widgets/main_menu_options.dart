@@ -1,7 +1,9 @@
+import 'package:aronnax/src/Pages/Consultations/clinic_history_consultation/clinic_history_view.dart';
 import 'package:aronnax/src/Pages/Consultations/main_consult/consultation_view.dart';
 import 'package:aronnax/src/Pages/Formulary/basic_form/basic_form_view.dart';
 import 'package:aronnax/src/Pages/Formulary/clinic_history/clinic_history_form_view.dart';
 import 'package:aronnax/src/Pages/Formulary/session/session_form_view.dart';
+import 'package:aronnax/src/Pages/Formulary/widgets/consultant_selection_dialog.dart';
 import 'package:aronnax/src/widgets/main_options_button.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -41,11 +43,15 @@ class MainMenuOptions extends StatelessWidget {
                     icon: FontAwesomeIcons.filePen,
                     text: "Abrir historia clínica",
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: ((context) => const MainViewClinicHistory()),
-                        ),
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return const ConsultantSelectionDialog(
+                            destinationRoute: MainViewClinicHistory(),
+                            title:
+                                "Selecciona a quién se asignará la historia clínica",
+                          );
+                        },
                       );
                     }),
               ),
@@ -57,10 +63,11 @@ class MainMenuOptions extends StatelessWidget {
                     icon: FontAwesomeIcons.doorOpen,
                     text: "Iniciar consulta",
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: ((context) => const MainViewSession()),
+                      showDialog(
+                        context: context,
+                        builder: (context) => const ConsultantSelectionDialog(
+                          title: "Selecciona al consultante",
+                          destinationRoute: MainViewSession(),
                         ),
                       );
                     }),

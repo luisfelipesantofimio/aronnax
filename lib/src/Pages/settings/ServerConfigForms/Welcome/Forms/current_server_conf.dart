@@ -1,6 +1,6 @@
 import 'package:aronnax/main.dart';
 import 'package:aronnax/src/Pages/settings/ServerConfigForms/Welcome/Views/finish.dart';
-import 'package:aronnax/src/database/model.dart';
+import 'package:aronnax/src/database/settings_model.dart';
 import 'package:flutter/material.dart';
 
 class ExistingServerForm extends StatefulWidget {
@@ -154,6 +154,10 @@ class _ExistingServerFormState extends State<ExistingServerForm> {
                     "serverSettings",
                     ServerSettings(_databaseUser, _databasePassword,
                         _databaseName, _serverAdress, _serverPort, true),
+                  );
+                  offlineModeDB.put(
+                    "offlineModeDB",
+                    LocalDatabaseMode(false),
                   );
 
                   Navigator.push(

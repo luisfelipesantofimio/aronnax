@@ -112,6 +112,27 @@ class _SettingsHeaderBarState extends State<SettingsHeaderBar> {
                           ),
                         ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.all(30),
+                        child: TextButton(
+                          onPressed: () {
+                            setState(() {
+                              currentView.value = 3;
+                            });
+                          },
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Base de datos local",
+                                  style: Theme.of(context).textTheme.bodyText2,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),

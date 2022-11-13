@@ -1,7 +1,6 @@
-import 'package:aronnax/src/misc/global_constants.dart';
+import 'package:aronnax/src/misc/global_values.dart';
 import 'package:aronnax/src/themes/custom_themes.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart'; //library for date formating
 
 class MainHeader extends StatelessWidget {

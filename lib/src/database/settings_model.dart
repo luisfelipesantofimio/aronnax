@@ -1,6 +1,6 @@
 import 'package:hive/hive.dart';
 
-part 'model.g.dart';
+part 'settings_model.g.dart';
 
 @HiveType(typeId: 0)
 class ServerSettings extends HiveObject {
@@ -27,9 +27,17 @@ class ServerSettings extends HiveObject {
 }
 
 @HiveType(typeId: 1)
-class LocalSettings extends HiveObject {
+class GlobalThemeMode extends HiveObject {
   @HiveField(0)
   bool darkModeEnabled = false;
 
-  LocalSettings(this.darkModeEnabled);
+  GlobalThemeMode(this.darkModeEnabled);
+}
+
+@HiveType(typeId: 2)
+class LocalDatabaseMode extends HiveObject {
+  @HiveField(0)
+  bool offlineModeEnabled = false;
+
+  LocalDatabaseMode(this.offlineModeEnabled);
 }

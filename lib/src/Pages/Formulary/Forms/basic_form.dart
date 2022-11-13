@@ -1,15 +1,25 @@
+import 'dart:developer';
+
+import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
+import 'package:aronnax/src/database/local_model/local_queries.dart';
+import 'package:aronnax/src/misc/departments_list.dart';
+import 'package:aronnax/src/misc/email_validator.dart';
+import 'package:aronnax/src/providers/cities_provider.dart';
 import 'package:aronnax/src/widgets/date_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:aronnax/src/API/server_api.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
-class BasicForm extends StatefulWidget {
+class BasicForm extends ConsumerStatefulWidget {
   const BasicForm({Key? key}) : super(key: key);
 
   @override
   BasicFormState createState() => BasicFormState();
 }
 
-class BasicFormState extends State<BasicForm> {
+class BasicFormState extends ConsumerState<BasicForm> {
   final basicKey = GlobalKey<FormState>();
 
   var defaultPhoto = const AssetImage("assets/img/unknown-user.png");
@@ -20,11 +30,11 @@ class BasicFormState extends State<BasicForm> {
   String lastNames = "";
   // ignore: non_constant_identifier_names
   String ID = "";
-  DateTime birthdate = DateTime.now();
+  String birthdate = "";
+  DateTime currentDate = DateTime.now();
+  final DateFormat formatter = DateFormat('dd/MM/yyyy');
   String phoneNumber = "";
   String mail = "";
-  String state = "";
-  String city = "";
   String ocupation = "";
   String education = "";
   String adress = "";
@@ -32,8 +42,19 @@ class BasicFormState extends State<BasicForm> {
   String emergencyContactName = "";
   String emergencyContactNumber = "";
 
+  String selectedState = "Selecciona el departamento";
+  String selectedCity = "Selecciona la ciudad";
+  String stateCode = "";
+
   @override
   Widget build(BuildContext context) {
+    List<String> citiesList = [];
+    final currentCities = ref.watch(selectedCityProvider);
+    citiesList = currentCities;
+
+    log(departmentsList.toString());
+    log(departmentsCodes.toString());
+
     return ListView(
       controller: ScrollController(), //sin Controller no hay lista
       children: [
@@ -90,6 +111,7 @@ class BasicFormState extends State<BasicForm> {
               Container(
                 margin: const EdgeInsets.all(20),
                 child: TextFormField(
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   style: Theme.of(context).textTheme.bodyText2,
                   autofocus: true,
                   decoration: InputDecoration(
@@ -112,6 +134,7 @@ class BasicFormState extends State<BasicForm> {
               Container(
                 margin: const EdgeInsets.all(20),
                 child: TextField(
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   style: Theme.of(context).textTheme.bodyText2,
                   autofocus: true,
                   decoration: InputDecoration(
@@ -131,10 +154,11 @@ class BasicFormState extends State<BasicForm> {
               Container(
                   margin: const EdgeInsets.all(20),
                   child: DateSelector(
-                      date: birthdate,
+                      date: currentDate,
                       onChanged: (valDate) {
                         setState(() {
-                          birthdate = valDate;
+                          currentDate = valDate;
+                          birthdate = formatter.format(currentDate);
                         });
                       })),
               Container(
@@ -148,6 +172,7 @@ class BasicFormState extends State<BasicForm> {
                     floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
                   ),
                   onChanged: (valMail) {
+                    basicKey.currentState!.validate();
                     setState(
                       () {
                         mail = valMail;
@@ -157,55 +182,77 @@ class BasicFormState extends State<BasicForm> {
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "Inserta un valor";
+                    } else {
+                      if (!validateEmail(value)) {
+                        return "Correo inválido";
+                      }
                     }
                   },
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.all(20),
-                child: TextFormField(
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: DropdownButtonFormField(
                   style: Theme.of(context).textTheme.bodyText2,
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    labelText: "Departamento de residencia",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
-                    floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
-                  ),
-                  onChanged: (valState) {
-                    setState(
-                      () {
-                        state = valState;
-                      },
-                    );
-                  },
+                  value: selectedState,
                   validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Inserta un valor";
+                    if (value == "Selecciona el departamento") {
+                      return "Selecciona una opción válida";
                     }
+                  },
+                  items: departmentsList
+                      .map(
+                        (e) => DropdownMenuItem(
+                          value: e,
+                          child: Text(
+                            e,
+                            style: const TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      selectedState = value as String;
+                      stateCode = departmentsCodes[departmentsList
+                          .indexWhere((element) => element == selectedState)];
+                    });
+                    ref
+                        .watch(selectedCityProvider.notifier)
+                        .getCities(stateCode);
+                    setState(() {});
                   },
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.all(20),
-                child: TextFormField(
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: DropdownButtonFormField(
                   style: Theme.of(context).textTheme.bodyText2,
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    labelText: "Municipio de residencia",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
-                    floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
-                  ),
-                  onChanged: (valCity) {
-                    setState(
-                      () {
-                        city = valCity;
-                      },
-                    );
-                  },
+                  value: selectedCity,
                   validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Inserta un valor";
+                    if (value == "Selecciona la ciudad") {
+                      return "Selecciona una opción válida";
                     }
+                  },
+                  items: citiesList
+                      .map(
+                        (e) => DropdownMenuItem(
+                          value: e,
+                          child: Text(
+                            e,
+                            style: const TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      selectedCity = value as String;
+                    });
                   },
                 ),
               ),
@@ -332,6 +379,7 @@ class BasicFormState extends State<BasicForm> {
               Container(
                 margin: const EdgeInsets.all(20),
                 child: TextFormField(
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   style: Theme.of(context).textTheme.bodyText2,
                   autofocus: true,
                   decoration: InputDecoration(
@@ -360,21 +408,37 @@ class BasicFormState extends State<BasicForm> {
                     if (basicKey.currentState!.validate()) {
                       basicKey.currentState!.save();
 
-                      insertPatientData(
-                          names,
-                          lastNames,
-                          birthdate.toString(),
-                          ID,
-                          phoneNumber,
-                          mail,
-                          city,
-                          state,
-                          adress,
-                          insurance,
-                          education,
-                          ocupation,
-                          emergencyContactName,
-                          emergencyContactNumber);
+                      isOfflineEnabled
+                          ? addLocalPatient(
+                              names,
+                              lastNames,
+                              birthdate,
+                              int.parse(ID),
+                              int.parse(phoneNumber),
+                              mail,
+                              selectedCity,
+                              selectedState,
+                              adress,
+                              insurance,
+                              education,
+                              ocupation,
+                              emergencyContactName,
+                              int.parse(emergencyContactNumber))
+                          : insertPatientData(
+                              names,
+                              lastNames,
+                              birthdate,
+                              ID,
+                              phoneNumber,
+                              mail,
+                              selectedCity,
+                              selectedState,
+                              adress,
+                              insurance,
+                              education,
+                              ocupation,
+                              emergencyContactName,
+                              emergencyContactNumber);
                       if (basicKey.currentState!.validate()) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(

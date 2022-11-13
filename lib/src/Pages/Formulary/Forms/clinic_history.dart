@@ -1,7 +1,13 @@
+import 'dart:developer';
+
 import 'package:aronnax/src/API/server_api.dart';
 import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
+import 'package:aronnax/src/database/local_model/local_model.dart';
+import 'package:aronnax/src/database/local_model/local_queries.dart';
 import 'package:aronnax/src/misc/passwd_generator.dart';
+import 'package:aronnax/src/providers/patient_search_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 DateTime dateFormat = DateTime.now();
@@ -11,14 +17,19 @@ String codeDate = DateFormat("ddMM").format(dateFormat);
 String registerNewCode = registerGen(8);
 String registerCode = "HC-$registerNewCode-$codeDate";
 
-class ClinicHistory extends StatefulWidget {
-  const ClinicHistory({Key? key}) : super(key: key);
+class ClinicHistory extends ConsumerStatefulWidget {
+  const ClinicHistory({
+    Key? key,
+    required this.patientID,
+  }) : super(key: key);
+  final String patientID;
 
   @override
-  _ClinicHistoryState createState() => _ClinicHistoryState();
+  ClinicHistoryState createState() => ClinicHistoryState();
 }
 
-class _ClinicHistoryState extends State<ClinicHistory> {
+class ClinicHistoryState extends ConsumerState<ClinicHistory> {
+  String dataForQuery = "";
   newRegisterCode() {
     String newCode = registerGen(8);
     setState(() {
@@ -37,13 +48,16 @@ class _ClinicHistoryState extends State<ClinicHistory> {
   String familyHistory = "";
   String diagnosticImpression = "";
   String treatmentPurpouse = "";
-  String ID = "";
+
   String createdBy = ("$globalUserName $globalUserLastNames");
 
   @override
   Widget build(BuildContext context) {
+    AsyncValue<List<Patient>> userConsultationProvider = ref.watch(
+      localPatientSearchProvider(dataForQuery),
+    );
+
     return ListView(
-      controller: ScrollController(),
       children: [
         Form(
           key: _clinicHistoryKey,
@@ -249,25 +263,6 @@ class _ClinicHistoryState extends State<ClinicHistory> {
                   },
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.all(20),
-                child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    labelText: "Documento asociado a esta historia clínica:",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
-                    floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
-                  ),
-                  onChanged: (valID) {
-                    setState(
-                      () {
-                        ID = valID;
-                      },
-                    );
-                  },
-                ),
-              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
@@ -275,19 +270,33 @@ class _ClinicHistoryState extends State<ClinicHistory> {
                     if (_clinicHistoryKey.currentState!.validate()) {
                       _clinicHistoryKey.currentState!.save();
 
-                      insertClinicHistory(
-                          registerCode,
-                          currentDate,
-                          reasonConsultation,
-                          mentalExamination,
-                          treatmentPurpouse,
-                          medAntecedents,
-                          psiAntecedents,
-                          familyHistory,
-                          personalHistory,
-                          diagnosticImpression,
-                          ID,
-                          createdBy);
+                      isOfflineEnabled
+                          ? addLocalClinicHistory(
+                              registerCode,
+                              currentDate,
+                              reasonConsultation,
+                              mentalExamination,
+                              treatmentPurpouse,
+                              medAntecedents,
+                              psiAntecedents,
+                              familyHistory,
+                              personalHistory,
+                              diagnosticImpression,
+                              int.parse(widget.patientID),
+                              createdBy)
+                          : insertClinicHistory(
+                              registerCode,
+                              currentDate,
+                              reasonConsultation,
+                              mentalExamination,
+                              treatmentPurpouse,
+                              medAntecedents,
+                              psiAntecedents,
+                              familyHistory,
+                              personalHistory,
+                              diagnosticImpression,
+                              widget.patientID,
+                              createdBy);
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text("Historia guardada"),

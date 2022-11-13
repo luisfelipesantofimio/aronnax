@@ -1,5 +1,6 @@
 import 'package:aronnax/src/Pages/Formulary/Forms/clinic_history.dart';
 import 'package:aronnax/src/Pages/Formulary/clinic_history/header.dart';
+import 'package:aronnax/src/Pages/Formulary/widgets/consultant_selection_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -12,8 +13,9 @@ class MainViewClinicHistory extends StatelessWidget {
       body: Center(
         child: Row(
           children: [
-            const Expanded(
-              child: HeaderClinicHistory(),
+            Expanded(
+              child: HeaderClinicHistory(
+                  patientNames: globalSelectedConsultantNames),
             ),
             Column(
               children: [
@@ -32,7 +34,7 @@ class MainViewClinicHistory extends StatelessWidget {
                     padding: const EdgeInsets.all(10),
                     width: 1000,
                     height: 500,
-                    child: const ClinicHistory(),
+                    child: ClinicHistory(patientID: globalSelectedConsultantID),
                   ),
                 ),
                 Padding(
