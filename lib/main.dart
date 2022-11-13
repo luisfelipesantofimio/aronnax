@@ -5,6 +5,7 @@ import 'package:aronnax/src/themes/custom_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'src/Pages/LoginScreen/login_main_view.dart';
 
@@ -13,7 +14,8 @@ late Box themeDB;
 late Box offlineModeDB;
 
 void main() async {
-  await Hive.initFlutter();
+  final documentsDir = await getApplicationDocumentsDirectory();
+  await Hive.initFlutter("${documentsDir.path}/aronnax/config");
   Hive.registerAdapter(ServerSettingsAdapter());
   Hive.registerAdapter(GlobalThemeModeAdapter());
   Hive.registerAdapter(LocalDatabaseModeAdapter());
