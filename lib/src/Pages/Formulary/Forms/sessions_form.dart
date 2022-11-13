@@ -8,18 +8,19 @@ DateTime dateFormat = DateTime.now();
 String currentDate = DateFormat("dd/MM/yyyy").format(dateFormat);
 
 class SessionsForm extends StatefulWidget {
-  const SessionsForm({Key? key}) : super(key: key);
+  const SessionsForm({Key? key, required this.patientID}) : super(key: key);
+  final String patientID;
 
   @override
-  _SessionsFormState createState() => _SessionsFormState();
+  SessionsFormState createState() => SessionsFormState();
 }
 
-class _SessionsFormState extends State<SessionsForm> {
+class SessionsFormState extends State<SessionsForm> {
   final sessionKey = GlobalKey<FormState>();
   String sessionSummary = "";
   String sessionObjectives = "";
   String therapeuticArchievements = "";
-  String idNumber = "";
+
   String professionalName = ("$globalUserName $globalUserLastNames");
 
   @override
@@ -106,30 +107,6 @@ class _SessionsFormState extends State<SessionsForm> {
                   },
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.all(20),
-                child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    labelText: "Documento del paciente",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
-                    floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
-                  ),
-                  onChanged: (valID) {
-                    setState(
-                      () {
-                        idNumber = valID;
-                      },
-                    );
-                  },
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Inserta un valor";
-                    }
-                  },
-                ),
-              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
@@ -142,7 +119,7 @@ class _SessionsFormState extends State<SessionsForm> {
                               sessionSummary,
                               sessionObjectives,
                               therapeuticArchievements,
-                              int.parse(idNumber),
+                              int.parse(widget.patientID),
                               professionalName,
                               currentDate)
                           : insertSessionData(
@@ -150,7 +127,7 @@ class _SessionsFormState extends State<SessionsForm> {
                               sessionSummary,
                               sessionObjectives,
                               therapeuticArchievements,
-                              idNumber,
+                              widget.patientID,
                               professionalName);
                     }
                   },

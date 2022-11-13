@@ -5,7 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../LoginScreen/login_form.dart';
 
 class SessionHeader extends StatelessWidget {
-  const SessionHeader({Key? key}) : super(key: key);
+  const SessionHeader({Key? key, required this.userNames}) : super(key: key);
+  final String userNames;
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +60,20 @@ class SessionHeader extends StatelessWidget {
                 ),
                 Text(
                   "$globalUserName $globalUserLastNames",
+                  style: GoogleFonts.montserrat(
+                    fontSize: 15,
+                    color: Colors.white,
+                  ),
+                ),
+                Text(
+                  "Nombre del consultante:",
+                  style: GoogleFonts.montserrat(
+                    fontSize: 20,
+                    color: Colors.white,
+                  ),
+                ),
+                Text(
+                  userNames,
                   style: GoogleFonts.montserrat(
                     fontSize: 15,
                     color: Colors.white,

@@ -5,7 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 import '../Forms/clinic_history.dart';
 
 class HeaderClinicHistory extends StatelessWidget {
-  const HeaderClinicHistory({Key? key}) : super(key: key);
+  const HeaderClinicHistory({Key? key, required this.patientNames})
+      : super(key: key);
+  final String patientNames;
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +52,20 @@ class HeaderClinicHistory extends StatelessWidget {
                     ),
                     Text(
                       "$globalUserName $globalUserLastNames",
+                      style: GoogleFonts.montserrat(
+                        fontSize: 15,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                      "Nombre del contultante:",
+                      style: GoogleFonts.montserrat(
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                      patientNames,
                       style: GoogleFonts.montserrat(
                         fontSize: 15,
                         color: Colors.white,

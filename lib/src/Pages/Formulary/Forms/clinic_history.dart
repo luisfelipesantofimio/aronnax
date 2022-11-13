@@ -18,7 +18,11 @@ String registerNewCode = registerGen(8);
 String registerCode = "HC-$registerNewCode-$codeDate";
 
 class ClinicHistory extends ConsumerStatefulWidget {
-  const ClinicHistory({Key? key}) : super(key: key);
+  const ClinicHistory({
+    Key? key,
+    required this.patientID,
+  }) : super(key: key);
+  final String patientID;
 
   @override
   ClinicHistoryState createState() => ClinicHistoryState();
@@ -44,7 +48,7 @@ class ClinicHistoryState extends ConsumerState<ClinicHistory> {
   String familyHistory = "";
   String diagnosticImpression = "";
   String treatmentPurpouse = "";
-  String ID = "";
+
   String createdBy = ("$globalUserName $globalUserLastNames");
 
   @override
@@ -259,128 +263,6 @@ class ClinicHistoryState extends ConsumerState<ClinicHistory> {
                   },
                 ),
               ),
-              isOfflineEnabled
-                  ? Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        children: [
-                          TextFormField(
-                            style: Theme.of(context).textTheme.bodyText2,
-                            autofocus: true,
-                            decoration: InputDecoration(
-                              labelText:
-                                  "Documento asociado a esta historia clínica:",
-                              labelStyle: Theme.of(context).textTheme.bodyText2,
-                              floatingLabelStyle:
-                                  Theme.of(context).textTheme.bodyText2,
-                            ),
-                            onChanged: (valID) {
-                              setState(
-                                () {
-                                  dataForQuery = valID;
-                                },
-                              );
-                            },
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              top: 10,
-                              bottom: 10,
-                            ),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: RichText(
-                                text: TextSpan(
-                                  text: "Número de documento seleccionado: ",
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text: ID,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          Visibility(
-                            visible: dataForQuery != "",
-                            child: userConsultationProvider.when(
-                              data: (data) {
-                                log(data.toString());
-                                return ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: data.length,
-                                  itemBuilder: (context, index) => InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        ID = data
-                                            .map((e) => e.idNumber)
-                                            .toList()[index]
-                                            .toString();
-                                        dataForQuery = ID;
-                                      });
-                                      log("ID seleccionado: $ID");
-                                    },
-                                    child: Container(
-                                      width: 100,
-                                      color: Colors.white,
-                                      child: Column(
-                                        children: [
-                                          Text(
-                                            "${data.map((e) => e.names).toList()[index]} ${data.map((e) => e.lastNames).toList()[index]}",
-                                            textAlign: TextAlign.left,
-                                            style: const TextStyle(
-                                                color: Colors.black),
-                                          ),
-                                          Text(
-                                            data
-                                                .map((e) => e.idNumber)
-                                                .toList()[index]
-                                                .toString(),
-                                            textAlign: TextAlign.left,
-                                            style: const TextStyle(
-                                                color: Colors.black),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              },
-                              error: (error, stackTrace) =>
-                                  Text("Ocurrió un error: $error"),
-                              loading: () => const CircularProgressIndicator(),
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  : Container(
-                      margin: const EdgeInsets.all(20),
-                      child: TextFormField(
-                        style: Theme.of(context).textTheme.bodyText2,
-                        autofocus: true,
-                        decoration: InputDecoration(
-                          labelText:
-                              "Documento asociado a esta historia clínica:",
-                          labelStyle: Theme.of(context).textTheme.bodyText2,
-                          floatingLabelStyle:
-                              Theme.of(context).textTheme.bodyText2,
-                        ),
-                        onChanged: (valID) {
-                          setState(
-                            () {
-                              ID = valID;
-                            },
-                          );
-                        },
-                      ),
-                    ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
@@ -400,7 +282,7 @@ class ClinicHistoryState extends ConsumerState<ClinicHistory> {
                               familyHistory,
                               personalHistory,
                               diagnosticImpression,
-                              int.parse(ID),
+                              int.parse(widget.patientID),
                               createdBy)
                           : insertClinicHistory(
                               registerCode,
@@ -413,7 +295,7 @@ class ClinicHistoryState extends ConsumerState<ClinicHistory> {
                               familyHistory,
                               personalHistory,
                               diagnosticImpression,
-                              ID,
+                              widget.patientID,
                               createdBy);
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(

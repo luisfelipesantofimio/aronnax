@@ -1,5 +1,6 @@
 import 'package:aronnax/src/Pages/Formulary/Forms/sessions_form.dart';
 import 'package:aronnax/src/Pages/Formulary/session/header.dart';
+import 'package:aronnax/src/Pages/Formulary/widgets/consultant_selection_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -12,8 +13,8 @@ class MainViewSession extends StatelessWidget {
       body: Center(
         child: Row(
           children: [
-            const Expanded(
-              child: SessionHeader(),
+            Expanded(
+              child: SessionHeader(userNames: globalSelectedConsultantNames),
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -33,7 +34,7 @@ class MainViewSession extends StatelessWidget {
                     padding: const EdgeInsets.all(10),
                     width: 1000,
                     height: 500,
-                    child: const SessionsForm(),
+                    child: SessionsForm(patientID: globalSelectedConsultantID),
                   ),
                 ),
                 Padding(
