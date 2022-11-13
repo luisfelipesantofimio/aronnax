@@ -262,54 +262,6 @@ class BasicFormState extends ConsumerState<BasicForm> {
                   style: Theme.of(context).textTheme.bodyText2,
                   autofocus: true,
                   decoration: InputDecoration(
-                    labelText: "Departamento de residencia",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
-                    floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
-                  ),
-                  onChanged: (valState) {
-                    setState(
-                      () {
-                        selectedState = valState;
-                      },
-                    );
-                  },
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Inserta un valor";
-                    }
-                  },
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.all(20),
-                child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    labelText: "Municipio de residencia",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
-                    floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
-                  ),
-                  onChanged: (valCity) {
-                    setState(
-                      () {
-                        selectedCity = valCity;
-                      },
-                    );
-                  },
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Inserta un valor";
-                    }
-                  },
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.all(20),
-                child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
-                  autofocus: true,
-                  decoration: InputDecoration(
                     labelText: "Dirección",
                     labelStyle: Theme.of(context).textTheme.bodyText2,
                     floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
