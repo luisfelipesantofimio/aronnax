@@ -14,11 +14,10 @@ var db = MySQL();
 String userPassword = "";
 String passwordInServer = "";
 String userID = "";
-bool isAbleToLogin = false;
+
 String globalUserName = "";
 String globalUserLastNames = "";
 String globalProfessionalID = "";
-bool userVerified = false;
 
 final _loginKey = GlobalKey<FormState>();
 
@@ -36,6 +35,9 @@ class LoginFormState extends ConsumerState<LoginForm> {
   bool isPasswordVisible = false;
   bool wasPressed = false;
 
+  bool userVerified = false;
+  bool isAbleToLogin = false;
+
   passwordVisivility() {
     setState(() {
       isPasswordVisible = !isPasswordVisible;
@@ -50,59 +52,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
       setState(() {
         isAbleToLogin = true;
       });
-    } else {
-      return null;
     }
-  }
-
-  loginUser(inputID) {
-    db.getConnection().then((conn) {
-      String loginQuery =
-          "select password from professional where personalID = $inputID";
-
-      String namesQuery =
-          "select names from professional where personalID = $inputID";
-      String lastNamesQuery =
-          "select lastNames from professional where personalID = $inputID";
-      String professionalIdQuery =
-          "select professionalID from professional where personalID = $inputID";
-
-      conn.query(loginQuery).then((results) {
-        for (var row in results) {
-          setState(() {
-            passwordInServer = row[0];
-            log(passwordInServer);
-            if (passwordInServer != "") {
-              setState(() {
-                userVerified = true;
-              });
-            }
-          });
-        }
-      });
-
-      conn.query(namesQuery).then((results) {
-        for (var row in results) {
-          setState(() {
-            globalUserName = row[0];
-          });
-        }
-      });
-      conn.query(lastNamesQuery).then((results) {
-        for (var row in results) {
-          setState(() {
-            globalUserLastNames = row[0];
-          });
-        }
-      });
-      conn.query(professionalIdQuery).then((results) {
-        for (var row in results) {
-          setState(() {
-            globalProfessionalID = row[0].toString();
-          });
-        }
-      });
-    });
   }
 
   @override
@@ -120,7 +70,63 @@ class LoginFormState extends ConsumerState<LoginForm> {
     log("Base de datos local activada? $isOfflineEnabled");
 
     String currentUserName = "";
+    String currentUserLastNames = "";
+    String currentProfessionalID = "";
+    String currentPasswordInServer = "";
     globalUserName = currentUserName;
+    globalUserLastNames = currentUserLastNames;
+    globalProfessionalID = currentProfessionalID;
+
+    loginUser(inputID) {
+      db.getConnection().then((conn) {
+        String loginQuery =
+            "select password from professional where personalID = $inputID";
+
+        String namesQuery =
+            "select names from professional where personalID = $inputID";
+        String lastNamesQuery =
+            "select lastNames from professional where personalID = $inputID";
+        String professionalIdQuery =
+            "select professionalID from professional where personalID = $inputID";
+
+        conn.query(loginQuery).then((results) {
+          for (var row in results) {
+            setState(() {
+              currentPasswordInServer = row[0];
+              passwordInServer = currentPasswordInServer;
+              log(currentPasswordInServer);
+              if (currentPasswordInServer != "") {
+                setState(() {
+                  userVerified = true;
+                });
+              }
+            });
+          }
+        });
+
+        conn.query(namesQuery).then((results) {
+          for (var row in results) {
+            setState(() {
+              globalUserName = row[0];
+            });
+          }
+        });
+        conn.query(lastNamesQuery).then((results) {
+          for (var row in results) {
+            setState(() {
+              globalUserLastNames = row[0];
+            });
+          }
+        });
+        conn.query(professionalIdQuery).then((results) {
+          for (var row in results) {
+            setState(() {
+              globalProfessionalID = row[0].toString();
+            });
+          }
+        });
+      });
+    }
 
     return Form(
       key: _loginKey,
@@ -140,8 +146,20 @@ class LoginFormState extends ConsumerState<LoginForm> {
                 setState(() {
                   userID = value;
                 });
-                !isOfflineEnabled ? loginUser(userID) : "";
+                !isOfflineEnabled
+                    ? loginUser(userID)
+                    : ref.watch(
+                        localLoginStateProvider(
+                          userID == ""
+                              ? 0
+                              : int.parse(
+                                  userID,
+                                ),
+                        ),
+                      );
+
                 setState(() {});
+                _loginKey.currentState!.validate();
               },
               validator: (value) {
                 if (value!.isEmpty) {
@@ -150,8 +168,6 @@ class LoginFormState extends ConsumerState<LoginForm> {
                 if (userVerified != true) {
                   return "El usuario no existe";
                 }
-
-                return null;
               },
               autofocus: true,
               decoration: InputDecoration(
@@ -180,9 +196,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
                 },
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "Inserta tu contraseña";
-                  } else {
-                    null;
+                    return "Ingresa tu contraseña";
                   }
                   if (isAbleToLogin != true) {
                     return "Contraseña incorrecta";
@@ -203,7 +217,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
                   contentPadding: const EdgeInsets.all(0),
                   labelText: "Contraseña",
                   hintText:
-                      "Contraseña para $globalUserName $globalUserLastNames",
+                      "Contraseña para $currentUserName $currentUserLastNames",
                   labelStyle: Theme.of(context).textTheme.bodyText2,
                   hintStyle: Theme.of(context).textTheme.bodyText2,
                   prefixIcon: const Icon(
@@ -238,12 +252,33 @@ class LoginFormState extends ConsumerState<LoginForm> {
                   data: (data) {
                     if (data.isNotEmpty && isOfflineEnabled) {
                       setState(() {
-                        passwordInServer =
+                        currentPasswordInServer =
                             data.map((e) => e.password).toList().single;
                         currentUserName =
                             data.map((e) => e.names).toList().single;
+                        currentUserLastNames =
+                            data.map((e) => e.lastNames).toList().single;
+                        currentProfessionalID = data
+                            .map((e) => e.professionalID)
+                            .toList()
+                            .single
+                            .toString();
                         globalUserName = currentUserName;
+                        globalUserLastNames = currentUserLastNames;
+                        globalProfessionalID = currentProfessionalID;
+                        passwordInServer = currentPasswordInServer;
                       });
+                      if (currentPasswordInServer != "") {
+                        setState(() {
+                          userVerified = true;
+                        });
+                      } else {
+                        setState(() {
+                          userVerified = false;
+                        });
+                      }
+                      setState(() {});
+                      _loginKey.currentState!.validate();
                     }
 
                     log(passwordInServer);
