@@ -54,33 +54,6 @@ class ShowQueryState extends ConsumerState<ShowQuery> {
         .getPatientInfo(selectedIdNumber);
 
     return Form(
-      //  setState(() {
-      //       textNames.value = row.fields["names"];
-      //       textLastNames.value = row.fields["lastNames"];
-      //       textID.value = row.fields["idNumber"].toString();
-      //       textContactNumber.value = row.fields["contactNumber"];
-      //       textAdress.value = row.fields["adress"];
-      //       textMail.value = row.fields["mail"];
-      //       textBirthDate.value = row.fields["birthDate"];
-      //       textCity.value = row.fields["city"];
-      //       textState.value = row.fields["state"];
-      //       textEducation.value = row.fields["education"];
-      //       textOcupation.value = row.fields["ocupation"];
-      //       textInsurance.value = row.fields["insurance"];
-      //       textEmergencyName.value = row.fields["emergencyContactName"];
-      //       textEmergencyNumb.value = row.fields["emergencyContactNumber"];
-      //     });
-
-      // currentDate.value = row.fields["dateTime"];
-      // currentRegister.value = row.fields["registerCode"];
-      // currentConsultationReason.value = row.fields["consultationReason"];
-      // currentMentalExamn.value = "";
-      // currentDiagnostic.value = "";
-      // currentFamilyHistory.value = "";
-      // currentPersonalHistory.value = "";
-      // currentPsyAntecedents.value = "";
-      // currentMedAntecedents.value = "";
-      // creator.value = "";
       key: _queryKey,
       child: Column(
         children: [
@@ -119,7 +92,8 @@ class ShowQueryState extends ConsumerState<ShowQuery> {
             ),
           ),
           Visibility(
-              visible: searchedPatientData.isNotEmpty,
+              visible: searchedPatientData.isNotEmpty ||
+                  userConsultationProvider.value!.isNotEmpty,
               //dataForQuery.text != "",
               child: isOfflineEnabled
                   ? userConsultationProvider.when(
@@ -235,14 +209,16 @@ class ShowQueryState extends ConsumerState<ShowQuery> {
                                   children: [
                                     Text(
                                       data.map((e) => e.names).toList()[index],
-                                      style: TextStyle(color: Colors.black),
+                                      style:
+                                          const TextStyle(color: Colors.black),
                                     ),
                                     Text(
                                       data
                                           .map((e) => e.idNumber)
                                           .toList()[index]
                                           .toString(),
-                                      style: TextStyle(color: Colors.black),
+                                      style:
+                                          const TextStyle(color: Colors.black),
                                     ),
                                   ],
                                 ),
@@ -350,7 +326,7 @@ class ShowQueryState extends ConsumerState<ShowQuery> {
                                 children: [
                                   Text(
                                     searchedPatientData[index].names,
-                                    style: TextStyle(color: Colors.black),
+                                    style: const TextStyle(color: Colors.black),
                                   ),
                                   Text(
                                     searchedPatientData[index]
