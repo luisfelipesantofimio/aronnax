@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:aronnax/src/Pages/Consultations/consultation_provider/consultations_provider.dart';
 import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
 import 'package:aronnax/src/database/local_model/local_model.dart';
-import 'package:aronnax/src/database/remote_model/remote_patient.dart';
+import 'package:aronnax/src/database/models/remote_patient.dart';
 import 'package:aronnax/src/providers/patient_search_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

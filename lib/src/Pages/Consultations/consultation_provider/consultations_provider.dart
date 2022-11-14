@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:aronnax/src/API/server_api.dart';
 import 'package:aronnax/src/Pages/Consultations/clinic_history_consultation/clinic_history_data.dart';
-import 'package:aronnax/src/database/remote_model/remote_clinic_history.dart';
-import 'package:aronnax/src/database/remote_model/remote_patient.dart';
+import 'package:aronnax/src/database/models/remote_clinic_history.dart';
+import 'package:aronnax/src/database/models/remote_patient.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mysql1/mysql1.dart';
 
