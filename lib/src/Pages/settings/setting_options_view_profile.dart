@@ -1,17 +1,14 @@
 import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
 import 'package:aronnax/src/Pages/settings/configOptions/update_password.dart';
+import 'package:aronnax/src/global/user_global_values.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SettingsOptionsProfile extends StatefulWidget {
+class SettingsOptionsProfile extends ConsumerWidget {
   const SettingsOptionsProfile({Key? key}) : super(key: key);
 
   @override
-  State<SettingsOptionsProfile> createState() => _SettingsOptionsProfileState();
-}
-
-class _SettingsOptionsProfileState extends State<SettingsOptionsProfile> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Center(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -22,10 +19,11 @@ class _SettingsOptionsProfileState extends State<SettingsOptionsProfile> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "$globalUserName  $globalUserLastNames",
+                "${ref.read(globalUserNameProvider)}  ${ref.read(globalUserLastNameProvider)}",
                 style: Theme.of(context).textTheme.headline1,
               ),
-              Text("Tarjeta profesional: $globalProfessionalID"),
+              Text(
+                  "Tarjeta profesional: ${ref.read(globalProfessionalIDProvider)}"),
               TextButton(
                 child: const Text("Cambiar mi contraseña"),
                 onPressed: () {

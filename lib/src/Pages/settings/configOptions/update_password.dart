@@ -1,7 +1,9 @@
 import 'package:aronnax/src/API/server_api.dart';
 import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
+import 'package:aronnax/src/global/user_global_values.dart';
 import 'package:crypt/crypt.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 String currentPassword = "";
 String newPassword = "";
@@ -12,14 +14,14 @@ bool dataVerified = false;
 bool isPasswordVisible = true;
 Crypt _hashNewPassword = Crypt.sha256(confirmNewPassword);
 
-class UpdatePasswordDialog extends StatefulWidget {
+class UpdatePasswordDialog extends ConsumerStatefulWidget {
   const UpdatePasswordDialog({Key? key}) : super(key: key);
 
   @override
-  State<UpdatePasswordDialog> createState() => _UpdatePasswordDialogState();
+  UpdatePasswordDialogState createState() => UpdatePasswordDialogState();
 }
 
-class _UpdatePasswordDialogState extends State<UpdatePasswordDialog> {
+class UpdatePasswordDialogState extends ConsumerState<UpdatePasswordDialog> {
   final _updatePasswordKey = GlobalKey<FormState>();
   isPasswordValid(String serverPassword, String inputPassword) {
     bool result = Crypt(serverPassword).match(inputPassword);
@@ -61,7 +63,8 @@ class _UpdatePasswordDialogState extends State<UpdatePasswordDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Actualizar contraseña para $globalUserName"),
+      title: Text(
+          "Actualizar contraseña para ${ref.read(globalUserNameProvider)}"),
       content: SizedBox(
         height: 250,
         child: Column(
@@ -140,13 +143,15 @@ class _UpdatePasswordDialogState extends State<UpdatePasswordDialog> {
                           onPressed: () {
                             _updatePasswordKey.currentState!.validate();
 
-                            updatePassword(int.parse(globalProfessionalID),
+                            updatePassword(
+                                int.parse(
+                                    ref.read(globalProfessionalIDProvider)),
                                 _hashNewPassword.toString());
 
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
-                                    "$globalUserName, se ha actualizado tu contraseña"),
+                                    "${ref.read(globalUserNameProvider)}, se ha actualizado tu contraseña"),
                               ),
                             );
                             Navigator.pop(context);

@@ -13,10 +13,8 @@ class GlobalRemoteLoginState extends StateNotifier<List<RemoteProfessional>> {
     state.clear();
     db.getConnection().then((conn) {
       String loginQuery = "select * from professional";
-      //"select * from professional where personalID = $personalID";
 
       conn.query(loginQuery).then((result) {
-        log(result.toString());
         for (var element in result) {
           state.add(
             RemoteProfessional.fromJson(element.fields),

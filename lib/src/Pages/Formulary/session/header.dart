@@ -1,15 +1,17 @@
 import 'package:aronnax/src/Pages/Formulary/Forms/sessions_form.dart';
+import 'package:aronnax/src/global/user_global_values.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../LoginScreen/login_form.dart';
 
-class SessionHeader extends StatelessWidget {
+class SessionHeader extends ConsumerWidget {
   const SessionHeader({Key? key, required this.userNames}) : super(key: key);
   final String userNames;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       decoration: const BoxDecoration(
         color: Color.fromARGB(255, 0, 0, 0),
@@ -59,7 +61,7 @@ class SessionHeader extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "$globalUserName $globalUserLastNames",
+                  "${ref.read(globalUserNameProvider)} ${ref.read(globalUserLastNameProvider)}",
                   style: GoogleFonts.montserrat(
                     fontSize: 15,
                     color: Colors.white,

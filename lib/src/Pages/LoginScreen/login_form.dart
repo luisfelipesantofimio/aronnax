@@ -1,23 +1,19 @@
 import 'package:aronnax/main.dart';
+import 'package:aronnax/src/database/models/remote_professional.dart';
+import 'package:aronnax/src/global/user_global_values.dart';
 import 'package:aronnax/src/providers/login_provider.dart';
 import 'package:aronnax/src/database/local_model/local_model.dart';
 import 'package:aronnax/src/database/settings_model.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer';
 import 'package:aronnax/src/Pages/MainMenu/main_menu.dart';
-import 'package:aronnax/src/API/server_api.dart';
 import 'package:crypt/crypt.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-var db = MySQL();
 String userPassword = "";
 String passwordInServer = "";
 String userID = "";
-
-String globalUserName = "";
-String globalUserLastNames = "";
-String globalProfessionalID = "";
 
 final _loginKey = GlobalKey<FormState>();
 
@@ -56,6 +52,12 @@ class LoginFormState extends ConsumerState<LoginForm> {
   }
 
   @override
+  void didChangeDependencies() {
+    ref.read(remoteLoginStateProvider.notifier).getProfessionalsInServer();
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     AsyncValue<List<ProfessionalData>> loginProvider = ref.watch(
       localLoginStateProvider(
@@ -67,65 +69,57 @@ class LoginFormState extends ConsumerState<LoginForm> {
       ),
     );
 
+    List<RemoteProfessional> currentRemoteProfessionalData =
+        ref.watch(remoteLoginStateProvider);
+
     log("Base de datos local activada? $isOfflineEnabled");
 
     String currentUserName = "";
     String currentUserLastNames = "";
     String currentProfessionalID = "";
     String currentPasswordInServer = "";
-    globalUserName = currentUserName;
-    globalUserLastNames = currentUserLastNames;
-    globalProfessionalID = currentProfessionalID;
 
-    loginUser(inputID) {
-      db.getConnection().then((conn) {
-        String loginQuery =
-            "select password from professional where personalID = $inputID";
-
-        String namesQuery =
-            "select names from professional where personalID = $inputID";
-        String lastNamesQuery =
-            "select lastNames from professional where personalID = $inputID";
-        String professionalIdQuery =
-            "select professionalID from professional where personalID = $inputID";
-
-        conn.query(loginQuery).then((results) {
-          for (var row in results) {
+    void setRemoteValues(int value) {
+      if (ref.watch(remoteLoginStateProvider).isNotEmpty && !isOfflineEnabled) {
+        for (var element in currentRemoteProfessionalData) {
+          if (element.personalID == value) {
             setState(() {
-              currentPasswordInServer = row[0];
+              currentUserName = element.names;
+              currentUserLastNames = element.lastNames;
+              currentProfessionalID = element.professionalID.toString();
+              currentPasswordInServer = element.password;
+              ref
+                  .read(globalUserNameProvider.notifier)
+                  .update((state) => currentUserName);
+              ref
+                  .read(globalUserLastNameProvider.notifier)
+                  .update((state) => currentUserLastNames);
+              ref
+                  .read(globalProfessionalIDProvider.notifier)
+                  .update((state) => currentProfessionalID);
               passwordInServer = currentPasswordInServer;
-              log(currentPasswordInServer);
-              if (currentPasswordInServer != "") {
-                setState(() {
-                  userVerified = true;
-                });
-              }
             });
+            // log("Usuario global: $globalUserName");
+            // log("Apellido global: $globalUserLastNames");
+            // log("Id profesional local: $currentProfessionalID");
+            // log("Id profesional global: $globalProfessionalID");
+            // log("Contraseña global: $passwordInServer");
+            // log("Contraseña local: $currentPasswordInServer");
           }
-        });
+        }
 
-        conn.query(namesQuery).then((results) {
-          for (var row in results) {
-            setState(() {
-              globalUserName = row[0];
-            });
-          }
-        });
-        conn.query(lastNamesQuery).then((results) {
-          for (var row in results) {
-            setState(() {
-              globalUserLastNames = row[0];
-            });
-          }
-        });
-        conn.query(professionalIdQuery).then((results) {
-          for (var row in results) {
-            setState(() {
-              globalProfessionalID = row[0].toString();
-            });
-          }
-        });
-      });
+        log(currentPasswordInServer);
+        if (currentPasswordInServer != "") {
+          setState(() {
+            userVerified = true;
+          });
+        } else {
+          setState(() {
+            userVerified = false;
+          });
+        }
+        setState(() {});
+      }
     }
 
     return Form(
@@ -146,18 +140,18 @@ class LoginFormState extends ConsumerState<LoginForm> {
                 setState(() {
                   userID = value;
                 });
-                !isOfflineEnabled
-                    ? loginUser(userID)
-                    : ref.watch(
+                isOfflineEnabled
+                    ? ref.watch(
                         localLoginStateProvider(
-                          userID == ""
+                          value == ""
                               ? 0
                               : int.parse(
                                   userID,
                                 ),
                         ),
-                      );
-
+                      )
+                    : "";
+                !isOfflineEnabled ? setRemoteValues(int.parse(value)) : "";
                 setState(() {});
                 _loginKey.currentState!.validate();
               },
@@ -191,14 +185,17 @@ class LoginFormState extends ConsumerState<LoginForm> {
                   setState(() {
                     userPassword = value;
                   });
+                  !isOfflineEnabled ? setRemoteValues(int.parse(userID)) : "";
                   isPasswordValid(passwordInServer, userPassword);
+
+                  setState(() {});
                   _loginKey.currentState!.validate();
                 },
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "Ingresa tu contraseña";
                   }
-                  if (isAbleToLogin != true) {
+                  if (!isAbleToLogin) {
                     return "Contraseña incorrecta";
                   } else {
                     Navigator.push(
@@ -263,9 +260,15 @@ class LoginFormState extends ConsumerState<LoginForm> {
                             .toList()
                             .single
                             .toString();
-                        globalUserName = currentUserName;
-                        globalUserLastNames = currentUserLastNames;
-                        globalProfessionalID = currentProfessionalID;
+                        ref
+                            .read(globalUserNameProvider.notifier)
+                            .update((state) => currentUserName);
+                        ref
+                            .read(globalUserLastNameProvider.notifier)
+                            .update((state) => currentUserLastNames);
+                        ref
+                            .read(globalProfessionalIDProvider.notifier)
+                            .update((state) => currentProfessionalID);
                         passwordInServer = currentPasswordInServer;
                       });
                       if (currentPasswordInServer != "") {

@@ -1,8 +1,10 @@
 import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
 import 'package:aronnax/src/Pages/MainMenu/main_header.dart';
 import 'package:aronnax/src/Pages/MainMenu/options_bar.dart';
+import 'package:aronnax/src/global/user_global_values.dart';
 import 'package:aronnax/src/widgets/main_menu_options.dart';
 import "package:flutter/material.dart";
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 DateTime hour = DateTime.now();
@@ -20,12 +22,12 @@ dayGreet() {
   }
 }
 
-class MainMenu extends StatelessWidget {
+class MainMenu extends ConsumerWidget {
   const MainMenu({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    String professionalNames = globalUserName;
+  Widget build(BuildContext context, WidgetRef ref) {
+    String professionalNames = ref.read(globalUserNameProvider);
     String finalGreet = dayGreet();
 
     return Scaffold(
