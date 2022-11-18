@@ -1,11 +1,9 @@
 import 'dart:developer';
 
 import 'package:aronnax/src/API/server_api.dart';
-import 'package:aronnax/src/Pages/Consultations/clinic_history_consultation/clinic_history_data.dart';
 import 'package:aronnax/src/database/models/remote_clinic_history.dart';
 import 'package:aronnax/src/database/models/remote_patient.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mysql1/mysql1.dart';
 
 class GlobalPatientConsultationState
     extends StateNotifier<List<RemotePatient>> {
@@ -25,8 +23,6 @@ class GlobalPatientConsultationState
         }
       });
     });
-    log(state.length.toString());
-    log(state.toString());
   }
 
   cleanCurrentList() {
@@ -41,42 +37,15 @@ class GlobalClinicHistoryConsultationState
   getPatientInfo(int data) {
     db.getConnection().then((conn) {
       String queryClinicHistoryData =
-          'SELECT * FROM clinic_history WHERE idNumber = $data';
+          "SELECT * FROM clinic_history WHERE idNumber = $data";
 
       conn.query(queryClinicHistoryData).then((results) {
         state.add(
           RemoteClinicHistory.fromJson(
-            results.single.fields,
+            results.first.fields,
           ),
         );
       });
-      currentDate.value = state.single.dateTime;
-      log(currentDate.value = state.single.dateTime);
-      // currentRegister.value =
-      //     searchedClinicHistoryData[index]
-      //         .registerCode;
-      // currentConsultationReason.value =
-      //     searchedClinicHistoryData[index]
-      //         .consultationReason;
-      // currentMentalExamn.value =
-      //     searchedClinicHistoryData[index]
-      //         .mentalExamn;
-      // currentDiagnostic.value =
-      //     searchedClinicHistoryData[index].diagnostic;
-      // currentFamilyHistory.value =
-      //     searchedClinicHistoryData[index]
-      //         .familyHistory;
-      // currentPersonalHistory.value =
-      //     searchedClinicHistoryData[index]
-      //         .personalHistory;
-      // currentPsyAntecedents.value =
-      //     searchedClinicHistoryData[index]
-      //         .psyAntecedents;
-      // currentMedAntecedents.value =
-      //     searchedClinicHistoryData[index]
-      //         .medAntecedents;
-      // creator.value =
-      //     searchedClinicHistoryData[index].createdBy;
     });
   }
 
