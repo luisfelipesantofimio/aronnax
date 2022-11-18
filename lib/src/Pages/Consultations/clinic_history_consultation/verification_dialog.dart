@@ -109,22 +109,3 @@ class VerifyProfessionalState extends ConsumerState<VerifyProfessional> {
     );
   }
 }
-
-class Butooooon extends StatelessWidget {
-  const Butooooon({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const ClinicHistoryView(),
-          ),
-        );
-      },
-      child: const Text("Entrar de todas formas"),
-    );
-  }
-}
