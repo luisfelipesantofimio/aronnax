@@ -35,9 +35,9 @@ class ShowQuery extends ConsumerStatefulWidget {
 }
 
 class ShowQueryState extends ConsumerState<ShowQuery> {
+  String dataForQuery = "";
   @override
   Widget build(BuildContext context) {
-    String dataForQuery = "";
     int selectedIdNumber = 0;
 
     final _queryKey = GlobalKey<FormState>();
@@ -49,9 +49,9 @@ class ShowQueryState extends ConsumerState<ShowQuery> {
         ref.watch(globalQueriedPatientProvider);
 
     log("Datos obtenidos desde el provider: $searchedPatientData");
-    ref
-        .read(globalQueriedClinicHistoryProvider.notifier)
-        .getPatientInfo(selectedIdNumber);
+    // ref
+    //     .read(globalQueriedClinicHistoryProvider.notifier)
+    //     .getPatientInfo(selectedIdNumber);
 
     return Form(
       key: _queryKey,
@@ -92,9 +92,7 @@ class ShowQueryState extends ConsumerState<ShowQuery> {
             ),
           ),
           Visibility(
-              visible: searchedPatientData.isNotEmpty ||
-                  userConsultationProvider.value!.isNotEmpty,
-              //dataForQuery.text != "",
+              visible: dataForQuery != "",
               child: isOfflineEnabled
                   ? userConsultationProvider.when(
                       data: (data) {
@@ -283,35 +281,17 @@ class ShowQueryState extends ConsumerState<ShowQuery> {
                                 textEmergencyNumb.value =
                                     searchedPatientData[index]
                                         .emergencyContactNumber;
+
                                 selectedIdNumber =
                                     searchedPatientData[index].idNumber;
-                                // currentDate.value =
-                                //     searchedClinicHistoryData[index].dateTime;
-                                // currentRegister.value =
-                                //     searchedClinicHistoryData[index]
-                                //         .registerCode;
-                                // currentConsultationReason.value =
-                                //     searchedClinicHistoryData[index]
-                                //         .consultationReason;
-                                // currentMentalExamn.value =
-                                //     searchedClinicHistoryData[index]
-                                //         .mentalExamn;
-                                // currentDiagnostic.value =
-                                //     searchedClinicHistoryData[index].diagnostic;
-                                // currentFamilyHistory.value =
-                                //     searchedClinicHistoryData[index]
-                                //         .familyHistory;
-                                // currentPersonalHistory.value =
-                                //     searchedClinicHistoryData[index]
-                                //         .personalHistory;
-                                // currentPsyAntecedents.value =
-                                //     searchedClinicHistoryData[index]
-                                //         .psyAntecedents;
-                                // currentMedAntecedents.value =
-                                //     searchedClinicHistoryData[index]
-                                //         .medAntecedents;
-                                // creator.value =
-                                //     searchedClinicHistoryData[index].createdBy;
+
+                                ref
+                                    .read(globalQueriedClinicHistoryProvider
+                                        .notifier)
+                                    .getPatientInfo(selectedIdNumber);
+                                log(ref
+                                    .read(globalQueriedClinicHistoryProvider)
+                                    .toString());
                               });
 
                               ref
@@ -358,7 +338,6 @@ class ShowQueryState extends ConsumerState<ShowQuery> {
                           .read(globalQueriedPatientProvider.notifier)
                           .getPatientInfo(dataForQuery);
 
-                      isOfflineEnabled ? log("message") : "";
                       ShowQuery.isSearchDefined.value = true;
                     }
                   },

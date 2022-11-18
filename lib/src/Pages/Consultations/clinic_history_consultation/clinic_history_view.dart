@@ -1,19 +1,82 @@
 import 'package:aronnax/src/Pages/Consultations/clinic_history_consultation/pdf/pdf_export.dart';
 import 'package:aronnax/src/Pages/Consultations/clinic_history_consultation/verification_dialog.dart';
+import 'package:aronnax/src/Pages/Consultations/consultation_provider/consultations_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'clinic_history_data.dart';
 
 var globalPadding = const EdgeInsets.all(30);
 
-class ClinicHistoryView extends StatefulWidget {
+class ClinicHistoryView extends ConsumerStatefulWidget {
   const ClinicHistoryView({Key? key}) : super(key: key);
 
   @override
-  State<ClinicHistoryView> createState() => _ClinicHistoryViewState();
+  ClinicHistoryViewState createState() => ClinicHistoryViewState();
 }
 
-class _ClinicHistoryViewState extends State<ClinicHistoryView> {
+class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
+  @override
+  void didChangeDependencies() {
+    ref.watch(globalQueriedClinicHistoryProvider.notifier).getPatientInfo(2);
+    currentRegister.value = ref
+        .watch(globalQueriedClinicHistoryProvider)
+        .map((e) => e.registerCode)
+        .toList()
+        .single;
+    currentDate.value = ref
+        .watch(globalQueriedClinicHistoryProvider)
+        .map((e) => e.dateTime)
+        .toList()
+        .single;
+    currentConsultationReason.value = ref
+        .watch(globalQueriedClinicHistoryProvider)
+        .map((e) => e.consultationReason)
+        .toList()
+        .single;
+    currentMentalExamn.value = ref
+        .watch(globalQueriedClinicHistoryProvider)
+        .map((e) => e.mentalExamn)
+        .toList()
+        .single;
+    currentTreatment.value = ref
+        .watch(globalQueriedClinicHistoryProvider)
+        .map((e) => e.treatment)
+        .toList()
+        .single;
+    currentMedAntecedents.value = ref
+        .watch(globalQueriedClinicHistoryProvider)
+        .map((e) => e.medAntecedents)
+        .toList()
+        .single;
+    currentPsyAntecedents.value = ref
+        .watch(globalQueriedClinicHistoryProvider)
+        .map((e) => e.psyAntecedents)
+        .toList()
+        .single;
+    currentFamilyHistory.value = ref
+        .watch(globalQueriedClinicHistoryProvider)
+        .map((e) => e.familyHistory)
+        .toList()
+        .single;
+    currentPersonalHistory.value = ref
+        .watch(globalQueriedClinicHistoryProvider)
+        .map((e) => e.personalHistory)
+        .toList()
+        .single;
+    currentDiagnostic.value = ref
+        .watch(globalQueriedClinicHistoryProvider)
+        .map((e) => e.diagnostic)
+        .toList()
+        .single;
+    creator.value = ref
+        .watch(globalQueriedClinicHistoryProvider)
+        .map((e) => e.createdBy)
+        .toList()
+        .single;
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
