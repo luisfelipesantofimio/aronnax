@@ -40,7 +40,7 @@ class VerifyProfessionalState extends ConsumerState<VerifyProfessional> {
       return ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-              "${ref.read(globalUserNameProvider)}, haz ingresado una contraseña incorrecta."),
+              "${ref.read(globalUserNameProvider)}, has ingresado una contraseña incorrecta."),
         ),
       );
     }

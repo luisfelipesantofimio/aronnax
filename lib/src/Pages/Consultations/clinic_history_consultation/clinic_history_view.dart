@@ -301,6 +301,10 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                               color: Colors.white,
                               icon: const Icon(Icons.arrow_back),
                               onPressed: () {
+                                ref
+                                    .read(globalQueriedClinicHistoryProvider
+                                        .notifier)
+                                    .cleanCurrentClinicHistoryList();
                                 setState(() {
                                   isVerified = false;
                                 });

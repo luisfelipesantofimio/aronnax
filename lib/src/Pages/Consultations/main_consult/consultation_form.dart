@@ -49,9 +49,6 @@ class ShowQueryState extends ConsumerState<ShowQuery> {
         ref.watch(globalQueriedPatientProvider);
 
     log("Datos obtenidos desde el provider: $searchedPatientData");
-    // ref
-    //     .read(globalQueriedClinicHistoryProvider.notifier)
-    //     .getPatientInfo(selectedIdNumber);
 
     return Form(
       key: _queryKey,
