@@ -8,12 +8,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class GlobalPatientConsultationState
     extends StateNotifier<List<RemotePatient>> {
   GlobalPatientConsultationState() : super([]);
+  List<RemotePatient> currentSearchedPatients = [];
+  List<RemotePatient> stateSnapshot = [];
   var db = MySQL();
-  getPatientInfo(String data) {
-    //  state.clear();
+  getPatientInfo() {
     db.getConnection().then((conn) {
-      String queryPatientData =
-          'SELECT * FROM patients WHERE names LIKE "%$data%"';
+      String queryPatientData = 'SELECT * FROM patients';
 
       conn.query(queryPatientData).then((results) {
         for (var element in results) {
@@ -23,6 +23,18 @@ class GlobalPatientConsultationState
         }
       });
     });
+    stateSnapshot = state;
+  }
+
+  void localQuery(String data) {
+    state = stateSnapshot;
+    currentSearchedPatients.clear();
+    for (var element in state) {
+      if (element.names.startsWith(data) || element.names.contains(data)) {
+        currentSearchedPatients.add(element);
+      }
+    }
+    state = currentSearchedPatients;
   }
 
   cleanCurrentList() {
