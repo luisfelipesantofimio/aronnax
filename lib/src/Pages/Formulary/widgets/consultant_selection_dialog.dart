@@ -36,10 +36,6 @@ class ConsultantSelectionDialogState
     List<RemotePatient>? remotePatientsList =
         ref.watch(globalQueriedPatientProvider) ?? [];
 
-    void lookForRemoteValues(List<RemotePatient> data) {
-      for (var element in data) {}
-    }
-
     return AlertDialog(
       backgroundColor: const Color.fromARGB(255, 186, 230, 230),
       content: SizedBox(
