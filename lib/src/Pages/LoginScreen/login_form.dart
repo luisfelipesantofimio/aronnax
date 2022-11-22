@@ -214,7 +214,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
                   contentPadding: const EdgeInsets.all(0),
                   labelText: "Contraseña",
                   hintText:
-                      "Contraseña para $currentUserName $currentUserLastNames",
+                      "Contraseña para ${ref.read(globalUserNameProvider)} ${ref.read(globalUserLastNameProvider)}",
                   labelStyle: Theme.of(context).textTheme.bodyText2,
                   hintStyle: Theme.of(context).textTheme.bodyText2,
                   prefixIcon: const Icon(
