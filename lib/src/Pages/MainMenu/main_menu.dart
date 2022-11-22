@@ -1,3 +1,4 @@
+import 'package:aronnax/src/Pages/Consultations/consultation_provider/consultations_provider.dart';
 import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
 import 'package:aronnax/src/Pages/MainMenu/main_header.dart';
 import 'package:aronnax/src/Pages/MainMenu/options_bar.dart';
@@ -22,11 +23,22 @@ dayGreet() {
   }
 }
 
-class MainMenu extends ConsumerWidget {
+class MainMenu extends ConsumerStatefulWidget {
   const MainMenu({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  MainMenuState createState() => MainMenuState();
+}
+
+class MainMenuState extends ConsumerState<MainMenu> {
+  @override
+  void didChangeDependencies() {
+    ref.read(globalQueriedPatientProvider.notifier).getPatientInfo();
+    super.didChangeDependencies();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     String professionalNames = ref.read(globalUserNameProvider);
     String finalGreet = dayGreet();
 
