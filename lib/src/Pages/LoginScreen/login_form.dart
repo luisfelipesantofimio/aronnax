@@ -99,12 +99,6 @@ class LoginFormState extends ConsumerState<LoginForm> {
                   .update((state) => currentProfessionalID);
               passwordInServer = currentPasswordInServer;
             });
-            // log("Usuario global: $globalUserName");
-            // log("Apellido global: $globalUserLastNames");
-            // log("Id profesional local: $currentProfessionalID");
-            // log("Id profesional global: $globalProfessionalID");
-            // log("Contraseña global: $passwordInServer");
-            // log("Contraseña local: $currentPasswordInServer");
           }
         }
 
@@ -120,6 +114,18 @@ class LoginFormState extends ConsumerState<LoginForm> {
         }
         setState(() {});
       }
+    }
+
+    void setLocaleValue(
+        String currentName, String currentLastNames, String currentID) {
+      ref.read(globalUserNameProvider.notifier).update((state) => currentName);
+      ref
+          .read(globalUserLastNameProvider.notifier)
+          .update((state) => currentLastNames);
+      ref
+          .read(globalProfessionalIDProvider.notifier)
+          .update((state) => currentID);
+      setState(() {});
     }
 
     return Form(
@@ -214,7 +220,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
                   contentPadding: const EdgeInsets.all(0),
                   labelText: "Contraseña",
                   hintText:
-                      "Contraseña para ${ref.read(globalUserNameProvider)} ${ref.read(globalUserLastNameProvider)}",
+                      "Contraseña para ${ref.watch(globalUserNameProvider)} ${ref.watch(globalUserLastNameProvider)}",
                   labelStyle: Theme.of(context).textTheme.bodyText2,
                   hintStyle: Theme.of(context).textTheme.bodyText2,
                   prefixIcon: const Icon(
@@ -260,17 +266,13 @@ class LoginFormState extends ConsumerState<LoginForm> {
                             .toList()
                             .single
                             .toString();
-                        ref
-                            .read(globalUserNameProvider.notifier)
-                            .update((state) => currentUserName);
-                        ref
-                            .read(globalUserLastNameProvider.notifier)
-                            .update((state) => currentUserLastNames);
-                        ref
-                            .read(globalProfessionalIDProvider.notifier)
-                            .update((state) => currentProfessionalID);
-                        passwordInServer = currentPasswordInServer;
                       });
+                      Future(() {
+                        setLocaleValue(currentUserName, currentUserLastNames,
+                            currentProfessionalID);
+                      });
+
+                      passwordInServer = currentPasswordInServer;
                       if (currentPasswordInServer != "") {
                         setState(() {
                           userVerified = true;
@@ -284,7 +286,6 @@ class LoginFormState extends ConsumerState<LoginForm> {
                       _loginKey.currentState!.validate();
                     }
 
-                    log(passwordInServer);
                     return const Visibility(
                         visible: false,
                         child: SizedBox(
