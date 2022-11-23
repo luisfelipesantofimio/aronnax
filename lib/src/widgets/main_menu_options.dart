@@ -1,4 +1,3 @@
-import 'package:aronnax/src/Pages/Consultations/clinic_history_consultation/clinic_history_view.dart';
 import 'package:aronnax/src/Pages/Consultations/main_consult/consultation_view.dart';
 import 'package:aronnax/src/Pages/Formulary/basic_form/basic_form_view.dart';
 import 'package:aronnax/src/Pages/Formulary/clinic_history/clinic_history_form_view.dart';

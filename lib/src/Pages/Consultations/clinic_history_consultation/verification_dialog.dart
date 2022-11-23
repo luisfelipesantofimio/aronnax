@@ -1,20 +1,22 @@
 import 'package:aronnax/src/Pages/Consultations/clinic_history_consultation/clinic_history_view.dart';
+import 'package:aronnax/src/global/user_global_values.dart';
 import 'package:crypt/crypt.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
 
 String currentPassword = "";
 bool isVerified = false;
 
-class VerifyProfessional extends StatefulWidget {
+class VerifyProfessional extends ConsumerStatefulWidget {
   const VerifyProfessional({Key? key}) : super(key: key);
 
   @override
-  State<VerifyProfessional> createState() => _VerifyProfessionalState();
+  VerifyProfessionalState createState() => VerifyProfessionalState();
 }
 
-class _VerifyProfessionalState extends State<VerifyProfessional> {
+class VerifyProfessionalState extends ConsumerState<VerifyProfessional> {
   final _verfiFormkey = GlobalKey<FormState>();
 
   isPasswordValid(String serverPassword, String inputPassword) {
@@ -37,15 +39,15 @@ class _VerifyProfessionalState extends State<VerifyProfessional> {
     } else {
       return ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content:
-              Text("$globalUserName, haz ingresado una contraseña incorrecta."),
+          content: Text(
+              "${ref.read(globalUserNameProvider)}, has ingresado una contraseña incorrecta."),
         ),
       );
     }
   }
 
   @override
-  Widget build(BuildContext thisContext) {
+  Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(
         "Verifica tu contraseña",
@@ -104,25 +106,6 @@ class _VerifyProfessionalState extends State<VerifyProfessional> {
           ),
         ),
       ],
-    );
-  }
-}
-
-class Butooooon extends StatelessWidget {
-  const Butooooon({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const ClinicHistoryView(),
-          ),
-        );
-      },
-      child: const Text("Entrar de todas formas"),
     );
   }
 }

@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:aronnax/src/Pages/Consultations/consultation_provider/consultations_provider.dart';
 import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
 import 'package:aronnax/src/database/local_model/local_model.dart';
-import 'package:aronnax/src/database/remote_model/remote_patient.dart';
+import 'package:aronnax/src/database/models/remote_patient.dart';
 import 'package:aronnax/src/providers/patient_search_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,9 +35,9 @@ class ShowQuery extends ConsumerStatefulWidget {
 }
 
 class ShowQueryState extends ConsumerState<ShowQuery> {
+  String dataForQuery = "";
   @override
   Widget build(BuildContext context) {
-    String dataForQuery = "";
     int selectedIdNumber = 0;
 
     final _queryKey = GlobalKey<FormState>();
@@ -49,9 +49,6 @@ class ShowQueryState extends ConsumerState<ShowQuery> {
         ref.watch(globalQueriedPatientProvider);
 
     log("Datos obtenidos desde el provider: $searchedPatientData");
-    ref
-        .read(globalQueriedClinicHistoryProvider.notifier)
-        .getPatientInfo(selectedIdNumber);
 
     return Form(
       key: _queryKey,
@@ -64,9 +61,11 @@ class ShowQueryState extends ConsumerState<ShowQuery> {
               onChanged: (value) {
                 dataForQuery = value;
 
-                ref
-                    .read(globalQueriedPatientProvider.notifier)
-                    .getPatientInfo(dataForQuery);
+                // !isOfflineEnabled
+                //     ? ref
+                //         .read(globalQueriedPatientProvider.notifier)
+                //         .localQuery(value)
+                //     : "";
               },
               onSaved: (value) {
                 setState(() {
@@ -80,7 +79,7 @@ class ShowQueryState extends ConsumerState<ShowQuery> {
               },
               autofocus: true,
               decoration: InputDecoration(
-                labelText: "Número de cédula",
+                labelText: "Nombre del consultante",
                 labelStyle: Theme.of(context).textTheme.bodyText2,
                 floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
                 focusedBorder: const OutlineInputBorder(
@@ -92,9 +91,7 @@ class ShowQueryState extends ConsumerState<ShowQuery> {
             ),
           ),
           Visibility(
-              visible: searchedPatientData.isNotEmpty ||
-                  userConsultationProvider.value!.isNotEmpty,
-              //dataForQuery.text != "",
+              visible: dataForQuery != "",
               child: isOfflineEnabled
                   ? userConsultationProvider.when(
                       data: (data) {
@@ -154,7 +151,6 @@ class ShowQueryState extends ConsumerState<ShowQuery> {
                           itemCount: data.length,
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
-                            log("Funciona");
                             return InkWell(
                               onTap: () {
                                 setState(() {
@@ -231,7 +227,7 @@ class ShowQueryState extends ConsumerState<ShowQuery> {
                       loading: () => const CircularProgressIndicator(),
                     )
                   : SizedBox(
-                      height: 300,
+                      height: 200,
                       child: ListView.builder(
                         itemCount: searchedPatientData.length,
                         shrinkWrap: true,
@@ -283,35 +279,17 @@ class ShowQueryState extends ConsumerState<ShowQuery> {
                                 textEmergencyNumb.value =
                                     searchedPatientData[index]
                                         .emergencyContactNumber;
+
                                 selectedIdNumber =
                                     searchedPatientData[index].idNumber;
-                                // currentDate.value =
-                                //     searchedClinicHistoryData[index].dateTime;
-                                // currentRegister.value =
-                                //     searchedClinicHistoryData[index]
-                                //         .registerCode;
-                                // currentConsultationReason.value =
-                                //     searchedClinicHistoryData[index]
-                                //         .consultationReason;
-                                // currentMentalExamn.value =
-                                //     searchedClinicHistoryData[index]
-                                //         .mentalExamn;
-                                // currentDiagnostic.value =
-                                //     searchedClinicHistoryData[index].diagnostic;
-                                // currentFamilyHistory.value =
-                                //     searchedClinicHistoryData[index]
-                                //         .familyHistory;
-                                // currentPersonalHistory.value =
-                                //     searchedClinicHistoryData[index]
-                                //         .personalHistory;
-                                // currentPsyAntecedents.value =
-                                //     searchedClinicHistoryData[index]
-                                //         .psyAntecedents;
-                                // currentMedAntecedents.value =
-                                //     searchedClinicHistoryData[index]
-                                //         .medAntecedents;
-                                // creator.value =
-                                //     searchedClinicHistoryData[index].createdBy;
+
+                                ref
+                                    .read(globalQueriedClinicHistoryProvider
+                                        .notifier)
+                                    .getPatientInfo(selectedIdNumber);
+                                log(ref
+                                    .read(globalQueriedClinicHistoryProvider)
+                                    .toString());
                               });
 
                               ref
@@ -356,9 +334,8 @@ class ShowQueryState extends ConsumerState<ShowQuery> {
                       log("Consultando con datos: ${dataForQuery}");
                       ref
                           .read(globalQueriedPatientProvider.notifier)
-                          .getPatientInfo(dataForQuery);
+                          .localQuery(dataForQuery);
 
-                      isOfflineEnabled ? log("message") : "";
                       ShowQuery.isSearchDefined.value = true;
                     }
                   },
@@ -371,9 +348,7 @@ class ShowQueryState extends ConsumerState<ShowQuery> {
                   tooltip: "Limpiar búsqueda",
                   onPressed: () {
                     ShowQuery.isSearchDefined.value = false;
-                    ref
-                        .read(globalQueriedPatientProvider.notifier)
-                        .cleanCurrentList();
+
                     ref
                         .read(globalQueriedClinicHistoryProvider.notifier)
                         .cleanCurrentClinicHistoryList();

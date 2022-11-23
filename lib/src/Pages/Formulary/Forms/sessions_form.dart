@@ -1,13 +1,15 @@
 import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
 import 'package:aronnax/src/database/local_model/local_queries.dart';
+import 'package:aronnax/src/global/user_global_values.dart';
 import 'package:flutter/material.dart';
 import 'package:aronnax/src/API/server_api.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 DateTime dateFormat = DateTime.now();
 String currentDate = DateFormat("dd/MM/yyyy").format(dateFormat);
 
-class SessionsForm extends StatefulWidget {
+class SessionsForm extends ConsumerStatefulWidget {
   const SessionsForm({Key? key, required this.patientID}) : super(key: key);
   final String patientID;
 
@@ -15,16 +17,17 @@ class SessionsForm extends StatefulWidget {
   SessionsFormState createState() => SessionsFormState();
 }
 
-class SessionsFormState extends State<SessionsForm> {
+class SessionsFormState extends ConsumerState<SessionsForm> {
   final sessionKey = GlobalKey<FormState>();
   String sessionSummary = "";
   String sessionObjectives = "";
   String therapeuticArchievements = "";
 
-  String professionalName = ("$globalUserName $globalUserLastNames");
-
   @override
   Widget build(BuildContext context) {
+    String professionalName =
+        "${ref.read(globalUserNameProvider)} ${ref.read(globalUserLastNameProvider)}";
+
     return ListView(
       controller: ScrollController(),
       children: [

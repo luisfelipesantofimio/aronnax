@@ -1,5 +1,7 @@
 // class implemented on remote SQL data fetching for clinic history
 
+import 'package:mysql1/mysql1.dart';
+
 class RemoteClinicHistory {
   final String registerCode;
   final String dateTime;
@@ -31,27 +33,27 @@ class RemoteClinicHistory {
   factory RemoteClinicHistory.fromJson(Map<String, dynamic> data) {
     final registerCode = data["registerCode"] as String?;
     final dateTime = data["dateTime"] as String?;
-    final consultationReason = data["consultationReason"] as String?;
-    final mentalExamn = data["mentalExamn"] as String?;
-    final treatment = data["treatment"] as String?;
-    final medAntecedents = data["medAntecedents"] as String?;
-    final psyAntecedents = data["psiAntecedents"] as String?;
-    final familyHistory = data["familyHistory"] as String?;
-    final personalHistory = data["personalHistory"] as String?;
-    final diagnostic = data["diagnostic"] as String?;
+    final consultationReason = data["consultationReason"] as Blob?;
+    final mentalExamn = data["mentalExamn"] as Blob?;
+    final treatment = data["treatment"] as Blob?;
+    final medAntecedents = data["medAntecedents"] as Blob?;
+    final psyAntecedents = data["psiAntecedents"] as Blob?;
+    final familyHistory = data["familyHistory"] as Blob?;
+    final personalHistory = data["personalHistory"] as Blob?;
+    final diagnostic = data["diagnostic"] as Blob?;
     final idNumber = data["idNumber"] as int?;
     final createdBy = data["createdBy"] as String?;
     return RemoteClinicHistory(
         registerCode: registerCode!,
         dateTime: dateTime!,
-        consultationReason: consultationReason!,
-        mentalExamn: mentalExamn!,
-        treatment: treatment!,
-        medAntecedents: medAntecedents!,
-        psyAntecedents: psyAntecedents!,
-        familyHistory: familyHistory!,
-        personalHistory: personalHistory!,
-        diagnostic: diagnostic!,
+        consultationReason: consultationReason!.toString(),
+        mentalExamn: mentalExamn!.toString(),
+        treatment: treatment!.toString(),
+        medAntecedents: medAntecedents!.toString(),
+        psyAntecedents: psyAntecedents!.toString(),
+        familyHistory: familyHistory!.toString(),
+        personalHistory: personalHistory!.toString(),
+        diagnostic: diagnostic!.toString(),
         idNumber: idNumber!,
         createdBy: createdBy!);
   }

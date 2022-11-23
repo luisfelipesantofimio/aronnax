@@ -1,16 +1,18 @@
 import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
+import 'package:aronnax/src/global/user_global_values.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../Forms/clinic_history.dart';
 
-class HeaderClinicHistory extends StatelessWidget {
+class HeaderClinicHistory extends ConsumerWidget {
   const HeaderClinicHistory({Key? key, required this.patientNames})
       : super(key: key);
   final String patientNames;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       decoration: const BoxDecoration(
         color: Color.fromARGB(255, 0, 0, 0),
@@ -51,7 +53,7 @@ class HeaderClinicHistory extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "$globalUserName $globalUserLastNames",
+                      "${ref.read(globalUserNameProvider)} ${ref.read(globalUserLastNameProvider)}",
                       style: GoogleFonts.montserrat(
                         fontSize: 15,
                         color: Colors.white,

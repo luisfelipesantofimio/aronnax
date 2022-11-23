@@ -1,5 +1,9 @@
+import 'package:aronnax/src/Pages/Consultations/consultation_provider/consultations_provider.dart';
+import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
 import 'package:aronnax/src/database/local_model/local_model.dart';
+import 'package:aronnax/src/database/models/remote_patient.dart';
 import 'package:aronnax/src/providers/patient_search_provider.dart';
+import 'package:aronnax/src/widgets/consultation_element.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -11,7 +15,7 @@ class ConsultantSelectionDialog extends ConsumerStatefulWidget {
     Key? key,
     required this.title,
     required this.destinationRoute,
-  }) : super();
+  }) : super(key: key);
   final String title;
 
   final Widget destinationRoute;
@@ -29,6 +33,8 @@ class ConsultantSelectionDialogState
     AsyncValue<List<Patient>> userConsultationProvider = ref.watch(
       localPatientSearchProvider(dataForQuery),
     );
+    List<RemotePatient>? remotePatientsList =
+        ref.watch(globalQueriedPatientProvider) ?? [];
 
     return AlertDialog(
       backgroundColor: const Color.fromARGB(255, 186, 230, 230),
@@ -54,28 +60,72 @@ class ConsultantSelectionDialogState
                 setState(() {
                   dataForQuery = value;
                 });
+                !isOfflineEnabled
+                    ? ref
+                        .read(globalQueriedPatientProvider.notifier)
+                        .localQuery(dataForQuery)
+                    : "";
               },
             ),
             const Padding(
               padding: EdgeInsets.all(10),
             ),
             Visibility(
-                visible: dataForQuery != "",
-                child: userConsultationProvider.when(
-                  data: (data) => SizedBox(
-                    height: 300,
-                    child: ListView.builder(
-                      itemCount: data.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
-                          child: InkWell(
+              visible: dataForQuery != "",
+              child: isOfflineEnabled
+                  ? userConsultationProvider.when(
+                      data: (data) => SizedBox(
+                        height: 300,
+                        child: ListView.builder(
+                          itemCount: data.length,
+                          itemBuilder: (context, index) {
+                            return ConsultationMenuElement(
+                              name:
+                                  "${data.map((e) => e.names).toList()[index]} ${data.map((e) => e.lastNames).toList()[index]}",
+                              idNumber: data
+                                  .map((e) => e.idNumber)
+                                  .toList()[index]
+                                  .toString(),
+                              onTap: () {
+                                setState(() {
+                                  globalSelectedConsultantID =
+                                      data.map((e) => e.names).toList()[index];
+                                  globalSelectedConsultantNames =
+                                      "${data.map((e) => e.names).toList()[index]} ${data.map((e) => e.lastNames).toList()[index]}";
+                                });
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          widget.destinationRoute,
+                                    ));
+                              },
+                            );
+                          },
+                        ),
+                      ),
+                      error: (error, stackTrace) =>
+                          const Text("Algo ha salido mal :("),
+                      loading: () => const CircularProgressIndicator(),
+                    )
+                  : SizedBox(
+                      height: 300,
+                      child: ListView.builder(
+                        itemCount: remotePatientsList.length,
+                        itemBuilder: (context, index) {
+                          return ConsultationMenuElement(
+                            name:
+                                "${remotePatientsList[index].names} ${remotePatientsList[index].lastNames}",
+                            idNumber:
+                                remotePatientsList[index].idNumber.toString(),
                             onTap: () {
                               setState(() {
                                 globalSelectedConsultantID =
-                                    data.map((e) => e.names).toList()[index];
+                                    remotePatientsList[index]
+                                        .idNumber
+                                        .toString();
                                 globalSelectedConsultantNames =
-                                    "${data.map((e) => e.names).toList()[index]} ${data.map((e) => e.lastNames).toList()[index]}";
+                                    "${remotePatientsList[index].names} ${remotePatientsList[index].lastNames}";
                               });
                               Navigator.push(
                                   context,
@@ -84,72 +134,11 @@ class ConsultantSelectionDialogState
                                         widget.destinationRoute,
                                   ));
                             },
-                            child: Container(
-                              height: 80,
-                              width: 200,
-                              decoration: const BoxDecoration(
-                                color: Color.fromARGB(255, 218, 204, 179),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color.fromARGB(255, 163, 163, 163),
-                                    blurRadius: 6,
-                                    offset: Offset(0, 6),
-                                  ),
-                                ],
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(
-                                    10,
-                                  ),
-                                ),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        const Text(
-                                          "Nombre: ",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        Text(
-                                          "${data.map((e) => e.names).toList()[index]} ${data.map((e) => e.lastNames).toList()[index]}",
-                                        )
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        const Text(
-                                          "Número de documento: ",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Text(
-                                          data
-                                              .map((e) => e.idNumber)
-                                              .toList()[index]
-                                              .toString(),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      },
+                          );
+                        },
+                      ),
                     ),
-                  ),
-                  error: (error, stackTrace) =>
-                      const Text("Algo ha salido mal :("),
-                  loading: () => const CircularProgressIndicator(),
-                )),
+            ),
           ],
         ),
       ),

@@ -1,8 +1,11 @@
+import 'package:aronnax/src/Pages/Consultations/consultation_provider/consultations_provider.dart';
 import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
 import 'package:aronnax/src/Pages/MainMenu/main_header.dart';
 import 'package:aronnax/src/Pages/MainMenu/options_bar.dart';
+import 'package:aronnax/src/global/user_global_values.dart';
 import 'package:aronnax/src/widgets/main_menu_options.dart';
 import "package:flutter/material.dart";
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 DateTime hour = DateTime.now();
@@ -20,12 +23,23 @@ dayGreet() {
   }
 }
 
-class MainMenu extends StatelessWidget {
+class MainMenu extends ConsumerStatefulWidget {
   const MainMenu({Key? key}) : super(key: key);
 
   @override
+  MainMenuState createState() => MainMenuState();
+}
+
+class MainMenuState extends ConsumerState<MainMenu> {
+  @override
+  void didChangeDependencies() {
+    ref.read(globalQueriedPatientProvider.notifier).getPatientInfo();
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    String professionalNames = globalUserName;
+    String professionalNames = ref.read(globalUserNameProvider);
     String finalGreet = dayGreet();
 
     return Scaffold(
