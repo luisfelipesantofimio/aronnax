@@ -61,9 +61,11 @@ class ShowQueryState extends ConsumerState<ShowQuery> {
               onChanged: (value) {
                 dataForQuery = value;
 
-                ref
-                    .read(globalQueriedPatientProvider.notifier)
-                    .getPatientInfo(dataForQuery);
+                // !isOfflineEnabled
+                //     ? ref
+                //         .read(globalQueriedPatientProvider.notifier)
+                //         .localQuery(value)
+                //     : "";
               },
               onSaved: (value) {
                 setState(() {
@@ -77,7 +79,7 @@ class ShowQueryState extends ConsumerState<ShowQuery> {
               },
               autofocus: true,
               decoration: InputDecoration(
-                labelText: "Número de cédula",
+                labelText: "Nombre del consultante",
                 labelStyle: Theme.of(context).textTheme.bodyText2,
                 floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
                 focusedBorder: const OutlineInputBorder(
@@ -149,7 +151,6 @@ class ShowQueryState extends ConsumerState<ShowQuery> {
                           itemCount: data.length,
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
-                            log("Funciona");
                             return InkWell(
                               onTap: () {
                                 setState(() {
@@ -226,7 +227,7 @@ class ShowQueryState extends ConsumerState<ShowQuery> {
                       loading: () => const CircularProgressIndicator(),
                     )
                   : SizedBox(
-                      height: 300,
+                      height: 200,
                       child: ListView.builder(
                         itemCount: searchedPatientData.length,
                         shrinkWrap: true,
@@ -333,7 +334,7 @@ class ShowQueryState extends ConsumerState<ShowQuery> {
                       log("Consultando con datos: ${dataForQuery}");
                       ref
                           .read(globalQueriedPatientProvider.notifier)
-                          .getPatientInfo(dataForQuery);
+                          .localQuery(dataForQuery);
 
                       ShowQuery.isSearchDefined.value = true;
                     }
@@ -347,9 +348,7 @@ class ShowQueryState extends ConsumerState<ShowQuery> {
                   tooltip: "Limpiar búsqueda",
                   onPressed: () {
                     ShowQuery.isSearchDefined.value = false;
-                    ref
-                        .read(globalQueriedPatientProvider.notifier)
-                        .cleanCurrentList();
+
                     ref
                         .read(globalQueriedClinicHistoryProvider.notifier)
                         .cleanCurrentClinicHistoryList();
