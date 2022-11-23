@@ -30,7 +30,8 @@ class GlobalPatientConsultationState
     state = stateSnapshot;
     currentSearchedPatients.clear();
     for (var element in state) {
-      if (element.names.startsWith(data) || element.names.contains(data)) {
+      if (element.names.toLowerCase().startsWith(data) ||
+          element.names.toLowerCase().contains(data)) {
         currentSearchedPatients.add(element);
       }
     }
