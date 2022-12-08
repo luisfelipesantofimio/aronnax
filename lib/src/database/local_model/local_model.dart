@@ -106,24 +106,10 @@ class LocalDatabase extends _$LocalDatabase {
     return (select(professional)).watch();
   }
 
-  Stream<List<ClinicHistoryData>> clinicHistoryConsultation(int idNumber) {
-    final patientInClinicHistory = alias(clinicHistory, "clinicHistoryPatient");
-    final query = select(patientInClinicHistory).join([
-      innerJoin(
-        clinicHistory,
-        clinicHistory.idNumber.equalsExp(patients.idNumber),
-        useColumns: false,
-      ),
-      innerJoin(
-        patients,
-        patients.idNumber.equalsExp(patientInClinicHistory.idNumber),
-        useColumns: false,
-      ),
-    ])
-      ..where(
-        patients.idNumber.equals(idNumber),
-      );
-    return query.map((row) => row.readTable(patientInClinicHistory)).watch();
+  Future<List<ClinicHistoryData>> clinicHistoryConsultation(int idNumber) {
+    return (select(clinicHistory)
+          ..where((tbl) => tbl.idNumber.equals(idNumber)))
+        .get();
   }
 
   Stream<List<Session>> patientSessionsConsultation(int idNumber) {
