@@ -1,6 +1,6 @@
 import 'package:aronnax/src/Pages/Consultations/clinic_history_consultation/pdf/pdf_export.dart';
 import 'package:aronnax/src/Pages/Consultations/clinic_history_consultation/verification_dialog.dart';
-import 'package:aronnax/src/Pages/Consultations/consultation_provider/consultations_provider.dart';
+import 'package:aronnax/src/Pages/ClinicHistory/consultation_provider/consultations_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';

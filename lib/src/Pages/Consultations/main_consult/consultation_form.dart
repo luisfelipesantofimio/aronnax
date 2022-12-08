@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:aronnax/src/Pages/Consultations/consultation_provider/consultations_provider.dart';
+import 'package:aronnax/src/Pages/ClinicHistory/consultation_provider/consultations_provider.dart';
 import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
 import 'package:aronnax/src/database/local_model/local_model.dart';
 import 'package:aronnax/src/database/models/remote_patient.dart';
