@@ -88,8 +88,10 @@ class ConsultantSelectionDialogState
                                   .toString(),
                               onTap: () {
                                 setState(() {
-                                  globalSelectedConsultantID =
-                                      data.map((e) => e.names).toList()[index];
+                                  globalSelectedConsultantID = data
+                                      .map((e) => e.idNumber)
+                                      .toList()[index]
+                                      .toString();
                                   globalSelectedConsultantNames =
                                       "${data.map((e) => e.names).toList()[index]} ${data.map((e) => e.lastNames).toList()[index]}";
                                 });

@@ -1,12 +1,8 @@
-import 'dart:developer';
-
 import 'package:aronnax/src/API/server_api.dart';
 import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
-import 'package:aronnax/src/database/local_model/local_model.dart';
 import 'package:aronnax/src/database/local_model/local_queries.dart';
 import 'package:aronnax/src/global/user_global_values.dart';
 import 'package:aronnax/src/misc/passwd_generator.dart';
-import 'package:aronnax/src/providers/patient_search_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
