@@ -3,12 +3,12 @@ import 'dart:developer';
 import 'package:aronnax/src/Pages/ClinicHistory/consultation_provider/consultations_provider.dart';
 import 'package:aronnax/src/Pages/ClinicHistory/widgets/clinic_history_confirm_password.dart';
 import 'package:aronnax/src/Pages/ClinicHistory/widgets/clinic_history_no_clinic_history_dialog.dart';
-import 'package:aronnax/src/Pages/Consultations/clinic_history_consultation/clinic_history_view.dart';
 import 'package:aronnax/src/Pages/Formulary/clinic_history/clinic_history_form_view.dart';
 import 'package:aronnax/src/Pages/Formulary/widgets/consultant_selection_dialog.dart';
 import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
 import 'package:aronnax/src/database/local_model/local_model.dart';
 import 'package:aronnax/src/database/local_model/local_queries.dart';
+import 'package:aronnax/src/database/models/remote_clinic_history.dart';
 import 'package:aronnax/src/database/models/remote_patient.dart';
 import 'package:aronnax/src/misc/global_values.dart';
 import 'package:aronnax/src/providers/patient_search_provider.dart';
@@ -35,7 +35,7 @@ class ClinicHistorySearchFormState
       localPatientSearchProvider(dataForQuery),
     );
     return SizedBox(
-      width: deviceWidth * 0.3,
+      width: ref.watch(deviceWidth) * 0.3,
       child: Form(
         child: Column(
           children: [
@@ -94,7 +94,7 @@ class ClinicHistorySearchFormState
                                   .toList()[index]
                                   .toString(),
                               onTap: () async {
-                                List localClinicHistoryData =
+                                List<ClinicHistoryData> localClinicHistoryData =
                                     await localDB.clinicHistoryConsultation(data
                                         .map((e) => e.idNumber)
                                         .toList()[index]);
@@ -150,12 +150,56 @@ class ClinicHistorySearchFormState
                           itemCount: remotePatientsList.length,
                           itemBuilder: (context, index) {
                             return ConsultationMenuElement(
-                                name:
-                                    "${remotePatientsList[index].names} ${remotePatientsList[index].lastNames}",
-                                idNumber: remotePatientsList[index]
-                                    .idNumber
-                                    .toString(),
-                                onTap: () {});
+                              name:
+                                  "${remotePatientsList[index].names} ${remotePatientsList[index].lastNames}",
+                              idNumber:
+                                  remotePatientsList[index].idNumber.toString(),
+                              onTap: () {
+                                ref
+                                    .read(globalQueriedClinicHistoryProvider
+                                        .notifier)
+                                    .clinicHistoryQuery(
+                                      remotePatientsList[index].idNumber,
+                                    );
+
+                                List<RemoteClinicHistory> clinicHistoryList =
+                                    ref.watch(
+                                        globalQueriedClinicHistoryProvider);
+
+                                if (clinicHistoryList.isEmpty) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => NoClinicHistoryDialog(
+                                      onPressed: () {
+                                        setState(() {
+                                          globalSelectedConsultantID =
+                                              remotePatientsList
+                                                  .map((e) => e.idNumber)
+                                                  .toList()[index]
+                                                  .toString();
+                                          globalSelectedConsultantNames =
+                                              "${remotePatientsList.map((e) => e.names).toList()[index]} ${remotePatientsList.map((e) => e.lastNames).toList()[index]}";
+                                        });
+
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const MainViewClinicHistory(),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  );
+                                } else {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) =>
+                                        const ClinicHistoryConfirmPasswordDialog(),
+                                  );
+                                }
+                              },
+                            );
                           },
                         )),
                   ),

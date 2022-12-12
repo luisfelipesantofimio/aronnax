@@ -1,4 +1,4 @@
-import 'package:aronnax/src/Pages/Consultations/clinic_history_consultation/clinic_history_view.dart';
+import 'package:aronnax/src/Pages/ClinicHistory/clinic_history_view.dart';
 import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
 import 'package:aronnax/src/global/controllers.dart';
 import 'package:aronnax/src/global/method.dart';

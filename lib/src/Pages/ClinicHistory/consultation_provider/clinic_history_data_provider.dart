@@ -1,6 +1,6 @@
-//TODO: asign individual string providers for CH
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+//Patient data for clinic history
 
 final currentPatientNames = StateProvider<String>(
   (ref) => "",
@@ -58,5 +58,41 @@ final currentPatientEmergencyName = StateProvider<String>(
 );
 
 final currentPatientEmergencyNumber = StateProvider<String>(
+  (ref) => "",
+);
+
+//Clinic history data
+
+final currentRegister = StateProvider<String>(
+  (ref) => "",
+);
+final currentDate = StateProvider<String>(
+  (ref) => "",
+);
+final currentConsultationReason = StateProvider<String>(
+  (ref) => "",
+);
+final currentMentalExamn = StateProvider<String>(
+  (ref) => "",
+);
+final currentTreatment = StateProvider<String>(
+  (ref) => "",
+);
+final currentMedAntecedents = StateProvider<String>(
+  (ref) => "",
+);
+final currentPsyAntecedents = StateProvider<String>(
+  (ref) => "",
+);
+final currentFamilyHistory = StateProvider<String>(
+  (ref) => "",
+);
+final currentPersonalHistory = StateProvider<String>(
+  (ref) => "",
+);
+final currentDiagnostic = StateProvider<String>(
+  (ref) => "",
+);
+final creator = StateProvider<String>(
   (ref) => "",
 );

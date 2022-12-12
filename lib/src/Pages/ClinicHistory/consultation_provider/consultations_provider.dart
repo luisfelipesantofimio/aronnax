@@ -46,20 +46,39 @@ class GlobalPatientConsultationState
 class GlobalClinicHistoryConsultationState
     extends StateNotifier<List<RemoteClinicHistory>> {
   GlobalClinicHistoryConsultationState() : super([]);
+
+  List<RemoteClinicHistory> currentSearchedClinicHistory = [];
+  List<RemoteClinicHistory> stateSnapshot = [];
+
   var db = MySQL();
-  getPatientInfo(int data) {
+  getPatientInfo() {
     db.getConnection().then((conn) {
-      String queryClinicHistoryData =
-          "SELECT * FROM clinic_history WHERE idNumber = $data";
+      String queryClinicHistoryData = "SELECT * FROM clinic_history";
 
       conn.query(queryClinicHistoryData).then((results) {
-        state.add(
-          RemoteClinicHistory.fromJson(
-            results.first.fields,
-          ),
-        );
+        for (var element in results) {
+          state.add(
+            RemoteClinicHistory.fromJson(
+              element.fields,
+            ),
+          );
+        }
       });
     });
+
+    stateSnapshot = state;
+  }
+
+  clinicHistoryQuery(int idNumber) {
+    state = stateSnapshot;
+    currentSearchedClinicHistory.clear();
+    for (var element in state) {
+      if (element.idNumber == idNumber) {
+        currentSearchedClinicHistory.add(element);
+        log("Historia encontrada: ${element.idNumber}");
+      }
+    }
+    state = currentSearchedClinicHistory;
   }
 
   cleanCurrentClinicHistoryList() {
