@@ -147,7 +147,7 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                               style: Theme.of(context).textTheme.headline5,
                               children: [
                                 TextSpan(
-                                  text: ref.read(currentConsultationReason),
+                                  text: ref.watch(currentConsultationReason),
                                   style: Theme.of(context).textTheme.bodyText1,
                                 ),
                               ],
@@ -162,7 +162,7 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                               style: Theme.of(context).textTheme.headline5,
                               children: [
                                 TextSpan(
-                                  text: ref.read(currentMentalExamn),
+                                  text: ref.watch(currentMentalExamn),
                                   style: Theme.of(context).textTheme.bodyText1,
                                 ),
                               ],
@@ -177,7 +177,7 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                               style: Theme.of(context).textTheme.headline5,
                               children: [
                                 TextSpan(
-                                  text: ref.read(currentMedAntecedents),
+                                  text: ref.watch(currentMedAntecedents),
                                   style: Theme.of(context).textTheme.bodyText1,
                                 ),
                               ],
@@ -192,7 +192,7 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                               style: Theme.of(context).textTheme.headline5,
                               children: [
                                 TextSpan(
-                                  text: ref.read(currentPsyAntecedents),
+                                  text: ref.watch(currentPsyAntecedents),
                                   style: Theme.of(context).textTheme.bodyText1,
                                 ),
                               ],
@@ -207,7 +207,7 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                               style: Theme.of(context).textTheme.headline5,
                               children: [
                                 TextSpan(
-                                  text: ref.read(currentFamilyHistory),
+                                  text: ref.watch(currentFamilyHistory),
                                   style: Theme.of(context).textTheme.bodyText1,
                                 ),
                               ],
@@ -222,7 +222,7 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                               style: Theme.of(context).textTheme.headline5,
                               children: [
                                 TextSpan(
-                                  text: ref.read(currentPersonalHistory),
+                                  text: ref.watch(currentPersonalHistory),
                                   style: Theme.of(context).textTheme.bodyText1,
                                 ),
                               ],
@@ -237,7 +237,7 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                               style: Theme.of(context).textTheme.headline5,
                               children: [
                                 TextSpan(
-                                  text: ref.read(currentDiagnostic),
+                                  text: ref.watch(currentDiagnostic),
                                   style: Theme.of(context).textTheme.bodyText1,
                                 ),
                               ],
@@ -252,7 +252,7 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                               style: Theme.of(context).textTheme.headline5,
                               children: [
                                 TextSpan(
-                                  text: ref.read(currentTreatment),
+                                  text: ref.watch(currentTreatment),
                                   style: Theme.of(context).textTheme.bodyText1,
                                 ),
                               ],
@@ -289,7 +289,7 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                             icon: const Icon(Icons.arrow_back),
                             onPressed: () {
                               ref
-                                  .read(globalQueriedClinicHistoryProvider
+                                  .watch(globalQueriedClinicHistoryProvider
                                       .notifier)
                                   .cleanCurrentClinicHistoryList();
 
@@ -359,7 +359,7 @@ class HeaderClinicHistoryViewState
                     fontWeight: FontWeight.bold),
                 children: [
                   TextSpan(
-                    text: ref.read(currentRegister),
+                    text: ref.watch(currentRegister),
                     style: GoogleFonts.montserrat(
                         fontSize: 20,
                         color: const Color.fromARGB(255, 230, 230, 230)),
@@ -379,7 +379,7 @@ class HeaderClinicHistoryViewState
                     fontWeight: FontWeight.bold),
                 children: [
                   TextSpan(
-                    text: ref.read(currentDate),
+                    text: ref.watch(currentDate),
                     style: GoogleFonts.montserrat(
                         fontSize: 20,
                         color: const Color.fromARGB(255, 230, 230, 230)),
@@ -399,7 +399,7 @@ class HeaderClinicHistoryViewState
                     fontWeight: FontWeight.bold),
                 children: [
                   TextSpan(
-                    text: ref.read(creator),
+                    text: ref.watch(creator),
                     style: GoogleFonts.montserrat(
                         fontSize: 20,
                         color: const Color.fromARGB(255, 230, 230, 230)),
