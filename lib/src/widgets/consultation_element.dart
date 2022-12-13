@@ -47,10 +47,14 @@ class ConsultationMenuElement extends StatelessWidget {
                       "Nombre: ",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
+                        color: Colors.black,
                       ),
                     ),
                     Text(
                       name,
+                      style: const TextStyle(
+                        color: Colors.black,
+                      ),
                     )
                   ],
                 ),
@@ -58,10 +62,16 @@ class ConsultationMenuElement extends StatelessWidget {
                   children: [
                     const Text(
                       "Número de documento: ",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
                     Text(
                       idNumber,
+                      style: const TextStyle(
+                        color: Colors.black,
+                      ),
                     ),
                   ],
                 )

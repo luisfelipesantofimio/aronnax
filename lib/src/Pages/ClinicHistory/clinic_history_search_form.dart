@@ -35,24 +35,12 @@ class ClinicHistorySearchFormState
       localPatientSearchProvider(dataForQuery),
     );
     return SizedBox(
-      width: ref.watch(deviceWidth) * 0.3,
+      width: ref.watch(deviceWidth) * 0.35,
       child: Form(
         child: Column(
           children: [
             Container(
               decoration: const BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    offset: Offset(-3, 3),
-                    blurRadius: 6,
-                    color: Color.fromARGB(255, 206, 206, 206),
-                  ),
-                  BoxShadow(
-                    offset: Offset(3, -3),
-                    blurRadius: 6,
-                    color: Color.fromARGB(255, 206, 206, 206),
-                  )
-                ],
                 color: Colors.white,
                 borderRadius: BorderRadius.all(
                   Radius.circular(5),

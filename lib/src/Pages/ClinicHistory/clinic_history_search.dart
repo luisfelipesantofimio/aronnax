@@ -12,14 +12,14 @@ class ClinicHistorySearchView extends ConsumerWidget {
       body: Center(
         child: Container(
           width: ref.watch(deviceWidth),
-          color: const Color.fromARGB(255, 152, 201, 241),
+          // color: const Color.fromARGB(255, 152, 201, 241),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text(
+              Text(
                 "Buscar historia clínica",
-                style: TextStyle(color: Colors.black),
+                style: Theme.of(context).textTheme.headline2,
               ),
               const Padding(
                 padding: EdgeInsets.all(10),
