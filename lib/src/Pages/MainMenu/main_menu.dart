@@ -36,6 +36,9 @@ class MainMenuState extends ConsumerState<MainMenu> {
     if (!isOfflineEnabled) {
       ref.read(globalQueriedPatientProvider.notifier).getPatientInfo();
       ref.read(globalQueriedClinicHistoryProvider.notifier).getPatientInfo();
+      ref
+          .read(globalQueriedSessionsProvider.notifier)
+          .fetchCurrentSessionData();
     }
     super.didChangeDependencies();
   }
