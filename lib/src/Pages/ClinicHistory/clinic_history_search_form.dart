@@ -104,7 +104,9 @@ class ClinicHistorySearchFormState
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                const MainViewClinicHistory(),
+                                                MainViewClinicHistory(
+                                                    patientID:
+                                                        globalSelectedConsultantID),
                                           ),
                                         );
                                       },
@@ -178,7 +180,9 @@ class ClinicHistorySearchFormState
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                const MainViewClinicHistory(),
+                                                MainViewClinicHistory(
+                                                    patientID:
+                                                        globalSelectedConsultantID),
                                           ),
                                         );
                                       },

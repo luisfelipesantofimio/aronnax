@@ -45,8 +45,9 @@ class MainMenuOptions extends StatelessWidget {
                       showDialog(
                         context: context,
                         builder: (context) {
-                          return const ConsultantSelectionDialog(
-                            destinationRoute: MainViewClinicHistory(),
+                          return ConsultantSelectionDialog(
+                            destinationRoute: MainViewClinicHistory(
+                                patientID: globalSelectedConsultantID),
                             title:
                                 "Selecciona a quién se asignará la historia clínica",
                           );
