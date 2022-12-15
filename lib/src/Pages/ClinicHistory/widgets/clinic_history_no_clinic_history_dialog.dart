@@ -13,9 +13,16 @@ class NoClinicHistoryDialog extends StatelessWidget {
         height: 300,
         width: 500,
         child: Column(
-          children: const [
-            Text("Espera"),
-            Text("El usuario no tiene una historia clínica registrada."),
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Espera",
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const Text("El usuario no tiene una historia clínica registrada."),
           ],
         ),
       ),
@@ -24,12 +31,22 @@ class NoClinicHistoryDialog extends StatelessWidget {
           onPressed: () {
             Navigator.pop(context);
           },
-          child: const Text("Volver"),
+          child: const Text(
+            "Volver",
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
         TextButton(
           onPressed: onPressed,
           child: const Text(
             "Crear historia clínica",
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ],
