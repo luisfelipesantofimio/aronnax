@@ -149,6 +149,11 @@ class ClinicHistorySearchFormState
                                     .clinicHistoryQuery(
                                       remotePatientsList[index].idNumber,
                                     );
+                                ref
+                                    .read(
+                                        globalQueriedSessionsProvider.notifier)
+                                    .searchPatientSessions(
+                                        remotePatientsList[index].idNumber);
 
                                 List<RemoteClinicHistory> clinicHistoryList =
                                     ref.watch(
