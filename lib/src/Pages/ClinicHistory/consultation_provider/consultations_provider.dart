@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:aronnax/src/API/server_api.dart';
+import 'package:aronnax/src/database/models/remode_session_resume.dart';
 import 'package:aronnax/src/database/models/remote_clinic_history.dart';
 import 'package:aronnax/src/database/models/remote_patient.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -72,6 +73,7 @@ class GlobalClinicHistoryConsultationState
   clinicHistoryQuery(int idNumber) {
     state = stateSnapshot;
     currentSearchedClinicHistory.clear();
+
     for (var element in state) {
       if (element.idNumber == idNumber) {
         currentSearchedClinicHistory.add(element);
@@ -86,6 +88,45 @@ class GlobalClinicHistoryConsultationState
   }
 }
 
+class GlobalRemoteSessionsState extends StateNotifier<List<RemoteSession>> {
+  GlobalRemoteSessionsState() : super([]);
+  var db = MySQL();
+  List<RemoteSession> stateSnapshot = [];
+  List<RemoteSession> currentSearchedSessions = [];
+  fetchCurrentSessionData() {
+    db.getConnection().then((conn) {
+      String queryClinicHistoryData = "SELECT * FROM sessions";
+
+      conn.query(queryClinicHistoryData).then((results) {
+        for (var element in results) {
+          state.add(
+            RemoteSession.fromJson(
+              element.fields,
+            ),
+          );
+        }
+      });
+    });
+    stateSnapshot = state;
+  }
+
+  searchPatientSessions(int idNumber) {
+    state = stateSnapshot;
+    currentSearchedSessions.clear();
+
+    for (var element in state) {
+      if (element.idNumber == idNumber) {
+        currentSearchedSessions.add(element);
+      }
+    }
+    state = currentSearchedSessions;
+  }
+
+  cleanCurrentSessionData() {
+    state.clear();
+  }
+}
+
 final globalQueriedPatientProvider =
     StateNotifierProvider<GlobalPatientConsultationState, List<RemotePatient>>(
   (ref) => GlobalPatientConsultationState(),
@@ -94,4 +135,9 @@ final globalQueriedPatientProvider =
 final globalQueriedClinicHistoryProvider = StateNotifierProvider<
     GlobalClinicHistoryConsultationState, List<RemoteClinicHistory>>(
   (ref) => GlobalClinicHistoryConsultationState(),
+);
+
+final globalQueriedSessionsProvider =
+    StateNotifierProvider<GlobalRemoteSessionsState, List<RemoteSession>>(
+  (ref) => GlobalRemoteSessionsState(),
 );
