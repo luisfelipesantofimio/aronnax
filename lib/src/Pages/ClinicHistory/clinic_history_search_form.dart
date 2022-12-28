@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:aronnax/src/Pages/ClinicHistory/consultation_provider/clinic_history_data_provider.dart';
 import 'package:aronnax/src/Pages/ClinicHistory/consultation_provider/consultations_provider.dart';
 import 'package:aronnax/src/Pages/ClinicHistory/widgets/clinic_history_confirm_password.dart';
 import 'package:aronnax/src/Pages/ClinicHistory/widgets/clinic_history_no_clinic_history_dialog.dart';
@@ -86,6 +87,18 @@ class ClinicHistorySearchFormState
                                     await localDB.clinicHistoryConsultation(data
                                         .map((e) => e.idNumber)
                                         .toList()[index]);
+                                ref
+                                    .read(localQueriedClinicHistoryProvider
+                                        .notifier)
+                                    .searchLocalClinicHistory(data
+                                        .map((e) => e.idNumber)
+                                        .toList()[index]);
+                                ref
+                                    .read(localQueriedSessionsProvider.notifier)
+                                    .searchLocalSessions(data
+                                        .map((e) => e.idNumber)
+                                        .toList()[index]);
+                                log("Is local clinic history empty? ${localClinicHistoryData.isEmpty}");
 
                                 if (localClinicHistoryData.isEmpty) {
                                   showDialog(
@@ -97,8 +110,6 @@ class ClinicHistorySearchFormState
                                               .map((e) => e.idNumber)
                                               .toList()[index]
                                               .toString();
-                                          globalSelectedConsultantNames =
-                                              "${data.map((e) => e.names).toList()[index]} ${data.map((e) => e.lastNames).toList()[index]}";
                                         });
                                         Navigator.push(
                                           context,
