@@ -195,6 +195,10 @@ class _LocalProfessionalRegisterState extends State<LocalProfessionalRegister> {
                 onPressed: () {
                   if (professionalKey.currentState!.validate()) {
                     professionalKey.currentState!.save();
+                    localdb.put(
+                      "serverSettings",
+                      ServerSettings("", "", "", "", "", true),
+                    );
                     addLocalProfessional(
                       personalID,
                       names,

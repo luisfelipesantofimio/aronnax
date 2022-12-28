@@ -53,7 +53,9 @@ class LoginFormState extends ConsumerState<LoginForm> {
 
   @override
   void didChangeDependencies() {
-    ref.read(remoteLoginStateProvider.notifier).getProfessionalsInServer();
+    if (!isOfflineEnabled) {
+      ref.read(remoteLoginStateProvider.notifier).getProfessionalsInServer();
+    }
     super.didChangeDependencies();
   }
 
@@ -70,7 +72,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
     );
 
     List<RemoteProfessional> currentRemoteProfessionalData =
-        ref.watch(remoteLoginStateProvider);
+        isOfflineEnabled ? [] : ref.watch(remoteLoginStateProvider);
 
     log("Base de datos local activada? $isOfflineEnabled");
 

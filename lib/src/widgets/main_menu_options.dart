@@ -1,4 +1,4 @@
-import 'package:aronnax/src/Pages/Consultations/main_consult/consultation_view.dart';
+import 'package:aronnax/src/Pages/ClinicHistory/clinic_history_search.dart';
 import 'package:aronnax/src/Pages/Formulary/basic_form/basic_form_view.dart';
 import 'package:aronnax/src/Pages/Formulary/clinic_history/clinic_history_form_view.dart';
 import 'package:aronnax/src/Pages/Formulary/session/session_form_view.dart';
@@ -45,8 +45,9 @@ class MainMenuOptions extends StatelessWidget {
                       showDialog(
                         context: context,
                         builder: (context) {
-                          return const ConsultantSelectionDialog(
-                            destinationRoute: MainViewClinicHistory(),
+                          return ConsultantSelectionDialog(
+                            destinationRoute: MainViewClinicHistory(
+                                patientID: globalSelectedConsultantID),
                             title:
                                 "Selecciona a quién se asignará la historia clínica",
                           );
@@ -82,9 +83,16 @@ class MainMenuOptions extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: ((context) => const UserConsultation()),
+                          builder: ((context) =>
+                              const ClinicHistorySearchView()),
                         ),
                       );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: ((context) => const UserConsultation()),
+                      //   ),
+                      // );
                     }),
               ),
             ),

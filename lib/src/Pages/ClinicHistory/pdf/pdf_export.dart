@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:aronnax/src/Pages/Consultations/clinic_history_consultation/pdf/designs/theme_one.dart';
+import 'package:aronnax/src/Pages/ClinicHistory/pdf/designs/theme_one.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -12,7 +12,8 @@ Future pdfExport() async {
       margin: const pw.EdgeInsets.all(0),
       pageFormat: PdfPageFormat.a4,
       build: (pw.Context context) {
-        return themeOne();
+        return pw.Container();
+        //themeOne();
       },
     ),
   );

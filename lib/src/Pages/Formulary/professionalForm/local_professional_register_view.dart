@@ -1,17 +1,18 @@
 import 'package:aronnax/src/Pages/Formulary/professionalForm/local_professional_register_form.dart';
 import 'package:aronnax/src/misc/global_values.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class LocalProfessionalRegisterView extends StatelessWidget {
+class LocalProfessionalRegisterView extends ConsumerWidget {
   const LocalProfessionalRegisterView({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: Row(
         children: [
           Container(
-            width: deviceWidth * 30 / 100,
+            width: ref.watch(deviceWidth) * 30 / 100,
             decoration: const BoxDecoration(
               color: Color.fromARGB(255, 196, 244, 248),
               boxShadow: [
@@ -63,8 +64,8 @@ class LocalProfessionalRegisterView extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: deviceHeight * 90 / 100,
-            width: deviceWidth * 70 / 100,
+            height: ref.watch(deviceHeight) * 90 / 100,
+            width: ref.watch(deviceWidth) * 70 / 100,
             child: const LocalProfessionalRegister(),
           )
         ],

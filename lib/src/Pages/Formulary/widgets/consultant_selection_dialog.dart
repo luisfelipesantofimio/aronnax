@@ -1,4 +1,4 @@
-import 'package:aronnax/src/Pages/Consultations/consultation_provider/consultations_provider.dart';
+import 'package:aronnax/src/Pages/ClinicHistory/consultation_provider/consultations_provider.dart';
 import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
 import 'package:aronnax/src/database/local_model/local_model.dart';
 import 'package:aronnax/src/database/models/remote_patient.dart';
@@ -34,7 +34,7 @@ class ConsultantSelectionDialogState
       localPatientSearchProvider(dataForQuery),
     );
     List<RemotePatient>? remotePatientsList =
-        ref.watch(globalQueriedPatientProvider) ?? [];
+        isOfflineEnabled ? [] : ref.watch(globalQueriedPatientProvider);
 
     return AlertDialog(
       backgroundColor: const Color.fromARGB(255, 186, 230, 230),
@@ -88,8 +88,10 @@ class ConsultantSelectionDialogState
                                   .toString(),
                               onTap: () {
                                 setState(() {
-                                  globalSelectedConsultantID =
-                                      data.map((e) => e.names).toList()[index];
+                                  globalSelectedConsultantID = data
+                                      .map((e) => e.idNumber)
+                                      .toList()[index]
+                                      .toString();
                                   globalSelectedConsultantNames =
                                       "${data.map((e) => e.names).toList()[index]} ${data.map((e) => e.lastNames).toList()[index]}";
                                 });
@@ -111,7 +113,7 @@ class ConsultantSelectionDialogState
                   : SizedBox(
                       height: 300,
                       child: ListView.builder(
-                        itemCount: remotePatientsList.length,
+                        itemCount: remotePatientsList!.length,
                         itemBuilder: (context, index) {
                           return ConsultationMenuElement(
                             name:
