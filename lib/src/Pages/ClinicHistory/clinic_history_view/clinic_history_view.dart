@@ -4,6 +4,7 @@ import 'package:aronnax/src/Pages/ClinicHistory/consultation_provider/clinic_his
 import 'package:aronnax/src/Pages/ClinicHistory/pdf/pdf_export.dart';
 import 'package:aronnax/src/Pages/ClinicHistory/consultation_provider/consultations_provider.dart';
 import 'package:aronnax/src/Pages/ClinicHistory/widgets/sessions_list_view.dart';
+import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
 import 'package:aronnax/src/misc/global_values.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,53 +21,105 @@ class ClinicHistoryView extends ConsumerStatefulWidget {
 
 class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
   bool isMouseOn = false;
+
   @override
   void didChangeDependencies() {
-    Future(
-      () {
-        ref.read(currentConsultationReason.notifier).update((state) => ref
-            .watch(globalQueriedClinicHistoryProvider)
-            .map((e) => e.consultationReason)
-            .toList()
-            .single);
-        ref.read(currentMentalExamn.notifier).update((state) => ref
-            .watch(globalQueriedClinicHistoryProvider)
-            .map((e) => e.mentalExamn)
-            .toList()
-            .single);
-        ref.read(currentTreatment.notifier).update((state) => ref
-            .watch(globalQueriedClinicHistoryProvider)
-            .map((e) => e.treatment)
-            .toList()
-            .single);
-        ref.read(currentMedAntecedents.notifier).update((state) => ref
-            .watch(globalQueriedClinicHistoryProvider)
-            .map((e) => e.medAntecedents)
-            .toList()
-            .single);
-        ref.read(currentPsyAntecedents.notifier).update((state) => ref
-            .watch(globalQueriedClinicHistoryProvider)
-            .map((e) => e.psyAntecedents)
-            .toList()
-            .single);
-        ref.read(currentFamilyHistory.notifier).update((state) => ref
-            .watch(globalQueriedClinicHistoryProvider)
-            .map((e) => e.familyHistory)
-            .toList()
-            .single);
-        ref.read(currentPersonalHistory.notifier).update((state) => ref
-            .watch(globalQueriedClinicHistoryProvider)
-            .map((e) => e.personalHistory)
-            .toList()
-            .single);
-        ref.read(currentDiagnostic.notifier).update((state) => ref
-            .watch(globalQueriedClinicHistoryProvider)
-            .map((e) => e.diagnostic)
-            .toList()
-            .single);
-      },
-    );
+    isOfflineEnabled
+        ? Future(
+            () {
+              ref.read(currentConsultationReason.notifier).update((state) => ref
+                  .watch(localQueriedClinicHistoryProvider)
+                  .map((e) => e.consultationReason)
+                  .toList()
+                  .single);
 
+              ref.read(currentMentalExamn.notifier).update((state) => ref
+                  .watch(localQueriedClinicHistoryProvider)
+                  .map((e) => e.mentalExamination)
+                  .toList()
+                  .single);
+
+              ref.read(currentTreatment.notifier).update((state) => ref
+                  .watch(localQueriedClinicHistoryProvider)
+                  .map((e) => e.treatment)
+                  .toList()
+                  .single);
+              ref.read(currentMedAntecedents.notifier).update((state) => ref
+                  .watch(localQueriedClinicHistoryProvider)
+                  .map((e) => e.medAntecedents)
+                  .toList()
+                  .single);
+              ref.read(currentPsyAntecedents.notifier).update((state) => ref
+                  .watch(localQueriedClinicHistoryProvider)
+                  .map((e) => e.psiAntecedents)
+                  .toList()
+                  .single);
+              ref.read(currentFamilyHistory.notifier).update((state) => ref
+                  .watch(localQueriedClinicHistoryProvider)
+                  .map((e) => e.familyHistory)
+                  .toList()
+                  .single);
+              ref.read(currentPersonalHistory.notifier).update((state) => ref
+                  .watch(localQueriedClinicHistoryProvider)
+                  .map((e) => e.personalHistory)
+                  .toList()
+                  .single);
+              ref.read(currentDiagnostic.notifier).update((state) => ref
+                  .watch(localQueriedClinicHistoryProvider)
+                  .map((e) => e.diagnostic)
+                  .toList()
+                  .single);
+              ref.read(currentDiagnostic.notifier).update((state) => ref
+                  .watch(localQueriedClinicHistoryProvider)
+                  .map((e) => e.diagnostic)
+                  .toList()
+                  .single);
+            },
+          )
+        : Future(
+            () {
+              ref.read(currentConsultationReason.notifier).update((state) => ref
+                  .watch(globalQueriedClinicHistoryProvider)
+                  .map((e) => e.consultationReason)
+                  .toList()
+                  .single);
+              ref.read(currentMentalExamn.notifier).update((state) => ref
+                  .watch(globalQueriedClinicHistoryProvider)
+                  .map((e) => e.mentalExamn)
+                  .toList()
+                  .single);
+              ref.read(currentTreatment.notifier).update((state) => ref
+                  .watch(globalQueriedClinicHistoryProvider)
+                  .map((e) => e.treatment)
+                  .toList()
+                  .single);
+              ref.read(currentMedAntecedents.notifier).update((state) => ref
+                  .watch(globalQueriedClinicHistoryProvider)
+                  .map((e) => e.medAntecedents)
+                  .toList()
+                  .single);
+              ref.read(currentPsyAntecedents.notifier).update((state) => ref
+                  .watch(globalQueriedClinicHistoryProvider)
+                  .map((e) => e.psyAntecedents)
+                  .toList()
+                  .single);
+              ref.read(currentFamilyHistory.notifier).update((state) => ref
+                  .watch(globalQueriedClinicHistoryProvider)
+                  .map((e) => e.familyHistory)
+                  .toList()
+                  .single);
+              ref.read(currentPersonalHistory.notifier).update((state) => ref
+                  .watch(globalQueriedClinicHistoryProvider)
+                  .map((e) => e.personalHistory)
+                  .toList()
+                  .single);
+              ref.read(currentDiagnostic.notifier).update((state) => ref
+                  .watch(globalQueriedClinicHistoryProvider)
+                  .map((e) => e.diagnostic)
+                  .toList()
+                  .single);
+            },
+          );
     super.didChangeDependencies();
   }
 
@@ -245,97 +298,186 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                                 color: Colors.white,
                                 icon: const Icon(Icons.arrow_back),
                                 onPressed: () {
-                                  ref
-                                      .watch(globalQueriedClinicHistoryProvider
-                                          .notifier)
-                                      .cleanCurrentClinicHistoryList();
+                                  isOfflineEnabled
+                                      ? ref
+                                          .read(
+                                              localQueriedClinicHistoryProvider
+                                                  .notifier)
+                                          .cleanCurrentClinicHistoryList()
+                                      : ref
+                                          .watch(
+                                              globalQueriedClinicHistoryProvider
+                                                  .notifier)
+                                          .cleanCurrentClinicHistoryList();
 
                                   Navigator.pop(context);
                                 }),
                           ),
                         ],
                       ),
-                      ref.read(globalQueriedSessionsProvider).isNotEmpty
-                          ? Padding(
-                              padding: const EdgeInsets.all(30.0),
-                              child: MouseRegion(
-                                cursor: SystemMouseCursors.click,
-                                onHover: (event) {
-                                  setState(() {
-                                    isMouseOn = !isMouseOn;
-                                  });
-                                },
-                                child: InkWell(
-                                  onTap: () {
-                                    showModalBottomSheet(
-                                      shape:
-                                          Border.all(style: BorderStyle.solid),
-                                      backgroundColor: const Color.fromARGB(
-                                          255, 211, 211, 211),
-                                      context: context,
-                                      builder: (context) {
-                                        return SessionsListView(
-                                          remoteSessions: ref
-                                                  .read(
-                                                      globalQueriedSessionsProvider)
-                                                  .isNotEmpty
-                                              ? ref.read(
-                                                  globalQueriedSessionsProvider)
-                                              : [],
-                                          localSessions: [],
+                      isOfflineEnabled
+                          ? ref.read(localQueriedSessionsProvider).isNotEmpty
+                              ? Padding(
+                                  padding: const EdgeInsets.all(30.0),
+                                  child: MouseRegion(
+                                    cursor: SystemMouseCursors.click,
+                                    onHover: (event) {
+                                      setState(() {
+                                        isMouseOn = !isMouseOn;
+                                      });
+                                    },
+                                    child: InkWell(
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                          shape: Border.all(
+                                              style: BorderStyle.solid),
+                                          backgroundColor: const Color.fromARGB(
+                                              255, 211, 211, 211),
+                                          context: context,
+                                          builder: (context) {
+                                            return SessionsListView(
+                                              remoteSessions: const [],
+                                              localSessions: ref
+                                                      .read(
+                                                          localQueriedSessionsProvider)
+                                                      .isNotEmpty
+                                                  ? ref.read(
+                                                      localQueriedSessionsProvider)
+                                                  : [],
+                                            );
+                                          },
                                         );
                                       },
-                                    );
-                                  },
-                                  child: Container(
-                                    height: 36,
-                                    decoration: const BoxDecoration(
-                                      color: Colors.purple,
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(
-                                          10,
-                                        ),
-                                      ),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color:
-                                              Color.fromARGB(255, 67, 67, 67),
-                                          offset: Offset(
-                                            0,
-                                            3,
+                                      child: Container(
+                                        height: 36,
+                                        decoration: const BoxDecoration(
+                                          color: Colors.purple,
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(
+                                              10,
+                                            ),
                                           ),
-                                          blurRadius: 6,
-                                        ),
-                                      ],
-                                    ),
-                                    child: Center(
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                          left: 8,
-                                          right: 8,
-                                          top: 3,
-                                          bottom: 3,
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children: const [
-                                            Text("Ver sesiones"),
-                                            Icon(
-                                              Icons.arrow_upward,
-                                              color: Colors.white,
-                                            )
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Color.fromARGB(
+                                                  255, 67, 67, 67),
+                                              offset: Offset(
+                                                0,
+                                                3,
+                                              ),
+                                              blurRadius: 6,
+                                            ),
                                           ],
+                                        ),
+                                        child: Center(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                              left: 8,
+                                              right: 8,
+                                              top: 3,
+                                              bottom: 3,
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: const [
+                                                Text("Ver sesiones"),
+                                                Icon(
+                                                  Icons.arrow_upward,
+                                                  color: Colors.white,
+                                                )
+                                              ],
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            )
-                          : SizedBox(
-                              height: ref.watch(deviceHeight) * 0.1,
-                            )
+                                )
+                              : SizedBox(
+                                  height: ref.watch(deviceHeight) * 0.1,
+                                )
+                          : ref.read(globalQueriedSessionsProvider).isNotEmpty
+                              ? Padding(
+                                  padding: const EdgeInsets.all(30.0),
+                                  child: MouseRegion(
+                                    cursor: SystemMouseCursors.click,
+                                    onHover: (event) {
+                                      setState(() {
+                                        isMouseOn = !isMouseOn;
+                                      });
+                                    },
+                                    child: InkWell(
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                          shape: Border.all(
+                                              style: BorderStyle.solid),
+                                          backgroundColor: const Color.fromARGB(
+                                              255, 211, 211, 211),
+                                          context: context,
+                                          builder: (context) {
+                                            return SessionsListView(
+                                              remoteSessions: ref
+                                                      .read(
+                                                          globalQueriedSessionsProvider)
+                                                      .isNotEmpty
+                                                  ? ref.read(
+                                                      globalQueriedSessionsProvider)
+                                                  : [],
+                                              localSessions: const [],
+                                            );
+                                          },
+                                        );
+                                      },
+                                      child: Container(
+                                        height: 36,
+                                        decoration: const BoxDecoration(
+                                          color: Colors.purple,
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(
+                                              10,
+                                            ),
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Color.fromARGB(
+                                                  255, 67, 67, 67),
+                                              offset: Offset(
+                                                0,
+                                                3,
+                                              ),
+                                              blurRadius: 6,
+                                            ),
+                                          ],
+                                        ),
+                                        child: Center(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                              left: 8,
+                                              right: 8,
+                                              top: 3,
+                                              bottom: 3,
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: const [
+                                                Text("Ver sesiones"),
+                                                Icon(
+                                                  Icons.arrow_upward,
+                                                  color: Colors.white,
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : SizedBox(
+                                  height: ref.watch(deviceHeight) * 0.1,
+                                )
                     ],
                   ),
                 ),
@@ -359,23 +501,43 @@ class HeaderClinicHistoryViewState
     extends ConsumerState<HeaderClinicHistoryView> {
   @override
   void didChangeDependencies() {
-    Future(() {
-      ref.read(currentRegister.notifier).update((state) => ref
-          .watch(globalQueriedClinicHistoryProvider)
-          .map((e) => e.registerCode)
-          .toList()
-          .single);
-      ref.read(currentDate.notifier).update((state) => ref
-          .watch(globalQueriedClinicHistoryProvider)
-          .map((e) => e.dateTime)
-          .toList()
-          .single);
-      ref.read(creator.notifier).update((state) => ref
-          .watch(globalQueriedClinicHistoryProvider)
-          .map((e) => e.createdBy)
-          .toList()
-          .single);
-    });
+    isOfflineEnabled
+        ? Future(
+            () {
+              ref.read(currentRegister.notifier).update((state) => ref
+                  .watch(localQueriedClinicHistoryProvider)
+                  .map((e) => e.registerNumber)
+                  .toList()
+                  .single);
+              ref.read(currentDate.notifier).update((state) => ref
+                  .watch(localQueriedClinicHistoryProvider)
+                  .map((e) => e.currentDate)
+                  .toList()
+                  .single);
+              ref.read(creator.notifier).update((state) => ref
+                  .watch(localQueriedClinicHistoryProvider)
+                  .map((e) => e.createdBy)
+                  .toList()
+                  .single);
+            },
+          )
+        : Future(() {
+            ref.read(currentRegister.notifier).update((state) => ref
+                .watch(globalQueriedClinicHistoryProvider)
+                .map((e) => e.registerCode)
+                .toList()
+                .single);
+            ref.read(currentDate.notifier).update((state) => ref
+                .watch(globalQueriedClinicHistoryProvider)
+                .map((e) => e.dateTime)
+                .toList()
+                .single);
+            ref.read(creator.notifier).update((state) => ref
+                .watch(globalQueriedClinicHistoryProvider)
+                .map((e) => e.createdBy)
+                .toList()
+                .single);
+          });
     super.didChangeDependencies();
   }
 
