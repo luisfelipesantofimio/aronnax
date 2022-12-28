@@ -29,13 +29,24 @@ class SessionsListView extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: SessionsListElement(
                 itemIndex: index,
-                sessionSummary: remoteSessions[index].sessionSummary,
-                sessionArchievements:
-                    remoteSessions[index].therapeuticArchievements,
-                sessionObjectives: remoteSessions[index].sessionObjectives,
-                sessionID: remoteSessions[index].sessionId,
-                sessionDate: remoteSessions[index].dateTime,
-                sessionProfessional: remoteSessions[index].professionalName,
+                sessionSummary: isOfflineEnabled
+                    ? localSessions[index].sessionSummary
+                    : remoteSessions[index].sessionSummary,
+                sessionArchievements: isOfflineEnabled
+                    ? localSessions[index].therapeuticArchievements
+                    : remoteSessions[index].therapeuticArchievements,
+                sessionObjectives: isOfflineEnabled
+                    ? localSessions[index].sessionObjectives
+                    : remoteSessions[index].sessionObjectives,
+                sessionID: isOfflineEnabled
+                    ? localSessions[index].sessionId
+                    : remoteSessions[index].sessionId,
+                sessionDate: isOfflineEnabled
+                    ? localSessions[index].sessionDate
+                    : remoteSessions[index].dateTime,
+                sessionProfessional: isOfflineEnabled
+                    ? localSessions[index].professionalName
+                    : remoteSessions[index].professionalName,
               ),
             );
           },
