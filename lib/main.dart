@@ -1,10 +1,12 @@
 import 'package:aronnax/src/Pages/settings/ServerConfigForms/Welcome/Views/first.dart';
+import 'package:aronnax/src/database/settings_db/settings.dart';
 import 'package:aronnax/src/database/settings_model.dart';
 import 'package:aronnax/src/misc/departments_list.dart';
 import 'package:aronnax/src/themes/custom_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'src/Pages/LoginScreen/login_main_view.dart';
@@ -12,8 +14,10 @@ import 'src/Pages/LoginScreen/login_main_view.dart';
 late Box localdb;
 late Box themeDB;
 late Box offlineModeDB;
+late Isar isar;
 
 void main() async {
+  isar = await Isar.open([SettingsSchema, RemoteDatabaseAccessSchema]);
   final documentsDir = await getApplicationDocumentsDirectory();
   await Hive.initFlutter("${documentsDir.path}/aronnax/config");
   Hive.registerAdapter(ServerSettingsAdapter());
