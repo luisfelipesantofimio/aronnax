@@ -203,7 +203,6 @@ class _LocalProfessionalRegisterState extends State<LocalProfessionalRegister> {
                       personalID,
                       names,
                       lastNames,
-                      profession,
                       professionalID,
                       userName,
                       _hashedPassword.toString(),

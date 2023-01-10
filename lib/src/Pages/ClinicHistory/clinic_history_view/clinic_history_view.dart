@@ -511,12 +511,12 @@ class HeaderClinicHistoryViewState
                   .single);
               ref.read(currentDate.notifier).update((state) => ref
                   .watch(localQueriedClinicHistoryProvider)
-                  .map((e) => e.currentDate)
+                  .map((e) => e.currentDate.toString())
                   .toList()
                   .single);
-              ref.read(creator.notifier).update((state) => ref
+              ref.read(professionalID.notifier).update((state) => ref
                   .watch(localQueriedClinicHistoryProvider)
-                  .map((e) => e.createdBy)
+                  .map((e) => e.professionalID)
                   .toList()
                   .single);
             },
@@ -532,9 +532,9 @@ class HeaderClinicHistoryViewState
                 .map((e) => e.dateTime)
                 .toList()
                 .single);
-            ref.read(creator.notifier).update((state) => ref
+            ref.read(professionalID.notifier).update((state) => ref
                 .watch(globalQueriedClinicHistoryProvider)
-                .map((e) => e.createdBy)
+                .map((e) => e.professionalID)
                 .toList()
                 .single);
           });
@@ -601,7 +601,7 @@ class HeaderClinicHistoryViewState
                     fontWeight: FontWeight.bold),
                 children: [
                   TextSpan(
-                    text: ref.watch(creator),
+                    text: ref.watch(professionalID).toString(),
                     style: GoogleFonts.montserrat(
                         fontSize: 20,
                         color: const Color.fromARGB(255, 230, 230, 230)),

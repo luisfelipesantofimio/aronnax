@@ -1,3 +1,4 @@
+import 'package:aronnax/src/Pages/ClinicHistory/consultation_provider/clinic_history_data_provider.dart';
 import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
 import 'package:aronnax/src/database/local_model/local_queries.dart';
 import 'package:aronnax/src/global/user_global_values.dart';
@@ -123,8 +124,8 @@ class SessionsFormState extends ConsumerState<SessionsForm> {
                               sessionObjectives,
                               therapeuticArchievements,
                               int.parse(widget.patientID),
-                              professionalName,
-                              currentDate)
+                              ref.read(globalProfessionalPersonalIDProvider),
+                              DateTime.now())
                           : insertSessionData(
                               currentDate,
                               sessionSummary,

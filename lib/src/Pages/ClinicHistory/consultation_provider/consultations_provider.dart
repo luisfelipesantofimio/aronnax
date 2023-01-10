@@ -151,7 +151,7 @@ class LocalClinicHistoryConsultationState
 
   Future<void> searchLocalClinicHistory(int idNumber) async {
     state = await localDB.clinicHistoryConsultation(idNumber);
-    log("Dato de la historia clínica con cc $idNumber: ${state.first.createdBy}");
+    log("Dato de la historia clínica con cc $idNumber: ${state.first.professionalID}");
   }
 
   cleanCurrentClinicHistoryList() {

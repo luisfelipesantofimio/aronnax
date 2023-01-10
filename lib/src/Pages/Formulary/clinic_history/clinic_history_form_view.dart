@@ -1,4 +1,5 @@
 import 'package:aronnax/src/API/server_api.dart';
+import 'package:aronnax/src/Pages/ClinicHistory/consultation_provider/clinic_history_data_provider.dart';
 import 'package:aronnax/src/Pages/Formulary/Forms/clinic_history.dart';
 import 'package:aronnax/src/Pages/Formulary/clinic_history/header.dart';
 import 'package:aronnax/src/Pages/Formulary/widgets/consultant_selection_dialog.dart';
@@ -25,8 +26,7 @@ class MainViewClinicHistory extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String createdBy =
-        "${ref.read(globalUserNameProvider)} ${ref.read(globalUserLastNameProvider)}";
+    int professionalID = ref.read(globalProfessionalPersonalIDProvider);
     return Scaffold(
       body: Center(
         child: Row(
@@ -73,7 +73,7 @@ class MainViewClinicHistory extends ConsumerWidget {
                               isOfflineEnabled
                                   ? addLocalClinicHistory(
                                       registerCode,
-                                      currentDate,
+                                      DateTime.now(),
                                       reasonConsultation,
                                       mentalExamination,
                                       treatmentPurpouse,
@@ -83,10 +83,10 @@ class MainViewClinicHistory extends ConsumerWidget {
                                       personalHistory,
                                       diagnosticImpression,
                                       int.parse(patientID),
-                                      createdBy)
+                                      professionalID)
                                   : insertClinicHistory(
                                       registerCode,
-                                      currentDate,
+                                      DateTime.now(),
                                       reasonConsultation,
                                       mentalExamination,
                                       treatmentPurpouse,
@@ -96,7 +96,7 @@ class MainViewClinicHistory extends ConsumerWidget {
                                       personalHistory,
                                       diagnosticImpression,
                                       patientID,
-                                      createdBy);
+                                      professionalID);
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content: Text("Historia guardada"),

@@ -42,10 +42,10 @@ class SessionsListView extends StatelessWidget {
                     ? localSessions[index].sessionId
                     : remoteSessions[index].sessionId,
                 sessionDate: isOfflineEnabled
-                    ? localSessions[index].sessionDate
+                    ? localSessions[index].sessionDate.toString()
                     : remoteSessions[index].dateTime,
                 sessionProfessional: isOfflineEnabled
-                    ? localSessions[index].professionalName
+                    ? localSessions[index].professionalID.toString()
                     : remoteSessions[index].professionalName,
               ),
             );
