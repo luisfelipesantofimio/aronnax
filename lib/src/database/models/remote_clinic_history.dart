@@ -14,7 +14,7 @@ class RemoteClinicHistory {
   final String personalHistory;
   final String diagnostic;
   final int idNumber;
-  final String createdBy;
+  final int professionalID;
   RemoteClinicHistory({
     required this.registerCode,
     required this.dateTime,
@@ -27,7 +27,7 @@ class RemoteClinicHistory {
     required this.personalHistory,
     required this.diagnostic,
     required this.idNumber,
-    required this.createdBy,
+    required this.professionalID,
   });
 
   factory RemoteClinicHistory.fromJson(Map<String, dynamic> data) {
@@ -42,7 +42,7 @@ class RemoteClinicHistory {
     final personalHistory = data["personalHistory"] as Blob?;
     final diagnostic = data["diagnostic"] as Blob?;
     final idNumber = data["idNumber"] as int?;
-    final createdBy = data["createdBy"] as String?;
+    final professionalID = data["createdBy"] as int?;
     return RemoteClinicHistory(
         registerCode: registerCode!,
         dateTime: dateTime!,
@@ -55,6 +55,6 @@ class RemoteClinicHistory {
         personalHistory: personalHistory!.toString(),
         diagnostic: diagnostic!.toString(),
         idNumber: idNumber!,
-        createdBy: createdBy!);
+        professionalID: professionalID!);
   }
 }
