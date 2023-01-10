@@ -9,3 +9,6 @@ final globalUserLastNameProvider = StateProvider(
 final globalProfessionalIDProvider = StateProvider(
   (ref) => "",
 );
+final globalProfessionalPersonalIDProvider = StateProvider<int>(
+  (ref) => 0,
+);

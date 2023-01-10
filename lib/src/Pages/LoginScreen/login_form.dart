@@ -80,6 +80,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
     String currentUserLastNames = "";
     String currentProfessionalID = "";
     String currentPasswordInServer = "";
+    int currentPersonalID = 0;
 
     void setRemoteValues(int value) {
       if (ref.watch(remoteLoginStateProvider).isNotEmpty && !isOfflineEnabled) {
@@ -90,6 +91,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
               currentUserLastNames = element.lastNames;
               currentProfessionalID = element.professionalID.toString();
               currentPasswordInServer = element.password;
+              currentPersonalID = element.personalID;
               ref
                   .read(globalUserNameProvider.notifier)
                   .update((state) => currentUserName);
@@ -99,6 +101,9 @@ class LoginFormState extends ConsumerState<LoginForm> {
               ref
                   .read(globalProfessionalIDProvider.notifier)
                   .update((state) => currentProfessionalID);
+              ref
+                  .read(globalProfessionalPersonalIDProvider.notifier)
+                  .update((state) => currentPersonalID);
               passwordInServer = currentPasswordInServer;
             });
           }
