@@ -3,45 +3,49 @@ import 'local_model.dart';
 
 LocalDatabase localDB = LocalDatabase();
 
-addLocalPatient(
-  String names,
-  String lastNames,
-  String birthDate,
-  int idNumber,
-  int contactNumber,
-  String mail,
-  String city,
-  String state,
-  String adress,
-  String insurance,
-  String education,
-  String ocupation,
-  String emergencyContactName,
-  int emergencyContactNumber,
-) {
+addLocalPatient({
+  required String names,
+  required String lastNames,
+  required DateTime birthDate,
+  required int idNumber,
+  required int contactNumber,
+  required String mail,
+  required String city,
+  required String state,
+  required String adress,
+  required String insurance,
+  required String education,
+  required String ocupation,
+  required String emergencyContactName,
+  required int emergencyContactNumber,
+  required DateTime creationDate,
+  required int professionalID,
+}) {
   final entity = PatientsCompanion(
-    names: Value(names),
-    lastNames: Value(lastNames),
-    birthDate: Value(birthDate),
-    idNumber: Value(idNumber),
-    contactNumber: Value(contactNumber),
-    mail: Value(mail),
-    city: Value(city),
-    state: Value(state),
-    adress: Value(adress),
-    insurance: Value(insurance),
-    education: Value(education),
-    ocupation: Value(ocupation),
-    emergencyContactName: Value(emergencyContactName),
-    emergencyContactNumber: Value(emergencyContactNumber),
-  );
+      names: Value(names),
+      lastNames: Value(lastNames),
+      birthDate: Value(birthDate),
+      idNumber: Value(idNumber),
+      contactNumber: Value(contactNumber),
+      mail: Value(mail),
+      city: Value(city),
+      state: Value(state),
+      adress: Value(adress),
+      insurance: Value(insurance),
+      education: Value(education),
+      ocupation: Value(ocupation),
+      emergencyContactName: Value(emergencyContactName),
+      emergencyContactNumber: Value(emergencyContactNumber),
+      isActive: const Value(true),
+      creationDate: Value(creationDate),
+      professionalID: Value(professionalID));
 
   localDB.insertPatient(entity);
 }
 
 Future<void> addLocalClinicHistory(
   String registerCode,
-  String dateTime,
+  DateTime dateTime,
   String consultationReason,
   String mentalExamn,
   String treatment,
@@ -51,7 +55,7 @@ Future<void> addLocalClinicHistory(
   String personalHistory,
   String diagnostic,
   int idNumber,
-  String createdBy,
+  int professionalID,
 ) async {
   final entity = ClinicHistoryCompanion(
     registerNumber: Value(registerCode),
@@ -65,7 +69,7 @@ Future<void> addLocalClinicHistory(
     diagnostic: Value(diagnostic),
     treatment: Value(treatment),
     idNumber: Value(idNumber),
-    createdBy: Value(createdBy),
+    professionalID: Value(professionalID),
   );
 
   await localDB.insertClinicHistory(entity);
@@ -76,12 +80,12 @@ Future<void> addLocalSession(
   String sessionObjectives,
   String therapeuticArchievements,
   int idNumber,
-  String professionalName,
-  String sessionDate,
+  int professionalID,
+  DateTime sessionDate,
 ) async {
   final entity = SessionsCompanion(
     idNumber: Value(idNumber),
-    professionalName: Value(professionalName),
+    professionalID: Value(professionalID),
     sessionDate: Value(sessionDate),
     sessionObjectives: Value(sessionObjectives),
     sessionSummary: Value(sessionSummary),
@@ -91,14 +95,13 @@ Future<void> addLocalSession(
 }
 
 addLocalProfessional(int personalID, String names, String lastNames,
-    String profession, int professionalID, String userName, String password) {
+    int professionalID, String userName, String password) {
   final entity = ProfessionalCompanion(
     userName: Value(userName),
     names: Value(names),
     lastNames: Value(lastNames),
     personalID: Value(personalID),
     professionalID: Value(professionalID),
-    profession: Value(profession),
     password: Value(password),
   );
 

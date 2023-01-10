@@ -11,7 +11,7 @@ class Patients extends Table {
   TextColumn get names => text()();
   TextColumn get lastNames => text()();
   IntColumn get idNumber => integer().unique()();
-  TextColumn get birthDate => text()();
+  DateTimeColumn get birthDate => dateTime()();
   IntColumn get contactNumber => integer()();
   TextColumn get mail => text()();
   TextColumn get city => text()();
@@ -22,12 +22,16 @@ class Patients extends Table {
   TextColumn get insurance => text()();
   TextColumn get emergencyContactName => text()();
   IntColumn get emergencyContactNumber => integer()();
+  DateTimeColumn get creationDate => dateTime()();
+  BoolColumn get isActive => boolean()();
+  IntColumn get professionalID =>
+      integer().references(Professional, #professionalID)();
 }
 
 class ClinicHistory extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get registerNumber => text()();
-  TextColumn get currentDate => text()();
+  DateTimeColumn get currentDate => dateTime()();
   TextColumn get consultationReason => text()();
   TextColumn get mentalExamination => text()();
   TextColumn get treatment => text()();
@@ -37,33 +41,65 @@ class ClinicHistory extends Table {
   TextColumn get personalHistory => text()();
   TextColumn get diagnostic => text()();
   IntColumn get idNumber => integer().references(Patients, #idNumber)();
-  TextColumn get createdBy => text()();
+  IntColumn get professionalID =>
+      integer().references(Professional, #professionalID)();
 }
 
 class Sessions extends Table {
   IntColumn get sessionId => integer().autoIncrement()();
-  TextColumn get sessionDate => text()();
+  DateTimeColumn get sessionDate => dateTime()();
   TextColumn get sessionSummary => text()();
   TextColumn get sessionObjectives => text()();
   TextColumn get therapeuticArchievements => text()();
-  IntColumn get idNumber => integer().references(ClinicHistory, #idNumber)();
-  TextColumn get professionalName => text()();
+  TextColumn get sessionNotes => text()();
+  TextColumn get sessionPerformance => text()();
+  IntColumn get idNumber => integer().references(Patients, #idNumber)();
+  IntColumn get professionalID =>
+      integer().references(Professional, #professionalID)();
 }
 
 class Professional extends Table {
+  IntColumn get id => integer().autoIncrement()();
   IntColumn get personalID => integer().unique()();
   TextColumn get names => text()();
   TextColumn get lastNames => text()();
-  TextColumn get profession => text()();
   IntColumn get professionalID => integer()();
   TextColumn get userName => text()();
   TextColumn get password => text()();
-
-  @override
-  Set<Column> get primaryKey => {professionalID};
 }
 
-@DriftDatabase(tables: [Patients, ClinicHistory, Sessions, Professional])
+class Tests extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  DateTimeColumn get testDate => dateTime()();
+  IntColumn get patientID => integer().references(Patients, #idNumber)();
+  IntColumn get professionalID =>
+      integer().references(Professional, #professionalID)();
+  IntColumn get sessionID => integer().references(Sessions, #sessionId)();
+  TextColumn get testDescription => text()();
+  TextColumn get category => text()();
+  TextColumn get testData => text()();
+}
+
+class Todos extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  DateTimeColumn get creationDate => dateTime()();
+  TextColumn get todo => text()();
+  BoolColumn get isComplete => boolean()();
+  IntColumn get sessionID => integer().references(Sessions, #sessionId)();
+}
+
+class Appointments extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  DateTimeColumn get date => dateTime()();
+  IntColumn get professionalID =>
+      integer().references(Professional, #professionalID)();
+  IntColumn get patientID => integer().references(Patients, #idNumber)();
+  TextColumn get description => text()();
+  TextColumn get status => text()();
+  TextColumn get sessionType => text()();
+}
+
+@DriftDatabase(tables: [Patients, ClinicHistory, Sessions, Professional, Tests])
 class LocalDatabase extends _$LocalDatabase {
   LocalDatabase() : super(_openConnection());
 
