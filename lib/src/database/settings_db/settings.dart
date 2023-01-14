@@ -6,7 +6,7 @@ part "settings.g.dart";
 class Settings {
   Id id = 0;
   bool isDarkModeEnabled = false;
-  bool isOfflineModeEnabled = false;
+  bool isOfflineModeEnabled = true;
 }
 
 @collection

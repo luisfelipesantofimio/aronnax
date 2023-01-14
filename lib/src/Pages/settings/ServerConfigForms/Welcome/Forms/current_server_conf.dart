@@ -1,5 +1,6 @@
 import 'package:aronnax/main.dart';
 import 'package:aronnax/src/Pages/settings/ServerConfigForms/Welcome/Views/finish.dart';
+import 'package:aronnax/src/database/settings_db/settings.dart';
 import 'package:aronnax/src/database/settings_model.dart';
 import 'package:flutter/material.dart';
 
@@ -158,6 +159,28 @@ class _ExistingServerFormState extends State<ExistingServerForm> {
                   offlineModeDB.put(
                     "offlineModeDB",
                     LocalDatabaseMode(false),
+                  );
+                  RemoteDatabaseAccess serverData = RemoteDatabaseAccess()
+                    ..databaseName = _databaseName
+                    ..server = _serverAdress
+                    ..port = _serverPort
+                    ..userName = _databaseUser
+                    ..password = _databasePassword;
+
+                  Future(
+                    () async {
+                      await isar.writeTxn(() async {
+                        await isar.remoteDatabaseAccess
+                            .put(serverData); // insert & update
+                      });
+
+                      await isar.writeTxn(() async {
+                        final item = await isar.settings.get(0);
+                        item!.isOfflineModeEnabled = false;
+
+                        await isar.settings.put(item);
+                      });
+                    },
                   );
 
                   Navigator.push(
