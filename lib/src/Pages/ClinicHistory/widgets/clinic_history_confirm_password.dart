@@ -64,6 +64,7 @@ class _ClinicHistoryConfirmPasswordDialogState
                       ),
                     );
                   }
+                  return null;
                 },
                 onChanged: (value) {
                   verfiFormkey.currentState!.validate();

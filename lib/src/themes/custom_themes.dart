@@ -1,9 +1,8 @@
+import 'package:aronnax/main.dart';
+import 'package:aronnax/src/data/database/settings_model.dart';
 import 'package:aronnax/src/themes/color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../../main.dart';
-import '../database/settings_model.dart';
 
 GlobalThemeMode settings = themeDB.get("SettingsDB");
 

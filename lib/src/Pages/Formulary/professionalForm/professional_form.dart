@@ -1,4 +1,4 @@
-import 'package:aronnax/src/API/server_api.dart';
+import 'package:aronnax/src/data/API/server_api.dart';
 import 'package:crypt/crypt.dart';
 import 'package:flutter/material.dart';
 
@@ -39,6 +39,7 @@ class _ProfessionalFormState extends State<ProfessionalForm> {
                     if (value!.isEmpty) {
                       return "El campo no puede estar vacío";
                     }
+                    return null;
                   },
                   autofocus: true,
                   decoration: InputDecoration(
@@ -60,6 +61,7 @@ class _ProfessionalFormState extends State<ProfessionalForm> {
                     if (value!.isEmpty) {
                       return "El campo no puede estar vacío";
                     }
+                    return null;
                   },
                   autofocus: true,
                   decoration: InputDecoration(
@@ -81,6 +83,7 @@ class _ProfessionalFormState extends State<ProfessionalForm> {
                     if (value!.isEmpty) {
                       return "El campo no puede estar vacío";
                     }
+                    return null;
                   },
                   autofocus: true,
                   decoration: InputDecoration(
@@ -102,6 +105,7 @@ class _ProfessionalFormState extends State<ProfessionalForm> {
                     if (value!.isEmpty) {
                       return "El campo no puede estar vacío";
                     }
+                    return null;
                   },
                   autofocus: true,
                   decoration: InputDecoration(
@@ -123,6 +127,7 @@ class _ProfessionalFormState extends State<ProfessionalForm> {
                     if (value!.isEmpty) {
                       return "El campo no puede estar vacío";
                     }
+                    return null;
                   },
                   autofocus: true,
                   decoration: InputDecoration(
@@ -144,6 +149,7 @@ class _ProfessionalFormState extends State<ProfessionalForm> {
                     if (value!.isEmpty) {
                       return "El campo no puede estar vacío";
                     }
+                    return null;
                   },
                   autofocus: true,
                   decoration: InputDecoration(
@@ -165,6 +171,7 @@ class _ProfessionalFormState extends State<ProfessionalForm> {
                     if (value!.isEmpty) {
                       return "El campo no puede estar vacío";
                     }
+                    return null;
                   },
                   autofocus: true,
                   decoration: InputDecoration(

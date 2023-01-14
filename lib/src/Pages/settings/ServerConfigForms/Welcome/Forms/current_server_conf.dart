@@ -1,7 +1,7 @@
 import 'package:aronnax/main.dart';
 import 'package:aronnax/src/Pages/settings/ServerConfigForms/Welcome/Views/finish.dart';
-import 'package:aronnax/src/database/settings_db/settings.dart';
-import 'package:aronnax/src/database/settings_model.dart';
+import 'package:aronnax/src/data/database/settings_db/settings.dart';
+import 'package:aronnax/src/data/database/settings_model.dart';
 import 'package:flutter/material.dart';
 
 class ExistingServerForm extends StatefulWidget {
@@ -48,6 +48,7 @@ class _ExistingServerFormState extends State<ExistingServerForm> {
               if (value!.isEmpty) {
                 return "Inserta un valor";
               }
+              return null;
             },
           ),
           TextFormField(
@@ -72,6 +73,7 @@ class _ExistingServerFormState extends State<ExistingServerForm> {
               if (value!.isEmpty) {
                 return "Inserta un valor";
               }
+              return null;
             },
           ),
           TextFormField(
@@ -96,6 +98,7 @@ class _ExistingServerFormState extends State<ExistingServerForm> {
               if (value!.isEmpty) {
                 return "Inserta un valor";
               }
+              return null;
             },
           ),
           TextFormField(
@@ -120,6 +123,7 @@ class _ExistingServerFormState extends State<ExistingServerForm> {
               if (value!.isEmpty) {
                 return "Inserta un valor";
               }
+              return null;
             },
           ),
           TextFormField(
@@ -139,6 +143,7 @@ class _ExistingServerFormState extends State<ExistingServerForm> {
                 if (value!.isEmpty) {
                   return "Inserta un valor";
                 }
+                return null;
               },
               onSaved: (valPassword) {
                 setState(() {

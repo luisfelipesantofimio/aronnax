@@ -1,4 +1,4 @@
-import 'package:aronnax/src/API/server_api.dart';
+import 'package:aronnax/src/data/API/server_api.dart';
 import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
 import 'package:aronnax/src/global/user_global_values.dart';
 import 'package:crypt/crypt.dart';
@@ -93,6 +93,7 @@ class UpdatePasswordDialogState extends ConsumerState<UpdatePasswordDialog> {
                       } else {
                         null;
                       }
+                      return null;
                     },
                     decoration: const InputDecoration(
                       hintText: "Contraseña actual",
@@ -131,6 +132,7 @@ class UpdatePasswordDialogState extends ConsumerState<UpdatePasswordDialog> {
                       } else {
                         null;
                       }
+                      return null;
                     },
                     decoration: const InputDecoration(
                         hintText: "Confirma la nueva contraseña"),

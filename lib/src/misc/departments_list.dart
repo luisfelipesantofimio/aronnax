@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:country_state_city/utils/state_utils.dart';
 
 List<String> departmentsList = [];

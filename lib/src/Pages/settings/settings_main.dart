@@ -3,7 +3,6 @@ import 'package:aronnax/src/Pages/settings/localdb_selection.dart';
 import 'package:aronnax/src/Pages/settings/setting_options_view_profile.dart';
 import 'package:aronnax/src/Pages/settings/theme_select.dart';
 import 'package:flutter/material.dart';
-import 'setting_options_view_profile.dart';
 import 'settings_headerbar.dart';
 
 class SettingsMain extends StatefulWidget {

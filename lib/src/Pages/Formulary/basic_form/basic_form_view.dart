@@ -1,10 +1,10 @@
-import 'dart:developer';
 
-import 'package:aronnax/src/API/server_api.dart';
+import 'package:aronnax/src/data/API/server_api.dart';
 import 'package:aronnax/src/Pages/Formulary/Forms/basic_form.dart';
 import 'package:aronnax/src/Pages/Formulary/basic_form/header.dart';
 import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
-import 'package:aronnax/src/database/local_model/local_queries.dart';
+import 'package:aronnax/src/data/database/local_model/local_queries.dart';
+
 import 'package:aronnax/src/global/controllers.dart';
 import 'package:aronnax/src/global/user_global_values.dart';
 import 'package:aronnax/src/widgets/generic_global_button.dart';

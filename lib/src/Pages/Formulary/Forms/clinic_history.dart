@@ -1,7 +1,6 @@
 import 'package:aronnax/src/global/controllers.dart';
 import 'package:aronnax/src/misc/passwd_generator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 DateTime dateFormat = DateTime.now();
@@ -59,6 +58,7 @@ class _ClinicHistoryState extends State<ClinicHistory> {
                     if (value!.isEmpty) {
                       return "Inserta un valor";
                     }
+                    return null;
                   },
                 ),
               ),
@@ -84,6 +84,7 @@ class _ClinicHistoryState extends State<ClinicHistory> {
                     if (value!.isEmpty) {
                       return "Inserta un valor";
                     }
+                    return null;
                   },
                 ),
               ),
@@ -109,6 +110,7 @@ class _ClinicHistoryState extends State<ClinicHistory> {
                     if (value!.isEmpty) {
                       return "Inserta un valor";
                     }
+                    return null;
                   },
                 ),
               ),
@@ -134,6 +136,7 @@ class _ClinicHistoryState extends State<ClinicHistory> {
                     if (value!.isEmpty) {
                       return "Inserta un valor";
                     }
+                    return null;
                   },
                 ),
               ),
@@ -159,6 +162,7 @@ class _ClinicHistoryState extends State<ClinicHistory> {
                     if (value!.isEmpty) {
                       return "Inserta un valor";
                     }
+                    return null;
                   },
                 ),
               ),
@@ -184,6 +188,7 @@ class _ClinicHistoryState extends State<ClinicHistory> {
                     if (value!.isEmpty) {
                       return "Inserta un valor";
                     }
+                    return null;
                   },
                 ),
               ),
@@ -209,6 +214,7 @@ class _ClinicHistoryState extends State<ClinicHistory> {
                     if (value!.isEmpty) {
                       return "Inserta un valor";
                     }
+                    return null;
                   },
                 ),
               ),
@@ -234,6 +240,7 @@ class _ClinicHistoryState extends State<ClinicHistory> {
                     if (value!.isEmpty) {
                       return "Inserta un valor";
                     }
+                    return null;
                   },
                 ),
               ),

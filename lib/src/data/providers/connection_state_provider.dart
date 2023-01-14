@@ -1,7 +1,6 @@
-import 'dart:developer';
 
 import 'package:aronnax/main.dart';
-import 'package:aronnax/src/database/settings_model.dart';
+import 'package:aronnax/src/data/database/settings_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class GlobalOfflineStatus extends StateNotifier<bool> {

@@ -1,8 +1,7 @@
 import 'package:aronnax/main.dart';
-import 'package:aronnax/src/API/server_api.dart';
 import 'package:aronnax/src/Pages/settings/ServerConfigForms/Welcome/Views/finish.dart';
-import 'package:aronnax/src/database/local_model/local_queries.dart';
-import 'package:aronnax/src/database/settings_model.dart';
+import 'package:aronnax/src/data/database/local_model/local_queries.dart';
+import 'package:aronnax/src/data/database/settings_model.dart';
 import 'package:crypt/crypt.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -51,6 +50,7 @@ class _LocalProfessionalRegisterState extends State<LocalProfessionalRegister> {
                     if (value!.isEmpty) {
                       return "El campo no puede estar vacío";
                     }
+                    return null;
                   },
                   autofocus: true,
                   decoration: InputDecoration(
@@ -72,6 +72,7 @@ class _LocalProfessionalRegisterState extends State<LocalProfessionalRegister> {
                     if (value!.isEmpty) {
                       return "El campo no puede estar vacío";
                     }
+                    return null;
                   },
                   autofocus: true,
                   decoration: InputDecoration(
@@ -93,6 +94,7 @@ class _LocalProfessionalRegisterState extends State<LocalProfessionalRegister> {
                     if (value!.isEmpty) {
                       return "El campo no puede estar vacío";
                     }
+                    return null;
                   },
                   autofocus: true,
                   decoration: InputDecoration(
@@ -125,6 +127,7 @@ class _LocalProfessionalRegisterState extends State<LocalProfessionalRegister> {
                     if (value == "Seleccionar profesión") {
                       return "Selecciona una opción válida";
                     }
+                    return null;
                   },
                 ),
               ),
@@ -136,6 +139,7 @@ class _LocalProfessionalRegisterState extends State<LocalProfessionalRegister> {
                     if (value!.isEmpty) {
                       return "El campo no puede estar vacío";
                     }
+                    return null;
                   },
                   autofocus: true,
                   decoration: InputDecoration(
@@ -157,6 +161,7 @@ class _LocalProfessionalRegisterState extends State<LocalProfessionalRegister> {
                     if (value!.isEmpty) {
                       return "El campo no puede estar vacío";
                     }
+                    return null;
                   },
                   autofocus: true,
                   decoration: InputDecoration(
@@ -178,6 +183,7 @@ class _LocalProfessionalRegisterState extends State<LocalProfessionalRegister> {
                     if (value!.isEmpty) {
                       return "El campo no puede estar vacío";
                     }
+                    return null;
                   },
                   autofocus: true,
                   decoration: InputDecoration(

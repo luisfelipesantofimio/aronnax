@@ -1,6 +1,6 @@
 import 'package:aronnax/src/Pages/settings/ServerConfigForms/Welcome/Views/first.dart';
-import 'package:aronnax/src/database/settings_db/settings.dart';
-import 'package:aronnax/src/database/settings_model.dart';
+import 'package:aronnax/src/data/database/settings_db/settings.dart';
+import 'package:aronnax/src/data/database/settings_model.dart';
 import 'package:aronnax/src/misc/departments_list.dart';
 import 'package:aronnax/src/themes/custom_themes.dart';
 import 'package:flutter/material.dart';

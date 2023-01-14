@@ -21,12 +21,12 @@ void main() {
 }
 
 registerGen(len) {
-  final _random = Random();
+  final random = Random();
   const charList =
       'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
   var result = List.generate(
     len,
-    (index) => charList[_random.nextInt(charList.length)],
+    (index) => charList[random.nextInt(charList.length)],
   ).join();
   return result;
 }

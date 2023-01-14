@@ -1,7 +1,7 @@
 import 'package:aronnax/src/Pages/ClinicHistory/widgets/sessions_list_element.dart';
 import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
-import 'package:aronnax/src/database/local_model/local_model.dart';
-import 'package:aronnax/src/database/models/remode_session_resume.dart';
+import 'package:aronnax/src/data/database/local_model/local_model.dart';
+import 'package:aronnax/src/data/models/remode_session_resume.dart';
 import 'package:flutter/material.dart';
 
 class SessionsListView extends StatelessWidget {

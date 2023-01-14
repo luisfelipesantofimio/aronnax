@@ -1,13 +1,14 @@
 import 'package:aronnax/main.dart';
-import 'package:aronnax/src/database/models/remote_professional.dart';
+import 'package:aronnax/src/data/database/local_model/local_model.dart';
+import 'package:aronnax/src/data/models/remote_professional.dart';
+import 'package:aronnax/src/data/database/settings_model.dart';
+import 'package:aronnax/src/data/providers/login_provider.dart';
+import 'package:aronnax/src/domain/repositories/auth_repository.dart';
 import 'package:aronnax/src/global/user_global_values.dart';
-import 'package:aronnax/src/providers/login_provider.dart';
-import 'package:aronnax/src/database/local_model/local_model.dart';
-import 'package:aronnax/src/database/settings_model.dart';
+
 import 'package:flutter/material.dart';
 import 'dart:developer';
 import 'package:aronnax/src/Pages/MainMenu/main_menu.dart';
-import 'package:crypt/crypt.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -41,15 +42,15 @@ class LoginFormState extends ConsumerState<LoginForm> {
     });
   }
 
-  isPasswordValid(String serverPassword, String inputPassword) {
-    log("Contraseña recibida: $serverPassword");
-    bool result = Crypt(serverPassword).match(inputPassword);
-    if (result == true) {
-      setState(() {
-        isAbleToLogin = true;
-      });
-    }
-  }
+  // isPasswordValid(String serverPassword, String inputPassword) {
+  //   log("Contraseña recibida: $serverPassword");
+  //   bool result = Crypt(serverPassword).match(inputPassword);
+  //   if (result == true) {
+  //     setState(() {
+  //       isAbleToLogin = true;
+  //     });
+  //   }
+  // }
 
   @override
   void didChangeDependencies() {
@@ -175,6 +176,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
                 if (userVerified != true) {
                   return "El usuario no existe";
                 }
+                return null;
               },
               autofocus: true,
               decoration: InputDecoration(
@@ -199,7 +201,6 @@ class LoginFormState extends ConsumerState<LoginForm> {
                     userPassword = value;
                   });
                   !isOfflineEnabled ? setRemoteValues(int.parse(userID)) : "";
-                  isPasswordValid(passwordInServer, userPassword);
 
                   setState(() {});
                   _loginKey.currentState!.validate();
@@ -208,7 +209,8 @@ class LoginFormState extends ConsumerState<LoginForm> {
                   if (value!.isEmpty) {
                     return "Ingresa tu contraseña";
                   }
-                  if (!isAbleToLogin) {
+                  if (AuthRepository()
+                      .loginUser(passwordInServer, userPassword)) {
                     return "Contraseña incorrecta";
                   } else {
                     Navigator.push(
@@ -221,6 +223,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
                       isAbleToLogin = false;
                     });
                   }
+                  return null;
                 },
                 autofocus: true,
                 decoration: InputDecoration(

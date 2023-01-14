@@ -1,10 +1,9 @@
-import 'package:aronnax/src/API/server_api.dart';
-import 'package:aronnax/src/Pages/ClinicHistory/consultation_provider/clinic_history_data_provider.dart';
+import 'package:aronnax/src/data/API/server_api.dart';
 import 'package:aronnax/src/Pages/Formulary/Forms/clinic_history.dart';
 import 'package:aronnax/src/Pages/Formulary/clinic_history/header.dart';
 import 'package:aronnax/src/Pages/Formulary/widgets/consultant_selection_dialog.dart';
 import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
-import 'package:aronnax/src/database/local_model/local_queries.dart';
+import 'package:aronnax/src/data/database/local_model/local_queries.dart';
 import 'package:aronnax/src/global/controllers.dart';
 import 'package:aronnax/src/global/user_global_values.dart';
 import 'package:aronnax/src/misc/passwd_generator.dart';

@@ -1,10 +1,8 @@
-import 'dart:developer';
-
-import 'package:aronnax/src/Pages/ClinicHistory/consultation_provider/clinic_history_data_provider.dart';
 import 'package:aronnax/src/Pages/ClinicHistory/pdf/pdf_export.dart';
-import 'package:aronnax/src/Pages/ClinicHistory/consultation_provider/consultations_provider.dart';
 import 'package:aronnax/src/Pages/ClinicHistory/widgets/sessions_list_view.dart';
 import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
+import 'package:aronnax/src/data/providers/clinic_history_data_provider.dart';
+import 'package:aronnax/src/data/providers/consultations_provider.dart';
 import 'package:aronnax/src/misc/global_values.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

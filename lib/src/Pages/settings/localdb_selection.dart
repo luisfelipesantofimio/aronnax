@@ -2,11 +2,11 @@ import 'dart:developer';
 
 import 'package:aronnax/main.dart';
 import 'package:aronnax/src/Pages/settings/widgets/no_server_dialog.dart';
-import 'package:aronnax/src/database/local_model/local_model.dart';
-import 'package:aronnax/src/database/local_model/local_queries.dart';
-import 'package:aronnax/src/database/settings_model.dart';
-import 'package:aronnax/src/providers/global_providers.dart';
-import 'package:aronnax/src/themes/custom_themes.dart';
+import 'package:aronnax/src/data/database/local_model/local_model.dart';
+import 'package:aronnax/src/data/database/local_model/local_queries.dart';
+import 'package:aronnax/src/data/database/settings_model.dart';
+import 'package:aronnax/src/data/providers/connection_state_provider.dart';
+
 import "package:flutter/material.dart";
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

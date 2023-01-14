@@ -10,7 +10,7 @@ class ClinicHistorySearchView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: Center(
-        child: Container(
+        child: SizedBox(
           width: ref.watch(deviceWidth),
           // color: const Color.fromARGB(255, 152, 201, 241),
           child: Column(

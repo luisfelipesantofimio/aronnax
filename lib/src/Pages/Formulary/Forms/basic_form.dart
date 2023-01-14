@@ -1,9 +1,9 @@
 import 'dart:developer';
 
+import 'package:aronnax/src/data/providers/cities_provider.dart';
 import 'package:aronnax/src/global/controllers.dart';
 import 'package:aronnax/src/misc/departments_list.dart';
 import 'package:aronnax/src/misc/email_validator.dart';
-import 'package:aronnax/src/providers/cities_provider.dart';
 import 'package:aronnax/src/widgets/date_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -78,6 +78,7 @@ class BasicFormState extends ConsumerState<BasicForm> {
                   if (value!.isEmpty) {
                     return "Inserta un valor";
                   }
+                  return null;
                 },
               ),
             ),
@@ -100,6 +101,7 @@ class BasicFormState extends ConsumerState<BasicForm> {
                   if (value!.isEmpty) {
                     return "Inserta un valor";
                   }
+                  return null;
                 },
               ),
             ),
@@ -123,6 +125,7 @@ class BasicFormState extends ConsumerState<BasicForm> {
                   if (value!.isEmpty) {
                     return "Inserta un valor";
                   }
+                  return null;
                 },
               ),
             ),
@@ -182,6 +185,7 @@ class BasicFormState extends ConsumerState<BasicForm> {
                       return "Correo inválido";
                     }
                   }
+                  return null;
                 },
               ),
             ),
@@ -255,6 +259,7 @@ class BasicFormState extends ConsumerState<BasicForm> {
                   if (value!.isEmpty) {
                     return "Inserta un valor";
                   }
+                  return null;
                 },
               ),
             ),
@@ -279,6 +284,7 @@ class BasicFormState extends ConsumerState<BasicForm> {
                   if (value!.isEmpty) {
                     return "Inserta un valor";
                   }
+                  return null;
                 },
               ),
             ),
@@ -303,6 +309,7 @@ class BasicFormState extends ConsumerState<BasicForm> {
                   if (value!.isEmpty) {
                     return "Inserta un valor";
                   }
+                  return null;
                 },
               ),
             ),
@@ -327,6 +334,7 @@ class BasicFormState extends ConsumerState<BasicForm> {
                   if (value!.isEmpty) {
                     return "Inserta un valor";
                   }
+                  return null;
                 },
               ),
             ),
@@ -351,6 +359,7 @@ class BasicFormState extends ConsumerState<BasicForm> {
                   if (value!.isEmpty) {
                     return "Inserta un valor";
                   }
+                  return null;
                 },
               ),
             ),
@@ -376,6 +385,7 @@ class BasicFormState extends ConsumerState<BasicForm> {
                   if (value!.isEmpty) {
                     return "Inserta un valor";
                   }
+                  return null;
                 },
               ),
             ),

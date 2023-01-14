@@ -1,7 +1,7 @@
 import 'package:aronnax/main.dart';
 import 'package:aronnax/src/Pages/LoginScreen/login_main_view.dart';
 import 'package:aronnax/src/Pages/settings/ServerConfigForms/Welcome/Forms/current_server_conf.dart';
-import 'package:aronnax/src/database/settings_model.dart';
+import 'package:aronnax/src/data/database/settings_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
