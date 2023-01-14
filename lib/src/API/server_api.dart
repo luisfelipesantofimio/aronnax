@@ -3,6 +3,8 @@ import 'package:aronnax/main.dart';
 import 'package:aronnax/src/database/settings_model.dart';
 import 'package:mysql1/mysql1.dart';
 
+// TODO: Update remote data model and queries with required values
+
 ServerSettings localData = localdb.get("serverSettings");
 
 String host = localData.server;
