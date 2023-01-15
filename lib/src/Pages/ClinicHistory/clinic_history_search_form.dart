@@ -7,10 +7,10 @@ import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/database/local_model/local_queries.dart';
 import 'package:aronnax/src/data/models/remote_clinic_history.dart';
 import 'package:aronnax/src/data/models/remote_patient.dart';
+import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/consultations_provider.dart';
 import 'package:aronnax/src/data/providers/patient_search_provider.dart';
 import 'package:aronnax/src/misc/global_values.dart';
-import 'package:aronnax/src/presentation/login/login_form.dart';
 import 'package:aronnax/src/widgets/consultation_element.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,6 +28,7 @@ class ClinicHistorySearchFormState
 
   @override
   Widget build(BuildContext context) {
+    bool isOfflineEnabled = ref.watch(globalOfflineStatusProvider);
     List<RemotePatient> remotePatientsList =
         isOfflineEnabled ? [] : ref.watch(globalQueriedPatientProvider);
     AsyncValue<List<Patient>> userConsultationProvider = ref.watch(

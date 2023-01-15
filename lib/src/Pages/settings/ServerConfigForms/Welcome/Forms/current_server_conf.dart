@@ -1,7 +1,6 @@
 import 'package:aronnax/main.dart';
 import 'package:aronnax/src/Pages/settings/ServerConfigForms/Welcome/Views/finish.dart';
 import 'package:aronnax/src/data/database/settings_db/settings.dart';
-import 'package:aronnax/src/data/database/settings_model.dart';
 import 'package:flutter/material.dart';
 
 class ExistingServerForm extends StatefulWidget {
@@ -156,15 +155,15 @@ class _ExistingServerFormState extends State<ExistingServerForm> {
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
-                  localdb.put(
-                    "serverSettings",
-                    ServerSettings(_databaseUser, _databasePassword,
-                        _databaseName, _serverAdress, _serverPort, true),
-                  );
-                  offlineModeDB.put(
-                    "offlineModeDB",
-                    LocalDatabaseMode(false),
-                  );
+                  // localdb.put(
+                  //   "serverSettings",
+                  //   ServerSettings(_databaseUser, _databasePassword,
+                  //       _databaseName, _serverAdress, _serverPort, true),
+                  // );
+                  // offlineModeDB.put(
+                  //   "offlineModeDB",
+                  //   LocalDatabaseMode(false),
+                  // );
                   RemoteDatabaseAccess serverData = RemoteDatabaseAccess()
                     ..databaseName = _databaseName
                     ..server = _serverAdress

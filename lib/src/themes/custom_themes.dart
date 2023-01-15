@@ -1,37 +1,8 @@
-import 'package:aronnax/main.dart';
-import 'package:aronnax/src/data/database/settings_model.dart';
 import 'package:aronnax/src/themes/color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-GlobalThemeMode settings = themeDB.get("SettingsDB");
-
-ValueNotifier<bool> darkThemeEnabled = ValueNotifier(settings.darkModeEnabled);
-
-class GlobalThemes with ChangeNotifier {
-  ThemeMode get currentTheme =>
-      darkThemeEnabled.value ? ThemeMode.dark : ThemeMode.light;
-
-  void changeCurrentTheme() {
-    darkThemeEnabled.value = !darkThemeEnabled.value;
-    themeDB.put(
-      "SettingsDB",
-      GlobalThemeMode(darkThemeEnabled.value),
-    );
-
-    notifyListeners();
-  }
-
-  areSettingsEmpty() {
-    if (themeDB.isEmpty) {
-      themeDB.put(
-        "SettingsDB",
-        GlobalThemeMode(false),
-      );
-    }
-    notifyListeners();
-  }
-
+class GlobalThemes {
   static ThemeData get darkTheme {
     return ThemeData(
       primaryColor: CustomDarkColors.accentColorCustom,

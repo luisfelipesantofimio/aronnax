@@ -1,10 +1,8 @@
 import 'dart:developer';
 
-import 'package:aronnax/main.dart';
 import 'package:aronnax/src/Pages/settings/widgets/no_server_dialog.dart';
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/database/local_model/local_queries.dart';
-import 'package:aronnax/src/data/database/settings_model.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 
 import "package:flutter/material.dart";
@@ -22,8 +20,6 @@ class LocalDBActivationScreenState
   @override
   Widget build(BuildContext context) {
     bool isOfflineEnabled = ref.watch(globalOfflineStatusProvider);
-    LocalDatabaseMode currentLocalDBstatus = offlineModeDB.get("offlineModeDB");
-    isOfflineEnabled = currentLocalDBstatus.offlineModeEnabled;
 
     log(isOfflineEnabled.toString());
     return Center(
@@ -41,12 +37,14 @@ class LocalDBActivationScreenState
                 onChanged: (switchVal) async {
                   List<ProfessionalData> currentLocalUserList =
                       await localDB.isProfessionalsListEmpty();
-                  if (isOfflineEnabled && localdb.isEmpty) {
+                  if (isOfflineEnabled
+                      //&& localdb.isEmpty
+                      ) {
                     showDialog(
                       context: context,
                       builder: (context) => const NoServerDialog(),
                     );
-                  } else if (localdb.isNotEmpty &&
+                  } else if ( //localdb.isNotEmpty &&
                       currentLocalUserList.isEmpty) {
                     showDialog(
                       context: context,

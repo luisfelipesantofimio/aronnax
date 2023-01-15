@@ -1,7 +1,6 @@
-import 'package:aronnax/main.dart';
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/models/remote_professional.dart';
-import 'package:aronnax/src/data/database/settings_model.dart';
+import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/login_provider.dart';
 import 'package:aronnax/src/domain/repositories/auth_repository.dart';
 import 'package:aronnax/src/global/user_global_values.dart';
@@ -17,9 +16,6 @@ String passwordInServer = "";
 String userID = "";
 
 final _loginKey = GlobalKey<FormState>();
-
-LocalDatabaseMode currentLocalDBstatus = offlineModeDB.get("offlineModeDB");
-bool isOfflineEnabled = currentLocalDBstatus.offlineModeEnabled;
 
 class LoginForm extends ConsumerStatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -42,19 +38,10 @@ class LoginFormState extends ConsumerState<LoginForm> {
     });
   }
 
-  // isPasswordValid(String serverPassword, String inputPassword) {
-  //   log("Contraseña recibida: $serverPassword");
-  //   bool result = Crypt(serverPassword).match(inputPassword);
-  //   if (result == true) {
-  //     setState(() {
-  //       isAbleToLogin = true;
-  //     });
-  //   }
-  // }
-
   @override
   void didChangeDependencies() {
-    if (!isOfflineEnabled) {
+    log(ref.watch(globalOfflineStatusProvider).toString());
+    if (!ref.watch(globalOfflineStatusProvider)) {
       ref.read(remoteLoginStateProvider.notifier).getProfessionalsInServer();
     }
     super.didChangeDependencies();
@@ -62,6 +49,8 @@ class LoginFormState extends ConsumerState<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
+    bool isOfflineEnabled = ref.watch(globalOfflineStatusProvider);
+
     AsyncValue<List<ProfessionalData>> loginProvider = ref.watch(
       localLoginStateProvider(
         userID == ""

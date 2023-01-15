@@ -1,6 +1,6 @@
 import 'package:aronnax/src/data/database/local_model/local_queries.dart';
+import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/global/user_global_values.dart';
-import 'package:aronnax/src/presentation/login/login_form.dart';
 import 'package:flutter/material.dart';
 import 'package:aronnax/src/data/remote_database/server_api.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,6 +25,8 @@ class SessionsFormState extends ConsumerState<SessionsForm> {
 
   @override
   Widget build(BuildContext context) {
+    bool isOfflineEnabled = ref.watch(globalOfflineStatusProvider);
+
     String professionalName =
         "${ref.read(globalUserNameProvider)} ${ref.read(globalUserLastNameProvider)}";
 

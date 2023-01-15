@@ -1,15 +1,16 @@
+import 'package:aronnax/src/data/providers/dark_mode_provider.dart';
 import 'package:aronnax/src/misc/global_values.dart';
-import 'package:aronnax/src/themes/custom_themes.dart';
 import "package:flutter/material.dart";
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'login_form.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends ConsumerWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     double currentWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Stack(
@@ -65,24 +66,20 @@ class LoginScreen extends StatelessWidget {
                     SizedBox(height: MediaQuery.of(context).size.height / 4),
                     SizedBox(
                       width: 200,
-                      child: ValueListenableBuilder(
-                        valueListenable: darkThemeEnabled,
-                        builder: (BuildContext context, value, c) {
-                          return Image(
-                            image: darkThemeEnabled.value
-                                ? const AssetImage(
-                                    "assets/img/aronnax-icon-light.png")
-                                : const AssetImage(
-                                    "assets/img/aronnax-icon-dark.png"),
-                          );
-                        },
+                      child: Image(
+                        height: 300,
+                        image: ref.watch(darkThemeProvider) == ThemeMode.light
+                            ? const AssetImage(
+                                "assets/img/aronnax-icon-light.png")
+                            : const AssetImage(
+                                "assets/img/aronnax-icon-dark.png"),
                       ),
                     ),
                     Text(
                       "Aronnax",
                       style: GoogleFonts.montserrat(
                         fontSize: 60,
-                        color: darkThemeEnabled.value
+                        color: ref.watch(darkThemeProvider) == ThemeMode.light
                             ? const Color.fromARGB(255, 215, 215, 215)
                             : const Color.fromARGB(255, 28, 28, 28),
                       ),
@@ -99,9 +96,10 @@ class LoginScreen extends StatelessWidget {
                           "Versión $globalVersion",
                           style: GoogleFonts.montserrat(
                             fontSize: 15,
-                            color: darkThemeEnabled.value
-                                ? const Color.fromARGB(255, 215, 215, 215)
-                                : const Color.fromARGB(255, 28, 28, 28),
+                            color:
+                                ref.watch(darkThemeProvider) == ThemeMode.light
+                                    ? const Color.fromARGB(255, 215, 215, 215)
+                                    : const Color.fromARGB(255, 28, 28, 28),
                           ),
                         )
                       ],

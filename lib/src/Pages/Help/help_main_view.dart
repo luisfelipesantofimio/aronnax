@@ -1,14 +1,15 @@
 import 'package:aronnax/src/Pages/Help/legal_info.dart';
-import 'package:aronnax/src/themes/custom_themes.dart';
+import 'package:aronnax/src/data/providers/dark_mode_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 var padding = const EdgeInsets.only(left: 60);
 
-class MainHelpView extends StatelessWidget {
+class MainHelpView extends ConsumerWidget {
   const MainHelpView({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: Center(
         child: Column(
@@ -20,18 +21,14 @@ class MainHelpView extends StatelessWidget {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ValueListenableBuilder(
-                        valueListenable: darkThemeEnabled,
-                        builder: (BuildContext context, value, c) {
-                          return Image(
-                            height: 300,
-                            image: darkThemeEnabled.value
-                                ? const AssetImage(
-                                    "assets/img/aronnax-icon-light.png")
-                                : const AssetImage(
-                                    "assets/img/aronnax-icon-dark.png"),
-                          );
-                        }),
+                    Image(
+                      height: 300,
+                      image: ref.watch(darkThemeProvider) == ThemeMode.light
+                          ? const AssetImage(
+                              "assets/img/aronnax-icon-light.png")
+                          : const AssetImage(
+                              "assets/img/aronnax-icon-dark.png"),
+                    ),
                     Text(
                       "Aronnax",
                       style: Theme.of(context).textTheme.headline1,

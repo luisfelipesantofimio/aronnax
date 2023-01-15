@@ -1,6 +1,6 @@
+import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/consultations_provider.dart';
 import 'package:aronnax/src/global/user_global_values.dart';
-import 'package:aronnax/src/presentation/login/login_form.dart';
 import 'package:aronnax/src/presentation/main_menu/main_header.dart';
 import 'package:aronnax/src/presentation/main_menu/options_bar.dart';
 import 'package:aronnax/src/widgets/main_menu_options.dart';
@@ -33,7 +33,7 @@ class MainMenu extends ConsumerStatefulWidget {
 class MainMenuState extends ConsumerState<MainMenu> {
   @override
   void didChangeDependencies() {
-    if (!isOfflineEnabled) {
+    if (!ref.watch(globalOfflineStatusProvider)) {
       ref.read(globalQueriedPatientProvider.notifier).getPatientInfo();
       ref.read(globalQueriedClinicHistoryProvider.notifier).getPatientInfo();
       ref

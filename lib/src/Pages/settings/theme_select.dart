@@ -1,14 +1,15 @@
-import 'package:aronnax/src/themes/custom_themes.dart';
+import 'package:aronnax/src/data/providers/dark_mode_provider.dart';
 import "package:flutter/material.dart";
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ThemeSelector extends StatefulWidget {
+class ThemeSelector extends ConsumerStatefulWidget {
   const ThemeSelector({Key? key}) : super(key: key);
 
   @override
-  State<ThemeSelector> createState() => _ThemeSelectorState();
+  ThemeSelectorState createState() => ThemeSelectorState();
 }
 
-class _ThemeSelectorState extends State<ThemeSelector> {
+class ThemeSelectorState extends ConsumerState<ThemeSelector> {
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -19,26 +20,24 @@ class _ThemeSelectorState extends State<ThemeSelector> {
             "Activar tema oscuro",
             style: Theme.of(context).textTheme.bodyText1,
           ),
-          ValueListenableBuilder(
-              valueListenable: darkThemeEnabled,
-              builder: (context, box, child) {
-                return Column(
-                  children: [
-                    Switch(
-                      value: darkThemeEnabled.value,
-                      onChanged: (switchVal) {
-                        currentTheme.changeCurrentTheme();
-                      },
-                      activeColor: Colors.blueGrey,
-                      activeTrackColor: Colors.green,
-                    ),
-                    Text(
-                      darkThemeEnabled.value ? "Modo oscuro" : "Modo claro",
-                      style: Theme.of(context).textTheme.bodyText2,
-                    ),
-                  ],
-                );
-              })
+          Column(
+            children: [
+              Switch(
+                value: ref.watch(darkThemeProvider) == ThemeMode.light,
+                onChanged: (switchVal) {
+                  ref.watch(darkThemeProvider.notifier).updateCurrentTheme();
+                },
+                activeColor: Colors.blueGrey,
+                activeTrackColor: Colors.green,
+              ),
+              Text(
+                ref.watch(darkThemeProvider) == ThemeMode.light
+                    ? "Modo claro"
+                    : "Modo oscuro",
+                style: Theme.of(context).textTheme.bodyText2,
+              ),
+            ],
+          ),
         ],
       ),
     );

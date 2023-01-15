@@ -1,24 +1,24 @@
 import 'dart:developer';
-import 'package:aronnax/main.dart';
-import 'package:aronnax/src/data/database/settings_model.dart';
 import 'package:mysql1/mysql1.dart';
 
 // TODO: Update remote data model and queries with required values
 
-ServerSettings localData = localdb.get("serverSettings");
+// ServerSettings localData = ServerSettings(
+//     "userName", password, "databaseName", "server", "port", false);
+//localdb.get("serverSettings");
 
-String host = localData.server;
-int port = int.parse(localData.port);
-String db = localData.databaseName;
-String user = localData.userName;
-String password = localData.password;
+String host = "localData.server";
+int port = 0;
+String db = "localData.databaseName";
+String user = "localData.userName";
+String password = "localData.password";
 
 class MySQL {
-  String host = localData.server;
-  int port = int.parse(localData.port);
-  String db = localData.databaseName;
-  String user = localData.userName;
-  String password = localData.password;
+  String host = "localData.server";
+  int port = 0;
+  String db = "localData.databaseName";
+  String user = "localData.userName";
+  String password = "localData.password";
   MySQL();
   Future<MySqlConnection> getConnection() async {
     var settings = ConnectionSettings(

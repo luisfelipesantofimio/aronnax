@@ -1,6 +1,4 @@
-import 'package:aronnax/main.dart';
 import 'package:aronnax/src/Pages/settings/ServerConfigForms/Welcome/Forms/server_create.dart';
-import 'package:aronnax/src/data/database/settings_model.dart';
 import 'package:aronnax/src/presentation/login/login_main_view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,17 +27,17 @@ class ServerCreate extends StatelessWidget {
                   ),
                 ),
                 Visibility(
-                  visible: localdb.isNotEmpty,
+                  //     visible: localdb.isNotEmpty,
                   child: Row(
                     children: [
                       const Text(
                           "Parece que ya tienes una configuración previa. ¿Deseas continuar?"),
                       TextButton(
                         onPressed: () {
-                          offlineModeDB.put(
-                            "offlineModeDB",
-                            LocalDatabaseMode(false),
-                          );
+                          // offlineModeDB.put(
+                          //   "offlineModeDB",
+                          //   LocalDatabaseMode(false),
+                          // );
                           Navigator.push(
                               context,
                               MaterialPageRoute(

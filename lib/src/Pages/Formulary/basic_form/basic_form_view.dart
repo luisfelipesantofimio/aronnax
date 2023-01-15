@@ -1,10 +1,10 @@
+import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/remote_database/server_api.dart';
 import 'package:aronnax/src/Pages/Formulary/Forms/basic_form.dart';
 import 'package:aronnax/src/Pages/Formulary/basic_form/header.dart';
 import 'package:aronnax/src/data/database/local_model/local_queries.dart';
 import 'package:aronnax/src/global/controllers.dart';
 import 'package:aronnax/src/global/user_global_values.dart';
-import 'package:aronnax/src/presentation/login/login_form.dart';
 import 'package:aronnax/src/widgets/generic_global_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,6 +14,7 @@ class MainViewRegister extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    bool isOfflineEnabled = ref.watch(globalOfflineStatusProvider);
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Center(

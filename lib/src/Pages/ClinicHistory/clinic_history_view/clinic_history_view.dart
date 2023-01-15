@@ -1,9 +1,9 @@
 import 'package:aronnax/src/Pages/ClinicHistory/pdf/pdf_export.dart';
 import 'package:aronnax/src/Pages/ClinicHistory/widgets/sessions_list_view.dart';
 import 'package:aronnax/src/data/providers/clinic_history_data_provider.dart';
+import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/consultations_provider.dart';
 import 'package:aronnax/src/misc/global_values.dart';
-import 'package:aronnax/src/presentation/login/login_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -22,7 +22,7 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
 
   @override
   void didChangeDependencies() {
-    isOfflineEnabled
+    ref.watch(globalOfflineStatusProvider)
         ? Future(
             () {
               ref.read(currentConsultationReason.notifier).update((state) => ref
@@ -125,6 +125,8 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+
+    bool isOfflineEnabled = ref.watch(globalOfflineStatusProvider);
 
     return Scaffold(
       body: Column(
@@ -499,7 +501,7 @@ class HeaderClinicHistoryViewState
     extends ConsumerState<HeaderClinicHistoryView> {
   @override
   void didChangeDependencies() {
-    isOfflineEnabled
+    ref.watch(globalOfflineStatusProvider)
         ? Future(
             () {
               ref.read(currentRegister.notifier).update((state) => ref

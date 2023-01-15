@@ -1,25 +1,22 @@
 
 import 'package:aronnax/main.dart';
-import 'package:aronnax/src/data/database/settings_model.dart';
+import 'package:aronnax/src/data/database/settings_db/settings.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class GlobalOfflineStatus extends StateNotifier<bool> {
   GlobalOfflineStatus() : super(false);
 
-  LocalDatabaseMode currentLocalDBstatus = offlineModeDB.get("offlineModeDB");
+  final settings = isar.settings;
 
-  void updateCurrentStatus() {
-    state = !state;
-    offlineModeDB.put(
-      "offlineModeDB",
-      LocalDatabaseMode(state),
-    );
+  void getConnectionStatus() async {
+    Settings? currentSettings = await settings.get(0);
+    state = currentSettings!.isOfflineModeEnabled!;
   }
 
-  void setCurrentStatus() {
-    if (offlineModeDB.isNotEmpty) {
-      state = currentLocalDBstatus.offlineModeEnabled;
-    }
+  void updateCurrentStatus() async {
+    Settings? currentSettings = await settings.get(0);
+    currentSettings!.isDarkModeEnabled = !currentSettings.isDarkModeEnabled!;
+    settings.put(currentSettings);
   }
 }
 

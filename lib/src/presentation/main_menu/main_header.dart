@@ -1,13 +1,14 @@
+import 'package:aronnax/src/data/providers/dark_mode_provider.dart';
 import 'package:aronnax/src/misc/global_values.dart';
-import 'package:aronnax/src/themes/custom_themes.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart'; //library for date formating
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
-class MainHeader extends StatelessWidget {
+class MainHeader extends ConsumerWidget {
   const MainHeader({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     DateTime dateFormat = DateTime.now();
     String currentDate = DateFormat("dd/MM/yyyy").format(dateFormat);
     return Container(
@@ -27,17 +28,11 @@ class MainHeader extends StatelessWidget {
         children: [
           Container(
             margin: const EdgeInsets.all(10),
-            child: ValueListenableBuilder(
-              valueListenable: darkThemeEnabled,
-              builder: (BuildContext context, value, c) {
-                return Image(
-                  width: 100,
-                  alignment: Alignment.centerLeft,
-                  image: darkThemeEnabled.value
-                      ? const AssetImage("assets/img/aronnax-icon-light.png")
-                      : const AssetImage("assets/img/aronnax-icon-dark.png"),
-                );
-              },
+            child: Image(
+              height: 300,
+              image: ref.watch(darkThemeProvider) == ThemeMode.light
+                  ? const AssetImage("assets/img/aronnax-icon-light.png")
+                  : const AssetImage("assets/img/aronnax-icon-dark.png"),
             ),
           ),
           Text(currentDate, //formated date
