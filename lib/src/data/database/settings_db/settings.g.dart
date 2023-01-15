@@ -17,13 +17,18 @@ const SettingsSchema = CollectionSchema(
   name: r'Settings',
   id: -8656046621518759136,
   properties: {
-    r'isDarkModeEnabled': PropertySchema(
+    r'isConfigured': PropertySchema(
       id: 0,
+      name: r'isConfigured',
+      type: IsarType.bool,
+    ),
+    r'isDarkModeEnabled': PropertySchema(
+      id: 1,
       name: r'isDarkModeEnabled',
       type: IsarType.bool,
     ),
     r'isOfflineModeEnabled': PropertySchema(
-      id: 1,
+      id: 2,
       name: r'isOfflineModeEnabled',
       type: IsarType.bool,
     )
@@ -57,8 +62,9 @@ void _settingsSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeBool(offsets[0], object.isDarkModeEnabled);
-  writer.writeBool(offsets[1], object.isOfflineModeEnabled);
+  writer.writeBool(offsets[0], object.isConfigured);
+  writer.writeBool(offsets[1], object.isDarkModeEnabled);
+  writer.writeBool(offsets[2], object.isOfflineModeEnabled);
 }
 
 Settings _settingsDeserialize(
@@ -69,8 +75,9 @@ Settings _settingsDeserialize(
 ) {
   final object = Settings();
   object.id = id;
-  object.isDarkModeEnabled = reader.readBool(offsets[0]);
-  object.isOfflineModeEnabled = reader.readBool(offsets[1]);
+  object.isConfigured = reader.readBoolOrNull(offsets[0]);
+  object.isDarkModeEnabled = reader.readBoolOrNull(offsets[1]);
+  object.isOfflineModeEnabled = reader.readBoolOrNull(offsets[2]);
   return object;
 }
 
@@ -82,9 +89,11 @@ P _settingsDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readBool(offset)) as P;
+      return (reader.readBoolOrNull(offset)) as P;
     case 1:
-      return (reader.readBool(offset)) as P;
+      return (reader.readBoolOrNull(offset)) as P;
+    case 2:
+      return (reader.readBoolOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -231,8 +240,53 @@ extension SettingsQueryFilter
     });
   }
 
+  QueryBuilder<Settings, Settings, QAfterFilterCondition> isConfiguredIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'isConfigured',
+      ));
+    });
+  }
+
   QueryBuilder<Settings, Settings, QAfterFilterCondition>
-      isDarkModeEnabledEqualTo(bool value) {
+      isConfiguredIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'isConfigured',
+      ));
+    });
+  }
+
+  QueryBuilder<Settings, Settings, QAfterFilterCondition> isConfiguredEqualTo(
+      bool? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'isConfigured',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Settings, Settings, QAfterFilterCondition>
+      isDarkModeEnabledIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'isDarkModeEnabled',
+      ));
+    });
+  }
+
+  QueryBuilder<Settings, Settings, QAfterFilterCondition>
+      isDarkModeEnabledIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'isDarkModeEnabled',
+      ));
+    });
+  }
+
+  QueryBuilder<Settings, Settings, QAfterFilterCondition>
+      isDarkModeEnabledEqualTo(bool? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'isDarkModeEnabled',
@@ -242,7 +296,25 @@ extension SettingsQueryFilter
   }
 
   QueryBuilder<Settings, Settings, QAfterFilterCondition>
-      isOfflineModeEnabledEqualTo(bool value) {
+      isOfflineModeEnabledIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'isOfflineModeEnabled',
+      ));
+    });
+  }
+
+  QueryBuilder<Settings, Settings, QAfterFilterCondition>
+      isOfflineModeEnabledIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'isOfflineModeEnabled',
+      ));
+    });
+  }
+
+  QueryBuilder<Settings, Settings, QAfterFilterCondition>
+      isOfflineModeEnabledEqualTo(bool? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'isOfflineModeEnabled',
@@ -259,6 +331,18 @@ extension SettingsQueryLinks
     on QueryBuilder<Settings, Settings, QFilterCondition> {}
 
 extension SettingsQuerySortBy on QueryBuilder<Settings, Settings, QSortBy> {
+  QueryBuilder<Settings, Settings, QAfterSortBy> sortByIsConfigured() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isConfigured', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Settings, Settings, QAfterSortBy> sortByIsConfiguredDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isConfigured', Sort.desc);
+    });
+  }
+
   QueryBuilder<Settings, Settings, QAfterSortBy> sortByIsDarkModeEnabled() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isDarkModeEnabled', Sort.asc);
@@ -299,6 +383,18 @@ extension SettingsQuerySortThenBy
     });
   }
 
+  QueryBuilder<Settings, Settings, QAfterSortBy> thenByIsConfigured() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isConfigured', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Settings, Settings, QAfterSortBy> thenByIsConfiguredDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isConfigured', Sort.desc);
+    });
+  }
+
   QueryBuilder<Settings, Settings, QAfterSortBy> thenByIsDarkModeEnabled() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isDarkModeEnabled', Sort.asc);
@@ -327,6 +423,12 @@ extension SettingsQuerySortThenBy
 
 extension SettingsQueryWhereDistinct
     on QueryBuilder<Settings, Settings, QDistinct> {
+  QueryBuilder<Settings, Settings, QDistinct> distinctByIsConfigured() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'isConfigured');
+    });
+  }
+
   QueryBuilder<Settings, Settings, QDistinct> distinctByIsDarkModeEnabled() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'isDarkModeEnabled');
@@ -348,13 +450,19 @@ extension SettingsQueryProperty
     });
   }
 
-  QueryBuilder<Settings, bool, QQueryOperations> isDarkModeEnabledProperty() {
+  QueryBuilder<Settings, bool?, QQueryOperations> isConfiguredProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'isConfigured');
+    });
+  }
+
+  QueryBuilder<Settings, bool?, QQueryOperations> isDarkModeEnabledProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isDarkModeEnabled');
     });
   }
 
-  QueryBuilder<Settings, bool, QQueryOperations>
+  QueryBuilder<Settings, bool?, QQueryOperations>
       isOfflineModeEnabledProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isOfflineModeEnabled');

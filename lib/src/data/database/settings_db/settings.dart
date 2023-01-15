@@ -4,9 +4,10 @@ part "settings.g.dart";
 
 @collection
 class Settings {
-  Id id = 0;
-  bool isDarkModeEnabled = false;
-  bool isOfflineModeEnabled = true;
+  Id id = Isar.autoIncrement;
+  bool? isDarkModeEnabled;
+  bool? isOfflineModeEnabled;
+  bool? isConfigured;
 }
 
 @collection
