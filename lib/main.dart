@@ -2,14 +2,13 @@ import 'package:aronnax/src/Pages/settings/ServerConfigForms/Welcome/Views/first
 import 'package:aronnax/src/data/database/settings_db/settings.dart';
 import 'package:aronnax/src/data/database/settings_model.dart';
 import 'package:aronnax/src/misc/departments_list.dart';
+import 'package:aronnax/src/presentation/login/login_main_view.dart';
 import 'package:aronnax/src/themes/custom_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
-
-import 'src/Pages/LoginScreen/login_main_view.dart';
 
 late Box localdb;
 late Box themeDB;

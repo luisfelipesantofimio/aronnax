@@ -1,6 +1,5 @@
+import 'package:aronnax/src/presentation/main_menu/main_menu.dart';
 import 'package:flutter/material.dart';
-
-import '../Pages/MainMenu/main_menu.dart';
 
 class LoginButton extends StatelessWidget {
   const LoginButton({Key? key}) : super(key: key);

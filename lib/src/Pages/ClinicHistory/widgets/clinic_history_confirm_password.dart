@@ -1,7 +1,7 @@
 import 'package:aronnax/src/Pages/ClinicHistory/clinic_history_view/clinic_history_view.dart';
-import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
 import 'package:aronnax/src/global/controllers.dart';
 import 'package:aronnax/src/global/method.dart';
+import 'package:aronnax/src/presentation/login/login_form.dart';
 import 'package:flutter/material.dart';
 
 class ClinicHistoryConfirmPasswordDialog extends StatefulWidget {

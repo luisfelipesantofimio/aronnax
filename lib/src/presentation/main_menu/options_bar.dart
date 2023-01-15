@@ -1,8 +1,7 @@
 import 'package:aronnax/src/Pages/Help/help_main_view.dart';
 import 'package:aronnax/src/Pages/settings/settings_main.dart';
+import 'package:aronnax/src/presentation/login/login_main_view.dart';
 import 'package:flutter/material.dart';
-
-import '../LoginScreen/login_main_view.dart';
 
 class OptionsBar extends StatefulWidget {
   const OptionsBar({Key? key}) : super(key: key);

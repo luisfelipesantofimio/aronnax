@@ -5,10 +5,10 @@ import 'package:aronnax/src/data/database/settings_model.dart';
 import 'package:aronnax/src/data/providers/login_provider.dart';
 import 'package:aronnax/src/domain/repositories/auth_repository.dart';
 import 'package:aronnax/src/global/user_global_values.dart';
+import 'package:aronnax/src/presentation/main_menu/main_menu.dart';
 
 import 'package:flutter/material.dart';
 import 'dart:developer';
-import 'package:aronnax/src/Pages/MainMenu/main_menu.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -209,7 +209,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
                   if (value!.isEmpty) {
                     return "Ingresa tu contraseña";
                   }
-                  if (AuthRepository()
+                  if (!AuthRepository()
                       .loginUser(passwordInServer, userPassword)) {
                     return "Contraseña incorrecta";
                   } else {

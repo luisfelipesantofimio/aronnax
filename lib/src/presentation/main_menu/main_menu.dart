@@ -1,8 +1,8 @@
-import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
-import 'package:aronnax/src/Pages/MainMenu/main_header.dart';
-import 'package:aronnax/src/Pages/MainMenu/options_bar.dart';
 import 'package:aronnax/src/data/providers/consultations_provider.dart';
 import 'package:aronnax/src/global/user_global_values.dart';
+import 'package:aronnax/src/presentation/login/login_form.dart';
+import 'package:aronnax/src/presentation/main_menu/main_header.dart';
+import 'package:aronnax/src/presentation/main_menu/options_bar.dart';
 import 'package:aronnax/src/widgets/main_menu_options.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_riverpod/flutter_riverpod.dart';
