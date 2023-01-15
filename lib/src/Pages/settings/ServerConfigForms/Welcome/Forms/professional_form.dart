@@ -1,4 +1,4 @@
-import 'package:aronnax/src/data/API/server_api.dart';
+import 'package:aronnax/src/data/remote_database/server_api.dart';
 import 'package:aronnax/src/Pages/settings/ServerConfigForms/Welcome/Views/finish.dart';
 import 'package:crypt/crypt.dart';
 import 'package:flutter/material.dart';

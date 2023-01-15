@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:aronnax/src/data/API/server_api.dart';
+import 'package:aronnax/src/data/remote_database/server_api.dart';
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/database/local_model/local_queries.dart';
 import 'package:aronnax/src/data/models/remode_session_resume.dart';
