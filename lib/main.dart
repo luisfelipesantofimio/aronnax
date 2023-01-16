@@ -13,7 +13,7 @@ late Isar isar;
 void main() async {
   final documentsDir = await getApplicationDocumentsDirectory();
   isar = await Isar.open([SettingsSchema, RemoteDatabaseAccessSchema],
-      directory: "${documentsDir.path}/aronnax/");
+      directory: documentsDir.path, name: "Aronnax_settings");
   runApp(
     const ProviderScope(
       child: MyApp(),
