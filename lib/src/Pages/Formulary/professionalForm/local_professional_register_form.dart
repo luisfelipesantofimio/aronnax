@@ -1,5 +1,7 @@
-import 'package:aronnax/src/Pages/settings/ServerConfigForms/Welcome/Views/finish.dart';
+import 'package:aronnax/main.dart';
 import 'package:aronnax/src/data/database/local_model/local_queries.dart';
+import 'package:aronnax/src/data/database/settings_db/settings.dart';
+import 'package:aronnax/src/presentation/welcome_screens/finish.dart';
 import 'package:crypt/crypt.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -199,10 +201,7 @@ class _LocalProfessionalRegisterState extends State<LocalProfessionalRegister> {
                 onPressed: () {
                   if (professionalKey.currentState!.validate()) {
                     professionalKey.currentState!.save();
-                    // localdb.put(
-                    //   "serverSettings",
-                    //   ServerSettings("", "", "", "", "", true),
-                    // );
+
                     addLocalProfessional(
                       personalID,
                       names,
@@ -211,10 +210,16 @@ class _LocalProfessionalRegisterState extends State<LocalProfessionalRegister> {
                       userName,
                       _hashedPassword.toString(),
                     );
-                    // offlineModeDB.put(
-                    //   "offlineModeDB",
-                    //   LocalDatabaseMode(true),
-                    // );
+                    Future(
+                      () async {
+                        await isar.writeTxn(() async {
+                          final currentSettings = await isar.settings.get(0);
+                          currentSettings!.isConfigured = true;
+
+                          await isar.settings.put(currentSettings);
+                        });
+                      },
+                    );
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text("¡Hola! $names"),
