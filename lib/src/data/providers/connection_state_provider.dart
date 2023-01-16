@@ -1,4 +1,3 @@
-
 import 'package:aronnax/main.dart';
 import 'package:aronnax/src/data/database/settings_db/settings.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

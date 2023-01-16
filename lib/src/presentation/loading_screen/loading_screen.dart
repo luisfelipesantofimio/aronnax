@@ -1,10 +1,10 @@
-
 import 'package:aronnax/main.dart';
 import 'package:aronnax/src/data/database/settings_db/settings.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/dark_mode_provider.dart';
 import 'package:aronnax/src/domain/repositories/database_repository.dart';
 import 'package:aronnax/src/presentation/login/login_main_view.dart';
+import 'package:aronnax/src/presentation/welcome_screens/first.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -24,7 +24,7 @@ class _LoadingScreenState extends ConsumerState<LoadingScreen> {
           await isar.writeTxn(() async {
             await isar.settings.put(Settings()
               ..id = 0
-              ..isDarkModeEnabled = true
+              ..isDarkModeEnabled = false
               ..isOfflineModeEnabled = true
               ..isConfigured = false);
           });
@@ -34,14 +34,33 @@ class _LoadingScreenState extends ConsumerState<LoadingScreen> {
     ref.watch(darkThemeProvider.notifier).getCurrentTheme();
     ref.watch(globalOfflineStatusProvider.notifier).getConnectionStatus();
 
-    Future(
-      () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const LoginScreen(),
-        ),
-      ),
-    );
+    Future(() async {
+      bool? isConfigured =
+          await DatabaseRepository().isAronnaxConfigured() ?? false;
+      if (isConfigured) {
+        Future(
+          () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const LoginScreen(),
+              ),
+            );
+          },
+        );
+      } else {
+        Future(
+          () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const FirstWelcome(),
+              ),
+            );
+          },
+        );
+      }
+    });
     super.didChangeDependencies();
   }
 

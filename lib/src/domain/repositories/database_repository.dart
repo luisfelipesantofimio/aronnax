@@ -10,10 +10,10 @@ class DatabaseRepository {
     return settingsList.isEmpty;
   }
 
-  Future<bool> isAronnaxConfigured() async {
+  Future<bool?> isAronnaxConfigured() async {
     final settings = isar.collection<Settings>();
     Settings? currentSettings = await settings.get(0);
-    return currentSettings!.isConfigured!;
+    return currentSettings!.isConfigured;
   }
 
   Future<bool?> getCurrentThemeMode() async {
