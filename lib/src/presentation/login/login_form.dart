@@ -31,6 +31,12 @@ class LoginFormState extends ConsumerState<LoginForm> {
   bool userVerified = false;
   bool isAbleToLogin = false;
 
+  String currentUserName = "";
+  String currentUserLastNames = "";
+  String currentProfessionalID = "";
+  String currentPasswordInServer = "";
+  int currentPersonalID = 0;
+
   passwordVisivility() {
     setState(() {
       isPasswordVisible = !isPasswordVisible;
@@ -40,8 +46,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
 
   @override
   void didChangeDependencies() {
-    log(ref.watch(globalOfflineStatusProvider).toString());
-    if (!ref.watch(globalOfflineStatusProvider)) {
+    if (ref.watch(globalOfflineStatusProvider)) {
       ref.read(remoteLoginStateProvider.notifier).getProfessionalsInServer();
     }
     super.didChangeDependencies();
@@ -50,6 +55,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
   @override
   Widget build(BuildContext context) {
     bool isOfflineEnabled = ref.watch(globalOfflineStatusProvider);
+    log(isOfflineEnabled.toString());
 
     AsyncValue<List<ProfessionalData>> loginProvider = ref.watch(
       localLoginStateProvider(
@@ -63,14 +69,6 @@ class LoginFormState extends ConsumerState<LoginForm> {
 
     List<RemoteProfessional> currentRemoteProfessionalData =
         isOfflineEnabled ? [] : ref.watch(remoteLoginStateProvider);
-
-    log("Base de datos local activada? $isOfflineEnabled");
-
-    String currentUserName = "";
-    String currentUserLastNames = "";
-    String currentProfessionalID = "";
-    String currentPasswordInServer = "";
-    int currentPersonalID = 0;
 
     void setRemoteValues(int value) {
       if (ref.watch(remoteLoginStateProvider).isNotEmpty && !isOfflineEnabled) {
@@ -122,7 +120,6 @@ class LoginFormState extends ConsumerState<LoginForm> {
       ref
           .read(globalProfessionalIDProvider.notifier)
           .update((state) => currentID);
-      setState(() {});
     }
 
     return Form(
@@ -154,7 +151,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
                         ),
                       )
                     : "";
-                !isOfflineEnabled ? setRemoteValues(int.parse(value)) : "";
+                isOfflineEnabled ? "" : setRemoteValues(int.parse(value));
                 setState(() {});
                 _loginKey.currentState!.validate();
               },
@@ -162,7 +159,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
                 if (value!.isEmpty) {
                   return "Inserta número de documento";
                 }
-                if (userVerified != true) {
+                if (!userVerified) {
                   return "El usuario no existe";
                 }
                 return null;
@@ -208,9 +205,6 @@ class LoginFormState extends ConsumerState<LoginForm> {
                         builder: (context) => const MainMenu(),
                       ),
                     );
-                    setState(() {
-                      isAbleToLogin = false;
-                    });
                   }
                   return null;
                 },
@@ -281,7 +275,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
                           userVerified = false;
                         });
                       }
-                      setState(() {});
+
                       _loginKey.currentState!.validate();
                     }
 

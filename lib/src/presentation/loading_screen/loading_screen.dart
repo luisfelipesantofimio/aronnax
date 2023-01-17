@@ -31,8 +31,6 @@ class _LoadingScreenState extends ConsumerState<LoadingScreen> {
         }
       },
     );
-    ref.watch(darkThemeProvider.notifier).getCurrentTheme();
-    ref.watch(globalOfflineStatusProvider.notifier).getConnectionStatus();
 
     Future(() async {
       bool? isConfigured =

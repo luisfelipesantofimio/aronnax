@@ -1,3 +1,4 @@
+import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/dark_mode_provider.dart';
 import 'package:aronnax/src/misc/global_values.dart';
 import "package:flutter/material.dart";
@@ -11,6 +12,8 @@ class LoginScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(darkThemeProvider.notifier).getCurrentTheme();
+    ref.watch(globalOfflineStatusProvider.notifier).getConnectionStatus();
     double currentWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Stack(

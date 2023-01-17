@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:aronnax/main.dart';
 import 'package:aronnax/src/data/database/settings_db/settings.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +13,7 @@ class DarkThemeNotifier extends StateNotifier<ThemeMode> {
     final db = isar.collection<Settings>();
     final darkTheme = await db.get(0);
     isDarkThemeEnabled = darkTheme!.isDarkModeEnabled!;
+
     state = isDarkThemeEnabled ? ThemeMode.dark : ThemeMode.light;
   }
 
