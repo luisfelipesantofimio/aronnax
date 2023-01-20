@@ -99,7 +99,33 @@ class Appointments extends Table {
   TextColumn get sessionType => text()();
 }
 
-@DriftDatabase(tables: [Patients, ClinicHistory, Sessions, Professional, Tests])
+class Settings extends Table {
+  IntColumn get id => integer()();
+  BoolColumn get isDarkModeEnabled => boolean()();
+  BoolColumn get isOfflineModeEnabled => boolean()();
+  BoolColumn get isConfigured => boolean()();
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+class ServerDatabase extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get userName => text()();
+  TextColumn get password => text()();
+  TextColumn get server => text()();
+  IntColumn get port => integer()();
+  TextColumn get databaseName => text()();
+}
+
+@DriftDatabase(tables: [
+  Patients,
+  ClinicHistory,
+  Sessions,
+  Professional,
+  Tests,
+  Settings,
+  ServerDatabase
+])
 class LocalDatabase extends _$LocalDatabase {
   LocalDatabase() : super(_openConnection());
 

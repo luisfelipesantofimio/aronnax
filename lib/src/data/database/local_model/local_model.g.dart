@@ -2719,6 +2719,607 @@ class TestsCompanion extends UpdateCompanion<Test> {
   }
 }
 
+class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SettingsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _isDarkModeEnabledMeta =
+      const VerificationMeta('isDarkModeEnabled');
+  @override
+  late final GeneratedColumn<bool> isDarkModeEnabled =
+      GeneratedColumn<bool>('is_dark_mode_enabled', aliasedName, false,
+          type: DriftSqlType.bool,
+          requiredDuringInsert: true,
+          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
+            SqlDialect.sqlite: 'CHECK ("is_dark_mode_enabled" IN (0, 1))',
+            SqlDialect.mysql: '',
+            SqlDialect.postgres: '',
+          }));
+  static const VerificationMeta _isOfflineModeEnabledMeta =
+      const VerificationMeta('isOfflineModeEnabled');
+  @override
+  late final GeneratedColumn<bool> isOfflineModeEnabled =
+      GeneratedColumn<bool>('is_offline_mode_enabled', aliasedName, false,
+          type: DriftSqlType.bool,
+          requiredDuringInsert: true,
+          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
+            SqlDialect.sqlite: 'CHECK ("is_offline_mode_enabled" IN (0, 1))',
+            SqlDialect.mysql: '',
+            SqlDialect.postgres: '',
+          }));
+  static const VerificationMeta _isConfiguredMeta =
+      const VerificationMeta('isConfigured');
+  @override
+  late final GeneratedColumn<bool> isConfigured =
+      GeneratedColumn<bool>('is_configured', aliasedName, false,
+          type: DriftSqlType.bool,
+          requiredDuringInsert: true,
+          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
+            SqlDialect.sqlite: 'CHECK ("is_configured" IN (0, 1))',
+            SqlDialect.mysql: '',
+            SqlDialect.postgres: '',
+          }));
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, isDarkModeEnabled, isOfflineModeEnabled, isConfigured];
+  @override
+  String get aliasedName => _alias ?? 'settings';
+  @override
+  String get actualTableName => 'settings';
+  @override
+  VerificationContext validateIntegrity(Insertable<Setting> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('is_dark_mode_enabled')) {
+      context.handle(
+          _isDarkModeEnabledMeta,
+          isDarkModeEnabled.isAcceptableOrUnknown(
+              data['is_dark_mode_enabled']!, _isDarkModeEnabledMeta));
+    } else if (isInserting) {
+      context.missing(_isDarkModeEnabledMeta);
+    }
+    if (data.containsKey('is_offline_mode_enabled')) {
+      context.handle(
+          _isOfflineModeEnabledMeta,
+          isOfflineModeEnabled.isAcceptableOrUnknown(
+              data['is_offline_mode_enabled']!, _isOfflineModeEnabledMeta));
+    } else if (isInserting) {
+      context.missing(_isOfflineModeEnabledMeta);
+    }
+    if (data.containsKey('is_configured')) {
+      context.handle(
+          _isConfiguredMeta,
+          isConfigured.isAcceptableOrUnknown(
+              data['is_configured']!, _isConfiguredMeta));
+    } else if (isInserting) {
+      context.missing(_isConfiguredMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Setting map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Setting(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      isDarkModeEnabled: attachedDatabase.typeMapping.read(
+          DriftSqlType.bool, data['${effectivePrefix}is_dark_mode_enabled'])!,
+      isOfflineModeEnabled: attachedDatabase.typeMapping.read(DriftSqlType.bool,
+          data['${effectivePrefix}is_offline_mode_enabled'])!,
+      isConfigured: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_configured'])!,
+    );
+  }
+
+  @override
+  $SettingsTable createAlias(String alias) {
+    return $SettingsTable(attachedDatabase, alias);
+  }
+}
+
+class Setting extends DataClass implements Insertable<Setting> {
+  final int id;
+  final bool isDarkModeEnabled;
+  final bool isOfflineModeEnabled;
+  final bool isConfigured;
+  const Setting(
+      {required this.id,
+      required this.isDarkModeEnabled,
+      required this.isOfflineModeEnabled,
+      required this.isConfigured});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['is_dark_mode_enabled'] = Variable<bool>(isDarkModeEnabled);
+    map['is_offline_mode_enabled'] = Variable<bool>(isOfflineModeEnabled);
+    map['is_configured'] = Variable<bool>(isConfigured);
+    return map;
+  }
+
+  SettingsCompanion toCompanion(bool nullToAbsent) {
+    return SettingsCompanion(
+      id: Value(id),
+      isDarkModeEnabled: Value(isDarkModeEnabled),
+      isOfflineModeEnabled: Value(isOfflineModeEnabled),
+      isConfigured: Value(isConfigured),
+    );
+  }
+
+  factory Setting.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Setting(
+      id: serializer.fromJson<int>(json['id']),
+      isDarkModeEnabled: serializer.fromJson<bool>(json['isDarkModeEnabled']),
+      isOfflineModeEnabled:
+          serializer.fromJson<bool>(json['isOfflineModeEnabled']),
+      isConfigured: serializer.fromJson<bool>(json['isConfigured']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'isDarkModeEnabled': serializer.toJson<bool>(isDarkModeEnabled),
+      'isOfflineModeEnabled': serializer.toJson<bool>(isOfflineModeEnabled),
+      'isConfigured': serializer.toJson<bool>(isConfigured),
+    };
+  }
+
+  Setting copyWith(
+          {int? id,
+          bool? isDarkModeEnabled,
+          bool? isOfflineModeEnabled,
+          bool? isConfigured}) =>
+      Setting(
+        id: id ?? this.id,
+        isDarkModeEnabled: isDarkModeEnabled ?? this.isDarkModeEnabled,
+        isOfflineModeEnabled: isOfflineModeEnabled ?? this.isOfflineModeEnabled,
+        isConfigured: isConfigured ?? this.isConfigured,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('Setting(')
+          ..write('id: $id, ')
+          ..write('isDarkModeEnabled: $isDarkModeEnabled, ')
+          ..write('isOfflineModeEnabled: $isOfflineModeEnabled, ')
+          ..write('isConfigured: $isConfigured')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, isDarkModeEnabled, isOfflineModeEnabled, isConfigured);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Setting &&
+          other.id == this.id &&
+          other.isDarkModeEnabled == this.isDarkModeEnabled &&
+          other.isOfflineModeEnabled == this.isOfflineModeEnabled &&
+          other.isConfigured == this.isConfigured);
+}
+
+class SettingsCompanion extends UpdateCompanion<Setting> {
+  final Value<int> id;
+  final Value<bool> isDarkModeEnabled;
+  final Value<bool> isOfflineModeEnabled;
+  final Value<bool> isConfigured;
+  const SettingsCompanion({
+    this.id = const Value.absent(),
+    this.isDarkModeEnabled = const Value.absent(),
+    this.isOfflineModeEnabled = const Value.absent(),
+    this.isConfigured = const Value.absent(),
+  });
+  SettingsCompanion.insert({
+    this.id = const Value.absent(),
+    required bool isDarkModeEnabled,
+    required bool isOfflineModeEnabled,
+    required bool isConfigured,
+  })  : isDarkModeEnabled = Value(isDarkModeEnabled),
+        isOfflineModeEnabled = Value(isOfflineModeEnabled),
+        isConfigured = Value(isConfigured);
+  static Insertable<Setting> custom({
+    Expression<int>? id,
+    Expression<bool>? isDarkModeEnabled,
+    Expression<bool>? isOfflineModeEnabled,
+    Expression<bool>? isConfigured,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (isDarkModeEnabled != null) 'is_dark_mode_enabled': isDarkModeEnabled,
+      if (isOfflineModeEnabled != null)
+        'is_offline_mode_enabled': isOfflineModeEnabled,
+      if (isConfigured != null) 'is_configured': isConfigured,
+    });
+  }
+
+  SettingsCompanion copyWith(
+      {Value<int>? id,
+      Value<bool>? isDarkModeEnabled,
+      Value<bool>? isOfflineModeEnabled,
+      Value<bool>? isConfigured}) {
+    return SettingsCompanion(
+      id: id ?? this.id,
+      isDarkModeEnabled: isDarkModeEnabled ?? this.isDarkModeEnabled,
+      isOfflineModeEnabled: isOfflineModeEnabled ?? this.isOfflineModeEnabled,
+      isConfigured: isConfigured ?? this.isConfigured,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (isDarkModeEnabled.present) {
+      map['is_dark_mode_enabled'] = Variable<bool>(isDarkModeEnabled.value);
+    }
+    if (isOfflineModeEnabled.present) {
+      map['is_offline_mode_enabled'] =
+          Variable<bool>(isOfflineModeEnabled.value);
+    }
+    if (isConfigured.present) {
+      map['is_configured'] = Variable<bool>(isConfigured.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SettingsCompanion(')
+          ..write('id: $id, ')
+          ..write('isDarkModeEnabled: $isDarkModeEnabled, ')
+          ..write('isOfflineModeEnabled: $isOfflineModeEnabled, ')
+          ..write('isConfigured: $isConfigured')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ServerDatabaseTable extends ServerDatabase
+    with TableInfo<$ServerDatabaseTable, ServerDatabaseData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ServerDatabaseTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _userNameMeta =
+      const VerificationMeta('userName');
+  @override
+  late final GeneratedColumn<String> userName = GeneratedColumn<String>(
+      'user_name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _passwordMeta =
+      const VerificationMeta('password');
+  @override
+  late final GeneratedColumn<String> password = GeneratedColumn<String>(
+      'password', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _serverMeta = const VerificationMeta('server');
+  @override
+  late final GeneratedColumn<String> server = GeneratedColumn<String>(
+      'server', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _portMeta = const VerificationMeta('port');
+  @override
+  late final GeneratedColumn<int> port = GeneratedColumn<int>(
+      'port', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _databaseNameMeta =
+      const VerificationMeta('databaseName');
+  @override
+  late final GeneratedColumn<String> databaseName = GeneratedColumn<String>(
+      'database_name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, userName, password, server, port, databaseName];
+  @override
+  String get aliasedName => _alias ?? 'server_database';
+  @override
+  String get actualTableName => 'server_database';
+  @override
+  VerificationContext validateIntegrity(Insertable<ServerDatabaseData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('user_name')) {
+      context.handle(_userNameMeta,
+          userName.isAcceptableOrUnknown(data['user_name']!, _userNameMeta));
+    } else if (isInserting) {
+      context.missing(_userNameMeta);
+    }
+    if (data.containsKey('password')) {
+      context.handle(_passwordMeta,
+          password.isAcceptableOrUnknown(data['password']!, _passwordMeta));
+    } else if (isInserting) {
+      context.missing(_passwordMeta);
+    }
+    if (data.containsKey('server')) {
+      context.handle(_serverMeta,
+          server.isAcceptableOrUnknown(data['server']!, _serverMeta));
+    } else if (isInserting) {
+      context.missing(_serverMeta);
+    }
+    if (data.containsKey('port')) {
+      context.handle(
+          _portMeta, port.isAcceptableOrUnknown(data['port']!, _portMeta));
+    } else if (isInserting) {
+      context.missing(_portMeta);
+    }
+    if (data.containsKey('database_name')) {
+      context.handle(
+          _databaseNameMeta,
+          databaseName.isAcceptableOrUnknown(
+              data['database_name']!, _databaseNameMeta));
+    } else if (isInserting) {
+      context.missing(_databaseNameMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ServerDatabaseData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ServerDatabaseData(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      userName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}user_name'])!,
+      password: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}password'])!,
+      server: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}server'])!,
+      port: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}port'])!,
+      databaseName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}database_name'])!,
+    );
+  }
+
+  @override
+  $ServerDatabaseTable createAlias(String alias) {
+    return $ServerDatabaseTable(attachedDatabase, alias);
+  }
+}
+
+class ServerDatabaseData extends DataClass
+    implements Insertable<ServerDatabaseData> {
+  final int id;
+  final String userName;
+  final String password;
+  final String server;
+  final int port;
+  final String databaseName;
+  const ServerDatabaseData(
+      {required this.id,
+      required this.userName,
+      required this.password,
+      required this.server,
+      required this.port,
+      required this.databaseName});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['user_name'] = Variable<String>(userName);
+    map['password'] = Variable<String>(password);
+    map['server'] = Variable<String>(server);
+    map['port'] = Variable<int>(port);
+    map['database_name'] = Variable<String>(databaseName);
+    return map;
+  }
+
+  ServerDatabaseCompanion toCompanion(bool nullToAbsent) {
+    return ServerDatabaseCompanion(
+      id: Value(id),
+      userName: Value(userName),
+      password: Value(password),
+      server: Value(server),
+      port: Value(port),
+      databaseName: Value(databaseName),
+    );
+  }
+
+  factory ServerDatabaseData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ServerDatabaseData(
+      id: serializer.fromJson<int>(json['id']),
+      userName: serializer.fromJson<String>(json['userName']),
+      password: serializer.fromJson<String>(json['password']),
+      server: serializer.fromJson<String>(json['server']),
+      port: serializer.fromJson<int>(json['port']),
+      databaseName: serializer.fromJson<String>(json['databaseName']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'userName': serializer.toJson<String>(userName),
+      'password': serializer.toJson<String>(password),
+      'server': serializer.toJson<String>(server),
+      'port': serializer.toJson<int>(port),
+      'databaseName': serializer.toJson<String>(databaseName),
+    };
+  }
+
+  ServerDatabaseData copyWith(
+          {int? id,
+          String? userName,
+          String? password,
+          String? server,
+          int? port,
+          String? databaseName}) =>
+      ServerDatabaseData(
+        id: id ?? this.id,
+        userName: userName ?? this.userName,
+        password: password ?? this.password,
+        server: server ?? this.server,
+        port: port ?? this.port,
+        databaseName: databaseName ?? this.databaseName,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('ServerDatabaseData(')
+          ..write('id: $id, ')
+          ..write('userName: $userName, ')
+          ..write('password: $password, ')
+          ..write('server: $server, ')
+          ..write('port: $port, ')
+          ..write('databaseName: $databaseName')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, userName, password, server, port, databaseName);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ServerDatabaseData &&
+          other.id == this.id &&
+          other.userName == this.userName &&
+          other.password == this.password &&
+          other.server == this.server &&
+          other.port == this.port &&
+          other.databaseName == this.databaseName);
+}
+
+class ServerDatabaseCompanion extends UpdateCompanion<ServerDatabaseData> {
+  final Value<int> id;
+  final Value<String> userName;
+  final Value<String> password;
+  final Value<String> server;
+  final Value<int> port;
+  final Value<String> databaseName;
+  const ServerDatabaseCompanion({
+    this.id = const Value.absent(),
+    this.userName = const Value.absent(),
+    this.password = const Value.absent(),
+    this.server = const Value.absent(),
+    this.port = const Value.absent(),
+    this.databaseName = const Value.absent(),
+  });
+  ServerDatabaseCompanion.insert({
+    this.id = const Value.absent(),
+    required String userName,
+    required String password,
+    required String server,
+    required int port,
+    required String databaseName,
+  })  : userName = Value(userName),
+        password = Value(password),
+        server = Value(server),
+        port = Value(port),
+        databaseName = Value(databaseName);
+  static Insertable<ServerDatabaseData> custom({
+    Expression<int>? id,
+    Expression<String>? userName,
+    Expression<String>? password,
+    Expression<String>? server,
+    Expression<int>? port,
+    Expression<String>? databaseName,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (userName != null) 'user_name': userName,
+      if (password != null) 'password': password,
+      if (server != null) 'server': server,
+      if (port != null) 'port': port,
+      if (databaseName != null) 'database_name': databaseName,
+    });
+  }
+
+  ServerDatabaseCompanion copyWith(
+      {Value<int>? id,
+      Value<String>? userName,
+      Value<String>? password,
+      Value<String>? server,
+      Value<int>? port,
+      Value<String>? databaseName}) {
+    return ServerDatabaseCompanion(
+      id: id ?? this.id,
+      userName: userName ?? this.userName,
+      password: password ?? this.password,
+      server: server ?? this.server,
+      port: port ?? this.port,
+      databaseName: databaseName ?? this.databaseName,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (userName.present) {
+      map['user_name'] = Variable<String>(userName.value);
+    }
+    if (password.present) {
+      map['password'] = Variable<String>(password.value);
+    }
+    if (server.present) {
+      map['server'] = Variable<String>(server.value);
+    }
+    if (port.present) {
+      map['port'] = Variable<int>(port.value);
+    }
+    if (databaseName.present) {
+      map['database_name'] = Variable<String>(databaseName.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ServerDatabaseCompanion(')
+          ..write('id: $id, ')
+          ..write('userName: $userName, ')
+          ..write('password: $password, ')
+          ..write('server: $server, ')
+          ..write('port: $port, ')
+          ..write('databaseName: $databaseName')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$LocalDatabase extends GeneratedDatabase {
   _$LocalDatabase(QueryExecutor e) : super(e);
   late final $ProfessionalTable professional = $ProfessionalTable(this);
@@ -2726,10 +3327,19 @@ abstract class _$LocalDatabase extends GeneratedDatabase {
   late final $ClinicHistoryTable clinicHistory = $ClinicHistoryTable(this);
   late final $SessionsTable sessions = $SessionsTable(this);
   late final $TestsTable tests = $TestsTable(this);
+  late final $SettingsTable settings = $SettingsTable(this);
+  late final $ServerDatabaseTable serverDatabase = $ServerDatabaseTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [professional, patients, clinicHistory, sessions, tests];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [
+        professional,
+        patients,
+        clinicHistory,
+        sessions,
+        tests,
+        settings,
+        serverDatabase
+      ];
 }
