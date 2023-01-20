@@ -1,9 +1,9 @@
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
-import 'package:aronnax/src/data/models/remote_patient.dart';
+import 'package:aronnax/src/domain/entities/remote_patient.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/consultations_provider.dart';
 import 'package:aronnax/src/data/providers/patient_search_provider.dart';
-import 'package:aronnax/src/widgets/consultation_element.dart';
+import 'package:aronnax/src/presentation/widgets/consultation_element.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

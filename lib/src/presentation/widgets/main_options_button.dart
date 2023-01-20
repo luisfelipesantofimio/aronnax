@@ -1,7 +1,7 @@
 //This file is suposed to be completly modified until I figure out how to
 //implement a reusable stateful button.
 
-import 'package:aronnax/src/themes/color_scheme.dart';
+import 'package:aronnax/src/presentation/themes/color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

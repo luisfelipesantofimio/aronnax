@@ -1,5 +1,5 @@
-import 'package:aronnax/src/global/controllers.dart';
-import 'package:aronnax/src/misc/passwd_generator.dart';
+import 'package:aronnax/src/presentation/core/controllers.dart';
+import 'package:aronnax/src/presentation/core/methods.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -7,7 +7,7 @@ DateTime dateFormat = DateTime.now();
 String currentDate = DateFormat("dd/MM/yyyy").format(dateFormat);
 String codeDate = DateFormat("ddMM").format(dateFormat);
 
-String registerNewCode = registerGen(8);
+String registerNewCode = AppMethods().codeGeneration(8);
 String registerCode = "HC-$registerNewCode-$codeDate";
 
 //Clinic history values

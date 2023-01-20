@@ -1,6 +1,6 @@
 import 'package:aronnax/src/Pages/ClinicHistory/widgets/sessions_list_element.dart';
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
-import 'package:aronnax/src/data/models/remode_session_resume.dart';
+import 'package:aronnax/src/domain/entities/remode_session_resume.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

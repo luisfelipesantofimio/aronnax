@@ -5,13 +5,12 @@ import 'package:aronnax/src/Pages/Formulary/clinic_history/clinic_history_form_v
 import 'package:aronnax/src/Pages/Formulary/widgets/consultant_selection_dialog.dart';
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/database/local_model/local_queries.dart';
-import 'package:aronnax/src/data/models/remote_clinic_history.dart';
-import 'package:aronnax/src/data/models/remote_patient.dart';
+import 'package:aronnax/src/domain/entities/remote_clinic_history.dart';
+import 'package:aronnax/src/domain/entities/remote_patient.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/consultations_provider.dart';
 import 'package:aronnax/src/data/providers/patient_search_provider.dart';
-import 'package:aronnax/src/misc/global_values.dart';
-import 'package:aronnax/src/widgets/consultation_element.dart';
+import 'package:aronnax/src/presentation/widgets/consultation_element.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -35,7 +34,7 @@ class ClinicHistorySearchFormState
       localPatientSearchProvider(dataForQuery),
     );
     return SizedBox(
-      width: ref.watch(deviceWidth) * 0.35,
+      width: MediaQuery.of(context).size.width * 0.35,
       child: Form(
         child: Column(
           children: [

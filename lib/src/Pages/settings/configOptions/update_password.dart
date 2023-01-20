@@ -1,5 +1,5 @@
 import 'package:aronnax/src/data/remote_database/server_api.dart';
-import 'package:aronnax/src/global/user_global_values.dart';
+import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:aronnax/src/presentation/login/login_form.dart';
 import 'package:crypt/crypt.dart';
 import 'package:flutter/material.dart';

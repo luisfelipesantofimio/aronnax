@@ -1,5 +1,4 @@
 import 'package:aronnax/src/Pages/ClinicHistory/clinic_history_search_form.dart';
-import 'package:aronnax/src/misc/global_values.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -11,7 +10,7 @@ class ClinicHistorySearchView extends ConsumerWidget {
     return Scaffold(
       body: Center(
         child: SizedBox(
-          width: ref.watch(deviceWidth),
+          width: MediaQuery.of(context).size.width,
           // color: const Color.fromARGB(255, 152, 201, 241),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

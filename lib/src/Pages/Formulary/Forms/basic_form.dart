@@ -1,10 +1,9 @@
 import 'dart:developer';
 
 import 'package:aronnax/src/data/providers/cities_provider.dart';
-import 'package:aronnax/src/global/controllers.dart';
-import 'package:aronnax/src/misc/departments_list.dart';
-import 'package:aronnax/src/misc/email_validator.dart';
-import 'package:aronnax/src/widgets/date_selector.dart';
+import 'package:aronnax/src/presentation/core/controllers.dart';
+import 'package:aronnax/src/presentation/core/methods.dart';
+import 'package:aronnax/src/presentation/widgets/date_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -48,9 +47,6 @@ class BasicFormState extends ConsumerState<BasicForm> {
     List<String> citiesList = [];
     final currentCities = ref.watch(selectedCityProvider);
     citiesList = currentCities;
-
-    log(departmentsList.toString());
-    log(departmentsCodes.toString());
 
     return SingleChildScrollView(
       child: Form(
@@ -181,7 +177,7 @@ class BasicFormState extends ConsumerState<BasicForm> {
                   if (value!.isEmpty) {
                     return "Inserta un valor";
                   } else {
-                    if (!validateEmail(value)) {
+                    if (!AppMethods().validateEmail(value)) {
                       return "Correo inválido";
                     }
                   }
@@ -189,55 +185,55 @@ class BasicFormState extends ConsumerState<BasicForm> {
                 },
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: DropdownButtonFormField(
-                style: Theme.of(context).textTheme.bodyText2,
-                value: selectedState,
-                items: departmentsList
-                    .map(
-                      (e) => DropdownMenuItem(
-                        value: e,
-                        child: Text(
-                          e,
-                        ),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (value) {
-                  setState(() {
-                    selectedState = value as String;
-                    stateCode = departmentsCodes[departmentsList
-                        .indexWhere((element) => element == selectedState)];
-                  });
-                  ref.watch(selectedCityProvider.notifier).getCities(stateCode);
-                  setState(() {});
-                },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: DropdownButtonFormField(
-                style: Theme.of(context).textTheme.bodyText2,
-                value: selectedCity,
-                items: citiesList
-                    .map(
-                      (e) => DropdownMenuItem(
-                        value: e,
-                        child: Text(
-                          e,
-                        ),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (value) {
-                  setState(() {
-                    selectedCity = value as String;
-                  });
-                  setState(() {});
-                },
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.all(20),
+            //   child: DropdownButtonFormField(
+            //     style: Theme.of(context).textTheme.bodyText2,
+            //     value: selectedState,
+            //     items: departmentsList
+            //         .map(
+            //           (e) => DropdownMenuItem(
+            //             value: e,
+            //             child: Text(
+            //               e,
+            //             ),
+            //           ),
+            //         )
+            //         .toList(),
+            //     onChanged: (value) {
+            //       setState(() {
+            //         selectedState = value as String;
+            //         stateCode = departmentsCodes[departmentsList
+            //             .indexWhere((element) => element == selectedState)];
+            //       });
+            //       ref.watch(selectedCityProvider.notifier).getCities(stateCode);
+            //       setState(() {});
+            //     },
+            //   ),
+            // ),
+            // Padding(
+            //   padding: const EdgeInsets.all(20),
+            //   child: DropdownButtonFormField(
+            //     style: Theme.of(context).textTheme.bodyText2,
+            //     value: selectedCity,
+            //     items: citiesList
+            //         .map(
+            //           (e) => DropdownMenuItem(
+            //             value: e,
+            //             child: Text(
+            //               e,
+            //             ),
+            //           ),
+            //         )
+            //         .toList(),
+            //     onChanged: (value) {
+            //       setState(() {
+            //         selectedCity = value as String;
+            //       });
+            //       setState(() {});
+            //     },
+            //   ),
+            // ),
             Container(
               margin: const EdgeInsets.all(20),
               child: TextFormField(

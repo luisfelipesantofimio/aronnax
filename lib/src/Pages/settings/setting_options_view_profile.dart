@@ -1,5 +1,5 @@
 import 'package:aronnax/src/Pages/settings/configOptions/update_password.dart';
-import 'package:aronnax/src/global/user_global_values.dart';
+import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

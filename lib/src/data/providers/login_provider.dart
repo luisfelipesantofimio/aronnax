@@ -1,7 +1,7 @@
 import 'package:aronnax/src/data/remote_database/server_api.dart';
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/database/local_model/local_queries.dart';
-import 'package:aronnax/src/data/models/remote_professional.dart';
+import 'package:aronnax/src/domain/entities/remote_professional.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class GlobalRemoteLoginState extends StateNotifier<List<RemoteProfessional>> {

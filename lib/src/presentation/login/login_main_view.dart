@@ -1,6 +1,6 @@
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/dark_mode_provider.dart';
-import 'package:aronnax/src/misc/global_values.dart';
+import 'package:aronnax/src/presentation/core/constants.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -73,9 +73,9 @@ class LoginScreen extends ConsumerWidget {
                         height: 300,
                         image: ref.watch(darkThemeProvider) == ThemeMode.light
                             ? const AssetImage(
-                                "assets/img/aronnax-icon-light.png")
+                                "assets/img/aronnax-icon-dark.png")
                             : const AssetImage(
-                                "assets/img/aronnax-icon-dark.png"),
+                                "assets/img/aronnax-icon-light.png"),
                       ),
                     ),
                     Text(
@@ -96,13 +96,13 @@ class LoginScreen extends ConsumerWidget {
                     child: Row(
                       children: [
                         Text(
-                          "Versión $globalVersion",
+                          "Versión ${AppConstants.globalVersion}",
                           style: GoogleFonts.montserrat(
                             fontSize: 15,
                             color:
                                 ref.watch(darkThemeProvider) == ThemeMode.light
-                                    ? const Color.fromARGB(255, 215, 215, 215)
-                                    : const Color.fromARGB(255, 28, 28, 28),
+                                    ? const Color.fromARGB(255, 28, 28, 28)
+                                    : const Color.fromARGB(255, 215, 215, 215),
                           ),
                         )
                       ],

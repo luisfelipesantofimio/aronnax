@@ -1,6 +1,6 @@
 import 'package:aronnax/src/Pages/ClinicHistory/clinic_history_view/clinic_history_view.dart';
-import 'package:aronnax/src/global/controllers.dart';
-import 'package:aronnax/src/global/method.dart';
+import 'package:aronnax/src/presentation/core/controllers.dart';
+import 'package:aronnax/src/presentation/core/methods.dart';
 import 'package:aronnax/src/presentation/login/login_form.dart';
 import 'package:flutter/material.dart';
 
@@ -53,7 +53,7 @@ class _ClinicHistoryConfirmPasswordDialogState
                   if (value!.isEmpty) {
                     return "Ingresa tu contraseña";
                   }
-                  if (!isPasswordValid(passwordInServer, value)) {
+                  if (!AppMethods().isPasswordValid(passwordInServer, value)) {
                     return "Contraseña incorrecta";
                   } else {
                     Navigator.pop(context);

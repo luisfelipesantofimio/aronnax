@@ -3,7 +3,7 @@ import 'package:aronnax/src/Pages/Formulary/basic_form/basic_form_view.dart';
 import 'package:aronnax/src/Pages/Formulary/clinic_history/clinic_history_form_view.dart';
 import 'package:aronnax/src/Pages/Formulary/session/session_form_view.dart';
 import 'package:aronnax/src/Pages/Formulary/widgets/consultant_selection_dialog.dart';
-import 'package:aronnax/src/widgets/main_options_button.dart';
+import 'package:aronnax/src/presentation/widgets/main_options_button.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 

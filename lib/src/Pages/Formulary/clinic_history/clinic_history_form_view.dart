@@ -4,10 +4,10 @@ import 'package:aronnax/src/Pages/Formulary/Forms/clinic_history.dart';
 import 'package:aronnax/src/Pages/Formulary/clinic_history/header.dart';
 import 'package:aronnax/src/Pages/Formulary/widgets/consultant_selection_dialog.dart';
 import 'package:aronnax/src/data/database/local_model/local_queries.dart';
-import 'package:aronnax/src/global/controllers.dart';
-import 'package:aronnax/src/global/user_global_values.dart';
-import 'package:aronnax/src/misc/passwd_generator.dart';
-import 'package:aronnax/src/widgets/generic_global_button.dart';
+import 'package:aronnax/src/presentation/core/controllers.dart';
+import 'package:aronnax/src/presentation/core/methods.dart';
+import 'package:aronnax/src/presentation/core/user_global_values.dart';
+import 'package:aronnax/src/presentation/widgets/generic_global_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,7 +17,7 @@ class MainViewClinicHistory extends ConsumerWidget {
   final String patientID;
 
   newRegisterCode() {
-    String newCode = registerGen(8);
+    String newCode = AppMethods().codeGeneration(8);
 
     registerNewCode = newCode;
     registerCode = "HC-$registerNewCode-$codeDate";

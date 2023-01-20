@@ -1,9 +1,11 @@
+import 'dart:developer';
+
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/consultations_provider.dart';
-import 'package:aronnax/src/global/user_global_values.dart';
+import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:aronnax/src/presentation/main_menu/main_header.dart';
 import 'package:aronnax/src/presentation/main_menu/options_bar.dart';
-import 'package:aronnax/src/widgets/main_menu_options.dart';
+import 'package:aronnax/src/presentation/widgets/main_menu_options.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';

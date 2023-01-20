@@ -1,9 +1,9 @@
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
-import 'package:aronnax/src/data/models/remote_professional.dart';
+import 'package:aronnax/src/domain/entities/remote_professional.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/login_provider.dart';
-import 'package:aronnax/src/domain/repositories/auth_repository.dart';
-import 'package:aronnax/src/global/user_global_values.dart';
+import 'package:aronnax/src/data/repositories/auth_repository.dart';
+import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:aronnax/src/presentation/main_menu/main_menu.dart';
 
 import 'package:flutter/material.dart';
@@ -188,7 +188,6 @@ class LoginFormState extends ConsumerState<LoginForm> {
                   });
                   !isOfflineEnabled ? setRemoteValues(int.parse(userID)) : "";
 
-                  setState(() {});
                   _loginKey.currentState!.validate();
                 },
                 validator: (value) {
@@ -199,10 +198,12 @@ class LoginFormState extends ConsumerState<LoginForm> {
                       .loginUser(passwordInServer, userPassword)) {
                     return "Contraseña incorrecta";
                   } else {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const MainMenu(),
+                    Future(
+                      () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const MainMenu(),
+                        ),
                       ),
                     );
                   }

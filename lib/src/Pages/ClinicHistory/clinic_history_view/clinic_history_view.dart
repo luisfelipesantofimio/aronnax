@@ -3,7 +3,6 @@ import 'package:aronnax/src/Pages/ClinicHistory/widgets/sessions_list_view.dart'
 import 'package:aronnax/src/data/providers/clinic_history_data_provider.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/consultations_provider.dart';
-import 'package:aronnax/src/misc/global_values.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -395,7 +394,8 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                                   ),
                                 )
                               : SizedBox(
-                                  height: ref.watch(deviceHeight) * 0.1,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.1,
                                 )
                           : ref.read(globalQueriedSessionsProvider).isNotEmpty
                               ? Padding(
@@ -476,7 +476,8 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                                   ),
                                 )
                               : SizedBox(
-                                  height: ref.watch(deviceHeight) * 0.1,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.1,
                                 )
                     ],
                   ),

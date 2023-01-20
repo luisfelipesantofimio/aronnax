@@ -3,9 +3,9 @@ import 'dart:developer';
 import 'package:aronnax/src/data/remote_database/server_api.dart';
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/database/local_model/local_queries.dart';
-import 'package:aronnax/src/data/models/remode_session_resume.dart';
-import 'package:aronnax/src/data/models/remote_clinic_history.dart';
-import 'package:aronnax/src/data/models/remote_patient.dart';
+import 'package:aronnax/src/domain/entities/remode_session_resume.dart';
+import 'package:aronnax/src/domain/entities/remote_clinic_history.dart';
+import 'package:aronnax/src/domain/entities/remote_patient.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class GlobalPatientConsultationState
