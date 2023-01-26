@@ -7,7 +7,6 @@ class GlobalThemes {
     return ThemeData(
       primaryColor: CustomDarkColors.accentColorCustom,
       scaffoldBackgroundColor: CustomDarkColors.background,
-      backgroundColor: CustomDarkColors.barColor,
       iconTheme: const IconThemeData(color: CustomDarkColors.buttonColor),
       //Form custom theme
       inputDecorationTheme: const InputDecorationTheme(
@@ -30,24 +29,25 @@ class GlobalThemes {
       ),
       //Text custom theme
       textTheme: TextTheme(
-        bodyText1: GoogleFonts.montserrat(
+        bodyLarge: GoogleFonts.montserrat(
             color: CustomDarkColors.textColor, fontSize: 20),
-        bodyText2: GoogleFonts.montserrat(
+        bodyMedium: GoogleFonts.montserrat(
             color: CustomDarkColors.textColor, fontSize: 15),
-        headline1: GoogleFonts.montserrat(
+        displayLarge: GoogleFonts.montserrat(
             color: CustomDarkColors.textColor, fontSize: 40),
-        headline2: GoogleFonts.montserrat(
+        displayMedium: GoogleFonts.montserrat(
             color: CustomDarkColors.textColor, fontSize: 35),
-        headline3: GoogleFonts.montserrat(color: CustomDarkColors.textColor),
-        headline4: GoogleFonts.montserrat(
+        displaySmall: GoogleFonts.montserrat(color: CustomDarkColors.textColor),
+        headlineMedium: GoogleFonts.montserrat(
           color: CustomDarkColors.textColor,
           fontSize: 30,
         ),
-        headline5: GoogleFonts.montserrat(
+        headlineSmall: GoogleFonts.montserrat(
             color: CustomDarkColors.textColor,
             fontSize: 25,
             fontWeight: FontWeight.bold),
       ),
+      //colorScheme: ColorScheme(background: CustomDarkColors.barColor, surface: null),
     );
   }
 
@@ -55,7 +55,6 @@ class GlobalThemes {
     return ThemeData(
       primaryColor: CustomDarkColors.accentColorCustom,
       scaffoldBackgroundColor: CustomLightColors.background,
-      backgroundColor: CustomLightColors.barColor,
       iconTheme: const IconThemeData(color: CustomLightColors.buttonColor),
       //Form custom theme
       inputDecorationTheme: const InputDecorationTheme(
@@ -78,24 +77,26 @@ class GlobalThemes {
       ),
       //Text custom theme
       textTheme: TextTheme(
-        bodyText1: GoogleFonts.montserrat(
+        bodyLarge: GoogleFonts.montserrat(
             color: CustomLightColors.textColor, fontSize: 20),
-        bodyText2: GoogleFonts.montserrat(
+        bodyMedium: GoogleFonts.montserrat(
             color: CustomLightColors.textColor, fontSize: 15),
-        headline1: GoogleFonts.montserrat(
+        displayLarge: GoogleFonts.montserrat(
             color: CustomLightColors.textColor, fontSize: 40),
-        headline2: GoogleFonts.montserrat(
+        displayMedium: GoogleFonts.montserrat(
             color: CustomLightColors.textColor, fontSize: 35),
-        headline3: GoogleFonts.montserrat(color: CustomLightColors.textColor),
-        headline4: GoogleFonts.montserrat(
+        displaySmall:
+            GoogleFonts.montserrat(color: CustomLightColors.textColor),
+        headlineMedium: GoogleFonts.montserrat(
           color: CustomLightColors.textColor,
           fontSize: 30,
         ),
-        headline5: GoogleFonts.montserrat(
+        headlineSmall: GoogleFonts.montserrat(
             color: CustomLightColors.textColor,
             fontSize: 25,
             fontWeight: FontWeight.bold),
       ),
+      //colorScheme: ColorScheme(background: CustomLightColors.barColor),
     );
   }
 }

@@ -13,7 +13,7 @@ class MainHeader extends ConsumerWidget {
     String currentDate = DateFormat("dd/MM/yyyy").format(dateFormat);
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).backgroundColor,
+        color: Theme.of(context).colorScheme.background,
         boxShadow: const <BoxShadow>[
           BoxShadow(
             color: Colors.black,
@@ -36,10 +36,10 @@ class MainHeader extends ConsumerWidget {
             ),
           ),
           Text(currentDate, //formated date
-              style: Theme.of(context).textTheme.bodyText1),
+              style: Theme.of(context).textTheme.bodyLarge),
           Text(
               "Aronnax v${AppConstants.globalVersion}\nCompilación ${AppConstants.compilationDate}",
-              style: Theme.of(context).textTheme.bodyText2)
+              style: Theme.of(context).textTheme.bodyMedium)
         ],
       ),
     );

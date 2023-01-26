@@ -18,14 +18,15 @@ class ThemeSelectorState extends ConsumerState<ThemeSelector> {
         children: [
           Text(
             "Activar tema oscuro",
-            style: Theme.of(context).textTheme.bodyText1,
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
           Column(
             children: [
               Switch(
                 value: ref.watch(darkThemeProvider) == ThemeMode.light,
                 onChanged: (switchVal) {
-                  ref.watch(darkThemeProvider.notifier).updateCurrentTheme();
+                  ref.watch(darkThemeProvider.notifier);
+                  //.updateCurrentTheme();
                 },
                 activeColor: Colors.blueGrey,
                 activeTrackColor: Colors.green,
@@ -34,7 +35,7 @@ class ThemeSelectorState extends ConsumerState<ThemeSelector> {
                 ref.watch(darkThemeProvider) == ThemeMode.light
                     ? "Modo claro"
                     : "Modo oscuro",
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
             ],
           ),

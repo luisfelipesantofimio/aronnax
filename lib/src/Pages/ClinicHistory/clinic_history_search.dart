@@ -18,7 +18,7 @@ class ClinicHistorySearchView extends ConsumerWidget {
             children: [
               Text(
                 "Buscar historia clínica",
-                style: Theme.of(context).textTheme.headline2,
+                style: Theme.of(context).textTheme.displayMedium,
               ),
               const Padding(
                 padding: EdgeInsets.all(10),

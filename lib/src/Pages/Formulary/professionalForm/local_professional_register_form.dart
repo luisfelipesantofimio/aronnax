@@ -1,24 +1,26 @@
-import 'package:aronnax/main.dart';
 import 'package:aronnax/src/data/database/local_model/local_queries.dart';
-import 'package:aronnax/src/data/database/settings_db/settings.dart';
+import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
+
 import 'package:aronnax/src/presentation/welcome_screens/finish.dart';
 import 'package:crypt/crypt.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 String _password = "";
 
 final _hashedPassword = Crypt.sha256(_password);
 
-class LocalProfessionalRegister extends StatefulWidget {
+class LocalProfessionalRegister extends ConsumerStatefulWidget {
   const LocalProfessionalRegister({Key? key}) : super(key: key);
 
   @override
-  _LocalProfessionalRegisterState createState() =>
-      _LocalProfessionalRegisterState();
+  LocalProfessionalRegisterState createState() =>
+      LocalProfessionalRegisterState();
 }
 
-class _LocalProfessionalRegisterState extends State<LocalProfessionalRegister> {
+class LocalProfessionalRegisterState
+    extends ConsumerState<LocalProfessionalRegister> {
   final professionalKey = GlobalKey<FormState>();
   int personalID = 0;
   String names = "";
@@ -45,7 +47,7 @@ class _LocalProfessionalRegisterState extends State<LocalProfessionalRegister> {
                 margin: const EdgeInsets.all(8),
                 child: TextFormField(
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "El campo no puede estar vacío";
@@ -55,7 +57,7 @@ class _LocalProfessionalRegisterState extends State<LocalProfessionalRegister> {
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "C.C del profesional",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (varID) {
                     setState(() {
@@ -67,7 +69,7 @@ class _LocalProfessionalRegisterState extends State<LocalProfessionalRegister> {
               Container(
                 margin: const EdgeInsets.all(8),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "El campo no puede estar vacío";
@@ -77,7 +79,7 @@ class _LocalProfessionalRegisterState extends State<LocalProfessionalRegister> {
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Nombres",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (varNames) {
                     setState(() {
@@ -89,7 +91,7 @@ class _LocalProfessionalRegisterState extends State<LocalProfessionalRegister> {
               Container(
                 margin: const EdgeInsets.all(8),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "El campo no puede estar vacío";
@@ -99,7 +101,7 @@ class _LocalProfessionalRegisterState extends State<LocalProfessionalRegister> {
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Apellidos",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (varLastNames) {
                     setState(() {
@@ -134,7 +136,7 @@ class _LocalProfessionalRegisterState extends State<LocalProfessionalRegister> {
               Container(
                 margin: const EdgeInsets.all(8),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "El campo no puede estar vacío";
@@ -144,7 +146,7 @@ class _LocalProfessionalRegisterState extends State<LocalProfessionalRegister> {
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Tarjeta profesional",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (varProfessionalID) {
                     setState(() {
@@ -156,7 +158,7 @@ class _LocalProfessionalRegisterState extends State<LocalProfessionalRegister> {
               Container(
                 margin: const EdgeInsets.all(8),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "El campo no puede estar vacío";
@@ -166,7 +168,7 @@ class _LocalProfessionalRegisterState extends State<LocalProfessionalRegister> {
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Nombre de usuario",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (userVar) {
                     setState(() {
@@ -178,7 +180,7 @@ class _LocalProfessionalRegisterState extends State<LocalProfessionalRegister> {
               Container(
                 margin: const EdgeInsets.all(8),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "El campo no puede estar vacío";
@@ -188,7 +190,7 @@ class _LocalProfessionalRegisterState extends State<LocalProfessionalRegister> {
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Tu contraseña",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (varPassword) {
                     setState(() {
@@ -212,12 +214,12 @@ class _LocalProfessionalRegisterState extends State<LocalProfessionalRegister> {
                     );
                     Future(
                       () async {
-                        await isar.writeTxn(() async {
-                          final currentSettings = await isar.settings.get(0);
-                          currentSettings!.isConfigured = true;
-
-                          await isar.settings.put(currentSettings);
-                        });
+                        final settings = await ref
+                            .read(localDatabaseRepositoryProvider)
+                            .getLocalSettings();
+                        ref
+                            .read(localDatabaseRepositoryProvider)
+                            .updateConfigurationState(settings, true);
                       },
                     );
                     ScaffoldMessenger.of(context).showSnackBar(

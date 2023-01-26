@@ -1,4 +1,3 @@
-import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/dark_mode_provider.dart';
 import 'package:aronnax/src/presentation/core/constants.dart';
 import "package:flutter/material.dart";
@@ -12,8 +11,7 @@ class LoginScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(darkThemeProvider.notifier).getCurrentTheme();
-    ref.watch(globalOfflineStatusProvider.notifier).getConnectionStatus();
+    //   ref.watch(darkThemeProvider.notifier).getCurrentTheme();
     double currentWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Stack(
@@ -33,7 +31,7 @@ class LoginScreen extends ConsumerWidget {
                     children: [
                       Text(
                         "inicio de sesión",
-                        style: Theme.of(context).textTheme.headline1,
+                        style: Theme.of(context).textTheme.displayLarge,
                       ),
                       const SizedBox(
                         child: LoginForm(),
@@ -51,7 +49,7 @@ class LoginScreen extends ConsumerWidget {
                 topRight: Radius.circular(50),
                 bottomRight: Radius.circular(30),
               ),
-              color: Theme.of(context).backgroundColor,
+              color: Theme.of(context).colorScheme.background,
               boxShadow: const [
                 BoxShadow(
                   spreadRadius: 2.0,

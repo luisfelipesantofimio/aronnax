@@ -148,11 +148,11 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                         child: RichText(
                           text: TextSpan(
                             text: "Motivo de consulta: \n",
-                            style: Theme.of(context).textTheme.headline5,
+                            style: Theme.of(context).textTheme.headlineSmall,
                             children: [
                               TextSpan(
                                 text: ref.watch(currentConsultationReason),
-                                style: Theme.of(context).textTheme.bodyText1,
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ],
                           ),
@@ -163,11 +163,11 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                         child: RichText(
                           text: TextSpan(
                             text: "Exámen mental: \n",
-                            style: Theme.of(context).textTheme.headline5,
+                            style: Theme.of(context).textTheme.headlineSmall,
                             children: [
                               TextSpan(
                                 text: ref.watch(currentMentalExamn),
-                                style: Theme.of(context).textTheme.bodyText1,
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ],
                           ),
@@ -178,11 +178,11 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                         child: RichText(
                           text: TextSpan(
                             text: "Antecedentes médicos: \n",
-                            style: Theme.of(context).textTheme.headline5,
+                            style: Theme.of(context).textTheme.headlineSmall,
                             children: [
                               TextSpan(
                                 text: ref.watch(currentMedAntecedents),
-                                style: Theme.of(context).textTheme.bodyText1,
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ],
                           ),
@@ -193,11 +193,11 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                         child: RichText(
                           text: TextSpan(
                             text: "Antecedentes psicológicos: \n",
-                            style: Theme.of(context).textTheme.headline5,
+                            style: Theme.of(context).textTheme.headlineSmall,
                             children: [
                               TextSpan(
                                 text: ref.watch(currentPsyAntecedents),
-                                style: Theme.of(context).textTheme.bodyText1,
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ],
                           ),
@@ -208,11 +208,11 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                         child: RichText(
                           text: TextSpan(
                             text: "Historia familiar: \n",
-                            style: Theme.of(context).textTheme.headline5,
+                            style: Theme.of(context).textTheme.headlineSmall,
                             children: [
                               TextSpan(
                                 text: ref.watch(currentFamilyHistory),
-                                style: Theme.of(context).textTheme.bodyText1,
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ],
                           ),
@@ -223,11 +223,11 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                         child: RichText(
                           text: TextSpan(
                             text: "Historia personal: \n",
-                            style: Theme.of(context).textTheme.headline5,
+                            style: Theme.of(context).textTheme.headlineSmall,
                             children: [
                               TextSpan(
                                 text: ref.watch(currentPersonalHistory),
-                                style: Theme.of(context).textTheme.bodyText1,
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ],
                           ),
@@ -238,11 +238,11 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                         child: RichText(
                           text: TextSpan(
                             text: "Impresión diagnística: \n",
-                            style: Theme.of(context).textTheme.headline5,
+                            style: Theme.of(context).textTheme.headlineSmall,
                             children: [
                               TextSpan(
                                 text: ref.watch(currentDiagnostic),
-                                style: Theme.of(context).textTheme.bodyText1,
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ],
                           ),
@@ -253,11 +253,11 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                         child: RichText(
                           text: TextSpan(
                             text: "Propuesta de tratamiento: \n",
-                            style: Theme.of(context).textTheme.headline5,
+                            style: Theme.of(context).textTheme.headlineSmall,
                             children: [
                               TextSpan(
                                 text: ref.watch(currentTreatment),
-                                style: Theme.of(context).textTheme.bodyText1,
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ],
                           ),

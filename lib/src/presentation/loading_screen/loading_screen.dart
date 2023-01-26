@@ -1,7 +1,5 @@
-import 'package:aronnax/main.dart';
-import 'package:aronnax/src/data/database/settings_db/settings.dart';
-
-import 'package:aronnax/src/data/repositories/database_repository.dart';
+import 'package:aronnax/src/data/database/local_model/local_model.dart';
+import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/presentation/login/login_main_view.dart';
 import 'package:aronnax/src/presentation/welcome_screens/first.dart';
 import 'package:flutter/material.dart';
@@ -19,22 +17,23 @@ class _LoadingScreenState extends ConsumerState<LoadingScreen> {
   void didChangeDependencies() {
     Future(
       () async {
-        if (await DatabaseRepository().isSettingsDBEmpty()) {
-          await isar.writeTxn(() async {
-            await isar.settings.put(Settings()
-              ..id = 0
-              ..isDarkModeEnabled = false
-              ..isOfflineModeEnabled = true
-              ..isConfigured = false);
-          });
+        if (await ref
+                .read(localDatabaseRepositoryProvider)
+                .verifySettingsData() ==
+            null) {
+          ref.read(localDatabaseRepositoryProvider).insertSettings(
+              id: 0,
+              darkModeEnabled: false,
+              offlineEnabled: false,
+              isConfigured: false);
         }
       },
     );
 
     Future(() async {
-      bool? isConfigured =
-          await DatabaseRepository().isAronnaxConfigured() ?? false;
-      if (isConfigured) {
+      Setting? settings =
+          await ref.read(localDatabaseRepositoryProvider).verifySettingsData();
+      if (settings!.isConfigured) {
         Future(
           () {
             Navigator.push(

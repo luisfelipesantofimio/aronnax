@@ -34,7 +34,7 @@ class _ProfessionalFormState extends State<ProfessionalForm> {
               Container(
                 margin: const EdgeInsets.all(8),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "El campo no puede estar vacío";
@@ -44,7 +44,7 @@ class _ProfessionalFormState extends State<ProfessionalForm> {
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "C.C del profesional",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (varID) {
                     setState(() {
@@ -56,7 +56,7 @@ class _ProfessionalFormState extends State<ProfessionalForm> {
               Container(
                 margin: const EdgeInsets.all(8),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "El campo no puede estar vacío";
@@ -66,7 +66,7 @@ class _ProfessionalFormState extends State<ProfessionalForm> {
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Nombres",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (varNames) {
                     setState(() {
@@ -78,7 +78,7 @@ class _ProfessionalFormState extends State<ProfessionalForm> {
               Container(
                 margin: const EdgeInsets.all(8),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "El campo no puede estar vacío";
@@ -88,7 +88,7 @@ class _ProfessionalFormState extends State<ProfessionalForm> {
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Apellidos",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (varLastNames) {
                     setState(() {
@@ -100,7 +100,7 @@ class _ProfessionalFormState extends State<ProfessionalForm> {
               Container(
                 margin: const EdgeInsets.all(8),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "El campo no puede estar vacío";
@@ -110,7 +110,7 @@ class _ProfessionalFormState extends State<ProfessionalForm> {
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Profesión",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (varProfession) {
                     setState(() {
@@ -122,7 +122,7 @@ class _ProfessionalFormState extends State<ProfessionalForm> {
               Container(
                 margin: const EdgeInsets.all(8),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "El campo no puede estar vacío";
@@ -132,7 +132,7 @@ class _ProfessionalFormState extends State<ProfessionalForm> {
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Tarjeta profesional",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (varProfessionalID) {
                     setState(() {
@@ -144,7 +144,7 @@ class _ProfessionalFormState extends State<ProfessionalForm> {
               Container(
                 margin: const EdgeInsets.all(8),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "El campo no puede estar vacío";
@@ -154,7 +154,7 @@ class _ProfessionalFormState extends State<ProfessionalForm> {
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Nombre de usuario",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (userVar) {
                     setState(() {
@@ -166,7 +166,7 @@ class _ProfessionalFormState extends State<ProfessionalForm> {
               Container(
                 margin: const EdgeInsets.all(8),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "El campo no puede estar vacío";
@@ -176,7 +176,7 @@ class _ProfessionalFormState extends State<ProfessionalForm> {
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Tu contraseña",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (varPassword) {
                     setState(() {

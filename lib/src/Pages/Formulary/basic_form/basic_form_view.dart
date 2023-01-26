@@ -31,7 +31,7 @@ class MainViewRegister extends ConsumerWidget {
                   margin: const EdgeInsets.only(top: 20),
                   child: Text(
                     "Información personal",
-                    style: Theme.of(context).textTheme.headline2,
+                    style: Theme.of(context).textTheme.displayMedium,
                   ),
                 ),
                 Expanded(

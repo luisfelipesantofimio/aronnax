@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/consultations_provider.dart';
@@ -58,7 +57,7 @@ class MainMenuState extends ConsumerState<MainMenu> {
             const MainHeader(),
             const MainMenuOptions(),
             Text("$finalGreet $professionalNames ¿Qué deseas hacer?",
-                style: Theme.of(context).textTheme.headline2),
+                style: Theme.of(context).textTheme.displayMedium),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,

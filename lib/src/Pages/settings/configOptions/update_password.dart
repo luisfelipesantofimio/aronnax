@@ -1,6 +1,6 @@
+import 'package:aronnax/src/data/providers/global_user_information_provider.dart';
 import 'package:aronnax/src/data/remote_database/server_api.dart';
 import 'package:aronnax/src/presentation/core/user_global_values.dart';
-import 'package:aronnax/src/presentation/login/login_form.dart';
 import 'package:crypt/crypt.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -80,7 +80,8 @@ class UpdatePasswordDialogState extends ConsumerState<UpdatePasswordDialog> {
                       setState(() {
                         currentPassword = value;
                       });
-                      isPasswordValid(passwordInServer, currentPassword);
+                      isPasswordValid(
+                          ref.read(userPasswordProvider), currentPassword);
                       verifyData();
                       _updatePasswordKey.currentState!.validate();
                     },

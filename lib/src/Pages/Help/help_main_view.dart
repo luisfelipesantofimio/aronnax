@@ -31,7 +31,7 @@ class MainHelpView extends ConsumerWidget {
                     ),
                     Text(
                       "Aronnax",
-                      style: Theme.of(context).textTheme.headline1,
+                      style: Theme.of(context).textTheme.displayLarge,
                     ),
                   ],
                 ),
@@ -43,14 +43,14 @@ class MainHelpView extends ConsumerWidget {
                       padding: const EdgeInsets.only(left: 60),
                       child: Text(
                         "Un software de gestión de pacientes e historias clínicas, minimalista y eficiente.\nHecho por psicólogos, para psicólogos.",
-                        style: Theme.of(context).textTheme.bodyText2,
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 60, top: 60),
                       child: Text(
                         "Información de desarrollo",
-                        style: Theme.of(context).textTheme.bodyText1,
+                        style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ),
                     Padding(
@@ -58,11 +58,11 @@ class MainHelpView extends ConsumerWidget {
                       child: RichText(
                         text: TextSpan(
                           text: "Desarrollado por: ",
-                          style: Theme.of(context).textTheme.bodyText2,
+                          style: Theme.of(context).textTheme.bodyMedium,
                           children: [
                             TextSpan(
                               text: "Luis Felipe Santofimio Buitrago",
-                              style: Theme.of(context).textTheme.bodyText2,
+                              style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ],
                         ),
@@ -72,7 +72,7 @@ class MainHelpView extends ConsumerWidget {
                       padding: padding,
                       child: Text(
                         "Aronnax funciona gracias a la tecnología de Flutter.",
-                        style: Theme.of(context).textTheme.bodyText2,
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
                     Padding(
@@ -94,7 +94,7 @@ class MainHelpView extends ConsumerWidget {
                       child: RichText(
                         text: TextSpan(
                           text: "Desarrollado con ",
-                          style: Theme.of(context).textTheme.bodyText2,
+                          style: Theme.of(context).textTheme.bodyMedium,
                           children: [
                             const WidgetSpan(
                               child: Icon(
@@ -104,7 +104,7 @@ class MainHelpView extends ConsumerWidget {
                             ),
                             TextSpan(
                               text: " en Crearte Consciencia.",
-                              style: Theme.of(context).textTheme.bodyText2,
+                              style: Theme.of(context).textTheme.bodyMedium,
                             )
                           ],
                         ),

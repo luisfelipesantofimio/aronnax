@@ -39,14 +39,14 @@ class _ClinicHistoryState extends State<ClinicHistory> {
               Container(
                 margin: const EdgeInsets.all(20),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   maxLines: 5,
                   autofocus: true,
                   decoration: InputDecoration(
                       labelText: "Motivo de consulta",
-                      labelStyle: Theme.of(context).textTheme.bodyText2,
+                      labelStyle: Theme.of(context).textTheme.bodyMedium,
                       floatingLabelStyle:
-                          Theme.of(context).textTheme.bodyText2),
+                          Theme.of(context).textTheme.bodyMedium),
                   onChanged: (value) {
                     setState(
                       () {
@@ -65,13 +65,13 @@ class _ClinicHistoryState extends State<ClinicHistory> {
               Container(
                 margin: const EdgeInsets.all(20),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   maxLines: 5,
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Examen mental",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
-                    floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
+                    floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (value) {
                     setState(
@@ -91,13 +91,13 @@ class _ClinicHistoryState extends State<ClinicHistory> {
               Container(
                 margin: const EdgeInsets.all(20),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   maxLines: 5,
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Antecedentes psicológicos",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
-                    floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
+                    floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (value) {
                     setState(
@@ -117,13 +117,13 @@ class _ClinicHistoryState extends State<ClinicHistory> {
               Container(
                 margin: const EdgeInsets.all(20),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   maxLines: 5,
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Antecedentes médicos",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
-                    floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
+                    floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (value) {
                     setState(
@@ -143,13 +143,13 @@ class _ClinicHistoryState extends State<ClinicHistory> {
               Container(
                 margin: const EdgeInsets.all(20),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   maxLines: 10,
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Historia personal",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
-                    floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
+                    floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (value) {
                     setState(
@@ -169,13 +169,13 @@ class _ClinicHistoryState extends State<ClinicHistory> {
               Container(
                 margin: const EdgeInsets.all(20),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   maxLines: 10,
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Historia familiar",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
-                    floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
+                    floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (value) {
                     setState(
@@ -195,13 +195,13 @@ class _ClinicHistoryState extends State<ClinicHistory> {
               Container(
                 margin: const EdgeInsets.all(20),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   maxLines: 5,
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Impresión diagnóstica",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
-                    floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
+                    floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (value) {
                     setState(
@@ -221,13 +221,13 @@ class _ClinicHistoryState extends State<ClinicHistory> {
               Container(
                 margin: const EdgeInsets.all(20),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   maxLines: 10,
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Propuesta de tratamiento",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
-                    floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
+                    floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (value) {
                     setState(

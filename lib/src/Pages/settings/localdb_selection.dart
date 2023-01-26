@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:aronnax/src/Pages/settings/widgets/no_server_dialog.dart';
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/database/local_model/local_queries.dart';
+import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 
 import "package:flutter/material.dart";
@@ -28,7 +29,7 @@ class LocalDBActivationScreenState
         children: [
           Text(
             "¿Activar base de datos local?",
-            style: Theme.of(context).textTheme.bodyText1,
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
           Column(
             children: [
@@ -51,9 +52,17 @@ class LocalDBActivationScreenState
                       builder: (context) => const NoLocalDBConfiguredDialog(),
                     );
                   } else {
-                    ref
-                        .read(globalOfflineStatusProvider.notifier)
-                        .updateCurrentStatus();
+                    Future(
+                      () async {
+                        final settings = await ref
+                            .read(localDatabaseRepositoryProvider)
+                            .getLocalSettings();
+                        ref
+                            .read(localDatabaseRepositoryProvider)
+                            .updateConfigurationState(
+                                settings, settings.isOfflineModeEnabled);
+                      },
+                    );
                   }
                 },
                 activeColor: Colors.blueGrey,
@@ -63,7 +72,7 @@ class LocalDBActivationScreenState
                 isOfflineEnabled
                     ? "Aronnax está funcionando offline"
                     : "Aronnax está conectado a tu base de datos",
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
             ],
           ),

@@ -22,7 +22,7 @@ class _SettingsHeaderBarState extends State<SettingsHeaderBar> {
                 padding: const EdgeInsets.all(15.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).backgroundColor,
+                    color: Theme.of(context).colorScheme.background,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   height: double.maxFinite,
@@ -45,7 +45,7 @@ class _SettingsHeaderBarState extends State<SettingsHeaderBar> {
                           ),
                           Text(
                             "Ajustes",
-                            style: Theme.of(context).textTheme.headline2,
+                            style: Theme.of(context).textTheme.displayMedium,
                           ),
                         ],
                       ),
@@ -63,7 +63,7 @@ class _SettingsHeaderBarState extends State<SettingsHeaderBar> {
                               children: [
                                 Text(
                                   "Mi información",
-                                  style: Theme.of(context).textTheme.bodyText2,
+                                  style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                               ],
                             ),
@@ -84,7 +84,7 @@ class _SettingsHeaderBarState extends State<SettingsHeaderBar> {
                               children: [
                                 Text(
                                   "Crear usuario",
-                                  style: Theme.of(context).textTheme.bodyText2,
+                                  style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                               ],
                             ),
@@ -105,7 +105,7 @@ class _SettingsHeaderBarState extends State<SettingsHeaderBar> {
                               children: [
                                 Text(
                                   "Tema oscuro",
-                                  style: Theme.of(context).textTheme.bodyText2,
+                                  style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                               ],
                             ),
@@ -126,7 +126,7 @@ class _SettingsHeaderBarState extends State<SettingsHeaderBar> {
                               children: [
                                 Text(
                                   "Base de datos local",
-                                  style: Theme.of(context).textTheme.bodyText2,
+                                  style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                               ],
                             ),

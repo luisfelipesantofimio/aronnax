@@ -1,16 +1,17 @@
-import 'package:aronnax/main.dart';
-import 'package:aronnax/src/data/database/settings_db/settings.dart';
+import 'package:aronnax/src/data/database/local_model/local_model.dart';
+import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/presentation/welcome_screens/finish.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ExistingServerForm extends StatefulWidget {
+class ExistingServerForm extends ConsumerStatefulWidget {
   const ExistingServerForm({Key? key}) : super(key: key);
 
   @override
-  State<ExistingServerForm> createState() => _ExistingServerFormState();
+  ExistingServerFormState createState() => ExistingServerFormState();
 }
 
-class _ExistingServerFormState extends State<ExistingServerForm> {
+class ExistingServerFormState extends ConsumerState<ExistingServerForm> {
   final _formKey = GlobalKey<FormState>();
   String _serverAdress = "";
   String _serverPort = "";
@@ -155,37 +156,23 @@ class _ExistingServerFormState extends State<ExistingServerForm> {
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
-                  // localdb.put(
-                  //   "serverSettings",
-                  //   ServerSettings(_databaseUser, _databasePassword,
-                  //       _databaseName, _serverAdress, _serverPort, true),
-                  // );
-                  // offlineModeDB.put(
-                  //   "offlineModeDB",
-                  //   LocalDatabaseMode(false),
-                  // );
-                  RemoteDatabaseAccess serverData = RemoteDatabaseAccess()
-                    ..databaseName = _databaseName
-                    ..server = _serverAdress
-                    ..port = _serverPort
-                    ..userName = _databaseUser
-                    ..password = _databasePassword;
 
-                  Future(
-                    () async {
-                      await isar.writeTxn(() async {
-                        await isar.remoteDatabaseAccess.put(serverData);
-                      });
-
-                      await isar.writeTxn(() async {
-                        final item = await isar.settings.get(0);
-                        item!.isOfflineModeEnabled = false;
-
-                        await isar.settings.put(item);
-                      });
-                    },
-                  );
-
+                  ref
+                      .read(localDatabaseRepositoryProvider)
+                      .insertRemoteDatabaseCredentials(
+                          databaseName: _databaseName,
+                          serverAdress: _serverAdress,
+                          port: int.parse(_serverPort),
+                          username: _databaseUser,
+                          databasePassword: _databasePassword);
+                  Future(() async {
+                    Setting settings = await ref
+                        .read(localDatabaseRepositoryProvider)
+                        .getLocalSettings();
+                    ref
+                        .read(localDatabaseRepositoryProvider)
+                        .updateConfigurationState(settings, false);
+                  });
                   Navigator.push(
                     context,
                     MaterialPageRoute(

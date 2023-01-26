@@ -26,10 +26,10 @@ class _DateSelectorState extends State<DateSelector> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text("Fecha de nacimiento:",
-                style: Theme.of(context).textTheme.bodyText2),
+                style: Theme.of(context).textTheme.bodyMedium),
             Text(
               DateFormat("dd/MM/yyyy").format(widget.date),
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
           ],
         ),
@@ -55,7 +55,7 @@ class _DateSelectorState extends State<DateSelector> {
             "Editar",
             style: Theme.of(context)
                 .textTheme
-                .bodyText2!
+                .bodyMedium!
                 .copyWith(color: Colors.blue),
           ),
         ),

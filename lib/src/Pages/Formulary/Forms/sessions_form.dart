@@ -40,13 +40,13 @@ class SessionsFormState extends ConsumerState<SessionsForm> {
               Container(
                 margin: const EdgeInsets.all(20),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   maxLines: 5,
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Resumen de la sesión",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
-                    floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
+                    floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (valResume) {
                     setState(
@@ -66,13 +66,13 @@ class SessionsFormState extends ConsumerState<SessionsForm> {
               Container(
                 margin: const EdgeInsets.all(20),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   maxLines: 5,
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Objetivo de la sesión",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
-                    floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
+                    floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (valObjective) {
                     setState(
@@ -92,13 +92,13 @@ class SessionsFormState extends ConsumerState<SessionsForm> {
               Container(
                 margin: const EdgeInsets.all(20),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   maxLines: 5,
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Logros terapéuticos",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
-                    floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
+                    floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (valArchievement) {
                     setState(

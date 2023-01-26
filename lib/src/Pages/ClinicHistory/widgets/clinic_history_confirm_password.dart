@@ -1,19 +1,20 @@
 import 'package:aronnax/src/Pages/ClinicHistory/clinic_history_view/clinic_history_view.dart';
+import 'package:aronnax/src/data/providers/global_user_information_provider.dart';
 import 'package:aronnax/src/presentation/core/controllers.dart';
 import 'package:aronnax/src/presentation/core/methods.dart';
-import 'package:aronnax/src/presentation/login/login_form.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ClinicHistoryConfirmPasswordDialog extends StatefulWidget {
+class ClinicHistoryConfirmPasswordDialog extends ConsumerStatefulWidget {
   const ClinicHistoryConfirmPasswordDialog({Key? key}) : super(key: key);
 
   @override
-  State<ClinicHistoryConfirmPasswordDialog> createState() =>
-      _ClinicHistoryConfirmPasswordDialogState();
+  ClinicHistoryConfirmPasswordDialogState createState() =>
+      ClinicHistoryConfirmPasswordDialogState();
 }
 
-class _ClinicHistoryConfirmPasswordDialogState
-    extends State<ClinicHistoryConfirmPasswordDialog> {
+class ClinicHistoryConfirmPasswordDialogState
+    extends ConsumerState<ClinicHistoryConfirmPasswordDialog> {
   bool hidePassword = true;
 
   @override
@@ -53,7 +54,8 @@ class _ClinicHistoryConfirmPasswordDialogState
                   if (value!.isEmpty) {
                     return "Ingresa tu contraseña";
                   }
-                  if (!AppMethods().isPasswordValid(passwordInServer, value)) {
+                  if (!AppMethods()
+                      .isPasswordValid(ref.read(userPasswordProvider), value)) {
                     return "Contraseña incorrecta";
                   } else {
                     Navigator.pop(context);

@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:aronnax/src/data/providers/cities_provider.dart';
 import 'package:aronnax/src/presentation/core/controllers.dart';
@@ -56,12 +55,12 @@ class BasicFormState extends ConsumerState<BasicForm> {
             Container(
               margin: const EdgeInsets.all(20),
               child: TextFormField(
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
                 autofocus: true,
                 decoration: InputDecoration(
                   labelText: "Nombres",
-                  labelStyle: Theme.of(context).textTheme.bodyText2,
-                  floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                  labelStyle: Theme.of(context).textTheme.bodyMedium,
+                  floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                 ),
                 onChanged: (valNames) {
                   setState(
@@ -81,11 +80,11 @@ class BasicFormState extends ConsumerState<BasicForm> {
             Container(
               margin: const EdgeInsets.all(20),
               child: TextFormField(
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
                 autofocus: true,
                 decoration: InputDecoration(
                     labelText: "Apellidos",
-                    labelStyle: Theme.of(context).textTheme.bodyText2),
+                    labelStyle: Theme.of(context).textTheme.bodyMedium),
                 onChanged: (valLastNames) {
                   setState(
                     () {
@@ -105,11 +104,11 @@ class BasicFormState extends ConsumerState<BasicForm> {
               margin: const EdgeInsets.all(20),
               child: TextFormField(
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
                 autofocus: true,
                 decoration: InputDecoration(
                     labelText: "Cédula",
-                    labelStyle: Theme.of(context).textTheme.bodyText2),
+                    labelStyle: Theme.of(context).textTheme.bodyMedium),
                 onChanged: (valID) {
                   setState(
                     () {
@@ -129,12 +128,12 @@ class BasicFormState extends ConsumerState<BasicForm> {
               margin: const EdgeInsets.all(20),
               child: TextField(
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
                 autofocus: true,
                 decoration: InputDecoration(
                   labelText: "Número de contacto",
-                  labelStyle: Theme.of(context).textTheme.bodyText2,
-                  floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                  labelStyle: Theme.of(context).textTheme.bodyMedium,
+                  floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                 ),
                 onChanged: (valPhone) {
                   setState(
@@ -158,12 +157,12 @@ class BasicFormState extends ConsumerState<BasicForm> {
             Container(
               margin: const EdgeInsets.all(20),
               child: TextFormField(
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
                 autofocus: true,
                 decoration: InputDecoration(
                   labelText: "Correo electrónico",
-                  labelStyle: Theme.of(context).textTheme.bodyText2,
-                  floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                  labelStyle: Theme.of(context).textTheme.bodyMedium,
+                  floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                 ),
                 onChanged: (valMail) {
                   basicKey.currentState!.validate();
@@ -237,12 +236,12 @@ class BasicFormState extends ConsumerState<BasicForm> {
             Container(
               margin: const EdgeInsets.all(20),
               child: TextFormField(
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
                 autofocus: true,
                 decoration: InputDecoration(
                   labelText: "Dirección",
-                  labelStyle: Theme.of(context).textTheme.bodyText2,
-                  floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                  labelStyle: Theme.of(context).textTheme.bodyMedium,
+                  floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                 ),
                 onChanged: (valAdress) {
                   setState(
@@ -262,12 +261,12 @@ class BasicFormState extends ConsumerState<BasicForm> {
             Container(
               margin: const EdgeInsets.all(20),
               child: TextFormField(
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
                 autofocus: true,
                 decoration: InputDecoration(
                   labelText: "Escolaridad",
-                  labelStyle: Theme.of(context).textTheme.bodyText2,
-                  floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                  labelStyle: Theme.of(context).textTheme.bodyMedium,
+                  floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                 ),
                 onChanged: (valStudies) {
                   setState(
@@ -287,12 +286,12 @@ class BasicFormState extends ConsumerState<BasicForm> {
             Container(
               margin: const EdgeInsets.all(20),
               child: TextFormField(
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
                 autofocus: true,
                 decoration: InputDecoration(
                   labelText: "Ocupación",
-                  labelStyle: Theme.of(context).textTheme.bodyText2,
-                  floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                  labelStyle: Theme.of(context).textTheme.bodyMedium,
+                  floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                 ),
                 onChanged: (valOcupation) {
                   setState(
@@ -312,12 +311,12 @@ class BasicFormState extends ConsumerState<BasicForm> {
             Container(
               margin: const EdgeInsets.all(20),
               child: TextFormField(
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
                 autofocus: true,
                 decoration: InputDecoration(
                   labelText: "EPS",
-                  labelStyle: Theme.of(context).textTheme.bodyText2,
-                  floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                  labelStyle: Theme.of(context).textTheme.bodyMedium,
+                  floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                 ),
                 onChanged: (valInsurance) {
                   setState(
@@ -337,12 +336,12 @@ class BasicFormState extends ConsumerState<BasicForm> {
             Container(
               margin: const EdgeInsets.all(20),
               child: TextFormField(
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
                 autofocus: true,
                 decoration: InputDecoration(
                   labelText: "Nombre de contacto de emergencia",
-                  labelStyle: Theme.of(context).textTheme.bodyText2,
-                  floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                  labelStyle: Theme.of(context).textTheme.bodyMedium,
+                  floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                 ),
                 onChanged: (valEmergencyName) {
                   setState(
@@ -363,12 +362,12 @@ class BasicFormState extends ConsumerState<BasicForm> {
               margin: const EdgeInsets.all(20),
               child: TextFormField(
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
                 autofocus: true,
                 decoration: InputDecoration(
                   labelText: "Número de contacto de emergencia",
-                  labelStyle: Theme.of(context).textTheme.bodyText2,
-                  floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                  labelStyle: Theme.of(context).textTheme.bodyMedium,
+                  floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                 ),
                 onChanged: (emergencyNumber) {
                   setState(
