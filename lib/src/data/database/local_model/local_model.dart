@@ -144,8 +144,16 @@ class LocalDatabase extends _$LocalDatabase {
     return into(sessions).insert(data);
   }
 
+  Future<void> insertSettings(SettingsCompanion data) {
+    return into(settings).insert(data);
+  }
+
   Future<void> insertProfessional(ProfessionalCompanion data) {
     return into(professional).insert(data);
+  }
+
+  Future<void> insertDatabaseAccess(ServerDatabaseCompanion data) {
+    return into(serverDatabase).insert(data);
   }
 
   Stream<List<Patient>> userConsultation(String userNames) {
@@ -168,6 +176,10 @@ class LocalDatabase extends _$LocalDatabase {
     return (select(professional)).watch();
   }
 
+  Stream<Setting> watchCurrentSettings() {
+    return (select(settings)..where((tbl) => tbl.id.equals(0))).watchSingle();
+  }
+
   Future<List<ClinicHistoryData>> clinicHistoryConsultation(int idNumber) {
     return (select(clinicHistory)
           ..where((tbl) => tbl.idNumber.equals(idNumber)))
@@ -181,6 +193,23 @@ class LocalDatabase extends _$LocalDatabase {
 
   Future<List<ProfessionalData>> isProfessionalsListEmpty() async {
     return (select(professional)).get();
+  }
+
+  Future<Setting?> verifyExistingSettings() {
+    return (select(settings)..where((tbl) => tbl.id.equals(0)))
+        .getSingleOrNull();
+  }
+
+  Future<Setting> getLocalSettings() {
+    return (select(settings)..where((tbl) => tbl.id.equals(0))).getSingle();
+  }
+
+  Future updateConfigurationState(Setting state, bool isOffline) {
+    return (update(settings)..where((t) => t.id.equals(0))).write(
+      SettingsCompanion(
+          isConfigured: Value(!state.isConfigured),
+          isOfflineModeEnabled: Value(isOffline)),
+    );
   }
 }
 
