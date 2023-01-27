@@ -25,17 +25,7 @@ class LoginForm extends ConsumerStatefulWidget {
 
 class LoginFormState extends ConsumerState<LoginForm> {
   bool isPasswordVisible = false;
-
   bool userExists = false;
-
-  String currentPasswordInServer = "";
-  int currentPersonalID = 0;
-
-  passwordVisivility() {
-    setState(() {
-      isPasswordVisible = !isPasswordVisible;
-    });
-  }
 
   @override
   void didChangeDependencies() {
@@ -58,21 +48,18 @@ class LoginFormState extends ConsumerState<LoginForm> {
     final authProvider = ref.read(authenticationProvider);
     final conectionMode = ref.watch(offlineStatusProvider);
     String userID = ref.watch(userIdProvider);
-    log(userID);
     String userPassword = ref.watch(userPasswordProvider);
-
+    AsyncValue<List<ProfessionalData>> localLoginProvider = ref.watch(
+      localLoginStateProvider(
+        userID == ""
+            ? 0
+            : int.parse(
+                userID,
+              ),
+      ),
+    );
     return conectionMode.when(
       data: (offlineEnabled) {
-        AsyncValue<List<ProfessionalData>> localLoginProvider = ref.watch(
-          localLoginStateProvider(
-            userID == ""
-                ? 0
-                : int.parse(
-                    userID,
-                  ),
-          ),
-        );
-
         List<RemoteProfessional> currentRemoteProfessionalData =
             offlineEnabled ? [] : ref.watch(remoteLoginStateProvider);
 
@@ -95,7 +82,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
                           (state) => value,
                         );
                     offlineEnabled
-                        ? ref.watch(
+                        ? ref.read(
                             localLoginStateProvider(
                               value == ""
                                   ? 0
@@ -140,8 +127,6 @@ class LoginFormState extends ConsumerState<LoginForm> {
                   child: TextFormField(
                     style: Theme.of(context).textTheme.bodyMedium,
                     onChanged: (value) {
-                      log("aa: $value, bb: $userPassword");
-
                       !offlineEnabled
                           ? authProvider.setRemoteValues(
                               personalID: int.parse(userID),
@@ -193,7 +178,9 @@ class LoginFormState extends ConsumerState<LoginForm> {
                   children: [
                     IconButton(
                       onPressed: () {
-                        passwordVisivility();
+                        setState(() {
+                          isPasswordVisible = !isPasswordVisible;
+                        });
                       },
                       icon: Icon(isPasswordVisible
                           ? Icons.visibility
@@ -225,16 +212,6 @@ class LoginFormState extends ConsumerState<LoginForm> {
                           setState(() {
                             userExists = data.isNotEmpty;
                           });
-
-                          if (currentPasswordInServer != "") {
-                            setState(() {
-                              //userVerified = true;
-                            });
-                          } else {
-                            setState(() {
-                              //  userVerified = false;
-                            });
-                          }
 
                           _loginKey.currentState!.validate();
                         }

@@ -11,7 +11,6 @@ class LoginScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    //   ref.watch(darkThemeProvider.notifier).getCurrentTheme();
     double currentWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Stack(
@@ -81,8 +80,8 @@ class LoginScreen extends ConsumerWidget {
                       style: GoogleFonts.montserrat(
                         fontSize: 60,
                         color: ref.watch(darkThemeProvider) == ThemeMode.light
-                            ? const Color.fromARGB(255, 215, 215, 215)
-                            : const Color.fromARGB(255, 28, 28, 28),
+                            ? const Color.fromARGB(255, 28, 28, 28)
+                            : const Color.fromARGB(255, 215, 215, 215),
                       ),
                     ),
                   ],
