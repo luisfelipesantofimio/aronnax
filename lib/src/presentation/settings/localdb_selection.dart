@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:aronnax/src/Pages/settings/widgets/no_server_dialog.dart';
+import 'package:aronnax/src/presentation/settings/widgets/no_server_dialog.dart';
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/database/local_model/local_queries.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';

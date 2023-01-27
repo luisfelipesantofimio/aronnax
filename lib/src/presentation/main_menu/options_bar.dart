@@ -1,5 +1,5 @@
 import 'package:aronnax/src/Pages/Help/help_main_view.dart';
-import 'package:aronnax/src/Pages/settings/settings_main.dart';
+import 'package:aronnax/src/presentation/settings/settings_main.dart';
 import 'package:aronnax/src/presentation/login/login_main_view.dart';
 import 'package:flutter/material.dart';
 

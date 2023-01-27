@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/interfaces/auth_repository_interface.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
@@ -7,14 +5,13 @@ import 'package:aronnax/src/data/providers/global_user_information_provider.dart
 import 'package:aronnax/src/domain/entities/remote_professional.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/login_provider.dart';
+import 'package:aronnax/src/presentation/core/constants.dart';
 import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:aronnax/src/presentation/main_menu/main_menu.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-final _loginKey = GlobalKey<FormState>();
 
 class LoginForm extends ConsumerStatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -64,7 +61,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
             offlineEnabled ? [] : ref.watch(remoteLoginStateProvider);
 
         return Form(
-          key: _loginKey,
+          key: AppConstants().loginKey,
           child: Padding(
             padding: const EdgeInsets.all(30.0),
             child: Column(
@@ -75,7 +72,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   style: Theme.of(context).textTheme.bodyMedium,
                   onFieldSubmitted: (value) {
-                    _loginKey.currentState!.validate();
+                    AppConstants().loginKey.currentState!.validate();
                   },
                   onChanged: (value) {
                     ref.read(userIdProvider.notifier).update(
@@ -97,7 +94,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
                             professionalData: currentRemoteProfessionalData,
                           );
 
-                    _loginKey.currentState!.validate();
+                    AppConstants().loginKey.currentState!.validate();
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -135,7 +132,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
                             )
                           : "";
 
-                      _loginKey.currentState!.validate();
+                      AppConstants().loginKey.currentState!.validate();
                     },
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -213,7 +210,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
                             userExists = data.isNotEmpty;
                           });
 
-                          _loginKey.currentState!.validate();
+                          AppConstants().loginKey.currentState!.validate();
                         }
 
                         return const Visibility(

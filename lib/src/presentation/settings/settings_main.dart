@@ -1,7 +1,7 @@
 import 'package:aronnax/src/Pages/Formulary/professionalForm/professional_form.dart';
-import 'package:aronnax/src/Pages/settings/localdb_selection.dart';
-import 'package:aronnax/src/Pages/settings/setting_options_view_profile.dart';
-import 'package:aronnax/src/Pages/settings/theme_select.dart';
+import 'package:aronnax/src/presentation/settings/localdb_selection.dart';
+import 'package:aronnax/src/presentation/settings/setting_options_view_profile.dart';
+import 'package:aronnax/src/presentation/settings/theme_select.dart';
 import 'package:flutter/material.dart';
 import 'settings_headerbar.dart';
 
