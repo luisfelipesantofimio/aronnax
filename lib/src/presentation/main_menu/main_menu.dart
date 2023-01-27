@@ -1,28 +1,12 @@
-
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/consultations_provider.dart';
+import 'package:aronnax/src/presentation/core/methods.dart';
 import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:aronnax/src/presentation/main_menu/main_header.dart';
 import 'package:aronnax/src/presentation/main_menu/options_bar.dart';
 import 'package:aronnax/src/presentation/widgets/main_menu_options.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
-
-DateTime hour = DateTime.now();
-String currentHour = DateFormat("kk").format(hour);
-int format = int.parse(currentHour);
-
-dayGreet() {
-  if (format > 23 || format < 12) {
-    return "Buenos días";
-  }
-  if (format >= 12 && format < 19) {
-    return "Buenas tardes";
-  } else {
-    return "Buenas noches";
-  }
-}
 
 class MainMenu extends ConsumerStatefulWidget {
   const MainMenu({Key? key}) : super(key: key);
@@ -47,7 +31,7 @@ class MainMenuState extends ConsumerState<MainMenu> {
   @override
   Widget build(BuildContext context) {
     String professionalNames = ref.read(globalUserNameProvider);
-    String finalGreet = dayGreet();
+    String finalGreet = AppMethods().showMainMenuGreet(DateTime.now().hour);
 
     return Scaffold(
       body: SizedBox(

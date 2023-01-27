@@ -23,4 +23,15 @@ class AppMethods {
     ).join();
     return result;
   }
+
+  String showMainMenuGreet(int hour) {
+    if (hour > 23 || hour < 12) {
+      return "Buenos días";
+    }
+    if (hour >= 12 && hour < 19) {
+      return "Buenas tardes";
+    } else {
+      return "Buenas noches";
+    }
+  }
 }

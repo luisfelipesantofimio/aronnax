@@ -87,12 +87,6 @@ class MainMenuOptions extends StatelessWidget {
                               const ClinicHistorySearchView()),
                         ),
                       );
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: ((context) => const UserConsultation()),
-                      //   ),
-                      // );
                     }),
               ),
             ),

@@ -9,8 +9,9 @@ class MainHeader extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    DateTime dateFormat = DateTime.now();
-    String currentDate = DateFormat("dd/MM/yyyy").format(dateFormat);
+    String currentDate = DateFormat("dd/MM/yyyy").format(
+      DateTime.now(),
+    );
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.background,
