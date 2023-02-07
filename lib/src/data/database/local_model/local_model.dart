@@ -132,6 +132,8 @@ class LocalDatabase extends _$LocalDatabase {
   @override
   int get schemaVersion => 1;
 
+  //Data insertion
+
   Future<void> insertPatient(PatientsCompanion data) {
     return into(patients).insert(data);
   }
@@ -155,6 +157,34 @@ class LocalDatabase extends _$LocalDatabase {
   Future<void> insertDatabaseAccess(ServerDatabaseCompanion data) {
     return into(serverDatabase).insert(data);
   }
+
+  // Data update
+
+  Future updateThemeMode(bool currentThemeMode) async {
+    return (update(settings)..where((t) => t.id.equals(0))).write(
+      SettingsCompanion(
+        isDarkModeEnabled: Value(!currentThemeMode),
+      ),
+    );
+  }
+
+  Future updateConnectionMode(bool currentConnectionMode) async {
+    return (update(settings)..where((t) => t.id.equals(0))).write(
+      SettingsCompanion(
+        isOfflineModeEnabled: Value(!currentConnectionMode),
+      ),
+    );
+  }
+
+  Future updateLocalUserPassword(int userID, String newEncodedValue) async {
+    return (update(professional)..where((t) => t.id.equals(userID))).write(
+      ProfessionalCompanion(
+        password: Value(newEncodedValue),
+      ),
+    );
+  }
+
+  // Data fetching
 
   Stream<List<Patient>> userConsultation(String userNames) {
     return (select(patients)

@@ -108,6 +108,18 @@ addLocalProfessional(int personalID, String names, String lastNames,
   localDB.insertProfessional(entity);
 }
 
+void updateThemeMode(bool currentThemeMode) {
+  localDB.updateThemeMode(currentThemeMode);
+}
+
+void updateConnectionMode(bool currentConnectionMode) {
+  localDB.updateConnectionMode(currentConnectionMode);
+}
+
+void updateLocalUserPassword(int userID, String newEncodedValue) {
+  localDB.updateLocalUserPassword(userID, newEncodedValue);
+}
+
 Stream<List<Patient>> searchPatient(String user) {
   return localDB.userConsultation(user);
 }
