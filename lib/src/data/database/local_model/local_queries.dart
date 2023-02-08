@@ -124,7 +124,7 @@ Stream<List<Patient>> searchPatient(String user) {
   return localDB.userConsultation(user);
 }
 
-Stream<List<ProfessionalData>> loginExistingProfessional(int userID) {
+Future<List<ProfessionalData>> loginExistingProfessional(int userID) {
   return localDB.loginProfessional(userID);
 }
 

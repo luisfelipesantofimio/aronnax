@@ -121,7 +121,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
   }
 
   @override
-  Stream<List<ProfessionalData>> loginExistingProfessional(int userID) {
+  Future<List<ProfessionalData>> loginExistingProfessional(int userID) {
     return localDB.loginProfessional(userID);
   }
 

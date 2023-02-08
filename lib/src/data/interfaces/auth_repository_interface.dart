@@ -4,18 +4,15 @@ import 'package:aronnax/src/domain/entities/remote_professional.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class AuthRepositoryInterface {
-  bool loginUser(String obtainedPassword, String userPassword);
+  bool validatePassword(String obtainedPassword, String userPassword);
 
-  bool setRemoteValues({
+  bool loginRemoteUser({
     required WidgetRef ref,
     required List<RemoteProfessional> professionalData,
     required int personalID,
   });
 
-  void setLocaleValue({
-    required WidgetRef ref,
-    required List<ProfessionalData> localProfessionalData,
-  });
+  Future<bool> loginLocalUser({required WidgetRef ref, required int userID});
 }
 
 final authenticationProvider = Provider<AuthRepositoryInterface>(

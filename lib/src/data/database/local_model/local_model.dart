@@ -194,12 +194,12 @@ class LocalDatabase extends _$LocalDatabase {
         .watch();
   }
 
-  Stream<List<ProfessionalData>> loginProfessional(int userID) {
+  Future<List<ProfessionalData>> loginProfessional(int userID) {
     return (select(professional)
           ..where(
             (tbl) => tbl.personalID.equals(userID),
           ))
-        .watch();
+        .get();
   }
 
   Stream<List<ProfessionalData>> initalProfessionalFetch() {

@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/interfaces/auth_repository_interface.dart';
+import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
+import 'package:aronnax/src/data/providers/global_user_information_provider.dart';
 import 'package:aronnax/src/data/providers/login_provider.dart';
 import 'package:aronnax/src/domain/entities/remote_professional.dart';
 import 'package:aronnax/src/presentation/core/user_global_values.dart';
@@ -10,13 +12,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AuthRepository implements AuthRepositoryInterface {
   @override
-  bool loginUser(String obtainedPassword, String userPassword) {
+  bool validatePassword(String obtainedPassword, String userPassword) {
     log("Contraseña Obtenida: $obtainedPassword. Input: $userPassword");
     return Crypt(obtainedPassword).match(userPassword);
   }
 
   @override
-  bool setRemoteValues({
+  bool loginRemoteUser({
     required WidgetRef ref,
     required List<RemoteProfessional> professionalData,
     required int personalID,
@@ -43,20 +45,29 @@ class AuthRepository implements AuthRepositoryInterface {
   }
 
   @override
-  void setLocaleValue({
+  Future<bool> loginLocalUser({
     required WidgetRef ref,
-    required List<ProfessionalData> localProfessionalData,
-  }) {
-    ref.read(globalUserNameProvider.notifier).update(
-        (state) => localProfessionalData.map((e) => e.names).toList().single);
-    ref.read(globalUserLastNameProvider.notifier).update((state) =>
-        localProfessionalData.map((e) => e.lastNames).toList().single);
-    ref.read(globalProfessionalIDProvider.notifier).update(
-          (state) => localProfessionalData
-              .map((e) => e.professionalID)
-              .toList()
-              .single
-              .toString(),
-        );
+    required int userID,
+  }) async {
+    List<ProfessionalData> professionalData = await ref
+        .read(localDatabaseRepositoryProvider)
+        .loginExistingProfessional(userID);
+    log(professionalData.toString());
+    if (professionalData.isNotEmpty) {
+      ref.read(globalUserNameProvider.notifier).update(
+          (state) => professionalData.map((e) => e.names).toList().single);
+      ref.read(globalUserLastNameProvider.notifier).update(
+          (state) => professionalData.map((e) => e.lastNames).toList().single);
+      ref.read(globalProfessionalIDProvider.notifier).update(
+            (state) => professionalData
+                .map((e) => e.professionalID)
+                .toList()
+                .single
+                .toString(),
+          );
+      ref.read(userPasswordProvider.notifier).update(
+          (state) => professionalData.map((e) => e.password).toList().single);
+    }
+    return professionalData.isNotEmpty;
   }
 }

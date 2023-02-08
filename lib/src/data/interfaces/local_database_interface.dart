@@ -51,7 +51,7 @@ abstract class LocalDatabaseInteface {
 
   Stream<List<Patient>> searchPatient(String user);
 
-  Stream<List<ProfessionalData>> loginExistingProfessional(int userID);
+  Future<List<ProfessionalData>> loginExistingProfessional(int userID);
 
   Stream<List<ProfessionalData>> fetchInitialRegisterUsers();
 
