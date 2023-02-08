@@ -28,7 +28,7 @@ final remoteLoginStateProvider =
   (ref) => GlobalRemoteLoginState(),
 );
 
-final localLoginStateProvider =
-    StreamProvider.family<List<ProfessionalData>, int>(
-  (ref, userID) => localDB.loginProfessional(userID),
-);
+// final localLoginStateProvider =
+//     StreamProvider.family<List<ProfessionalData>, int>(
+//   (ref, userID) => localDB.loginProfessional(userID),
+// );

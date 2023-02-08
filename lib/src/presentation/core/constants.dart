@@ -7,5 +7,6 @@ class AppConstants {
   static const String compilationDate = "12/06/2022";
 
   //Form controllers
-  final loginKey = GlobalKey<FormState>();
 }
+
+final loginKey = GlobalKey<FormState>();

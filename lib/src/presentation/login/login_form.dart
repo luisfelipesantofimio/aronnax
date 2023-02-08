@@ -2,13 +2,11 @@ import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/interfaces/auth_repository_interface.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/providers/global_user_information_provider.dart';
-import 'package:aronnax/src/domain/entities/remote_professional.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/login_provider.dart';
 import 'package:aronnax/src/presentation/core/constants.dart';
 import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:aronnax/src/presentation/main_menu/main_menu.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,9 +26,9 @@ class LoginFormState extends ConsumerState<LoginForm> {
   void didChangeDependencies() {
     Future(
       () async {
-        Setting isOffline =
+        Setting settings =
             await ref.watch(localDatabaseRepositoryProvider).getLocalSettings();
-        if (!isOffline.isOfflineModeEnabled) {
+        if (!settings.isOfflineModeEnabled) {
           ref
               .read(remoteLoginStateProvider.notifier)
               .getProfessionalsInServer();
@@ -42,26 +40,12 @@ class LoginFormState extends ConsumerState<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    final authProvider = ref.read(authenticationProvider);
     final conectionMode = ref.watch(offlineStatusProvider);
-    String userID = ref.watch(userIdProvider);
-    String userPassword = ref.watch(userPasswordProvider);
-    AsyncValue<List<ProfessionalData>> localLoginProvider = ref.watch(
-      localLoginStateProvider(
-        userID == ""
-            ? 0
-            : int.parse(
-                userID,
-              ),
-      ),
-    );
+
     return conectionMode.when(
       data: (offlineEnabled) {
-        List<RemoteProfessional> currentRemoteProfessionalData =
-            offlineEnabled ? [] : ref.watch(remoteLoginStateProvider);
-
         return Form(
-          key: AppConstants().loginKey,
+          key: loginKey,
           child: Padding(
             padding: const EdgeInsets.all(30.0),
             child: Column(
@@ -72,29 +56,20 @@ class LoginFormState extends ConsumerState<LoginForm> {
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   style: Theme.of(context).textTheme.bodyMedium,
                   onFieldSubmitted: (value) {
-                    AppConstants().loginKey.currentState!.validate();
+                    loginKey.currentState!.validate();
                   },
-                  onChanged: (value) {
-                    ref.read(userIdProvider.notifier).update(
-                          (state) => value,
-                        );
-                    offlineEnabled
-                        ? ref.read(
-                            localLoginStateProvider(
-                              value == ""
-                                  ? 0
-                                  : int.parse(
-                                      userID,
-                                    ),
-                            ),
-                          )
-                        : authProvider.setRemoteValues(
-                            ref: ref,
-                            personalID: int.parse(value),
-                            professionalData: currentRemoteProfessionalData,
-                          );
+                  onChanged: (value) async {
+                    if (offlineEnabled) {
+                      userExists =
+                          await ref.read(authenticationProvider).loginLocalUser(
+                                ref: ref,
+                                userID: value.isEmpty ? 0 : int.parse(value),
+                              );
+                    } else {
+                      //TODO: implement remote login
+                    }
 
-                    AppConstants().loginKey.currentState!.validate();
+                    loginKey.currentState!.validate();
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -124,21 +99,14 @@ class LoginFormState extends ConsumerState<LoginForm> {
                   child: TextFormField(
                     style: Theme.of(context).textTheme.bodyMedium,
                     onChanged: (value) {
-                      !offlineEnabled
-                          ? authProvider.setRemoteValues(
-                              personalID: int.parse(userID),
-                              professionalData: currentRemoteProfessionalData,
-                              ref: ref,
-                            )
-                          : "";
-
-                      AppConstants().loginKey.currentState!.validate();
+                      loginKey.currentState!.validate();
                     },
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "Ingresa tu contraseña";
                       }
-                      if (!authProvider.loginUser(userPassword, value)) {
+                      if (!ref.read(authenticationProvider).validatePassword(
+                          ref.watch(userPasswordProvider), value)) {
                         return "Contraseña incorrecta";
                       } else {
                         Future(
@@ -187,46 +155,6 @@ class LoginFormState extends ConsumerState<LoginForm> {
                 ),
                 const Padding(
                   padding: EdgeInsets.all(20),
-                ),
-                Visibility(
-                  visible: offlineEnabled,
-                  child: SizedBox(
-                    height: 20,
-                    child: localLoginProvider.when(
-                      data: (data) {
-                        if (data.isNotEmpty && offlineEnabled) {
-                          Future(() {
-                            ref.read(userPasswordProvider.notifier).update(
-                                (state) => data
-                                    .map((e) => e.password)
-                                    .toList()
-                                    .single);
-                            authProvider.setLocaleValue(
-                              ref: ref,
-                              localProfessionalData: data,
-                            );
-                          });
-                          setState(() {
-                            userExists = data.isNotEmpty;
-                          });
-
-                          AppConstants().loginKey.currentState!.validate();
-                        }
-
-                        return const Visibility(
-                            visible: false,
-                            child: SizedBox(
-                              height: 1,
-                            ));
-                      },
-                      error: (error, stackTrace) => const Center(
-                        child: Text("Algo salió mal :("),
-                      ),
-                      loading: () => const Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    ),
-                  ),
                 ),
               ],
             ),
