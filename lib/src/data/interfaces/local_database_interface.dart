@@ -73,6 +73,8 @@ abstract class LocalDatabaseInteface {
 
   void updateConfigurationState(Setting settings, bool isOffline);
 
+  Future updateThemeMode(bool isDarkEnabled);
+
   Stream<Setting> getSettingsAsStream();
 
   Future<Setting> getLocalSettings();

@@ -1,9 +1,8 @@
-import 'package:aronnax/src/data/providers/dark_mode_provider.dart';
+import 'package:aronnax/src/data/providers/settings_provider.dart';
 import 'package:aronnax/src/presentation/loading_screen/loading_screen.dart';
 import 'package:aronnax/src/presentation/themes/custom_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 
 void main() async {
   runApp(
@@ -28,11 +27,19 @@ class MyAppState extends ConsumerState<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: GlobalThemes.lightTheme,
-      darkTheme: GlobalThemes.darkTheme,
-      themeMode: ref.watch(darkThemeProvider),
-      home: const LoadingScreen(),
+    final settingsStream = ref.watch(settingsStreamProvider);
+
+    return settingsStream.when(
+      data: (data) => MaterialApp(
+        theme: GlobalThemes.lightTheme,
+        darkTheme: GlobalThemes.darkTheme,
+        themeMode: data.isDarkModeEnabled ? ThemeMode.dark : ThemeMode.light,
+        home: const LoadingScreen(),
+      ),
+      error: (error, stackTrace) => const Center(
+        child: Text("Something went wrong."),
+      ),
+      loading: () => const CircularProgressIndicator(),
     );
   }
 }

@@ -1,5 +1,4 @@
 import 'package:aronnax/src/Pages/Help/legal_info.dart';
-import 'package:aronnax/src/data/providers/dark_mode_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -23,7 +22,7 @@ class MainHelpView extends ConsumerWidget {
                   children: [
                     Image(
                       height: 300,
-                      image: ref.watch(darkThemeProvider) == ThemeMode.light
+                      image: true
                           ? const AssetImage(
                               "assets/img/aronnax-icon-light.png")
                           : const AssetImage(
@@ -87,27 +86,6 @@ class MainHelpView extends ConsumerWidget {
                             ),
                           );
                         },
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 60, top: 20),
-                      child: RichText(
-                        text: TextSpan(
-                          text: "Desarrollado con ",
-                          style: Theme.of(context).textTheme.bodyMedium,
-                          children: [
-                            const WidgetSpan(
-                              child: Icon(
-                                Icons.favorite,
-                                color: Colors.red,
-                              ),
-                            ),
-                            TextSpan(
-                              text: " en Crearte Consciencia.",
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            )
-                          ],
-                        ),
                       ),
                     ),
                   ],

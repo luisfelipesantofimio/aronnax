@@ -1,37 +1,18 @@
-import 'package:aronnax/src/Pages/Formulary/professionalForm/professional_form.dart';
-import 'package:aronnax/src/presentation/settings/localdb_selection.dart';
-import 'package:aronnax/src/presentation/settings/setting_options_view_profile.dart';
-import 'package:aronnax/src/presentation/settings/theme_select.dart';
+import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
+import 'package:aronnax/src/data/interfaces/settings_repository_interface.dart';
+import 'package:aronnax/src/data/providers/settings_provider.dart';
+import 'package:aronnax/src/presentation/core/methods.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'settings_headerbar.dart';
 
-class SettingsMain extends StatefulWidget {
+class SettingsMain extends ConsumerWidget {
   const SettingsMain({Key? key}) : super(key: key);
 
   @override
-  State<SettingsMain> createState() => _SettingsMainState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final settingsStream = ref.watch(settingsStreamProvider);
 
-class _SettingsMainState extends State<SettingsMain> {
-  settingSetView() {
-    switch (currentView.value) {
-      case 0:
-        return const SettingsOptionsProfile();
-
-      case 1:
-        return const ProfessionalForm();
-      case 2:
-        return const ThemeSelector();
-      case 3:
-        return const LocalDBActivationScreen();
-
-      default:
-        return const SettingsOptionsProfile();
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       body: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -46,7 +27,8 @@ class _SettingsMainState extends State<SettingsMain> {
                   child: SizedBox(
                     height: double.maxFinite,
                     width: 1000,
-                    child: settingSetView(),
+                    child: AppMethods()
+                        .settingsScreenIndex(currentView, settingsStream),
                   ),
                 );
               },

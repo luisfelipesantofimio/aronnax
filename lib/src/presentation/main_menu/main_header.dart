@@ -1,4 +1,3 @@
-import 'package:aronnax/src/data/providers/dark_mode_provider.dart';
 import 'package:aronnax/src/presentation/core/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -31,7 +30,7 @@ class MainHeader extends ConsumerWidget {
             margin: const EdgeInsets.all(10),
             child: Image(
               height: 100,
-              image: ref.watch(darkThemeProvider) == ThemeMode.light
+              image: true
                   ? const AssetImage("assets/img/aronnax-icon-dark.png")
                   : const AssetImage("assets/img/aronnax-icon-light.png"),
             ),

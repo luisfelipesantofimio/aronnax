@@ -1,4 +1,3 @@
-import 'package:aronnax/src/data/providers/dark_mode_provider.dart';
 import 'package:aronnax/src/presentation/core/constants.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -68,7 +67,7 @@ class LoginScreen extends ConsumerWidget {
                       width: 200,
                       child: Image(
                         height: 300,
-                        image: ref.watch(darkThemeProvider) == ThemeMode.light
+                        image: true
                             ? const AssetImage(
                                 "assets/img/aronnax-icon-dark.png")
                             : const AssetImage(
@@ -79,7 +78,7 @@ class LoginScreen extends ConsumerWidget {
                       "Aronnax",
                       style: GoogleFonts.montserrat(
                         fontSize: 60,
-                        color: ref.watch(darkThemeProvider) == ThemeMode.light
+                        color: true
                             ? const Color.fromARGB(255, 28, 28, 28)
                             : const Color.fromARGB(255, 215, 215, 215),
                       ),
@@ -96,10 +95,9 @@ class LoginScreen extends ConsumerWidget {
                           "Versión ${AppConstants.globalVersion}",
                           style: GoogleFonts.montserrat(
                             fontSize: 15,
-                            color:
-                                ref.watch(darkThemeProvider) == ThemeMode.light
-                                    ? const Color.fromARGB(255, 28, 28, 28)
-                                    : const Color.fromARGB(255, 215, 215, 215),
+                            color: true
+                                ? const Color.fromARGB(255, 28, 28, 28)
+                                : const Color.fromARGB(255, 215, 215, 215),
                           ),
                         )
                       ],

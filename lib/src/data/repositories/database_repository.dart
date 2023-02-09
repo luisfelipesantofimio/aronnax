@@ -181,4 +181,9 @@ class DatabaseRepository implements LocalDatabaseInteface {
   Future<Setting> getLocalSettings() {
     return localDB.getLocalSettings();
   }
+
+  @override
+  Future updateThemeMode(bool isDarkEnabled) {
+    return localDB.updateThemeMode(isDarkEnabled);
+  }
 }
