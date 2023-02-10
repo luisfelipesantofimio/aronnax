@@ -13,7 +13,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class AuthRepository implements AuthRepositoryInterface {
   @override
   bool validatePassword(String obtainedPassword, String userPassword) {
-    log("Contraseña Obtenida: $obtainedPassword. Input: $userPassword");
     return Crypt(obtainedPassword).match(userPassword);
   }
 
