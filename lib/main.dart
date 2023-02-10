@@ -36,8 +36,8 @@ class MyAppState extends ConsumerState<MyApp> {
         themeMode: data.isDarkModeEnabled ? ThemeMode.dark : ThemeMode.light,
         home: const LoadingScreen(),
       ),
-      error: (error, stackTrace) => const Center(
-        child: Text("Something went wrong."),
+      error: (error, stackTrace) => Center(
+        child: Text("Something went wrong. $error"),
       ),
       loading: () => const CircularProgressIndicator(),
     );
