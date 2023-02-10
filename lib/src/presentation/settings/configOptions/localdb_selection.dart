@@ -23,62 +23,69 @@ class LocalDBActivationScreenState
   Widget build(BuildContext context) {
     bool isOfflineEnabled = ref.watch(globalOfflineStatusProvider);
 
-    log(isOfflineEnabled.toString());
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            "¿Activar base de datos local?",
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
-          Column(
-            children: [
-              Switch(
-                value: isOfflineEnabled,
-                onChanged: (switchVal) async {
-                  List<ProfessionalData> currentLocalUserList =
-                      await localDB.isProfessionalsListEmpty();
-                  if (isOfflineEnabled
-                      //&& localdb.isEmpty
-                      ) {
-                    showDialog(
-                      context: context,
-                      builder: (context) => const NoServerDialog(),
-                    );
-                  } else if ( //localdb.isNotEmpty &&
-                      currentLocalUserList.isEmpty) {
-                    showDialog(
-                      context: context,
-                      builder: (context) => const NoLocalDBConfiguredDialog(),
-                    );
-                  } else {
-                    Future(
-                      () async {
-                        final settings = await ref
-                            .read(localDatabaseRepositoryProvider)
-                            .getLocalSettings();
-                        ref
-                            .read(localDatabaseRepositoryProvider)
-                            .updateConfigurationState(
-                                settings, settings.isOfflineModeEnabled);
-                      },
-                    );
-                  }
-                },
-                activeColor: Colors.blueGrey,
-                activeTrackColor: Colors.green,
-              ),
-              Text(
-                isOfflineEnabled
-                    ? "Aronnax está funcionando offline"
-                    : "Aronnax está conectado a tu base de datos",
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-            ],
-          ),
-        ],
+    return widget.settingsData.when(
+      data: (data) => Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "¿Activar base de datos local?",
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            Column(
+              children: [
+                Switch(
+                  value: isOfflineEnabled,
+                  onChanged: (switchVal) async {
+                    List<ServerDatabaseData> serverConfigurations = await ref
+                        .watch(localDatabaseRepositoryProvider)
+                        .getServerConfigurationList();
+
+                    List<ProfessionalData> professionalsList = await ref
+                        .read(localDatabaseRepositoryProvider)
+                        .getProfessionalsList();
+
+                    if (isOfflineEnabled && serverConfigurations.isEmpty) {
+                      Future(() => showDialog(
+                            context: context,
+                            builder: (context) => const NoServerDialog(),
+                          ));
+                    } else if (!isOfflineEnabled && professionalsList.isEmpty) {
+                      Future(
+                        () => showDialog(
+                          context: context,
+                          builder: (context) =>
+                              const NoLocalDBConfiguredDialog(),
+                        ),
+                      );
+                    } else {
+                      Future(
+                        () async {
+                          ref
+                              .read(localDatabaseRepositoryProvider)
+                              .updateConnectionMode(!switchVal);
+                        },
+                      );
+                    }
+                  },
+                  activeColor: Colors.blueGrey,
+                  activeTrackColor: Colors.green,
+                ),
+                Text(
+                  isOfflineEnabled
+                      ? "Aronnax está funcionando offline"
+                      : "Aronnax está conectado a tu base de datos",
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
+      error: (error, stackTrace) => const Center(
+        child: Text("Something went wrong"),
+      ),
+      loading: () => const CircularProgressIndicator(),
     );
   }
 }

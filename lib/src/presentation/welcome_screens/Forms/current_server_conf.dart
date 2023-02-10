@@ -1,4 +1,3 @@
-import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/presentation/welcome_screens/finish.dart';
 import 'package:flutter/material.dart';
@@ -166,12 +165,9 @@ class ExistingServerFormState extends ConsumerState<ExistingServerForm> {
                           username: _databaseUser,
                           databasePassword: _databasePassword);
                   Future(() async {
-                    Setting settings = await ref
-                        .read(localDatabaseRepositoryProvider)
-                        .getLocalSettings();
                     ref
                         .read(localDatabaseRepositoryProvider)
-                        .updateConfigurationState(settings, false);
+                        .updateConfigurationState(true);
                   });
                   Navigator.push(
                     context,

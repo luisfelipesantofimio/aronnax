@@ -212,16 +212,14 @@ class LocalProfessionalRegisterState
                       userName,
                       _hashedPassword.toString(),
                     );
-                    Future(
-                      () async {
-                        final settings = await ref
-                            .read(localDatabaseRepositoryProvider)
-                            .getLocalSettings();
-                        ref
-                            .read(localDatabaseRepositoryProvider)
-                            .updateConfigurationState(settings, true);
-                      },
-                    );
+
+                    ref
+                        .read(localDatabaseRepositoryProvider)
+                        .updateConfigurationState(true);
+                    ref
+                        .read(localDatabaseRepositoryProvider)
+                        .updateConnectionMode(true);
+
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text("¡Hola! $names"),
