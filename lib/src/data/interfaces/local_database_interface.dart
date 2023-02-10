@@ -71,9 +71,15 @@ abstract class LocalDatabaseInteface {
     required String databasePassword,
   });
 
-  void updateConfigurationState(Setting settings, bool isOffline);
+  void updateConfigurationState(bool isConfigured);
 
   Future updateThemeMode(bool isDarkEnabled);
+
+  Future updateConnectionMode(bool isOfflineEnabled);
+
+  Future<List<ServerDatabaseData>> getServerConfigurationList();
+
+  Future<List<ProfessionalData>> getProfessionalsList();
 
   Stream<Setting> getSettingsAsStream();
 

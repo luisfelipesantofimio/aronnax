@@ -168,8 +168,8 @@ class DatabaseRepository implements LocalDatabaseInteface {
   }
 
   @override
-  void updateConfigurationState(Setting settings, bool isOffline) {
-    localDB.updateConfigurationState(settings, isOffline);
+  void updateConfigurationState(bool isConfigured) {
+    localDB.updateConfigurationState(isConfigured);
   }
 
   @override
@@ -185,5 +185,20 @@ class DatabaseRepository implements LocalDatabaseInteface {
   @override
   Future updateThemeMode(bool isDarkEnabled) {
     return localDB.updateThemeMode(isDarkEnabled);
+  }
+
+  @override
+  Future<List<ServerDatabaseData>> getServerConfigurationList() {
+    return localDB.getServerConfigurations();
+  }
+
+  @override
+  Future<List<ProfessionalData>> getProfessionalsList() {
+    return localDB.getProfessionalsList();
+  }
+
+  @override
+  Future updateConnectionMode(bool isOfflineEnabled) {
+    return localDB.updateConnectionMode(isOfflineEnabled);
   }
 }
