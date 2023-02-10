@@ -1,5 +1,6 @@
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
+import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/presentation/login/login_main_view.dart';
 import 'package:aronnax/src/presentation/welcome_screens/first.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,9 @@ class _LoadingScreenState extends ConsumerState<LoadingScreen> {
       Setting? settings =
           await ref.read(localDatabaseRepositoryProvider).verifySettingsData();
       if (settings!.isConfigured) {
+        ref
+            .read(globalOfflineStatusProvider.notifier)
+            .update((state) => settings.isDarkModeEnabled);
         Future(
           () {
             Navigator.push(
