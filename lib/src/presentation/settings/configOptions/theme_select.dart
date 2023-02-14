@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/interfaces/settings_repository_interface.dart';
+import 'package:aronnax/src/data/providers/theme_provider.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -26,6 +27,9 @@ class ThemeSelector extends ConsumerWidget {
                 Switch(
                   value: data.isDarkModeEnabled,
                   onChanged: (switchVal) {
+                    ref
+                        .read(themeProvider.notifier)
+                        .swithThemeMode(ref, switchVal);
                     ref
                         .read(settingsRepositoryProvider)
                         .switchCurrentTheme(ref, data.isDarkModeEnabled);
