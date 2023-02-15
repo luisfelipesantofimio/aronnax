@@ -37,6 +37,12 @@ class $ProfessionalTable extends Professional
   late final GeneratedColumn<String> lastNames = GeneratedColumn<String>(
       'last_names', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _countryCodeMeta =
+      const VerificationMeta('countryCode');
+  @override
+  late final GeneratedColumn<String> countryCode = GeneratedColumn<String>(
+      'country_code', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _professionalIDMeta =
       const VerificationMeta('professionalID');
   @override
@@ -56,8 +62,16 @@ class $ProfessionalTable extends Professional
       'password', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   @override
-  List<GeneratedColumn> get $columns =>
-      [id, personalID, names, lastNames, professionalID, userName, password];
+  List<GeneratedColumn> get $columns => [
+        id,
+        personalID,
+        names,
+        lastNames,
+        countryCode,
+        professionalID,
+        userName,
+        password
+      ];
   @override
   String get aliasedName => _alias ?? 'professional';
   @override
@@ -89,6 +103,14 @@ class $ProfessionalTable extends Professional
           lastNames.isAcceptableOrUnknown(data['last_names']!, _lastNamesMeta));
     } else if (isInserting) {
       context.missing(_lastNamesMeta);
+    }
+    if (data.containsKey('country_code')) {
+      context.handle(
+          _countryCodeMeta,
+          countryCode.isAcceptableOrUnknown(
+              data['country_code']!, _countryCodeMeta));
+    } else if (isInserting) {
+      context.missing(_countryCodeMeta);
     }
     if (data.containsKey('professional_i_d')) {
       context.handle(
@@ -127,6 +149,8 @@ class $ProfessionalTable extends Professional
           .read(DriftSqlType.string, data['${effectivePrefix}names'])!,
       lastNames: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}last_names'])!,
+      countryCode: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}country_code'])!,
       professionalID: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}professional_i_d'])!,
       userName: attachedDatabase.typeMapping
@@ -148,6 +172,7 @@ class ProfessionalData extends DataClass
   final int personalID;
   final String names;
   final String lastNames;
+  final String countryCode;
   final int professionalID;
   final String userName;
   final String password;
@@ -156,6 +181,7 @@ class ProfessionalData extends DataClass
       required this.personalID,
       required this.names,
       required this.lastNames,
+      required this.countryCode,
       required this.professionalID,
       required this.userName,
       required this.password});
@@ -166,6 +192,7 @@ class ProfessionalData extends DataClass
     map['personal_i_d'] = Variable<int>(personalID);
     map['names'] = Variable<String>(names);
     map['last_names'] = Variable<String>(lastNames);
+    map['country_code'] = Variable<String>(countryCode);
     map['professional_i_d'] = Variable<int>(professionalID);
     map['user_name'] = Variable<String>(userName);
     map['password'] = Variable<String>(password);
@@ -178,6 +205,7 @@ class ProfessionalData extends DataClass
       personalID: Value(personalID),
       names: Value(names),
       lastNames: Value(lastNames),
+      countryCode: Value(countryCode),
       professionalID: Value(professionalID),
       userName: Value(userName),
       password: Value(password),
@@ -192,6 +220,7 @@ class ProfessionalData extends DataClass
       personalID: serializer.fromJson<int>(json['personalID']),
       names: serializer.fromJson<String>(json['names']),
       lastNames: serializer.fromJson<String>(json['lastNames']),
+      countryCode: serializer.fromJson<String>(json['countryCode']),
       professionalID: serializer.fromJson<int>(json['professionalID']),
       userName: serializer.fromJson<String>(json['userName']),
       password: serializer.fromJson<String>(json['password']),
@@ -205,6 +234,7 @@ class ProfessionalData extends DataClass
       'personalID': serializer.toJson<int>(personalID),
       'names': serializer.toJson<String>(names),
       'lastNames': serializer.toJson<String>(lastNames),
+      'countryCode': serializer.toJson<String>(countryCode),
       'professionalID': serializer.toJson<int>(professionalID),
       'userName': serializer.toJson<String>(userName),
       'password': serializer.toJson<String>(password),
@@ -216,6 +246,7 @@ class ProfessionalData extends DataClass
           int? personalID,
           String? names,
           String? lastNames,
+          String? countryCode,
           int? professionalID,
           String? userName,
           String? password}) =>
@@ -224,6 +255,7 @@ class ProfessionalData extends DataClass
         personalID: personalID ?? this.personalID,
         names: names ?? this.names,
         lastNames: lastNames ?? this.lastNames,
+        countryCode: countryCode ?? this.countryCode,
         professionalID: professionalID ?? this.professionalID,
         userName: userName ?? this.userName,
         password: password ?? this.password,
@@ -235,6 +267,7 @@ class ProfessionalData extends DataClass
           ..write('personalID: $personalID, ')
           ..write('names: $names, ')
           ..write('lastNames: $lastNames, ')
+          ..write('countryCode: $countryCode, ')
           ..write('professionalID: $professionalID, ')
           ..write('userName: $userName, ')
           ..write('password: $password')
@@ -243,8 +276,8 @@ class ProfessionalData extends DataClass
   }
 
   @override
-  int get hashCode => Object.hash(
-      id, personalID, names, lastNames, professionalID, userName, password);
+  int get hashCode => Object.hash(id, personalID, names, lastNames, countryCode,
+      professionalID, userName, password);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -253,6 +286,7 @@ class ProfessionalData extends DataClass
           other.personalID == this.personalID &&
           other.names == this.names &&
           other.lastNames == this.lastNames &&
+          other.countryCode == this.countryCode &&
           other.professionalID == this.professionalID &&
           other.userName == this.userName &&
           other.password == this.password);
@@ -263,6 +297,7 @@ class ProfessionalCompanion extends UpdateCompanion<ProfessionalData> {
   final Value<int> personalID;
   final Value<String> names;
   final Value<String> lastNames;
+  final Value<String> countryCode;
   final Value<int> professionalID;
   final Value<String> userName;
   final Value<String> password;
@@ -271,6 +306,7 @@ class ProfessionalCompanion extends UpdateCompanion<ProfessionalData> {
     this.personalID = const Value.absent(),
     this.names = const Value.absent(),
     this.lastNames = const Value.absent(),
+    this.countryCode = const Value.absent(),
     this.professionalID = const Value.absent(),
     this.userName = const Value.absent(),
     this.password = const Value.absent(),
@@ -280,12 +316,14 @@ class ProfessionalCompanion extends UpdateCompanion<ProfessionalData> {
     required int personalID,
     required String names,
     required String lastNames,
+    required String countryCode,
     required int professionalID,
     required String userName,
     required String password,
   })  : personalID = Value(personalID),
         names = Value(names),
         lastNames = Value(lastNames),
+        countryCode = Value(countryCode),
         professionalID = Value(professionalID),
         userName = Value(userName),
         password = Value(password);
@@ -294,6 +332,7 @@ class ProfessionalCompanion extends UpdateCompanion<ProfessionalData> {
     Expression<int>? personalID,
     Expression<String>? names,
     Expression<String>? lastNames,
+    Expression<String>? countryCode,
     Expression<int>? professionalID,
     Expression<String>? userName,
     Expression<String>? password,
@@ -303,6 +342,7 @@ class ProfessionalCompanion extends UpdateCompanion<ProfessionalData> {
       if (personalID != null) 'personal_i_d': personalID,
       if (names != null) 'names': names,
       if (lastNames != null) 'last_names': lastNames,
+      if (countryCode != null) 'country_code': countryCode,
       if (professionalID != null) 'professional_i_d': professionalID,
       if (userName != null) 'user_name': userName,
       if (password != null) 'password': password,
@@ -314,6 +354,7 @@ class ProfessionalCompanion extends UpdateCompanion<ProfessionalData> {
       Value<int>? personalID,
       Value<String>? names,
       Value<String>? lastNames,
+      Value<String>? countryCode,
       Value<int>? professionalID,
       Value<String>? userName,
       Value<String>? password}) {
@@ -322,6 +363,7 @@ class ProfessionalCompanion extends UpdateCompanion<ProfessionalData> {
       personalID: personalID ?? this.personalID,
       names: names ?? this.names,
       lastNames: lastNames ?? this.lastNames,
+      countryCode: countryCode ?? this.countryCode,
       professionalID: professionalID ?? this.professionalID,
       userName: userName ?? this.userName,
       password: password ?? this.password,
@@ -343,6 +385,9 @@ class ProfessionalCompanion extends UpdateCompanion<ProfessionalData> {
     if (lastNames.present) {
       map['last_names'] = Variable<String>(lastNames.value);
     }
+    if (countryCode.present) {
+      map['country_code'] = Variable<String>(countryCode.value);
+    }
     if (professionalID.present) {
       map['professional_i_d'] = Variable<int>(professionalID.value);
     }
@@ -362,6 +407,7 @@ class ProfessionalCompanion extends UpdateCompanion<ProfessionalData> {
           ..write('personalID: $personalID, ')
           ..write('names: $names, ')
           ..write('lastNames: $lastNames, ')
+          ..write('countryCode: $countryCode, ')
           ..write('professionalID: $professionalID, ')
           ..write('userName: $userName, ')
           ..write('password: $password')
@@ -1860,14 +1906,21 @@ class $SessionsTable extends Sessions with TableInfo<$SessionsTable, Session> {
       const VerificationMeta('sessionNotes');
   @override
   late final GeneratedColumn<String> sessionNotes = GeneratedColumn<String>(
-      'session_notes', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      'session_notes', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _sessionPerformanceMeta =
       const VerificationMeta('sessionPerformance');
   @override
   late final GeneratedColumn<String> sessionPerformance =
       GeneratedColumn<String>('session_performance', aliasedName, false,
           type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _sessionPerformanceExplanationMeta =
+      const VerificationMeta('sessionPerformanceExplanation');
+  @override
+  late final GeneratedColumn<String> sessionPerformanceExplanation =
+      GeneratedColumn<String>(
+          'session_performance_explanation', aliasedName, true,
+          type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _idNumberMeta =
       const VerificationMeta('idNumber');
   @override
@@ -1895,6 +1948,7 @@ class $SessionsTable extends Sessions with TableInfo<$SessionsTable, Session> {
         therapeuticArchievements,
         sessionNotes,
         sessionPerformance,
+        sessionPerformanceExplanation,
         idNumber,
         professionalID
       ];
@@ -1949,8 +2003,6 @@ class $SessionsTable extends Sessions with TableInfo<$SessionsTable, Session> {
           _sessionNotesMeta,
           sessionNotes.isAcceptableOrUnknown(
               data['session_notes']!, _sessionNotesMeta));
-    } else if (isInserting) {
-      context.missing(_sessionNotesMeta);
     }
     if (data.containsKey('session_performance')) {
       context.handle(
@@ -1959,6 +2011,13 @@ class $SessionsTable extends Sessions with TableInfo<$SessionsTable, Session> {
               data['session_performance']!, _sessionPerformanceMeta));
     } else if (isInserting) {
       context.missing(_sessionPerformanceMeta);
+    }
+    if (data.containsKey('session_performance_explanation')) {
+      context.handle(
+          _sessionPerformanceExplanationMeta,
+          sessionPerformanceExplanation.isAcceptableOrUnknown(
+              data['session_performance_explanation']!,
+              _sessionPerformanceExplanationMeta));
     }
     if (data.containsKey('id_number')) {
       context.handle(_idNumberMeta,
@@ -1995,9 +2054,12 @@ class $SessionsTable extends Sessions with TableInfo<$SessionsTable, Session> {
           DriftSqlType.string,
           data['${effectivePrefix}therapeutic_archievements'])!,
       sessionNotes: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}session_notes'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}session_notes']),
       sessionPerformance: attachedDatabase.typeMapping.read(
           DriftSqlType.string, data['${effectivePrefix}session_performance'])!,
+      sessionPerformanceExplanation: attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}session_performance_explanation']),
       idNumber: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id_number'])!,
       professionalID: attachedDatabase.typeMapping
@@ -2017,8 +2079,9 @@ class Session extends DataClass implements Insertable<Session> {
   final String sessionSummary;
   final String sessionObjectives;
   final String therapeuticArchievements;
-  final String sessionNotes;
+  final String? sessionNotes;
   final String sessionPerformance;
+  final String? sessionPerformanceExplanation;
   final int idNumber;
   final int professionalID;
   const Session(
@@ -2027,8 +2090,9 @@ class Session extends DataClass implements Insertable<Session> {
       required this.sessionSummary,
       required this.sessionObjectives,
       required this.therapeuticArchievements,
-      required this.sessionNotes,
+      this.sessionNotes,
       required this.sessionPerformance,
+      this.sessionPerformanceExplanation,
       required this.idNumber,
       required this.professionalID});
   @override
@@ -2040,8 +2104,14 @@ class Session extends DataClass implements Insertable<Session> {
     map['session_objectives'] = Variable<String>(sessionObjectives);
     map['therapeutic_archievements'] =
         Variable<String>(therapeuticArchievements);
-    map['session_notes'] = Variable<String>(sessionNotes);
+    if (!nullToAbsent || sessionNotes != null) {
+      map['session_notes'] = Variable<String>(sessionNotes);
+    }
     map['session_performance'] = Variable<String>(sessionPerformance);
+    if (!nullToAbsent || sessionPerformanceExplanation != null) {
+      map['session_performance_explanation'] =
+          Variable<String>(sessionPerformanceExplanation);
+    }
     map['id_number'] = Variable<int>(idNumber);
     map['professional_i_d'] = Variable<int>(professionalID);
     return map;
@@ -2054,8 +2124,14 @@ class Session extends DataClass implements Insertable<Session> {
       sessionSummary: Value(sessionSummary),
       sessionObjectives: Value(sessionObjectives),
       therapeuticArchievements: Value(therapeuticArchievements),
-      sessionNotes: Value(sessionNotes),
+      sessionNotes: sessionNotes == null && nullToAbsent
+          ? const Value.absent()
+          : Value(sessionNotes),
       sessionPerformance: Value(sessionPerformance),
+      sessionPerformanceExplanation:
+          sessionPerformanceExplanation == null && nullToAbsent
+              ? const Value.absent()
+              : Value(sessionPerformanceExplanation),
       idNumber: Value(idNumber),
       professionalID: Value(professionalID),
     );
@@ -2071,9 +2147,11 @@ class Session extends DataClass implements Insertable<Session> {
       sessionObjectives: serializer.fromJson<String>(json['sessionObjectives']),
       therapeuticArchievements:
           serializer.fromJson<String>(json['therapeuticArchievements']),
-      sessionNotes: serializer.fromJson<String>(json['sessionNotes']),
+      sessionNotes: serializer.fromJson<String?>(json['sessionNotes']),
       sessionPerformance:
           serializer.fromJson<String>(json['sessionPerformance']),
+      sessionPerformanceExplanation:
+          serializer.fromJson<String?>(json['sessionPerformanceExplanation']),
       idNumber: serializer.fromJson<int>(json['idNumber']),
       professionalID: serializer.fromJson<int>(json['professionalID']),
     );
@@ -2088,8 +2166,10 @@ class Session extends DataClass implements Insertable<Session> {
       'sessionObjectives': serializer.toJson<String>(sessionObjectives),
       'therapeuticArchievements':
           serializer.toJson<String>(therapeuticArchievements),
-      'sessionNotes': serializer.toJson<String>(sessionNotes),
+      'sessionNotes': serializer.toJson<String?>(sessionNotes),
       'sessionPerformance': serializer.toJson<String>(sessionPerformance),
+      'sessionPerformanceExplanation':
+          serializer.toJson<String?>(sessionPerformanceExplanation),
       'idNumber': serializer.toJson<int>(idNumber),
       'professionalID': serializer.toJson<int>(professionalID),
     };
@@ -2101,8 +2181,9 @@ class Session extends DataClass implements Insertable<Session> {
           String? sessionSummary,
           String? sessionObjectives,
           String? therapeuticArchievements,
-          String? sessionNotes,
+          Value<String?> sessionNotes = const Value.absent(),
           String? sessionPerformance,
+          Value<String?> sessionPerformanceExplanation = const Value.absent(),
           int? idNumber,
           int? professionalID}) =>
       Session(
@@ -2112,8 +2193,12 @@ class Session extends DataClass implements Insertable<Session> {
         sessionObjectives: sessionObjectives ?? this.sessionObjectives,
         therapeuticArchievements:
             therapeuticArchievements ?? this.therapeuticArchievements,
-        sessionNotes: sessionNotes ?? this.sessionNotes,
+        sessionNotes:
+            sessionNotes.present ? sessionNotes.value : this.sessionNotes,
         sessionPerformance: sessionPerformance ?? this.sessionPerformance,
+        sessionPerformanceExplanation: sessionPerformanceExplanation.present
+            ? sessionPerformanceExplanation.value
+            : this.sessionPerformanceExplanation,
         idNumber: idNumber ?? this.idNumber,
         professionalID: professionalID ?? this.professionalID,
       );
@@ -2127,6 +2212,8 @@ class Session extends DataClass implements Insertable<Session> {
           ..write('therapeuticArchievements: $therapeuticArchievements, ')
           ..write('sessionNotes: $sessionNotes, ')
           ..write('sessionPerformance: $sessionPerformance, ')
+          ..write(
+              'sessionPerformanceExplanation: $sessionPerformanceExplanation, ')
           ..write('idNumber: $idNumber, ')
           ..write('professionalID: $professionalID')
           ..write(')'))
@@ -2142,6 +2229,7 @@ class Session extends DataClass implements Insertable<Session> {
       therapeuticArchievements,
       sessionNotes,
       sessionPerformance,
+      sessionPerformanceExplanation,
       idNumber,
       professionalID);
   @override
@@ -2155,6 +2243,8 @@ class Session extends DataClass implements Insertable<Session> {
           other.therapeuticArchievements == this.therapeuticArchievements &&
           other.sessionNotes == this.sessionNotes &&
           other.sessionPerformance == this.sessionPerformance &&
+          other.sessionPerformanceExplanation ==
+              this.sessionPerformanceExplanation &&
           other.idNumber == this.idNumber &&
           other.professionalID == this.professionalID);
 }
@@ -2165,8 +2255,9 @@ class SessionsCompanion extends UpdateCompanion<Session> {
   final Value<String> sessionSummary;
   final Value<String> sessionObjectives;
   final Value<String> therapeuticArchievements;
-  final Value<String> sessionNotes;
+  final Value<String?> sessionNotes;
   final Value<String> sessionPerformance;
+  final Value<String?> sessionPerformanceExplanation;
   final Value<int> idNumber;
   final Value<int> professionalID;
   const SessionsCompanion({
@@ -2177,6 +2268,7 @@ class SessionsCompanion extends UpdateCompanion<Session> {
     this.therapeuticArchievements = const Value.absent(),
     this.sessionNotes = const Value.absent(),
     this.sessionPerformance = const Value.absent(),
+    this.sessionPerformanceExplanation = const Value.absent(),
     this.idNumber = const Value.absent(),
     this.professionalID = const Value.absent(),
   });
@@ -2186,15 +2278,15 @@ class SessionsCompanion extends UpdateCompanion<Session> {
     required String sessionSummary,
     required String sessionObjectives,
     required String therapeuticArchievements,
-    required String sessionNotes,
+    this.sessionNotes = const Value.absent(),
     required String sessionPerformance,
+    this.sessionPerformanceExplanation = const Value.absent(),
     required int idNumber,
     required int professionalID,
   })  : sessionDate = Value(sessionDate),
         sessionSummary = Value(sessionSummary),
         sessionObjectives = Value(sessionObjectives),
         therapeuticArchievements = Value(therapeuticArchievements),
-        sessionNotes = Value(sessionNotes),
         sessionPerformance = Value(sessionPerformance),
         idNumber = Value(idNumber),
         professionalID = Value(professionalID);
@@ -2206,6 +2298,7 @@ class SessionsCompanion extends UpdateCompanion<Session> {
     Expression<String>? therapeuticArchievements,
     Expression<String>? sessionNotes,
     Expression<String>? sessionPerformance,
+    Expression<String>? sessionPerformanceExplanation,
     Expression<int>? idNumber,
     Expression<int>? professionalID,
   }) {
@@ -2218,6 +2311,8 @@ class SessionsCompanion extends UpdateCompanion<Session> {
         'therapeutic_archievements': therapeuticArchievements,
       if (sessionNotes != null) 'session_notes': sessionNotes,
       if (sessionPerformance != null) 'session_performance': sessionPerformance,
+      if (sessionPerformanceExplanation != null)
+        'session_performance_explanation': sessionPerformanceExplanation,
       if (idNumber != null) 'id_number': idNumber,
       if (professionalID != null) 'professional_i_d': professionalID,
     });
@@ -2229,8 +2324,9 @@ class SessionsCompanion extends UpdateCompanion<Session> {
       Value<String>? sessionSummary,
       Value<String>? sessionObjectives,
       Value<String>? therapeuticArchievements,
-      Value<String>? sessionNotes,
+      Value<String?>? sessionNotes,
       Value<String>? sessionPerformance,
+      Value<String?>? sessionPerformanceExplanation,
       Value<int>? idNumber,
       Value<int>? professionalID}) {
     return SessionsCompanion(
@@ -2242,6 +2338,8 @@ class SessionsCompanion extends UpdateCompanion<Session> {
           therapeuticArchievements ?? this.therapeuticArchievements,
       sessionNotes: sessionNotes ?? this.sessionNotes,
       sessionPerformance: sessionPerformance ?? this.sessionPerformance,
+      sessionPerformanceExplanation:
+          sessionPerformanceExplanation ?? this.sessionPerformanceExplanation,
       idNumber: idNumber ?? this.idNumber,
       professionalID: professionalID ?? this.professionalID,
     );
@@ -2272,6 +2370,10 @@ class SessionsCompanion extends UpdateCompanion<Session> {
     if (sessionPerformance.present) {
       map['session_performance'] = Variable<String>(sessionPerformance.value);
     }
+    if (sessionPerformanceExplanation.present) {
+      map['session_performance_explanation'] =
+          Variable<String>(sessionPerformanceExplanation.value);
+    }
     if (idNumber.present) {
       map['id_number'] = Variable<int>(idNumber.value);
     }
@@ -2291,6 +2393,8 @@ class SessionsCompanion extends UpdateCompanion<Session> {
           ..write('therapeuticArchievements: $therapeuticArchievements, ')
           ..write('sessionNotes: $sessionNotes, ')
           ..write('sessionPerformance: $sessionPerformance, ')
+          ..write(
+              'sessionPerformanceExplanation: $sessionPerformanceExplanation, ')
           ..write('idNumber: $idNumber, ')
           ..write('professionalID: $professionalID')
           ..write(')'))
@@ -2345,11 +2449,11 @@ class $TestsTable extends Tests with TableInfo<$TestsTable, Test> {
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
           'REFERENCES sessions (session_id)'));
-  static const VerificationMeta _testDescriptionMeta =
-      const VerificationMeta('testDescription');
+  static const VerificationMeta _testReasonMeta =
+      const VerificationMeta('testReason');
   @override
-  late final GeneratedColumn<String> testDescription = GeneratedColumn<String>(
-      'test_description', aliasedName, false,
+  late final GeneratedColumn<String> testReason = GeneratedColumn<String>(
+      'test_reason', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _categoryMeta =
       const VerificationMeta('category');
@@ -2370,7 +2474,7 @@ class $TestsTable extends Tests with TableInfo<$TestsTable, Test> {
         patientID,
         professionalID,
         sessionID,
-        testDescription,
+        testReason,
         category,
         testData
       ];
@@ -2416,13 +2520,13 @@ class $TestsTable extends Tests with TableInfo<$TestsTable, Test> {
     } else if (isInserting) {
       context.missing(_sessionIDMeta);
     }
-    if (data.containsKey('test_description')) {
+    if (data.containsKey('test_reason')) {
       context.handle(
-          _testDescriptionMeta,
-          testDescription.isAcceptableOrUnknown(
-              data['test_description']!, _testDescriptionMeta));
+          _testReasonMeta,
+          testReason.isAcceptableOrUnknown(
+              data['test_reason']!, _testReasonMeta));
     } else if (isInserting) {
-      context.missing(_testDescriptionMeta);
+      context.missing(_testReasonMeta);
     }
     if (data.containsKey('category')) {
       context.handle(_categoryMeta,
@@ -2455,8 +2559,8 @@ class $TestsTable extends Tests with TableInfo<$TestsTable, Test> {
           .read(DriftSqlType.int, data['${effectivePrefix}professional_i_d'])!,
       sessionID: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}session_i_d'])!,
-      testDescription: attachedDatabase.typeMapping.read(
-          DriftSqlType.string, data['${effectivePrefix}test_description'])!,
+      testReason: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}test_reason'])!,
       category: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}category'])!,
       testData: attachedDatabase.typeMapping
@@ -2476,7 +2580,7 @@ class Test extends DataClass implements Insertable<Test> {
   final int patientID;
   final int professionalID;
   final int sessionID;
-  final String testDescription;
+  final String testReason;
   final String category;
   final String testData;
   const Test(
@@ -2485,7 +2589,7 @@ class Test extends DataClass implements Insertable<Test> {
       required this.patientID,
       required this.professionalID,
       required this.sessionID,
-      required this.testDescription,
+      required this.testReason,
       required this.category,
       required this.testData});
   @override
@@ -2496,7 +2600,7 @@ class Test extends DataClass implements Insertable<Test> {
     map['patient_i_d'] = Variable<int>(patientID);
     map['professional_i_d'] = Variable<int>(professionalID);
     map['session_i_d'] = Variable<int>(sessionID);
-    map['test_description'] = Variable<String>(testDescription);
+    map['test_reason'] = Variable<String>(testReason);
     map['category'] = Variable<String>(category);
     map['test_data'] = Variable<String>(testData);
     return map;
@@ -2509,7 +2613,7 @@ class Test extends DataClass implements Insertable<Test> {
       patientID: Value(patientID),
       professionalID: Value(professionalID),
       sessionID: Value(sessionID),
-      testDescription: Value(testDescription),
+      testReason: Value(testReason),
       category: Value(category),
       testData: Value(testData),
     );
@@ -2524,7 +2628,7 @@ class Test extends DataClass implements Insertable<Test> {
       patientID: serializer.fromJson<int>(json['patientID']),
       professionalID: serializer.fromJson<int>(json['professionalID']),
       sessionID: serializer.fromJson<int>(json['sessionID']),
-      testDescription: serializer.fromJson<String>(json['testDescription']),
+      testReason: serializer.fromJson<String>(json['testReason']),
       category: serializer.fromJson<String>(json['category']),
       testData: serializer.fromJson<String>(json['testData']),
     );
@@ -2538,7 +2642,7 @@ class Test extends DataClass implements Insertable<Test> {
       'patientID': serializer.toJson<int>(patientID),
       'professionalID': serializer.toJson<int>(professionalID),
       'sessionID': serializer.toJson<int>(sessionID),
-      'testDescription': serializer.toJson<String>(testDescription),
+      'testReason': serializer.toJson<String>(testReason),
       'category': serializer.toJson<String>(category),
       'testData': serializer.toJson<String>(testData),
     };
@@ -2550,7 +2654,7 @@ class Test extends DataClass implements Insertable<Test> {
           int? patientID,
           int? professionalID,
           int? sessionID,
-          String? testDescription,
+          String? testReason,
           String? category,
           String? testData}) =>
       Test(
@@ -2559,7 +2663,7 @@ class Test extends DataClass implements Insertable<Test> {
         patientID: patientID ?? this.patientID,
         professionalID: professionalID ?? this.professionalID,
         sessionID: sessionID ?? this.sessionID,
-        testDescription: testDescription ?? this.testDescription,
+        testReason: testReason ?? this.testReason,
         category: category ?? this.category,
         testData: testData ?? this.testData,
       );
@@ -2571,7 +2675,7 @@ class Test extends DataClass implements Insertable<Test> {
           ..write('patientID: $patientID, ')
           ..write('professionalID: $professionalID, ')
           ..write('sessionID: $sessionID, ')
-          ..write('testDescription: $testDescription, ')
+          ..write('testReason: $testReason, ')
           ..write('category: $category, ')
           ..write('testData: $testData')
           ..write(')'))
@@ -2580,7 +2684,7 @@ class Test extends DataClass implements Insertable<Test> {
 
   @override
   int get hashCode => Object.hash(id, testDate, patientID, professionalID,
-      sessionID, testDescription, category, testData);
+      sessionID, testReason, category, testData);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -2590,7 +2694,7 @@ class Test extends DataClass implements Insertable<Test> {
           other.patientID == this.patientID &&
           other.professionalID == this.professionalID &&
           other.sessionID == this.sessionID &&
-          other.testDescription == this.testDescription &&
+          other.testReason == this.testReason &&
           other.category == this.category &&
           other.testData == this.testData);
 }
@@ -2601,7 +2705,7 @@ class TestsCompanion extends UpdateCompanion<Test> {
   final Value<int> patientID;
   final Value<int> professionalID;
   final Value<int> sessionID;
-  final Value<String> testDescription;
+  final Value<String> testReason;
   final Value<String> category;
   final Value<String> testData;
   const TestsCompanion({
@@ -2610,7 +2714,7 @@ class TestsCompanion extends UpdateCompanion<Test> {
     this.patientID = const Value.absent(),
     this.professionalID = const Value.absent(),
     this.sessionID = const Value.absent(),
-    this.testDescription = const Value.absent(),
+    this.testReason = const Value.absent(),
     this.category = const Value.absent(),
     this.testData = const Value.absent(),
   });
@@ -2620,14 +2724,14 @@ class TestsCompanion extends UpdateCompanion<Test> {
     required int patientID,
     required int professionalID,
     required int sessionID,
-    required String testDescription,
+    required String testReason,
     required String category,
     required String testData,
   })  : testDate = Value(testDate),
         patientID = Value(patientID),
         professionalID = Value(professionalID),
         sessionID = Value(sessionID),
-        testDescription = Value(testDescription),
+        testReason = Value(testReason),
         category = Value(category),
         testData = Value(testData);
   static Insertable<Test> custom({
@@ -2636,7 +2740,7 @@ class TestsCompanion extends UpdateCompanion<Test> {
     Expression<int>? patientID,
     Expression<int>? professionalID,
     Expression<int>? sessionID,
-    Expression<String>? testDescription,
+    Expression<String>? testReason,
     Expression<String>? category,
     Expression<String>? testData,
   }) {
@@ -2646,7 +2750,7 @@ class TestsCompanion extends UpdateCompanion<Test> {
       if (patientID != null) 'patient_i_d': patientID,
       if (professionalID != null) 'professional_i_d': professionalID,
       if (sessionID != null) 'session_i_d': sessionID,
-      if (testDescription != null) 'test_description': testDescription,
+      if (testReason != null) 'test_reason': testReason,
       if (category != null) 'category': category,
       if (testData != null) 'test_data': testData,
     });
@@ -2658,7 +2762,7 @@ class TestsCompanion extends UpdateCompanion<Test> {
       Value<int>? patientID,
       Value<int>? professionalID,
       Value<int>? sessionID,
-      Value<String>? testDescription,
+      Value<String>? testReason,
       Value<String>? category,
       Value<String>? testData}) {
     return TestsCompanion(
@@ -2667,7 +2771,7 @@ class TestsCompanion extends UpdateCompanion<Test> {
       patientID: patientID ?? this.patientID,
       professionalID: professionalID ?? this.professionalID,
       sessionID: sessionID ?? this.sessionID,
-      testDescription: testDescription ?? this.testDescription,
+      testReason: testReason ?? this.testReason,
       category: category ?? this.category,
       testData: testData ?? this.testData,
     );
@@ -2691,8 +2795,8 @@ class TestsCompanion extends UpdateCompanion<Test> {
     if (sessionID.present) {
       map['session_i_d'] = Variable<int>(sessionID.value);
     }
-    if (testDescription.present) {
-      map['test_description'] = Variable<String>(testDescription.value);
+    if (testReason.present) {
+      map['test_reason'] = Variable<String>(testReason.value);
     }
     if (category.present) {
       map['category'] = Variable<String>(category.value);
@@ -2711,7 +2815,7 @@ class TestsCompanion extends UpdateCompanion<Test> {
           ..write('patientID: $patientID, ')
           ..write('professionalID: $professionalID, ')
           ..write('sessionID: $sessionID, ')
-          ..write('testDescription: $testDescription, ')
+          ..write('testReason: $testReason, ')
           ..write('category: $category, ')
           ..write('testData: $testData')
           ..write(')'))
