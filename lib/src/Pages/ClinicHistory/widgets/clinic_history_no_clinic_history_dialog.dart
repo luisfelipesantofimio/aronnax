@@ -14,7 +14,7 @@ class NoClinicHistoryDialog extends StatelessWidget {
         width: 500,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: const [
             Text(
               "Espera",
               style: TextStyle(
@@ -22,7 +22,7 @@ class NoClinicHistoryDialog extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const Text("El usuario no tiene una historia clínica registrada."),
+            Text("El usuario no tiene una historia clínica registrada."),
           ],
         ),
       ),

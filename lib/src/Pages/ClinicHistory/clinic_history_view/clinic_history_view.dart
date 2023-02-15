@@ -1,11 +1,8 @@
-import 'dart:developer';
-
-import 'package:aronnax/src/Pages/ClinicHistory/consultation_provider/clinic_history_data_provider.dart';
 import 'package:aronnax/src/Pages/ClinicHistory/pdf/pdf_export.dart';
-import 'package:aronnax/src/Pages/ClinicHistory/consultation_provider/consultations_provider.dart';
 import 'package:aronnax/src/Pages/ClinicHistory/widgets/sessions_list_view.dart';
-import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
-import 'package:aronnax/src/misc/global_values.dart';
+import 'package:aronnax/src/data/providers/clinic_history_data_provider.dart';
+import 'package:aronnax/src/data/providers/connection_state_provider.dart';
+import 'package:aronnax/src/data/providers/consultations_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -24,7 +21,7 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
 
   @override
   void didChangeDependencies() {
-    isOfflineEnabled
+    ref.watch(globalOfflineStatusProvider)
         ? Future(
             () {
               ref.read(currentConsultationReason.notifier).update((state) => ref
@@ -128,6 +125,8 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
+    bool isOfflineEnabled = ref.watch(globalOfflineStatusProvider);
+
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -149,11 +148,11 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                         child: RichText(
                           text: TextSpan(
                             text: "Motivo de consulta: \n",
-                            style: Theme.of(context).textTheme.headline5,
+                            style: Theme.of(context).textTheme.headlineSmall,
                             children: [
                               TextSpan(
                                 text: ref.watch(currentConsultationReason),
-                                style: Theme.of(context).textTheme.bodyText1,
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ],
                           ),
@@ -164,11 +163,11 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                         child: RichText(
                           text: TextSpan(
                             text: "Exámen mental: \n",
-                            style: Theme.of(context).textTheme.headline5,
+                            style: Theme.of(context).textTheme.headlineSmall,
                             children: [
                               TextSpan(
                                 text: ref.watch(currentMentalExamn),
-                                style: Theme.of(context).textTheme.bodyText1,
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ],
                           ),
@@ -179,11 +178,11 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                         child: RichText(
                           text: TextSpan(
                             text: "Antecedentes médicos: \n",
-                            style: Theme.of(context).textTheme.headline5,
+                            style: Theme.of(context).textTheme.headlineSmall,
                             children: [
                               TextSpan(
                                 text: ref.watch(currentMedAntecedents),
-                                style: Theme.of(context).textTheme.bodyText1,
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ],
                           ),
@@ -194,11 +193,11 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                         child: RichText(
                           text: TextSpan(
                             text: "Antecedentes psicológicos: \n",
-                            style: Theme.of(context).textTheme.headline5,
+                            style: Theme.of(context).textTheme.headlineSmall,
                             children: [
                               TextSpan(
                                 text: ref.watch(currentPsyAntecedents),
-                                style: Theme.of(context).textTheme.bodyText1,
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ],
                           ),
@@ -209,11 +208,11 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                         child: RichText(
                           text: TextSpan(
                             text: "Historia familiar: \n",
-                            style: Theme.of(context).textTheme.headline5,
+                            style: Theme.of(context).textTheme.headlineSmall,
                             children: [
                               TextSpan(
                                 text: ref.watch(currentFamilyHistory),
-                                style: Theme.of(context).textTheme.bodyText1,
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ],
                           ),
@@ -224,11 +223,11 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                         child: RichText(
                           text: TextSpan(
                             text: "Historia personal: \n",
-                            style: Theme.of(context).textTheme.headline5,
+                            style: Theme.of(context).textTheme.headlineSmall,
                             children: [
                               TextSpan(
                                 text: ref.watch(currentPersonalHistory),
-                                style: Theme.of(context).textTheme.bodyText1,
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ],
                           ),
@@ -239,11 +238,11 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                         child: RichText(
                           text: TextSpan(
                             text: "Impresión diagnística: \n",
-                            style: Theme.of(context).textTheme.headline5,
+                            style: Theme.of(context).textTheme.headlineSmall,
                             children: [
                               TextSpan(
                                 text: ref.watch(currentDiagnostic),
-                                style: Theme.of(context).textTheme.bodyText1,
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ],
                           ),
@@ -254,11 +253,11 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                         child: RichText(
                           text: TextSpan(
                             text: "Propuesta de tratamiento: \n",
-                            style: Theme.of(context).textTheme.headline5,
+                            style: Theme.of(context).textTheme.headlineSmall,
                             children: [
                               TextSpan(
                                 text: ref.watch(currentTreatment),
-                                style: Theme.of(context).textTheme.bodyText1,
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ],
                           ),
@@ -395,7 +394,8 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                                   ),
                                 )
                               : SizedBox(
-                                  height: ref.watch(deviceHeight) * 0.1,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.1,
                                 )
                           : ref.read(globalQueriedSessionsProvider).isNotEmpty
                               ? Padding(
@@ -476,7 +476,8 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                                   ),
                                 )
                               : SizedBox(
-                                  height: ref.watch(deviceHeight) * 0.1,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.1,
                                 )
                     ],
                   ),
@@ -501,7 +502,7 @@ class HeaderClinicHistoryViewState
     extends ConsumerState<HeaderClinicHistoryView> {
   @override
   void didChangeDependencies() {
-    isOfflineEnabled
+    ref.watch(globalOfflineStatusProvider)
         ? Future(
             () {
               ref.read(currentRegister.notifier).update((state) => ref
@@ -511,12 +512,12 @@ class HeaderClinicHistoryViewState
                   .single);
               ref.read(currentDate.notifier).update((state) => ref
                   .watch(localQueriedClinicHistoryProvider)
-                  .map((e) => e.currentDate)
+                  .map((e) => e.currentDate.toString())
                   .toList()
                   .single);
-              ref.read(creator.notifier).update((state) => ref
+              ref.read(professionalID.notifier).update((state) => ref
                   .watch(localQueriedClinicHistoryProvider)
-                  .map((e) => e.createdBy)
+                  .map((e) => e.professionalID)
                   .toList()
                   .single);
             },
@@ -532,9 +533,9 @@ class HeaderClinicHistoryViewState
                 .map((e) => e.dateTime)
                 .toList()
                 .single);
-            ref.read(creator.notifier).update((state) => ref
+            ref.read(professionalID.notifier).update((state) => ref
                 .watch(globalQueriedClinicHistoryProvider)
-                .map((e) => e.createdBy)
+                .map((e) => e.professionalID)
                 .toList()
                 .single);
           });
@@ -601,7 +602,7 @@ class HeaderClinicHistoryViewState
                     fontWeight: FontWeight.bold),
                 children: [
                   TextSpan(
-                    text: ref.watch(creator),
+                    text: ref.watch(professionalID).toString(),
                     style: GoogleFonts.montserrat(
                         fontSize: 20,
                         color: const Color.fromARGB(255, 230, 230, 230)),

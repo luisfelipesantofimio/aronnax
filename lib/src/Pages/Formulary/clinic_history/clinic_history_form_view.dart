@@ -1,13 +1,13 @@
-import 'package:aronnax/src/API/server_api.dart';
+import 'package:aronnax/src/data/providers/connection_state_provider.dart';
+import 'package:aronnax/src/data/remote_database/server_api.dart';
 import 'package:aronnax/src/Pages/Formulary/Forms/clinic_history.dart';
 import 'package:aronnax/src/Pages/Formulary/clinic_history/header.dart';
 import 'package:aronnax/src/Pages/Formulary/widgets/consultant_selection_dialog.dart';
-import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
-import 'package:aronnax/src/database/local_model/local_queries.dart';
-import 'package:aronnax/src/global/controllers.dart';
-import 'package:aronnax/src/global/user_global_values.dart';
-import 'package:aronnax/src/misc/passwd_generator.dart';
-import 'package:aronnax/src/widgets/generic_global_button.dart';
+import 'package:aronnax/src/data/database/local_model/local_queries.dart';
+import 'package:aronnax/src/presentation/core/controllers.dart';
+import 'package:aronnax/src/presentation/core/methods.dart';
+import 'package:aronnax/src/presentation/core/user_global_values.dart';
+import 'package:aronnax/src/presentation/widgets/generic_global_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,7 +17,7 @@ class MainViewClinicHistory extends ConsumerWidget {
   final String patientID;
 
   newRegisterCode() {
-    String newCode = registerGen(8);
+    String newCode = AppMethods().codeGeneration(8);
 
     registerNewCode = newCode;
     registerCode = "HC-$registerNewCode-$codeDate";
@@ -25,8 +25,9 @@ class MainViewClinicHistory extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String createdBy =
-        "${ref.read(globalUserNameProvider)} ${ref.read(globalUserLastNameProvider)}";
+    bool isOfflineEnabled = ref.watch(globalOfflineStatusProvider);
+
+    int professionalID = ref.read(globalProfessionalPersonalIDProvider);
     return Scaffold(
       body: Center(
         child: Row(
@@ -41,7 +42,7 @@ class MainViewClinicHistory extends ConsumerWidget {
                   margin: const EdgeInsets.only(top: 20),
                   child: Text(
                     "Historia clínica",
-                    style: Theme.of(context).textTheme.headline2,
+                    style: Theme.of(context).textTheme.displayMedium,
                   ),
                 ),
                 Expanded(
@@ -73,7 +74,7 @@ class MainViewClinicHistory extends ConsumerWidget {
                               isOfflineEnabled
                                   ? addLocalClinicHistory(
                                       registerCode,
-                                      currentDate,
+                                      DateTime.now(),
                                       reasonConsultation,
                                       mentalExamination,
                                       treatmentPurpouse,
@@ -83,10 +84,10 @@ class MainViewClinicHistory extends ConsumerWidget {
                                       personalHistory,
                                       diagnosticImpression,
                                       int.parse(patientID),
-                                      createdBy)
+                                      professionalID)
                                   : insertClinicHistory(
                                       registerCode,
-                                      currentDate,
+                                      DateTime.now(),
                                       reasonConsultation,
                                       mentalExamination,
                                       treatmentPurpouse,
@@ -96,7 +97,7 @@ class MainViewClinicHistory extends ConsumerWidget {
                                       personalHistory,
                                       diagnosticImpression,
                                       patientID,
-                                      createdBy);
+                                      professionalID);
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content: Text("Historia guardada"),

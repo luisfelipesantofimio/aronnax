@@ -1,10 +1,11 @@
 import 'package:aronnax/src/Pages/ClinicHistory/widgets/sessions_list_element.dart';
-import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
-import 'package:aronnax/src/database/local_model/local_model.dart';
-import 'package:aronnax/src/database/models/remode_session_resume.dart';
+import 'package:aronnax/src/data/database/local_model/local_model.dart';
+import 'package:aronnax/src/domain/entities/remode_session_resume.dart';
+import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SessionsListView extends StatelessWidget {
+class SessionsListView extends ConsumerWidget {
   const SessionsListView(
       {Key? key, required this.remoteSessions, required this.localSessions})
       : super(key: key);
@@ -13,7 +14,8 @@ class SessionsListView extends StatelessWidget {
   final List<Session> localSessions;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    bool isOfflineEnabled = ref.watch(globalOfflineStatusProvider);
     return DraggableScrollableSheet(
       initialChildSize: 1,
       maxChildSize: 1,
@@ -42,10 +44,10 @@ class SessionsListView extends StatelessWidget {
                     ? localSessions[index].sessionId
                     : remoteSessions[index].sessionId,
                 sessionDate: isOfflineEnabled
-                    ? localSessions[index].sessionDate
+                    ? localSessions[index].sessionDate.toString()
                     : remoteSessions[index].dateTime,
                 sessionProfessional: isOfflineEnabled
-                    ? localSessions[index].professionalName
+                    ? localSessions[index].professionalID.toString()
                     : remoteSessions[index].professionalName,
               ),
             );

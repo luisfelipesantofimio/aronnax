@@ -1,27 +1,12 @@
-import 'package:aronnax/src/Pages/settings/ServerConfigForms/Welcome/Views/first.dart';
-import 'package:aronnax/src/database/settings_model.dart';
-import 'package:aronnax/src/misc/departments_list.dart';
-import 'package:aronnax/src/themes/custom_themes.dart';
+import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
+import 'package:aronnax/src/data/providers/theme_provider.dart';
+import 'package:aronnax/src/presentation/loading_screen/loading_screen.dart';
+import 'package:aronnax/src/presentation/themes/custom_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:path_provider/path_provider.dart';
-
-import 'src/Pages/LoginScreen/login_main_view.dart';
-
-late Box localdb;
-late Box themeDB;
-late Box offlineModeDB;
 
 void main() async {
-  final documentsDir = await getApplicationDocumentsDirectory();
-  await Hive.initFlutter("${documentsDir.path}/aronnax/config");
-  Hive.registerAdapter(ServerSettingsAdapter());
-  Hive.registerAdapter(GlobalThemeModeAdapter());
-  Hive.registerAdapter(LocalDatabaseModeAdapter());
-  localdb = await Hive.openBox<ServerSettings>("ServerSettings");
-  themeDB = await Hive.openBox<GlobalThemeMode>("SettingsDB");
-  offlineModeDB = await Hive.openBox<LocalDatabaseMode>("offlineModeDB");
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(
     const ProviderScope(
       child: MyApp(),
@@ -39,30 +24,36 @@ class MyApp extends ConsumerStatefulWidget {
 class MyAppState extends ConsumerState<MyApp> {
   @override
   void initState() {
-    getStates();
     super.initState();
+  }
 
-    currentTheme.areSettingsEmpty();
-    currentTheme.addListener(() {
-      setState(() {});
-    });
+  @override
+  void didChangeDependencies() {
+    ref.read(themeProvider.notifier).getCurrentTheme(ref);
+    Future(
+      () async {
+        if (await ref
+                .read(localDatabaseRepositoryProvider)
+                .verifySettingsData() ==
+            null) {
+          ref.read(localDatabaseRepositoryProvider).insertSettings(
+              id: 0,
+              darkModeEnabled: false,
+              offlineEnabled: false,
+              isConfigured: false);
+        }
+      },
+    );
+    super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
-    verifyLocalData() {
-      if (offlineModeDB.isNotEmpty) {
-        return const LoginScreen();
-      } else {
-        return const FirstWelcome();
-      }
-    }
-
     return MaterialApp(
       theme: GlobalThemes.lightTheme,
       darkTheme: GlobalThemes.darkTheme,
-      themeMode: currentTheme.currentTheme,
-      home: verifyLocalData(),
+      themeMode: ref.watch(themeProvider),
+      home: const LoadingScreen(),
     );
   }
 }

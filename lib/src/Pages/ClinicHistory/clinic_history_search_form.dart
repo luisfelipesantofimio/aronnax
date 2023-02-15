@@ -1,19 +1,16 @@
 import 'dart:developer';
-
-import 'package:aronnax/src/Pages/ClinicHistory/consultation_provider/clinic_history_data_provider.dart';
-import 'package:aronnax/src/Pages/ClinicHistory/consultation_provider/consultations_provider.dart';
 import 'package:aronnax/src/Pages/ClinicHistory/widgets/clinic_history_confirm_password.dart';
 import 'package:aronnax/src/Pages/ClinicHistory/widgets/clinic_history_no_clinic_history_dialog.dart';
 import 'package:aronnax/src/Pages/Formulary/clinic_history/clinic_history_form_view.dart';
 import 'package:aronnax/src/Pages/Formulary/widgets/consultant_selection_dialog.dart';
-import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
-import 'package:aronnax/src/database/local_model/local_model.dart';
-import 'package:aronnax/src/database/local_model/local_queries.dart';
-import 'package:aronnax/src/database/models/remote_clinic_history.dart';
-import 'package:aronnax/src/database/models/remote_patient.dart';
-import 'package:aronnax/src/misc/global_values.dart';
-import 'package:aronnax/src/providers/patient_search_provider.dart';
-import 'package:aronnax/src/widgets/consultation_element.dart';
+import 'package:aronnax/src/data/database/local_model/local_model.dart';
+import 'package:aronnax/src/data/database/local_model/local_queries.dart';
+import 'package:aronnax/src/domain/entities/remote_clinic_history.dart';
+import 'package:aronnax/src/domain/entities/remote_patient.dart';
+import 'package:aronnax/src/data/providers/connection_state_provider.dart';
+import 'package:aronnax/src/data/providers/consultations_provider.dart';
+import 'package:aronnax/src/data/providers/patient_search_provider.dart';
+import 'package:aronnax/src/presentation/widgets/consultation_element.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -30,13 +27,14 @@ class ClinicHistorySearchFormState
 
   @override
   Widget build(BuildContext context) {
+    bool isOfflineEnabled = ref.watch(globalOfflineStatusProvider);
     List<RemotePatient> remotePatientsList =
         isOfflineEnabled ? [] : ref.watch(globalQueriedPatientProvider);
     AsyncValue<List<Patient>> userConsultationProvider = ref.watch(
       localPatientSearchProvider(dataForQuery),
     );
     return SizedBox(
-      width: ref.watch(deviceWidth) * 0.35,
+      width: MediaQuery.of(context).size.width * 0.35,
       child: Form(
         child: Column(
           children: [

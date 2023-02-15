@@ -1,10 +1,8 @@
-import 'dart:developer';
 
-import 'package:aronnax/src/global/controllers.dart';
-import 'package:aronnax/src/misc/departments_list.dart';
-import 'package:aronnax/src/misc/email_validator.dart';
-import 'package:aronnax/src/providers/cities_provider.dart';
-import 'package:aronnax/src/widgets/date_selector.dart';
+import 'package:aronnax/src/data/providers/cities_provider.dart';
+import 'package:aronnax/src/presentation/core/controllers.dart';
+import 'package:aronnax/src/presentation/core/methods.dart';
+import 'package:aronnax/src/presentation/widgets/date_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -49,9 +47,6 @@ class BasicFormState extends ConsumerState<BasicForm> {
     final currentCities = ref.watch(selectedCityProvider);
     citiesList = currentCities;
 
-    log(departmentsList.toString());
-    log(departmentsCodes.toString());
-
     return SingleChildScrollView(
       child: Form(
         key: basicKey,
@@ -60,12 +55,12 @@ class BasicFormState extends ConsumerState<BasicForm> {
             Container(
               margin: const EdgeInsets.all(20),
               child: TextFormField(
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
                 autofocus: true,
                 decoration: InputDecoration(
                   labelText: "Nombres",
-                  labelStyle: Theme.of(context).textTheme.bodyText2,
-                  floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                  labelStyle: Theme.of(context).textTheme.bodyMedium,
+                  floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                 ),
                 onChanged: (valNames) {
                   setState(
@@ -78,17 +73,18 @@ class BasicFormState extends ConsumerState<BasicForm> {
                   if (value!.isEmpty) {
                     return "Inserta un valor";
                   }
+                  return null;
                 },
               ),
             ),
             Container(
               margin: const EdgeInsets.all(20),
               child: TextFormField(
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
                 autofocus: true,
                 decoration: InputDecoration(
                     labelText: "Apellidos",
-                    labelStyle: Theme.of(context).textTheme.bodyText2),
+                    labelStyle: Theme.of(context).textTheme.bodyMedium),
                 onChanged: (valLastNames) {
                   setState(
                     () {
@@ -100,6 +96,7 @@ class BasicFormState extends ConsumerState<BasicForm> {
                   if (value!.isEmpty) {
                     return "Inserta un valor";
                   }
+                  return null;
                 },
               ),
             ),
@@ -107,11 +104,11 @@ class BasicFormState extends ConsumerState<BasicForm> {
               margin: const EdgeInsets.all(20),
               child: TextFormField(
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
                 autofocus: true,
                 decoration: InputDecoration(
                     labelText: "Cédula",
-                    labelStyle: Theme.of(context).textTheme.bodyText2),
+                    labelStyle: Theme.of(context).textTheme.bodyMedium),
                 onChanged: (valID) {
                   setState(
                     () {
@@ -123,6 +120,7 @@ class BasicFormState extends ConsumerState<BasicForm> {
                   if (value!.isEmpty) {
                     return "Inserta un valor";
                   }
+                  return null;
                 },
               ),
             ),
@@ -130,12 +128,12 @@ class BasicFormState extends ConsumerState<BasicForm> {
               margin: const EdgeInsets.all(20),
               child: TextField(
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
                 autofocus: true,
                 decoration: InputDecoration(
                   labelText: "Número de contacto",
-                  labelStyle: Theme.of(context).textTheme.bodyText2,
-                  floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                  labelStyle: Theme.of(context).textTheme.bodyMedium,
+                  floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                 ),
                 onChanged: (valPhone) {
                   setState(
@@ -159,12 +157,12 @@ class BasicFormState extends ConsumerState<BasicForm> {
             Container(
               margin: const EdgeInsets.all(20),
               child: TextFormField(
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
                 autofocus: true,
                 decoration: InputDecoration(
                   labelText: "Correo electrónico",
-                  labelStyle: Theme.of(context).textTheme.bodyText2,
-                  floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                  labelStyle: Theme.of(context).textTheme.bodyMedium,
+                  floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                 ),
                 onChanged: (valMail) {
                   basicKey.currentState!.validate();
@@ -178,71 +176,72 @@ class BasicFormState extends ConsumerState<BasicForm> {
                   if (value!.isEmpty) {
                     return "Inserta un valor";
                   } else {
-                    if (!validateEmail(value)) {
+                    if (!AppMethods().validateEmail(value)) {
                       return "Correo inválido";
                     }
                   }
+                  return null;
                 },
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: DropdownButtonFormField(
-                style: Theme.of(context).textTheme.bodyText2,
-                value: selectedState,
-                items: departmentsList
-                    .map(
-                      (e) => DropdownMenuItem(
-                        value: e,
-                        child: Text(
-                          e,
-                        ),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (value) {
-                  setState(() {
-                    selectedState = value as String;
-                    stateCode = departmentsCodes[departmentsList
-                        .indexWhere((element) => element == selectedState)];
-                  });
-                  ref.watch(selectedCityProvider.notifier).getCities(stateCode);
-                  setState(() {});
-                },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: DropdownButtonFormField(
-                style: Theme.of(context).textTheme.bodyText2,
-                value: selectedCity,
-                items: citiesList
-                    .map(
-                      (e) => DropdownMenuItem(
-                        value: e,
-                        child: Text(
-                          e,
-                        ),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (value) {
-                  setState(() {
-                    selectedCity = value as String;
-                  });
-                  setState(() {});
-                },
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.all(20),
+            //   child: DropdownButtonFormField(
+            //     style: Theme.of(context).textTheme.bodyText2,
+            //     value: selectedState,
+            //     items: departmentsList
+            //         .map(
+            //           (e) => DropdownMenuItem(
+            //             value: e,
+            //             child: Text(
+            //               e,
+            //             ),
+            //           ),
+            //         )
+            //         .toList(),
+            //     onChanged: (value) {
+            //       setState(() {
+            //         selectedState = value as String;
+            //         stateCode = departmentsCodes[departmentsList
+            //             .indexWhere((element) => element == selectedState)];
+            //       });
+            //       ref.watch(selectedCityProvider.notifier).getCities(stateCode);
+            //       setState(() {});
+            //     },
+            //   ),
+            // ),
+            // Padding(
+            //   padding: const EdgeInsets.all(20),
+            //   child: DropdownButtonFormField(
+            //     style: Theme.of(context).textTheme.bodyText2,
+            //     value: selectedCity,
+            //     items: citiesList
+            //         .map(
+            //           (e) => DropdownMenuItem(
+            //             value: e,
+            //             child: Text(
+            //               e,
+            //             ),
+            //           ),
+            //         )
+            //         .toList(),
+            //     onChanged: (value) {
+            //       setState(() {
+            //         selectedCity = value as String;
+            //       });
+            //       setState(() {});
+            //     },
+            //   ),
+            // ),
             Container(
               margin: const EdgeInsets.all(20),
               child: TextFormField(
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
                 autofocus: true,
                 decoration: InputDecoration(
                   labelText: "Dirección",
-                  labelStyle: Theme.of(context).textTheme.bodyText2,
-                  floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                  labelStyle: Theme.of(context).textTheme.bodyMedium,
+                  floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                 ),
                 onChanged: (valAdress) {
                   setState(
@@ -255,18 +254,19 @@ class BasicFormState extends ConsumerState<BasicForm> {
                   if (value!.isEmpty) {
                     return "Inserta un valor";
                   }
+                  return null;
                 },
               ),
             ),
             Container(
               margin: const EdgeInsets.all(20),
               child: TextFormField(
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
                 autofocus: true,
                 decoration: InputDecoration(
                   labelText: "Escolaridad",
-                  labelStyle: Theme.of(context).textTheme.bodyText2,
-                  floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                  labelStyle: Theme.of(context).textTheme.bodyMedium,
+                  floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                 ),
                 onChanged: (valStudies) {
                   setState(
@@ -279,18 +279,19 @@ class BasicFormState extends ConsumerState<BasicForm> {
                   if (value!.isEmpty) {
                     return "Inserta un valor";
                   }
+                  return null;
                 },
               ),
             ),
             Container(
               margin: const EdgeInsets.all(20),
               child: TextFormField(
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
                 autofocus: true,
                 decoration: InputDecoration(
                   labelText: "Ocupación",
-                  labelStyle: Theme.of(context).textTheme.bodyText2,
-                  floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                  labelStyle: Theme.of(context).textTheme.bodyMedium,
+                  floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                 ),
                 onChanged: (valOcupation) {
                   setState(
@@ -303,18 +304,19 @@ class BasicFormState extends ConsumerState<BasicForm> {
                   if (value!.isEmpty) {
                     return "Inserta un valor";
                   }
+                  return null;
                 },
               ),
             ),
             Container(
               margin: const EdgeInsets.all(20),
               child: TextFormField(
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
                 autofocus: true,
                 decoration: InputDecoration(
                   labelText: "EPS",
-                  labelStyle: Theme.of(context).textTheme.bodyText2,
-                  floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                  labelStyle: Theme.of(context).textTheme.bodyMedium,
+                  floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                 ),
                 onChanged: (valInsurance) {
                   setState(
@@ -327,18 +329,19 @@ class BasicFormState extends ConsumerState<BasicForm> {
                   if (value!.isEmpty) {
                     return "Inserta un valor";
                   }
+                  return null;
                 },
               ),
             ),
             Container(
               margin: const EdgeInsets.all(20),
               child: TextFormField(
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
                 autofocus: true,
                 decoration: InputDecoration(
                   labelText: "Nombre de contacto de emergencia",
-                  labelStyle: Theme.of(context).textTheme.bodyText2,
-                  floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                  labelStyle: Theme.of(context).textTheme.bodyMedium,
+                  floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                 ),
                 onChanged: (valEmergencyName) {
                   setState(
@@ -351,6 +354,7 @@ class BasicFormState extends ConsumerState<BasicForm> {
                   if (value!.isEmpty) {
                     return "Inserta un valor";
                   }
+                  return null;
                 },
               ),
             ),
@@ -358,12 +362,12 @@ class BasicFormState extends ConsumerState<BasicForm> {
               margin: const EdgeInsets.all(20),
               child: TextFormField(
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
                 autofocus: true,
                 decoration: InputDecoration(
                   labelText: "Número de contacto de emergencia",
-                  labelStyle: Theme.of(context).textTheme.bodyText2,
-                  floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                  labelStyle: Theme.of(context).textTheme.bodyMedium,
+                  floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                 ),
                 onChanged: (emergencyNumber) {
                   setState(
@@ -376,6 +380,7 @@ class BasicFormState extends ConsumerState<BasicForm> {
                   if (value!.isEmpty) {
                     return "Inserta un valor";
                   }
+                  return null;
                 },
               ),
             ),

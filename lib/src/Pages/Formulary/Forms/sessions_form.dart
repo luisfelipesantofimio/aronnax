@@ -1,8 +1,8 @@
-import 'package:aronnax/src/Pages/LoginScreen/login_form.dart';
-import 'package:aronnax/src/database/local_model/local_queries.dart';
-import 'package:aronnax/src/global/user_global_values.dart';
+import 'package:aronnax/src/data/database/local_model/local_queries.dart';
+import 'package:aronnax/src/data/providers/connection_state_provider.dart';
+import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:flutter/material.dart';
-import 'package:aronnax/src/API/server_api.dart';
+import 'package:aronnax/src/data/remote_database/server_api.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
@@ -25,6 +25,8 @@ class SessionsFormState extends ConsumerState<SessionsForm> {
 
   @override
   Widget build(BuildContext context) {
+    bool isOfflineEnabled = ref.watch(globalOfflineStatusProvider);
+
     String professionalName =
         "${ref.read(globalUserNameProvider)} ${ref.read(globalUserLastNameProvider)}";
 
@@ -38,13 +40,13 @@ class SessionsFormState extends ConsumerState<SessionsForm> {
               Container(
                 margin: const EdgeInsets.all(20),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   maxLines: 5,
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Resumen de la sesión",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
-                    floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
+                    floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (valResume) {
                     setState(
@@ -57,19 +59,20 @@ class SessionsFormState extends ConsumerState<SessionsForm> {
                     if (value!.isEmpty) {
                       return "Inserta un valor";
                     }
+                    return null;
                   },
                 ),
               ),
               Container(
                 margin: const EdgeInsets.all(20),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   maxLines: 5,
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Objetivo de la sesión",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
-                    floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
+                    floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (valObjective) {
                     setState(
@@ -82,19 +85,20 @@ class SessionsFormState extends ConsumerState<SessionsForm> {
                     if (value!.isEmpty) {
                       return "Inserta un valor";
                     }
+                    return null;
                   },
                 ),
               ),
               Container(
                 margin: const EdgeInsets.all(20),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   maxLines: 5,
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Logros terapéuticos",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
-                    floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
+                    floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (valArchievement) {
                     setState(
@@ -107,6 +111,7 @@ class SessionsFormState extends ConsumerState<SessionsForm> {
                     if (value!.isEmpty) {
                       return "Inserta un valor";
                     }
+                    return null;
                   },
                 ),
               ),
@@ -123,8 +128,8 @@ class SessionsFormState extends ConsumerState<SessionsForm> {
                               sessionObjectives,
                               therapeuticArchievements,
                               int.parse(widget.patientID),
-                              professionalName,
-                              currentDate)
+                              ref.read(globalProfessionalPersonalIDProvider),
+                              DateTime.now())
                           : insertSessionData(
                               currentDate,
                               sessionSummary,

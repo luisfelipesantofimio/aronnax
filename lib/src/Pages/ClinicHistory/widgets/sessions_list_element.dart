@@ -1,4 +1,3 @@
-import 'package:aronnax/src/misc/global_values.dart';
 import 'package:flutter/material.dart';
 
 class SessionsListElement extends StatelessWidget {

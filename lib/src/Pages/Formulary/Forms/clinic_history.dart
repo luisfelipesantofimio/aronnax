@@ -1,14 +1,13 @@
-import 'package:aronnax/src/global/controllers.dart';
-import 'package:aronnax/src/misc/passwd_generator.dart';
+import 'package:aronnax/src/presentation/core/controllers.dart';
+import 'package:aronnax/src/presentation/core/methods.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 DateTime dateFormat = DateTime.now();
 String currentDate = DateFormat("dd/MM/yyyy").format(dateFormat);
 String codeDate = DateFormat("ddMM").format(dateFormat);
 
-String registerNewCode = registerGen(8);
+String registerNewCode = AppMethods().codeGeneration(8);
 String registerCode = "HC-$registerNewCode-$codeDate";
 
 //Clinic history values
@@ -40,14 +39,14 @@ class _ClinicHistoryState extends State<ClinicHistory> {
               Container(
                 margin: const EdgeInsets.all(20),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   maxLines: 5,
                   autofocus: true,
                   decoration: InputDecoration(
                       labelText: "Motivo de consulta",
-                      labelStyle: Theme.of(context).textTheme.bodyText2,
+                      labelStyle: Theme.of(context).textTheme.bodyMedium,
                       floatingLabelStyle:
-                          Theme.of(context).textTheme.bodyText2),
+                          Theme.of(context).textTheme.bodyMedium),
                   onChanged: (value) {
                     setState(
                       () {
@@ -59,19 +58,20 @@ class _ClinicHistoryState extends State<ClinicHistory> {
                     if (value!.isEmpty) {
                       return "Inserta un valor";
                     }
+                    return null;
                   },
                 ),
               ),
               Container(
                 margin: const EdgeInsets.all(20),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   maxLines: 5,
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Examen mental",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
-                    floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
+                    floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (value) {
                     setState(
@@ -84,19 +84,20 @@ class _ClinicHistoryState extends State<ClinicHistory> {
                     if (value!.isEmpty) {
                       return "Inserta un valor";
                     }
+                    return null;
                   },
                 ),
               ),
               Container(
                 margin: const EdgeInsets.all(20),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   maxLines: 5,
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Antecedentes psicológicos",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
-                    floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
+                    floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (value) {
                     setState(
@@ -109,19 +110,20 @@ class _ClinicHistoryState extends State<ClinicHistory> {
                     if (value!.isEmpty) {
                       return "Inserta un valor";
                     }
+                    return null;
                   },
                 ),
               ),
               Container(
                 margin: const EdgeInsets.all(20),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   maxLines: 5,
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Antecedentes médicos",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
-                    floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
+                    floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (value) {
                     setState(
@@ -134,19 +136,20 @@ class _ClinicHistoryState extends State<ClinicHistory> {
                     if (value!.isEmpty) {
                       return "Inserta un valor";
                     }
+                    return null;
                   },
                 ),
               ),
               Container(
                 margin: const EdgeInsets.all(20),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   maxLines: 10,
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Historia personal",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
-                    floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
+                    floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (value) {
                     setState(
@@ -159,19 +162,20 @@ class _ClinicHistoryState extends State<ClinicHistory> {
                     if (value!.isEmpty) {
                       return "Inserta un valor";
                     }
+                    return null;
                   },
                 ),
               ),
               Container(
                 margin: const EdgeInsets.all(20),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   maxLines: 10,
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Historia familiar",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
-                    floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
+                    floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (value) {
                     setState(
@@ -184,19 +188,20 @@ class _ClinicHistoryState extends State<ClinicHistory> {
                     if (value!.isEmpty) {
                       return "Inserta un valor";
                     }
+                    return null;
                   },
                 ),
               ),
               Container(
                 margin: const EdgeInsets.all(20),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   maxLines: 5,
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Impresión diagnóstica",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
-                    floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
+                    floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (value) {
                     setState(
@@ -209,19 +214,20 @@ class _ClinicHistoryState extends State<ClinicHistory> {
                     if (value!.isEmpty) {
                       return "Inserta un valor";
                     }
+                    return null;
                   },
                 ),
               ),
               Container(
                 margin: const EdgeInsets.all(20),
                 child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   maxLines: 10,
                   autofocus: true,
                   decoration: InputDecoration(
                     labelText: "Propuesta de tratamiento",
-                    labelStyle: Theme.of(context).textTheme.bodyText2,
-                    floatingLabelStyle: Theme.of(context).textTheme.bodyText2,
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
+                    floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (value) {
                     setState(
@@ -234,6 +240,7 @@ class _ClinicHistoryState extends State<ClinicHistory> {
                     if (value!.isEmpty) {
                       return "Inserta un valor";
                     }
+                    return null;
                   },
                 ),
               ),
