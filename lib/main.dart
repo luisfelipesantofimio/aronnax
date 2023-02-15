@@ -1,10 +1,12 @@
-import 'package:aronnax/src/data/providers/settings_provider.dart';
+import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
+import 'package:aronnax/src/data/providers/theme_provider.dart';
 import 'package:aronnax/src/presentation/loading_screen/loading_screen.dart';
 import 'package:aronnax/src/presentation/themes/custom_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(
     const ProviderScope(
       child: MyApp(),
@@ -26,20 +28,32 @@ class MyAppState extends ConsumerState<MyApp> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final settingsStream = ref.watch(settingsStreamProvider);
+  void didChangeDependencies() {
+    ref.read(themeProvider.notifier).getCurrentTheme(ref);
+    Future(
+      () async {
+        if (await ref
+                .read(localDatabaseRepositoryProvider)
+                .verifySettingsData() ==
+            null) {
+          ref.read(localDatabaseRepositoryProvider).insertSettings(
+              id: 0,
+              darkModeEnabled: false,
+              offlineEnabled: false,
+              isConfigured: false);
+        }
+      },
+    );
+    super.didChangeDependencies();
+  }
 
-    return settingsStream.when(
-      data: (data) => MaterialApp(
-        theme: GlobalThemes.lightTheme,
-        darkTheme: GlobalThemes.darkTheme,
-        themeMode: data.isDarkModeEnabled ? ThemeMode.dark : ThemeMode.light,
-        home: const LoadingScreen(),
-      ),
-      error: (error, stackTrace) => Center(
-        child: Text("Something went wrong. $error"),
-      ),
-      loading: () => const CircularProgressIndicator(),
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: GlobalThemes.lightTheme,
+      darkTheme: GlobalThemes.darkTheme,
+      themeMode: ref.watch(themeProvider),
+      home: const LoadingScreen(),
     );
   }
 }
