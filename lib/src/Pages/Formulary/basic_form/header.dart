@@ -12,11 +12,6 @@ class HeaderRegister extends StatelessWidget {
         height: double.maxFinite,
         decoration: const BoxDecoration(
           color: Color.fromARGB(255, 0, 0, 0),
-          image: DecorationImage(
-            opacity: 0.5,
-            image: AssetImage("assets/img/flowers_cover.png"),
-            fit: BoxFit.fill,
-          ),
           boxShadow: [
             BoxShadow(
               color: Colors.black,

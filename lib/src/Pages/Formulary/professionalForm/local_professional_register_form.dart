@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:aronnax/src/data/database/local_model/local_queries.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
+import 'package:aronnax/src/data/interfaces/location_repository_interface.dart';
 
 import 'package:aronnax/src/presentation/welcome_screens/finish.dart';
+import 'package:country_state_city/country_state_city.dart';
 import 'package:crypt/crypt.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,14 +29,10 @@ class LocalProfessionalRegisterState
   int personalID = 0;
   String names = "";
   String lastNames = "";
-  String profession = "Seleccionar profesión";
   int professionalID = 0;
   String userName = "";
-  List<String> professionList = [
-    "Seleccionar profesión",
-    "Psicólogo",
-    "Psicóloga",
-  ];
+  String selectedCountryCode = 'AF';
+  get onChanged => null;
 
   @override
   Widget build(BuildContext context) {
@@ -112,29 +112,6 @@ class LocalProfessionalRegisterState
               ),
               Container(
                 margin: const EdgeInsets.all(8),
-                child: DropdownButtonFormField<String>(
-                  onChanged: (value) {
-                    setState(() {
-                      profession = value!;
-                    });
-                  },
-                  items: professionList
-                      .map((e) => DropdownMenuItem(
-                            value: e,
-                            child: Text(e),
-                          ))
-                      .toList(),
-                  value: profession,
-                  validator: (value) {
-                    if (value == "Seleccionar profesión") {
-                      return "Selecciona una opción válida";
-                    }
-                    return null;
-                  },
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.all(8),
                 child: TextFormField(
                   style: Theme.of(context).textTheme.bodyMedium,
                   validator: (value) {
@@ -155,6 +132,36 @@ class LocalProfessionalRegisterState
                   },
                 ),
               ),
+              Container(
+                  margin: const EdgeInsets.all(8),
+                  child: FutureBuilder(
+                    future: ref.read(locationProvider).selectCountryCode(),
+                    builder: (context, AsyncSnapshot<List<Country?>> snapshot) {
+                      return DropdownButtonFormField(
+                        items: snapshot.data!
+                            .map(
+                              (e) => DropdownMenuItem(
+                                value: e,
+                                child: Row(
+                                  children: [
+                                    Text(e!.flag),
+                                    Text(e.name),
+                                  ],
+                                ),
+                              ),
+                            )
+                            .toList(),
+                        value: snapshot.data!.elementAt(snapshot.data!
+                            .indexWhere((element) =>
+                                element!.isoCode == selectedCountryCode)),
+                        onChanged: (Country? value) {
+                          setState(() {
+                            selectedCountryCode = value!.isoCode;
+                          });
+                        },
+                      );
+                    },
+                  )),
               Container(
                 margin: const EdgeInsets.all(8),
                 child: TextFormField(
@@ -205,13 +212,13 @@ class LocalProfessionalRegisterState
                     professionalKey.currentState!.save();
 
                     addLocalProfessional(
-                      personalID,
-                      names,
-                      lastNames,
-                      professionalID,
-                      userName,
-                      _hashedPassword.toString(),
-                    );
+                        personalID,
+                        names,
+                        lastNames,
+                        professionalID,
+                        userName,
+                        _hashedPassword.toString(),
+                        selectedCountryCode);
 
                     ref
                         .read(localDatabaseRepositoryProvider)
