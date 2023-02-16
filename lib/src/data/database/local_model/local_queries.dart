@@ -95,8 +95,9 @@ Future<void> addLocalSession(
 }
 
 addLocalProfessional(int personalID, String names, String lastNames,
-    int professionalID, String userName, String password) {
+    int professionalID, String userName, String password, String cuntryCode) {
   final entity = ProfessionalCompanion(
+    countryCode: Value(cuntryCode),
     userName: Value(userName),
     names: Value(names),
     lastNames: Value(lastNames),
