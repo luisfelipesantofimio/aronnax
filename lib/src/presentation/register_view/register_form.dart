@@ -21,19 +21,6 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
   String selectedCity = '';
 
   @override
-  void initState() {
-    Future(
-      () {
-        String code = ref.read(stateListProvider).asData!.value.first.isoCode;
-        setState(() {
-          stateCode = code;
-        });
-      },
-    );
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final stateList = ref.watch(stateListProvider);
     final citiesList = ref.watch(
