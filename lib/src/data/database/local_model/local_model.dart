@@ -76,12 +76,12 @@ class LocalDatabase extends _$LocalDatabase {
 
   // Data fetching
 
-  Stream<List<Patient>> userConsultation(String userNames) {
+  Future<List<Patient>> userConsultation(String userNames) {
     return (select(patients)
           ..where(
             (tbl) => tbl.names.contains(userNames),
           ))
-        .watch();
+        .get();
   }
 
   Future<List<ProfessionalData>> getProfessionalsList() {

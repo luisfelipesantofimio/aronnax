@@ -49,7 +49,7 @@ abstract class LocalDatabaseInteface {
   void addLocalProfessional(int personalID, String names, String lastNames,
       int professionalID, String userName, String password);
 
-  Stream<List<Patient>> searchPatient(String user);
+  Future<List<Patient>> searchPatient(String user);
 
   Future<List<ProfessionalData>> loginExistingProfessional(int userID);
 

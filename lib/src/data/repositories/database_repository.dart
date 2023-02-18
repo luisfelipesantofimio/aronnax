@@ -116,7 +116,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
   }
 
   @override
-  Stream<List<Patient>> searchPatient(String user) {
+  Future<List<Patient>> searchPatient(String user) {
     return localDB.userConsultation(user);
   }
 

@@ -121,7 +121,7 @@ void updateLocalUserPassword(int userID, String newEncodedValue) {
   localDB.updateLocalUserPassword(userID, newEncodedValue);
 }
 
-Stream<List<Patient>> searchPatient(String user) {
+Future<List<Patient>> searchPatient(String user) {
   return localDB.userConsultation(user);
 }
 
