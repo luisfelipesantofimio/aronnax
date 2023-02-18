@@ -64,6 +64,8 @@ class AuthRepository implements AuthRepositoryInterface {
                 .single
                 .toString(),
           );
+      ref.read(globalProfessionalCountryCodeProvider.notifier).update((state) =>
+          professionalData.map((e) => e.countryCode).toList().single);
       ref.read(userPasswordProvider.notifier).update(
           (state) => professionalData.map((e) => e.password).toList().single);
     }
