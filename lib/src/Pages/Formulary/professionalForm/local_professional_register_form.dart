@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:aronnax/src/data/database/local_model/local_queries.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
-import 'package:aronnax/src/data/interfaces/location_repository_interface.dart';
+import 'package:aronnax/src/data/providers/location_data_provider.dart';
 
 import 'package:aronnax/src/presentation/welcome_screens/finish.dart';
 import 'package:country_state_city/country_state_city.dart';
@@ -36,6 +36,8 @@ class LocalProfessionalRegisterState
 
   @override
   Widget build(BuildContext context) {
+    final countriesList = ref.watch(countriesListProvider);
+
     return ListView(
       controller: ScrollController(),
       children: [
@@ -133,35 +135,42 @@ class LocalProfessionalRegisterState
                 ),
               ),
               Container(
-                  margin: const EdgeInsets.all(8),
-                  child: FutureBuilder(
-                    future: ref.read(locationProvider).selectCountryCode(),
-                    builder: (context, AsyncSnapshot<List<Country?>> snapshot) {
-                      return DropdownButtonFormField(
-                        items: snapshot.data!
-                            .map(
-                              (e) => DropdownMenuItem(
-                                value: e,
-                                child: Row(
-                                  children: [
-                                    Text(e!.flag),
-                                    Text(e.name),
-                                  ],
-                                ),
-                              ),
-                            )
-                            .toList(),
-                        value: snapshot.data!.elementAt(snapshot.data!
-                            .indexWhere((element) =>
-                                element!.isoCode == selectedCountryCode)),
-                        onChanged: (Country? value) {
-                          setState(() {
-                            selectedCountryCode = value!.isoCode;
-                          });
-                        },
-                      );
+                margin: const EdgeInsets.all(8),
+                child: countriesList.when(
+                  data: (data) => DropdownButtonFormField(
+                    items: data
+                        .map(
+                          (e) => DropdownMenuItem(
+                            value: e,
+                            child: Row(
+                              children: [
+                                Text(e.flag),
+                                Text(e.name),
+                              ],
+                            ),
+                          ),
+                        )
+                        .toList(),
+                    value: data.elementAt(data.indexWhere(
+                        (element) => element.isoCode == selectedCountryCode)),
+                    onChanged: (Country? value) {
+                      setState(() {
+                        selectedCountryCode = value!.isoCode;
+                      });
                     },
-                  )),
+                  ),
+                  error: (error, stackTrace) => Row(
+                    children: [
+                      const Text('Something went wrong'),
+                      TextButton(
+                        onPressed: () => ref.invalidate(countriesListProvider),
+                        child: const Text('Try again'),
+                      ),
+                    ],
+                  ),
+                  loading: () => const CircularProgressIndicator(),
+                ),
+              ),
               Container(
                 margin: const EdgeInsets.all(8),
                 child: TextFormField(

@@ -12,3 +12,6 @@ final globalProfessionalIDProvider = StateProvider(
 final globalProfessionalPersonalIDProvider = StateProvider<int>(
   (ref) => 0,
 );
+
+final globalProfessionalCountryCodeProvider =
+    StateProvider<String>((ref) => '');
