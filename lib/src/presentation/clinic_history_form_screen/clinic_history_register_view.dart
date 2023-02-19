@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
+import 'package:aronnax/src/data/providers/forms_providers/clinic_history_form_provider.dart';
 import 'package:aronnax/src/data/remote_database/server_api.dart';
 import 'package:aronnax/src/presentation/clinic_history_form_screen/clinic_history_register_form.dart';
 import 'package:aronnax/src/data/database/local_model/local_queries.dart';
@@ -31,7 +32,6 @@ class _ClinicHistoryRegisterViewState
 
   @override
   void initState() {
-    log(widget.patientID + widget.patientName);
     setState(() {
       registerCode =
           "HC-${AppMethods().codeGeneration(8)}-${DateFormat('ddMM').format(DateTime.now())}";
@@ -118,28 +118,44 @@ class _ClinicHistoryRegisterViewState
                                             ? addLocalClinicHistory(
                                                 registerCode,
                                                 DateTime.now(),
-                                                reasonConsultation,
-                                                mentalExamination,
-                                                treatmentPurpouse,
-                                                medAntecedents,
-                                                psiAntecedents,
-                                                familyHistory,
-                                                personalHistory,
-                                                diagnosticImpression,
+                                                ref.read(
+                                                    clinicHistoryConsultationReasonProvider),
+                                                ref.read(
+                                                    clinicHistoryMentalExaminationProvider),
+                                                ref.read(
+                                                    clinicHistoryTreatmentProvider),
+                                                ref.read(
+                                                    clinicHistoryMedAntecedentsProvider),
+                                                ref.read(
+                                                    clinicHistoryPsyAntecedentsProvider),
+                                                ref.read(
+                                                    clinicHistoryFamilyHistoryProvider),
+                                                ref.read(
+                                                    clinicHistoryPersonalHistoryProvider),
+                                                ref.read(
+                                                    clinicHistoryDiagnosticProvider),
                                                 int.parse(widget.patientID),
                                                 professionalID)
                                             : insertClinicHistory(
                                                 registerCode,
                                                 DateTime.now(),
-                                                reasonConsultation,
-                                                mentalExamination,
-                                                treatmentPurpouse,
-                                                medAntecedents,
-                                                psiAntecedents,
-                                                familyHistory,
-                                                personalHistory,
-                                                diagnosticImpression,
-                                                widget.patientID,
+                                                ref.read(
+                                                    clinicHistoryConsultationReasonProvider),
+                                                ref.read(
+                                                    clinicHistoryMentalExaminationProvider),
+                                                ref.read(
+                                                    clinicHistoryTreatmentProvider),
+                                                ref.read(
+                                                    clinicHistoryMedAntecedentsProvider),
+                                                ref.read(
+                                                    clinicHistoryPsyAntecedentsProvider),
+                                                ref.read(
+                                                    clinicHistoryFamilyHistoryProvider),
+                                                ref.read(
+                                                    clinicHistoryPersonalHistoryProvider),
+                                                ref.read(
+                                                    clinicHistoryDiagnosticProvider),
+                                                int.parse(widget.patientID),
                                                 professionalID);
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
