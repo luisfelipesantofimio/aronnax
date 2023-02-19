@@ -2,19 +2,22 @@ import 'package:aronnax/src/Pages/Formulary/Forms/sessions_form.dart';
 import 'package:aronnax/src/Pages/Formulary/session/header.dart';
 import 'package:aronnax/src/Pages/Formulary/widgets/consultant_selection_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class MainViewSession extends StatelessWidget {
+class MainViewSession extends ConsumerWidget {
   const MainViewSession({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: Center(
         child: Row(
           children: [
             Expanded(
-              child: SessionHeader(userNames: globalSelectedConsultantNames),
+              child: SessionHeader(
+                userNames: ref.read(globalSelectedConsultantNamesProvider),
+              ),
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -34,7 +37,9 @@ class MainViewSession extends StatelessWidget {
                     padding: const EdgeInsets.all(10),
                     width: 1000,
                     height: 500,
-                    child: SessionsForm(patientID: globalSelectedConsultantID),
+                    child: SessionsForm(
+                      patientID: ref.read(globalSelectedConsultantIDProvider),
+                    ),
                   ),
                 ),
                 Padding(

@@ -1,17 +1,21 @@
 import 'package:aronnax/src/Pages/ClinicHistory/clinic_history_search.dart';
-import 'package:aronnax/src/Pages/Formulary/clinic_history/clinic_history_form_view.dart';
 import 'package:aronnax/src/Pages/Formulary/session/session_form_view.dart';
 import 'package:aronnax/src/Pages/Formulary/widgets/consultant_selection_dialog.dart';
+import 'package:aronnax/src/presentation/clinic_history_form_screen/clinic_history_register_view.dart';
 import 'package:aronnax/src/presentation/register_view/register_view.dart';
 import 'package:aronnax/src/presentation/widgets/main_options_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class MainMenuOptions extends StatelessWidget {
+class MainMenuOptions extends ConsumerWidget {
   const MainMenuOptions({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    String selectedPatientID = ref.watch(globalSelectedConsultantIDProvider);
+    String selectedPatientNames =
+        ref.watch(globalSelectedConsultantNamesProvider);
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.only(top: 100.0),
@@ -46,8 +50,10 @@ class MainMenuOptions extends StatelessWidget {
                         context: context,
                         builder: (context) {
                           return ConsultantSelectionDialog(
-                            destinationRoute: MainViewClinicHistory(
-                                patientID: globalSelectedConsultantID),
+                            destinationRoute: ClinicHistoryRegisterView(
+                              patientID: selectedPatientID,
+                              patientName: selectedPatientNames,
+                            ),
                             title:
                                 "Selecciona a quién se asignará la historia clínica",
                           );

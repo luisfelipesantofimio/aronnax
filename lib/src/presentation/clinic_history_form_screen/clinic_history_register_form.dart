@@ -1,34 +1,18 @@
+import 'package:aronnax/src/data/providers/forms_providers/clinic_history_form_provider.dart';
 import 'package:aronnax/src/presentation/core/controllers.dart';
-import 'package:aronnax/src/presentation/core/methods.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-DateTime dateFormat = DateTime.now();
-String currentDate = DateFormat("dd/MM/yyyy").format(dateFormat);
-String codeDate = DateFormat("ddMM").format(dateFormat);
-
-String registerNewCode = AppMethods().codeGeneration(8);
-String registerCode = "HC-$registerNewCode-$codeDate";
-
-//Clinic history values
-String reasonConsultation = "";
-String medAntecedents = "";
-String psiAntecedents = "";
-String mentalExamination = "";
-String personalHistory = "";
-String familyHistory = "";
-String diagnosticImpression = "";
-String treatmentPurpouse = "";
-
-class ClinicHistoryRegisterForm extends StatefulWidget {
+class ClinicHistoryRegisterForm extends ConsumerStatefulWidget {
   const ClinicHistoryRegisterForm({Key? key}) : super(key: key);
 
   @override
-  State<ClinicHistoryRegisterForm> createState() =>
+  ConsumerState<ClinicHistoryRegisterForm> createState() =>
       _ClinicHistoryRegisterFormState();
 }
 
-class _ClinicHistoryRegisterFormState extends State<ClinicHistoryRegisterForm> {
+class _ClinicHistoryRegisterFormState
+    extends ConsumerState<ClinicHistoryRegisterForm> {
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -49,11 +33,11 @@ class _ClinicHistoryRegisterFormState extends State<ClinicHistoryRegisterForm> {
                       floatingLabelStyle:
                           Theme.of(context).textTheme.bodyMedium),
                   onChanged: (value) {
-                    setState(
-                      () {
-                        reasonConsultation = value;
-                      },
-                    );
+                    ref
+                        .read(clinicHistoryConsultationReasonProvider.notifier)
+                        .update(
+                          (state) => value,
+                        );
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -75,11 +59,11 @@ class _ClinicHistoryRegisterFormState extends State<ClinicHistoryRegisterForm> {
                     floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (value) {
-                    setState(
-                      () {
-                        mentalExamination = value;
-                      },
-                    );
+                    ref
+                        .read(clinicHistoryMentalExaminationProvider.notifier)
+                        .update(
+                          (state) => value,
+                        );
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -101,11 +85,11 @@ class _ClinicHistoryRegisterFormState extends State<ClinicHistoryRegisterForm> {
                     floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (value) {
-                    setState(
-                      () {
-                        psiAntecedents = value;
-                      },
-                    );
+                    ref
+                        .read(clinicHistoryPsyAntecedentsProvider.notifier)
+                        .update(
+                          (state) => value,
+                        );
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -127,11 +111,11 @@ class _ClinicHistoryRegisterFormState extends State<ClinicHistoryRegisterForm> {
                     floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (value) {
-                    setState(
-                      () {
-                        medAntecedents = value;
-                      },
-                    );
+                    ref
+                        .read(clinicHistoryMedAntecedentsProvider.notifier)
+                        .update(
+                          (state) => value,
+                        );
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -153,11 +137,11 @@ class _ClinicHistoryRegisterFormState extends State<ClinicHistoryRegisterForm> {
                     floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (value) {
-                    setState(
-                      () {
-                        personalHistory = value;
-                      },
-                    );
+                    ref
+                        .read(clinicHistoryPersonalHistoryProvider.notifier)
+                        .update(
+                          (state) => value,
+                        );
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -179,11 +163,11 @@ class _ClinicHistoryRegisterFormState extends State<ClinicHistoryRegisterForm> {
                     floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (value) {
-                    setState(
-                      () {
-                        familyHistory = value;
-                      },
-                    );
+                    ref
+                        .read(clinicHistoryFamilyHistoryProvider.notifier)
+                        .update(
+                          (state) => value,
+                        );
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -205,11 +189,9 @@ class _ClinicHistoryRegisterFormState extends State<ClinicHistoryRegisterForm> {
                     floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (value) {
-                    setState(
-                      () {
-                        diagnosticImpression = value;
-                      },
-                    );
+                    ref.read(clinicHistoryDiagnosticProvider.notifier).update(
+                          (state) => value,
+                        );
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -231,11 +213,9 @@ class _ClinicHistoryRegisterFormState extends State<ClinicHistoryRegisterForm> {
                     floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (value) {
-                    setState(
-                      () {
-                        treatmentPurpouse = value;
-                      },
-                    );
+                    ref.read(clinicHistoryTreatmentProvider.notifier).update(
+                          (state) => value,
+                        );
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
