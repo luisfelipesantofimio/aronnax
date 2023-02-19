@@ -20,14 +20,15 @@ String familyHistory = "";
 String diagnosticImpression = "";
 String treatmentPurpouse = "";
 
-class ClinicHistory extends StatefulWidget {
-  const ClinicHistory({Key? key}) : super(key: key);
+class ClinicHistoryRegisterForm extends StatefulWidget {
+  const ClinicHistoryRegisterForm({Key? key}) : super(key: key);
 
   @override
-  State<ClinicHistory> createState() => _ClinicHistoryState();
+  State<ClinicHistoryRegisterForm> createState() =>
+      _ClinicHistoryRegisterFormState();
 }
 
-class _ClinicHistoryState extends State<ClinicHistory> {
+class _ClinicHistoryRegisterFormState extends State<ClinicHistoryRegisterForm> {
   @override
   Widget build(BuildContext context) {
     return ListView(
