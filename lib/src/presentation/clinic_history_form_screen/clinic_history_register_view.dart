@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:aronnax/src/Pages/Formulary/widgets/consultant_selection_dialog.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/forms_providers/clinic_history_form_provider.dart';
 import 'package:aronnax/src/data/remote_database/server_api.dart';
@@ -15,11 +16,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 class ClinicHistoryRegisterView extends ConsumerStatefulWidget {
-  const ClinicHistoryRegisterView(
-      {Key? key, required this.patientID, required this.patientName})
-      : super(key: key);
-  final String patientID;
-  final String patientName;
+  const ClinicHistoryRegisterView({
+    Key? key,
+  }) : super(key: key);
 
   @override
   ConsumerState<ClinicHistoryRegisterView> createState() =>
@@ -53,7 +52,8 @@ class _ClinicHistoryRegisterViewState
             child: SizedBox(
               width: MediaQuery.of(context).size.width * 0.2,
               child: ClinicHistoryRegisterInformation(
-                  patientName: widget.patientName, registerCode: registerCode),
+                  patientName: ref.watch(globalSelectedConsultantNamesProvider),
+                  registerCode: registerCode),
             ),
           ),
           Align(
@@ -134,7 +134,8 @@ class _ClinicHistoryRegisterViewState
                                                     clinicHistoryPersonalHistoryProvider),
                                                 ref.read(
                                                     clinicHistoryDiagnosticProvider),
-                                                int.parse(widget.patientID),
+                                                ref.read(
+                                                    globalSelectedConsultantIDProvider),
                                                 professionalID)
                                             : insertClinicHistory(
                                                 registerCode,
@@ -155,7 +156,8 @@ class _ClinicHistoryRegisterViewState
                                                     clinicHistoryPersonalHistoryProvider),
                                                 ref.read(
                                                     clinicHistoryDiagnosticProvider),
-                                                int.parse(widget.patientID),
+                                                ref.read(
+                                                    globalSelectedConsultantIDProvider),
                                                 professionalID);
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(

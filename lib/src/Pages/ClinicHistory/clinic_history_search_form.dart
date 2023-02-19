@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:aronnax/src/Pages/ClinicHistory/widgets/clinic_history_confirm_password.dart';
 import 'package:aronnax/src/Pages/ClinicHistory/widgets/clinic_history_no_clinic_history_dialog.dart';
+import 'package:aronnax/src/Pages/Formulary/widgets/consultant_selection_dialog.dart';
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/database/local_model/local_queries.dart';
 import 'package:aronnax/src/domain/entities/remote_clinic_history.dart';
@@ -105,18 +106,28 @@ class ClinicHistorySearchFormState
                                     context: context,
                                     builder: (context) => NoClinicHistoryDialog(
                                       onPressed: () {
+                                        ref
+                                            .read(
+                                                globalSelectedConsultantIDProvider
+                                                    .notifier)
+                                            .update(
+                                              (state) => localPatientsList
+                                                  .map((e) => e.idNumber)
+                                                  .toList()[index],
+                                            );
+                                        ref
+                                            .read(
+                                                globalSelectedConsultantNamesProvider
+                                                    .notifier)
+                                            .update(
+                                              (state) =>
+                                                  '${localPatientsList.map((e) => e.names).toList()[index]} ${localPatientsList.map((e) => e.lastNames).toList()[index]}',
+                                            );
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                ClinicHistoryRegisterView(
-                                              patientID: localPatientsList
-                                                  .map((e) => e.idNumber)
-                                                  .toList()[index]
-                                                  .toString(),
-                                              patientName:
-                                                  '${localPatientsList.map((e) => e.names).toList()[index]} ${localPatientsList.map((e) => e.lastNames).toList()[index]}',
-                                            ),
+                                                const ClinicHistoryRegisterView(),
                                           ),
                                         );
                                       },
@@ -173,18 +184,28 @@ class ClinicHistorySearchFormState
                                     context: context,
                                     builder: (context) => NoClinicHistoryDialog(
                                       onPressed: () {
+                                        ref
+                                            .read(
+                                                globalSelectedConsultantIDProvider
+                                                    .notifier)
+                                            .update(
+                                              (state) => remotePatientsList
+                                                  .map((e) => e.idNumber)
+                                                  .toList()[index],
+                                            );
+                                        ref
+                                            .read(
+                                                globalSelectedConsultantNamesProvider
+                                                    .notifier)
+                                            .update(
+                                              (state) =>
+                                                  '${remotePatientsList.map((e) => e.names).toList()[index]} ${remotePatientsList.map((e) => e.lastNames).toList()[index]}',
+                                            );
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                ClinicHistoryRegisterView(
-                                              patientID: remotePatientsList
-                                                  .map((e) => e.idNumber)
-                                                  .toList()[index]
-                                                  .toString(),
-                                              patientName:
-                                                  '${remotePatientsList.map((e) => e.names).toList()[index]} ${remotePatientsList.map((e) => e.lastNames).toList()[index]}',
-                                            ),
+                                                const ClinicHistoryRegisterView(),
                                           ),
                                         );
                                       },

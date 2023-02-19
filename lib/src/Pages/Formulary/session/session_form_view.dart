@@ -38,7 +38,9 @@ class MainViewSession extends ConsumerWidget {
                     width: 1000,
                     height: 500,
                     child: SessionsForm(
-                      patientID: ref.read(globalSelectedConsultantIDProvider),
+                      patientID: ref
+                          .read(globalSelectedConsultantIDProvider)
+                          .toString(),
                     ),
                   ),
                 ),

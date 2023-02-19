@@ -13,9 +13,6 @@ class MainMenuOptions extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String selectedPatientID = ref.watch(globalSelectedConsultantIDProvider);
-    String selectedPatientNames =
-        ref.watch(globalSelectedConsultantNamesProvider);
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.only(top: 100.0),
@@ -49,11 +46,8 @@ class MainMenuOptions extends ConsumerWidget {
                       showDialog(
                         context: context,
                         builder: (context) {
-                          return ConsultantSelectionDialog(
-                            destinationRoute: ClinicHistoryRegisterView(
-                              patientID: selectedPatientID,
-                              patientName: selectedPatientNames,
-                            ),
+                          return const ConsultantSelectionDialog(
+                            destinationRoute: ClinicHistoryRegisterView(),
                             title:
                                 "Selecciona a quién se asignará la historia clínica",
                           );

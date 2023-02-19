@@ -13,7 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final globalSelectedConsultantNamesProvider =
     StateProvider<String>((ref) => '');
-final globalSelectedConsultantIDProvider = StateProvider<String>((ref) => '');
+final globalSelectedConsultantIDProvider = StateProvider<int>((ref) => 0);
 
 class ConsultantSelectionDialog extends ConsumerStatefulWidget {
   const ConsultantSelectionDialog({
@@ -104,12 +104,9 @@ class ConsultantSelectionDialogState
                               ref
                                   .read(globalSelectedConsultantIDProvider
                                       .notifier)
-                                  .update(
-                                    (state) => localPatientsListProvider
-                                        .map((e) => e.idNumber)
-                                        .toList()[index]
-                                        .toString(),
-                                  );
+                                  .update((state) => localPatientsListProvider
+                                      .map((e) => e.idNumber)
+                                      .toList()[index]);
                               ref
                                   .read(globalSelectedConsultantNamesProvider
                                       .notifier)
@@ -117,9 +114,6 @@ class ConsultantSelectionDialogState
                                     (state) =>
                                         "${localPatientsListProvider.map((e) => e.names).toList()[index]} ${localPatientsListProvider.map((e) => e.lastNames).toList()[index]}",
                                   );
-                              log(ref
-                                  .read(globalSelectedConsultantNamesProvider));
-                              log(ref.read(globalSelectedConsultantIDProvider));
 
                               if (localClinicHistoryData.isEmpty) {
                                 Future(
@@ -163,9 +157,8 @@ class ConsultantSelectionDialogState
                                   .read(globalSelectedConsultantIDProvider
                                       .notifier)
                                   .update(
-                                    (state) => remotePatientsList[index]
-                                        .idNumber
-                                        .toString(),
+                                    (state) =>
+                                        remotePatientsList[index].idNumber,
                                   );
                               ref
                                   .read(globalSelectedConsultantNamesProvider
