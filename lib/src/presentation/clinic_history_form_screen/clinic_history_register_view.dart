@@ -40,7 +40,7 @@ class _ClinicHistoryRegisterViewState
 
   @override
   Widget build(BuildContext context) {
-    bool isOfflineEnabled = ref.watch(globalOfflineStatusProvider);
+    bool isOfflineEnabled = ref.watch(offlineStatusProvider).value!;
 
     int professionalID = ref.watch(globalProfessionalPersonalIDProvider);
     return Scaffold(
