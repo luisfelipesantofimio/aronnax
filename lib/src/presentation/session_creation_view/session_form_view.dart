@@ -1,3 +1,4 @@
+import 'package:aronnax/src/presentation/widgets/note_creation_dialog.dart';
 import 'package:aronnax/src/presentation/session_creation_view/session_form.dart';
 import 'package:aronnax/src/Pages/Formulary/widgets/consultant_selection_dialog.dart';
 import 'package:aronnax/src/presentation/core/controllers.dart';
@@ -35,7 +36,10 @@ class SessionFormView extends ConsumerWidget {
                       GenericIconButon(
                         icon: FontAwesomeIcons.noteSticky,
                         title: 'Añadir nota',
-                        onTap: () => '',
+                        onTap: () => showDialog(
+                          context: context,
+                          builder: (context) => const NoteCreationDialog(),
+                        ),
                       ),
                       GenericIconButon(
                         icon: FontAwesomeIcons.squareCheck,
