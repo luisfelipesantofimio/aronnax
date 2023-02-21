@@ -6,6 +6,7 @@ import 'package:aronnax/src/presentation/session_creation_view/session_informati
 import 'package:aronnax/src/presentation/widgets/generic_global_button.dart';
 import 'package:aronnax/src/presentation/widgets/generic_icon_button.dart';
 import 'package:aronnax/src/presentation/widgets/session_performance_dialog/session_performance_dialog.dart';
+import 'package:aronnax/src/presentation/widgets/todo_creation_dialog/todos_creation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -44,7 +45,10 @@ class SessionFormView extends ConsumerWidget {
                       GenericIconButon(
                         icon: FontAwesomeIcons.squareCheck,
                         title: 'Añadir tarea',
-                        onTap: () => '',
+                        onTap: () => showDialog(
+                          context: context,
+                          builder: (context) => const TodosCreationDialog(),
+                        ),
                       ),
                       GenericIconButon(
                         icon: FontAwesomeIcons.microscope,
