@@ -13,6 +13,8 @@ part 'local_model.g.dart';
   Sessions,
   Professional,
   Tests,
+  Todos,
+  Appointments,
   Settings,
   ServerDatabase
 ])

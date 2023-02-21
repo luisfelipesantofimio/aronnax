@@ -81,6 +81,8 @@ class Todos extends Table {
   DateTimeColumn get creationDate => dateTime()();
   TextColumn get todo => text()();
   TextColumn get description => text().nullable()();
+  TextColumn get category => text().nullable()();
+  TextColumn get itemColor => text()();
   BoolColumn get isComplete => boolean()();
 }
 

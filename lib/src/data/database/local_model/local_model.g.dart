@@ -2823,6 +2823,753 @@ class TestsCompanion extends UpdateCompanion<Test> {
   }
 }
 
+class $TodosTable extends Todos with TableInfo<$TodosTable, Todo> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TodosTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _creationDateMeta =
+      const VerificationMeta('creationDate');
+  @override
+  late final GeneratedColumn<DateTime> creationDate = GeneratedColumn<DateTime>(
+      'creation_date', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _todoMeta = const VerificationMeta('todo');
+  @override
+  late final GeneratedColumn<String> todo = GeneratedColumn<String>(
+      'todo', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _descriptionMeta =
+      const VerificationMeta('description');
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+      'description', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _categoryMeta =
+      const VerificationMeta('category');
+  @override
+  late final GeneratedColumn<String> category = GeneratedColumn<String>(
+      'category', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _itemColorMeta =
+      const VerificationMeta('itemColor');
+  @override
+  late final GeneratedColumn<String> itemColor = GeneratedColumn<String>(
+      'item_color', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _isCompleteMeta =
+      const VerificationMeta('isComplete');
+  @override
+  late final GeneratedColumn<bool> isComplete =
+      GeneratedColumn<bool>('is_complete', aliasedName, false,
+          type: DriftSqlType.bool,
+          requiredDuringInsert: true,
+          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
+            SqlDialect.sqlite: 'CHECK ("is_complete" IN (0, 1))',
+            SqlDialect.mysql: '',
+            SqlDialect.postgres: '',
+          }));
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, creationDate, todo, description, category, itemColor, isComplete];
+  @override
+  String get aliasedName => _alias ?? 'todos';
+  @override
+  String get actualTableName => 'todos';
+  @override
+  VerificationContext validateIntegrity(Insertable<Todo> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('creation_date')) {
+      context.handle(
+          _creationDateMeta,
+          creationDate.isAcceptableOrUnknown(
+              data['creation_date']!, _creationDateMeta));
+    } else if (isInserting) {
+      context.missing(_creationDateMeta);
+    }
+    if (data.containsKey('todo')) {
+      context.handle(
+          _todoMeta, todo.isAcceptableOrUnknown(data['todo']!, _todoMeta));
+    } else if (isInserting) {
+      context.missing(_todoMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+          _descriptionMeta,
+          description.isAcceptableOrUnknown(
+              data['description']!, _descriptionMeta));
+    }
+    if (data.containsKey('category')) {
+      context.handle(_categoryMeta,
+          category.isAcceptableOrUnknown(data['category']!, _categoryMeta));
+    }
+    if (data.containsKey('item_color')) {
+      context.handle(_itemColorMeta,
+          itemColor.isAcceptableOrUnknown(data['item_color']!, _itemColorMeta));
+    } else if (isInserting) {
+      context.missing(_itemColorMeta);
+    }
+    if (data.containsKey('is_complete')) {
+      context.handle(
+          _isCompleteMeta,
+          isComplete.isAcceptableOrUnknown(
+              data['is_complete']!, _isCompleteMeta));
+    } else if (isInserting) {
+      context.missing(_isCompleteMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Todo map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Todo(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      creationDate: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime, data['${effectivePrefix}creation_date'])!,
+      todo: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}todo'])!,
+      description: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}description']),
+      category: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}category']),
+      itemColor: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}item_color'])!,
+      isComplete: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_complete'])!,
+    );
+  }
+
+  @override
+  $TodosTable createAlias(String alias) {
+    return $TodosTable(attachedDatabase, alias);
+  }
+}
+
+class Todo extends DataClass implements Insertable<Todo> {
+  final int id;
+  final DateTime creationDate;
+  final String todo;
+  final String? description;
+  final String? category;
+  final String itemColor;
+  final bool isComplete;
+  const Todo(
+      {required this.id,
+      required this.creationDate,
+      required this.todo,
+      this.description,
+      this.category,
+      required this.itemColor,
+      required this.isComplete});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['creation_date'] = Variable<DateTime>(creationDate);
+    map['todo'] = Variable<String>(todo);
+    if (!nullToAbsent || description != null) {
+      map['description'] = Variable<String>(description);
+    }
+    if (!nullToAbsent || category != null) {
+      map['category'] = Variable<String>(category);
+    }
+    map['item_color'] = Variable<String>(itemColor);
+    map['is_complete'] = Variable<bool>(isComplete);
+    return map;
+  }
+
+  TodosCompanion toCompanion(bool nullToAbsent) {
+    return TodosCompanion(
+      id: Value(id),
+      creationDate: Value(creationDate),
+      todo: Value(todo),
+      description: description == null && nullToAbsent
+          ? const Value.absent()
+          : Value(description),
+      category: category == null && nullToAbsent
+          ? const Value.absent()
+          : Value(category),
+      itemColor: Value(itemColor),
+      isComplete: Value(isComplete),
+    );
+  }
+
+  factory Todo.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Todo(
+      id: serializer.fromJson<int>(json['id']),
+      creationDate: serializer.fromJson<DateTime>(json['creationDate']),
+      todo: serializer.fromJson<String>(json['todo']),
+      description: serializer.fromJson<String?>(json['description']),
+      category: serializer.fromJson<String?>(json['category']),
+      itemColor: serializer.fromJson<String>(json['itemColor']),
+      isComplete: serializer.fromJson<bool>(json['isComplete']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'creationDate': serializer.toJson<DateTime>(creationDate),
+      'todo': serializer.toJson<String>(todo),
+      'description': serializer.toJson<String?>(description),
+      'category': serializer.toJson<String?>(category),
+      'itemColor': serializer.toJson<String>(itemColor),
+      'isComplete': serializer.toJson<bool>(isComplete),
+    };
+  }
+
+  Todo copyWith(
+          {int? id,
+          DateTime? creationDate,
+          String? todo,
+          Value<String?> description = const Value.absent(),
+          Value<String?> category = const Value.absent(),
+          String? itemColor,
+          bool? isComplete}) =>
+      Todo(
+        id: id ?? this.id,
+        creationDate: creationDate ?? this.creationDate,
+        todo: todo ?? this.todo,
+        description: description.present ? description.value : this.description,
+        category: category.present ? category.value : this.category,
+        itemColor: itemColor ?? this.itemColor,
+        isComplete: isComplete ?? this.isComplete,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('Todo(')
+          ..write('id: $id, ')
+          ..write('creationDate: $creationDate, ')
+          ..write('todo: $todo, ')
+          ..write('description: $description, ')
+          ..write('category: $category, ')
+          ..write('itemColor: $itemColor, ')
+          ..write('isComplete: $isComplete')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      id, creationDate, todo, description, category, itemColor, isComplete);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Todo &&
+          other.id == this.id &&
+          other.creationDate == this.creationDate &&
+          other.todo == this.todo &&
+          other.description == this.description &&
+          other.category == this.category &&
+          other.itemColor == this.itemColor &&
+          other.isComplete == this.isComplete);
+}
+
+class TodosCompanion extends UpdateCompanion<Todo> {
+  final Value<int> id;
+  final Value<DateTime> creationDate;
+  final Value<String> todo;
+  final Value<String?> description;
+  final Value<String?> category;
+  final Value<String> itemColor;
+  final Value<bool> isComplete;
+  const TodosCompanion({
+    this.id = const Value.absent(),
+    this.creationDate = const Value.absent(),
+    this.todo = const Value.absent(),
+    this.description = const Value.absent(),
+    this.category = const Value.absent(),
+    this.itemColor = const Value.absent(),
+    this.isComplete = const Value.absent(),
+  });
+  TodosCompanion.insert({
+    this.id = const Value.absent(),
+    required DateTime creationDate,
+    required String todo,
+    this.description = const Value.absent(),
+    this.category = const Value.absent(),
+    required String itemColor,
+    required bool isComplete,
+  })  : creationDate = Value(creationDate),
+        todo = Value(todo),
+        itemColor = Value(itemColor),
+        isComplete = Value(isComplete);
+  static Insertable<Todo> custom({
+    Expression<int>? id,
+    Expression<DateTime>? creationDate,
+    Expression<String>? todo,
+    Expression<String>? description,
+    Expression<String>? category,
+    Expression<String>? itemColor,
+    Expression<bool>? isComplete,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (creationDate != null) 'creation_date': creationDate,
+      if (todo != null) 'todo': todo,
+      if (description != null) 'description': description,
+      if (category != null) 'category': category,
+      if (itemColor != null) 'item_color': itemColor,
+      if (isComplete != null) 'is_complete': isComplete,
+    });
+  }
+
+  TodosCompanion copyWith(
+      {Value<int>? id,
+      Value<DateTime>? creationDate,
+      Value<String>? todo,
+      Value<String?>? description,
+      Value<String?>? category,
+      Value<String>? itemColor,
+      Value<bool>? isComplete}) {
+    return TodosCompanion(
+      id: id ?? this.id,
+      creationDate: creationDate ?? this.creationDate,
+      todo: todo ?? this.todo,
+      description: description ?? this.description,
+      category: category ?? this.category,
+      itemColor: itemColor ?? this.itemColor,
+      isComplete: isComplete ?? this.isComplete,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (creationDate.present) {
+      map['creation_date'] = Variable<DateTime>(creationDate.value);
+    }
+    if (todo.present) {
+      map['todo'] = Variable<String>(todo.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (category.present) {
+      map['category'] = Variable<String>(category.value);
+    }
+    if (itemColor.present) {
+      map['item_color'] = Variable<String>(itemColor.value);
+    }
+    if (isComplete.present) {
+      map['is_complete'] = Variable<bool>(isComplete.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TodosCompanion(')
+          ..write('id: $id, ')
+          ..write('creationDate: $creationDate, ')
+          ..write('todo: $todo, ')
+          ..write('description: $description, ')
+          ..write('category: $category, ')
+          ..write('itemColor: $itemColor, ')
+          ..write('isComplete: $isComplete')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $AppointmentsTable extends Appointments
+    with TableInfo<$AppointmentsTable, Appointment> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $AppointmentsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _dateMeta = const VerificationMeta('date');
+  @override
+  late final GeneratedColumn<DateTime> date = GeneratedColumn<DateTime>(
+      'date', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _professionalIDMeta =
+      const VerificationMeta('professionalID');
+  @override
+  late final GeneratedColumn<int> professionalID = GeneratedColumn<int>(
+      'professional_i_d', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES professional (professional_i_d)'));
+  static const VerificationMeta _patientIDMeta =
+      const VerificationMeta('patientID');
+  @override
+  late final GeneratedColumn<int> patientID = GeneratedColumn<int>(
+      'patient_i_d', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES patients (id_number)'));
+  static const VerificationMeta _descriptionMeta =
+      const VerificationMeta('description');
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+      'description', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _statusMeta = const VerificationMeta('status');
+  @override
+  late final GeneratedColumn<String> status = GeneratedColumn<String>(
+      'status', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _sessionTypeMeta =
+      const VerificationMeta('sessionType');
+  @override
+  late final GeneratedColumn<String> sessionType = GeneratedColumn<String>(
+      'session_type', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, date, professionalID, patientID, description, status, sessionType];
+  @override
+  String get aliasedName => _alias ?? 'appointments';
+  @override
+  String get actualTableName => 'appointments';
+  @override
+  VerificationContext validateIntegrity(Insertable<Appointment> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('date')) {
+      context.handle(
+          _dateMeta, date.isAcceptableOrUnknown(data['date']!, _dateMeta));
+    } else if (isInserting) {
+      context.missing(_dateMeta);
+    }
+    if (data.containsKey('professional_i_d')) {
+      context.handle(
+          _professionalIDMeta,
+          professionalID.isAcceptableOrUnknown(
+              data['professional_i_d']!, _professionalIDMeta));
+    } else if (isInserting) {
+      context.missing(_professionalIDMeta);
+    }
+    if (data.containsKey('patient_i_d')) {
+      context.handle(
+          _patientIDMeta,
+          patientID.isAcceptableOrUnknown(
+              data['patient_i_d']!, _patientIDMeta));
+    } else if (isInserting) {
+      context.missing(_patientIDMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+          _descriptionMeta,
+          description.isAcceptableOrUnknown(
+              data['description']!, _descriptionMeta));
+    }
+    if (data.containsKey('status')) {
+      context.handle(_statusMeta,
+          status.isAcceptableOrUnknown(data['status']!, _statusMeta));
+    } else if (isInserting) {
+      context.missing(_statusMeta);
+    }
+    if (data.containsKey('session_type')) {
+      context.handle(
+          _sessionTypeMeta,
+          sessionType.isAcceptableOrUnknown(
+              data['session_type']!, _sessionTypeMeta));
+    } else if (isInserting) {
+      context.missing(_sessionTypeMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Appointment map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Appointment(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      date: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}date'])!,
+      professionalID: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}professional_i_d'])!,
+      patientID: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}patient_i_d'])!,
+      description: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}description']),
+      status: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}status'])!,
+      sessionType: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}session_type'])!,
+    );
+  }
+
+  @override
+  $AppointmentsTable createAlias(String alias) {
+    return $AppointmentsTable(attachedDatabase, alias);
+  }
+}
+
+class Appointment extends DataClass implements Insertable<Appointment> {
+  final int id;
+  final DateTime date;
+  final int professionalID;
+  final int patientID;
+  final String? description;
+  final String status;
+  final String sessionType;
+  const Appointment(
+      {required this.id,
+      required this.date,
+      required this.professionalID,
+      required this.patientID,
+      this.description,
+      required this.status,
+      required this.sessionType});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['date'] = Variable<DateTime>(date);
+    map['professional_i_d'] = Variable<int>(professionalID);
+    map['patient_i_d'] = Variable<int>(patientID);
+    if (!nullToAbsent || description != null) {
+      map['description'] = Variable<String>(description);
+    }
+    map['status'] = Variable<String>(status);
+    map['session_type'] = Variable<String>(sessionType);
+    return map;
+  }
+
+  AppointmentsCompanion toCompanion(bool nullToAbsent) {
+    return AppointmentsCompanion(
+      id: Value(id),
+      date: Value(date),
+      professionalID: Value(professionalID),
+      patientID: Value(patientID),
+      description: description == null && nullToAbsent
+          ? const Value.absent()
+          : Value(description),
+      status: Value(status),
+      sessionType: Value(sessionType),
+    );
+  }
+
+  factory Appointment.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Appointment(
+      id: serializer.fromJson<int>(json['id']),
+      date: serializer.fromJson<DateTime>(json['date']),
+      professionalID: serializer.fromJson<int>(json['professionalID']),
+      patientID: serializer.fromJson<int>(json['patientID']),
+      description: serializer.fromJson<String?>(json['description']),
+      status: serializer.fromJson<String>(json['status']),
+      sessionType: serializer.fromJson<String>(json['sessionType']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'date': serializer.toJson<DateTime>(date),
+      'professionalID': serializer.toJson<int>(professionalID),
+      'patientID': serializer.toJson<int>(patientID),
+      'description': serializer.toJson<String?>(description),
+      'status': serializer.toJson<String>(status),
+      'sessionType': serializer.toJson<String>(sessionType),
+    };
+  }
+
+  Appointment copyWith(
+          {int? id,
+          DateTime? date,
+          int? professionalID,
+          int? patientID,
+          Value<String?> description = const Value.absent(),
+          String? status,
+          String? sessionType}) =>
+      Appointment(
+        id: id ?? this.id,
+        date: date ?? this.date,
+        professionalID: professionalID ?? this.professionalID,
+        patientID: patientID ?? this.patientID,
+        description: description.present ? description.value : this.description,
+        status: status ?? this.status,
+        sessionType: sessionType ?? this.sessionType,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('Appointment(')
+          ..write('id: $id, ')
+          ..write('date: $date, ')
+          ..write('professionalID: $professionalID, ')
+          ..write('patientID: $patientID, ')
+          ..write('description: $description, ')
+          ..write('status: $status, ')
+          ..write('sessionType: $sessionType')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      id, date, professionalID, patientID, description, status, sessionType);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Appointment &&
+          other.id == this.id &&
+          other.date == this.date &&
+          other.professionalID == this.professionalID &&
+          other.patientID == this.patientID &&
+          other.description == this.description &&
+          other.status == this.status &&
+          other.sessionType == this.sessionType);
+}
+
+class AppointmentsCompanion extends UpdateCompanion<Appointment> {
+  final Value<int> id;
+  final Value<DateTime> date;
+  final Value<int> professionalID;
+  final Value<int> patientID;
+  final Value<String?> description;
+  final Value<String> status;
+  final Value<String> sessionType;
+  const AppointmentsCompanion({
+    this.id = const Value.absent(),
+    this.date = const Value.absent(),
+    this.professionalID = const Value.absent(),
+    this.patientID = const Value.absent(),
+    this.description = const Value.absent(),
+    this.status = const Value.absent(),
+    this.sessionType = const Value.absent(),
+  });
+  AppointmentsCompanion.insert({
+    this.id = const Value.absent(),
+    required DateTime date,
+    required int professionalID,
+    required int patientID,
+    this.description = const Value.absent(),
+    required String status,
+    required String sessionType,
+  })  : date = Value(date),
+        professionalID = Value(professionalID),
+        patientID = Value(patientID),
+        status = Value(status),
+        sessionType = Value(sessionType);
+  static Insertable<Appointment> custom({
+    Expression<int>? id,
+    Expression<DateTime>? date,
+    Expression<int>? professionalID,
+    Expression<int>? patientID,
+    Expression<String>? description,
+    Expression<String>? status,
+    Expression<String>? sessionType,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (date != null) 'date': date,
+      if (professionalID != null) 'professional_i_d': professionalID,
+      if (patientID != null) 'patient_i_d': patientID,
+      if (description != null) 'description': description,
+      if (status != null) 'status': status,
+      if (sessionType != null) 'session_type': sessionType,
+    });
+  }
+
+  AppointmentsCompanion copyWith(
+      {Value<int>? id,
+      Value<DateTime>? date,
+      Value<int>? professionalID,
+      Value<int>? patientID,
+      Value<String?>? description,
+      Value<String>? status,
+      Value<String>? sessionType}) {
+    return AppointmentsCompanion(
+      id: id ?? this.id,
+      date: date ?? this.date,
+      professionalID: professionalID ?? this.professionalID,
+      patientID: patientID ?? this.patientID,
+      description: description ?? this.description,
+      status: status ?? this.status,
+      sessionType: sessionType ?? this.sessionType,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (date.present) {
+      map['date'] = Variable<DateTime>(date.value);
+    }
+    if (professionalID.present) {
+      map['professional_i_d'] = Variable<int>(professionalID.value);
+    }
+    if (patientID.present) {
+      map['patient_i_d'] = Variable<int>(patientID.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(status.value);
+    }
+    if (sessionType.present) {
+      map['session_type'] = Variable<String>(sessionType.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AppointmentsCompanion(')
+          ..write('id: $id, ')
+          ..write('date: $date, ')
+          ..write('professionalID: $professionalID, ')
+          ..write('patientID: $patientID, ')
+          ..write('description: $description, ')
+          ..write('status: $status, ')
+          ..write('sessionType: $sessionType')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
   @override
   final GeneratedDatabase attachedDatabase;
@@ -3431,6 +4178,8 @@ abstract class _$LocalDatabase extends GeneratedDatabase {
   late final $ClinicHistoryTable clinicHistory = $ClinicHistoryTable(this);
   late final $SessionsTable sessions = $SessionsTable(this);
   late final $TestsTable tests = $TestsTable(this);
+  late final $TodosTable todos = $TodosTable(this);
+  late final $AppointmentsTable appointments = $AppointmentsTable(this);
   late final $SettingsTable settings = $SettingsTable(this);
   late final $ServerDatabaseTable serverDatabase = $ServerDatabaseTable(this);
   @override
@@ -3443,6 +4192,8 @@ abstract class _$LocalDatabase extends GeneratedDatabase {
         clinicHistory,
         sessions,
         tests,
+        todos,
+        appointments,
         settings,
         serverDatabase
       ];
