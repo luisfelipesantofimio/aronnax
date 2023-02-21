@@ -81,20 +81,23 @@ class _NoteCreationDialogState extends ConsumerState<NoteCreationDialog> {
                       Navigator.pop(context);
                     },
                   ),
-                  NoteCreationActionButton(
-                    icon: FontAwesomeIcons.eraser,
-                    title: 'Borrar nota',
-                    onTap: () {
-                      ref
-                          .read(sessionNotesProvider.notifier)
-                          .update((state) => null);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Nota borrada'),
-                        ),
-                      );
-                      Navigator.pop(context);
-                    },
+                  Visibility(
+                    visible: ref.read(sessionNotesProvider) != null,
+                    child: NoteCreationActionButton(
+                      icon: FontAwesomeIcons.eraser,
+                      title: 'Borrar nota',
+                      onTap: () {
+                        ref
+                            .read(sessionNotesProvider.notifier)
+                            .update((state) => null);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Nota borrada'),
+                          ),
+                        );
+                        Navigator.pop(context);
+                      },
+                    ),
                   ),
                 ],
               )
