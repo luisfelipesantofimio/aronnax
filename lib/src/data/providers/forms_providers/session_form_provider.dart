@@ -7,4 +7,4 @@ final sessionObjectivesProvider = StateProvider<String>((ref) => '');
 final sessionTherapeuticArchievementsProvider =
     StateProvider<String>((ref) => '');
 
-final sessionNotesProvider = StateProvider<String>((ref) => '');
+final sessionNotesProvider = StateProvider<String?>((ref) => null);
