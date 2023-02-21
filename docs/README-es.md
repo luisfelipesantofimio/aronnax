@@ -45,6 +45,3 @@ Aronnax se encuentra en constante desarrollo y aumentando sus características p
 - Implementar test de tamizaje para aplicar durante las consultas
 - Traducir completamente al inglés
 - Base de datos local preconfigurada para profesionales que trabajen por su cuenta y no requieran una base de datos externa.
-
-
-<p align="center">Hecho con &hearts; en <a href="https://crearteconsciencia.co">Crearte Consciencia</a></p>
