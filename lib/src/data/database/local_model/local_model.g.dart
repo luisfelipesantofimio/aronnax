@@ -2863,9 +2863,9 @@ class $TodosTable extends Todos with TableInfo<$TodosTable, Todo> {
   static const VerificationMeta _itemColorMeta =
       const VerificationMeta('itemColor');
   @override
-  late final GeneratedColumn<String> itemColor = GeneratedColumn<String>(
+  late final GeneratedColumn<int> itemColor = GeneratedColumn<int>(
       'item_color', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      type: DriftSqlType.int, requiredDuringInsert: true);
   static const VerificationMeta _isCompleteMeta =
       const VerificationMeta('isComplete');
   @override
@@ -2951,7 +2951,7 @@ class $TodosTable extends Todos with TableInfo<$TodosTable, Todo> {
       category: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}category']),
       itemColor: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}item_color'])!,
+          .read(DriftSqlType.int, data['${effectivePrefix}item_color'])!,
       isComplete: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}is_complete'])!,
     );
@@ -2969,7 +2969,7 @@ class Todo extends DataClass implements Insertable<Todo> {
   final String todo;
   final String? description;
   final String? category;
-  final String itemColor;
+  final int itemColor;
   final bool isComplete;
   const Todo(
       {required this.id,
@@ -2991,7 +2991,7 @@ class Todo extends DataClass implements Insertable<Todo> {
     if (!nullToAbsent || category != null) {
       map['category'] = Variable<String>(category);
     }
-    map['item_color'] = Variable<String>(itemColor);
+    map['item_color'] = Variable<int>(itemColor);
     map['is_complete'] = Variable<bool>(isComplete);
     return map;
   }
@@ -3021,7 +3021,7 @@ class Todo extends DataClass implements Insertable<Todo> {
       todo: serializer.fromJson<String>(json['todo']),
       description: serializer.fromJson<String?>(json['description']),
       category: serializer.fromJson<String?>(json['category']),
-      itemColor: serializer.fromJson<String>(json['itemColor']),
+      itemColor: serializer.fromJson<int>(json['itemColor']),
       isComplete: serializer.fromJson<bool>(json['isComplete']),
     );
   }
@@ -3034,7 +3034,7 @@ class Todo extends DataClass implements Insertable<Todo> {
       'todo': serializer.toJson<String>(todo),
       'description': serializer.toJson<String?>(description),
       'category': serializer.toJson<String?>(category),
-      'itemColor': serializer.toJson<String>(itemColor),
+      'itemColor': serializer.toJson<int>(itemColor),
       'isComplete': serializer.toJson<bool>(isComplete),
     };
   }
@@ -3045,7 +3045,7 @@ class Todo extends DataClass implements Insertable<Todo> {
           String? todo,
           Value<String?> description = const Value.absent(),
           Value<String?> category = const Value.absent(),
-          String? itemColor,
+          int? itemColor,
           bool? isComplete}) =>
       Todo(
         id: id ?? this.id,
@@ -3092,7 +3092,7 @@ class TodosCompanion extends UpdateCompanion<Todo> {
   final Value<String> todo;
   final Value<String?> description;
   final Value<String?> category;
-  final Value<String> itemColor;
+  final Value<int> itemColor;
   final Value<bool> isComplete;
   const TodosCompanion({
     this.id = const Value.absent(),
@@ -3109,7 +3109,7 @@ class TodosCompanion extends UpdateCompanion<Todo> {
     required String todo,
     this.description = const Value.absent(),
     this.category = const Value.absent(),
-    required String itemColor,
+    required int itemColor,
     required bool isComplete,
   })  : creationDate = Value(creationDate),
         todo = Value(todo),
@@ -3121,7 +3121,7 @@ class TodosCompanion extends UpdateCompanion<Todo> {
     Expression<String>? todo,
     Expression<String>? description,
     Expression<String>? category,
-    Expression<String>? itemColor,
+    Expression<int>? itemColor,
     Expression<bool>? isComplete,
   }) {
     return RawValuesInsertable({
@@ -3141,7 +3141,7 @@ class TodosCompanion extends UpdateCompanion<Todo> {
       Value<String>? todo,
       Value<String?>? description,
       Value<String?>? category,
-      Value<String>? itemColor,
+      Value<int>? itemColor,
       Value<bool>? isComplete}) {
     return TodosCompanion(
       id: id ?? this.id,
@@ -3173,7 +3173,7 @@ class TodosCompanion extends UpdateCompanion<Todo> {
       map['category'] = Variable<String>(category.value);
     }
     if (itemColor.present) {
-      map['item_color'] = Variable<String>(itemColor.value);
+      map['item_color'] = Variable<int>(itemColor.value);
     }
     if (isComplete.present) {
       map['is_complete'] = Variable<bool>(isComplete.value);

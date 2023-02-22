@@ -82,7 +82,7 @@ class Todos extends Table {
   TextColumn get todo => text()();
   TextColumn get description => text().nullable()();
   TextColumn get category => text().nullable()();
-  TextColumn get itemColor => text()();
+  IntColumn get itemColor => integer()();
   BoolColumn get isComplete => boolean()();
 }
 
