@@ -1,13 +1,8 @@
-import 'package:aronnax/src/data/database/local_model/local_queries.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
+import 'package:aronnax/src/presentation/core/controllers.dart';
 import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:flutter/material.dart';
-import 'package:aronnax/src/data/remote_database/server_api.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
-
-DateTime dateFormat = DateTime.now();
-String currentDate = DateFormat("dd/MM/yyyy").format(dateFormat);
 
 class SessionsForm extends ConsumerStatefulWidget {
   const SessionsForm({Key? key, required this.patientID}) : super(key: key);
@@ -18,7 +13,6 @@ class SessionsForm extends ConsumerStatefulWidget {
 }
 
 class SessionsFormState extends ConsumerState<SessionsForm> {
-  final sessionKey = GlobalKey<FormState>();
   String sessionSummary = "";
   String sessionObjectives = "";
   String therapeuticArchievements = "";
@@ -34,7 +28,7 @@ class SessionsFormState extends ConsumerState<SessionsForm> {
       controller: ScrollController(),
       children: [
         Form(
-          key: sessionKey,
+          key: sessionFormKey,
           child: Column(
             children: [
               Container(
@@ -115,33 +109,33 @@ class SessionsFormState extends ConsumerState<SessionsForm> {
                   },
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (sessionKey.currentState!.validate()) {
-                      sessionKey.currentState!.save();
+              // Padding(
+              //   padding: const EdgeInsets.all(8.0),
+              //   child: ElevatedButton(
+              //     onPressed: () {
+              //       if (sessionKey.currentState!.validate()) {
+              //         sessionKey.currentState!.save();
 
-                      isOfflineEnabled
-                          ? addLocalSession(
-                              sessionSummary,
-                              sessionObjectives,
-                              therapeuticArchievements,
-                              int.parse(widget.patientID),
-                              ref.read(globalProfessionalPersonalIDProvider),
-                              DateTime.now())
-                          : insertSessionData(
-                              currentDate,
-                              sessionSummary,
-                              sessionObjectives,
-                              therapeuticArchievements,
-                              widget.patientID,
-                              professionalName);
-                    }
-                  },
-                  child: const Text("Guardar información"),
-                ),
-              ),
+              //         isOfflineEnabled
+              //             ? addLocalSession(
+              //                 sessionSummary,
+              //                 sessionObjectives,
+              //                 therapeuticArchievements,
+              //                 int.parse(widget.patientID),
+              //                 ref.read(globalProfessionalPersonalIDProvider),
+              //                 DateTime.now())
+              //             : insertSessionData(
+              //                 currentDate,
+              //                 sessionSummary,
+              //                 sessionObjectives,
+              //                 therapeuticArchievements,
+              //                 widget.patientID,
+              //                 professionalName);
+              //       }
+              //     },
+              //     child: const Text("Guardar información"),
+              //   ),
+              // ),
             ],
           ),
         )

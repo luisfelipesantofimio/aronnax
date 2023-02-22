@@ -1,7 +1,15 @@
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
-import 'package:aronnax/src/data/database/local_model/local_queries.dart';
+import 'package:aronnax/src/data/repositories/user_search_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final localPatientSearchProvider = StreamProvider.family<List<Patient>, String>(
-  (ref, userName) => localDB.userConsultation(userName),
+/// It's value gets updated when the input parameter of
+/// the [UserSearchRepository] local query method
+/// is used
+final localQueriedPatientSearchListProvider = StateProvider<List<Patient>>(
+  (ref) => [],
 );
+
+// final remoteQueriedPatientSearchListProvider =
+//     StateProvider<List<RemotePatient>>(
+//   (ref) => [],
+// );

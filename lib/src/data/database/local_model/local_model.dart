@@ -13,6 +13,8 @@ part 'local_model.g.dart';
   Sessions,
   Professional,
   Tests,
+  Todos,
+  Appointments,
   Settings,
   ServerDatabase
 ])
@@ -48,6 +50,10 @@ class LocalDatabase extends _$LocalDatabase {
     return into(serverDatabase).insert(data);
   }
 
+  Future<void> insertTodo(TodosCompanion data) {
+    return into(todos).insert(data);
+  }
+
   // Data update
 
   Future updateThemeMode(bool currentThemeMode) async {
@@ -76,12 +82,12 @@ class LocalDatabase extends _$LocalDatabase {
 
   // Data fetching
 
-  Stream<List<Patient>> userConsultation(String userNames) {
+  Future<List<Patient>> userConsultation(String userNames) {
     return (select(patients)
           ..where(
             (tbl) => tbl.names.contains(userNames),
           ))
-        .watch();
+        .get();
   }
 
   Future<List<ProfessionalData>> getProfessionalsList() {

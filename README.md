@@ -45,6 +45,3 @@ Aronnax is in current development and growing in features to improve the consult
 - Implement some screening tests for doing during consultation
 - Complete translation to english
 - Local preconfigured database for professionals who are groing to work by their own and don't requiere an external database.
-
-
-<p align="center">Made with &hearts; in <a href="https://crearteconsciencia.co">Crearte Consciencia</a></p>

@@ -18,7 +18,7 @@ class MainMenu extends ConsumerStatefulWidget {
 class MainMenuState extends ConsumerState<MainMenu> {
   @override
   void didChangeDependencies() {
-    if (!ref.watch(globalOfflineStatusProvider)) {
+    if (!ref.watch(offlineStatusProvider).value!) {
       ref.read(globalQueriedPatientProvider.notifier).getPatientInfo();
       ref.read(globalQueriedClinicHistoryProvider.notifier).getPatientInfo();
       ref

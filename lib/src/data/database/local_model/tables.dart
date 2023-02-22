@@ -45,8 +45,9 @@ class Sessions extends Table {
   TextColumn get sessionSummary => text()();
   TextColumn get sessionObjectives => text()();
   TextColumn get therapeuticArchievements => text()();
-  TextColumn get sessionNotes => text()();
+  TextColumn get sessionNotes => text().nullable()();
   TextColumn get sessionPerformance => text()();
+  TextColumn get sessionPerformanceExplanation => text().nullable()();
   IntColumn get idNumber => integer().references(Patients, #idNumber)();
   IntColumn get professionalID =>
       integer().references(Professional, #professionalID)();
@@ -57,6 +58,7 @@ class Professional extends Table {
   IntColumn get personalID => integer().unique()();
   TextColumn get names => text()();
   TextColumn get lastNames => text()();
+  TextColumn get countryCode => text()();
   IntColumn get professionalID => integer()();
   TextColumn get userName => text()();
   TextColumn get password => text()();
@@ -69,7 +71,7 @@ class Tests extends Table {
   IntColumn get professionalID =>
       integer().references(Professional, #professionalID)();
   IntColumn get sessionID => integer().references(Sessions, #sessionId)();
-  TextColumn get testDescription => text()();
+  TextColumn get testReason => text()();
   TextColumn get category => text()();
   TextColumn get testData => text()();
 }
@@ -78,8 +80,10 @@ class Todos extends Table {
   IntColumn get id => integer().autoIncrement()();
   DateTimeColumn get creationDate => dateTime()();
   TextColumn get todo => text()();
+  TextColumn get description => text().nullable()();
+  TextColumn get category => text().nullable()();
+  IntColumn get itemColor => integer()();
   BoolColumn get isComplete => boolean()();
-  IntColumn get sessionID => integer().references(Sessions, #sessionId)();
 }
 
 class Appointments extends Table {
@@ -88,7 +92,7 @@ class Appointments extends Table {
   IntColumn get professionalID =>
       integer().references(Professional, #professionalID)();
   IntColumn get patientID => integer().references(Patients, #idNumber)();
-  TextColumn get description => text()();
+  TextColumn get description => text().nullable()();
   TextColumn get status => text()();
   TextColumn get sessionType => text()();
 }

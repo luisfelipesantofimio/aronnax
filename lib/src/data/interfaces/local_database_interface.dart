@@ -1,5 +1,6 @@
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/repositories/database_repository.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class LocalDatabaseInteface {
@@ -49,7 +50,7 @@ abstract class LocalDatabaseInteface {
   void addLocalProfessional(int personalID, String names, String lastNames,
       int professionalID, String userName, String password);
 
-  Stream<List<Patient>> searchPatient(String user);
+  Future<List<Patient>> searchPatient(String user);
 
   Future<List<ProfessionalData>> loginExistingProfessional(int userID);
 
@@ -69,6 +70,15 @@ abstract class LocalDatabaseInteface {
     required int port,
     required String username,
     required String databasePassword,
+  });
+
+  Future<void> addLocalTodo({
+    required DateTime date,
+    required String todoTitle,
+    required String? todoDescription,
+    required List<String> categoryList,
+    required Color itemColor,
+    required bool isComplete,
   });
 
   void updateConfigurationState(bool isConfigured);
