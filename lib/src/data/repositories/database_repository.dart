@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/remote_database/server_api.dart';
@@ -200,5 +202,29 @@ class DatabaseRepository implements LocalDatabaseInteface {
   @override
   Future updateConnectionMode(bool isOfflineEnabled) {
     return localDB.updateConnectionMode(isOfflineEnabled);
+  }
+
+  @override
+  Future<void> addLocalTodo({
+    required DateTime date,
+    required String todoTitle,
+    required String? todoDescription,
+    required List<String> categoryList,
+    required Color itemColor,
+    required bool isComplete,
+  }) {
+    final data = TodosCompanion(
+      todo: Value(todoTitle),
+      description: Value(todoDescription),
+      creationDate: Value(date),
+      category: Value(
+        categoryList.join(','),
+      ),
+      itemColor: Value(
+        itemColor.value,
+      ),
+      isComplete: Value(isComplete),
+    );
+    return localDB.insertTodo(data);
   }
 }
