@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class TodosColorSelection extends StatelessWidget {
   const TodosColorSelection({
@@ -9,17 +6,22 @@ class TodosColorSelection extends StatelessWidget {
     required this.icon,
     required this.color,
     required this.onSelected,
+    required this.isSelected,
   }) : super(key: key);
   final IconData icon;
   final Color color;
+  final bool isSelected;
   final Function(Color) onSelected;
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => onSelected(color),
       child: Container(
-        margin: EdgeInsets.only(right: 10),
+        margin: const EdgeInsets.only(right: 10),
         decoration: BoxDecoration(
+          border: isSelected
+              ? Border.all(color: Colors.black, width: 1)
+              : Border.all(style: BorderStyle.none),
           color: color,
           shape: BoxShape.circle,
         ),
