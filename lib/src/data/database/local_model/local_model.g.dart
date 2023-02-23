@@ -3,12 +3,12 @@
 part of 'local_model.dart';
 
 // ignore_for_file: type=lint
-class $ProfessionalTable extends Professional
-    with TableInfo<$ProfessionalTable, ProfessionalData> {
+class $LocalProfessionalTable extends LocalProfessional
+    with TableInfo<$LocalProfessionalTable, LocalProfessionalData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $ProfessionalTable(this.attachedDatabase, [this._alias]);
+  $LocalProfessionalTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -73,11 +73,12 @@ class $ProfessionalTable extends Professional
         password
       ];
   @override
-  String get aliasedName => _alias ?? 'professional';
+  String get aliasedName => _alias ?? 'local_professional';
   @override
-  String get actualTableName => 'professional';
+  String get actualTableName => 'local_professional';
   @override
-  VerificationContext validateIntegrity(Insertable<ProfessionalData> instance,
+  VerificationContext validateIntegrity(
+      Insertable<LocalProfessionalData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -138,9 +139,9 @@ class $ProfessionalTable extends Professional
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  ProfessionalData map(Map<String, dynamic> data, {String? tablePrefix}) {
+  LocalProfessionalData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ProfessionalData(
+    return LocalProfessionalData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       personalID: attachedDatabase.typeMapping
@@ -161,13 +162,13 @@ class $ProfessionalTable extends Professional
   }
 
   @override
-  $ProfessionalTable createAlias(String alias) {
-    return $ProfessionalTable(attachedDatabase, alias);
+  $LocalProfessionalTable createAlias(String alias) {
+    return $LocalProfessionalTable(attachedDatabase, alias);
   }
 }
 
-class ProfessionalData extends DataClass
-    implements Insertable<ProfessionalData> {
+class LocalProfessionalData extends DataClass
+    implements Insertable<LocalProfessionalData> {
   final int id;
   final int personalID;
   final String names;
@@ -176,7 +177,7 @@ class ProfessionalData extends DataClass
   final int professionalID;
   final String userName;
   final String password;
-  const ProfessionalData(
+  const LocalProfessionalData(
       {required this.id,
       required this.personalID,
       required this.names,
@@ -199,8 +200,8 @@ class ProfessionalData extends DataClass
     return map;
   }
 
-  ProfessionalCompanion toCompanion(bool nullToAbsent) {
-    return ProfessionalCompanion(
+  LocalProfessionalCompanion toCompanion(bool nullToAbsent) {
+    return LocalProfessionalCompanion(
       id: Value(id),
       personalID: Value(personalID),
       names: Value(names),
@@ -212,10 +213,10 @@ class ProfessionalData extends DataClass
     );
   }
 
-  factory ProfessionalData.fromJson(Map<String, dynamic> json,
+  factory LocalProfessionalData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ProfessionalData(
+    return LocalProfessionalData(
       id: serializer.fromJson<int>(json['id']),
       personalID: serializer.fromJson<int>(json['personalID']),
       names: serializer.fromJson<String>(json['names']),
@@ -241,7 +242,7 @@ class ProfessionalData extends DataClass
     };
   }
 
-  ProfessionalData copyWith(
+  LocalProfessionalData copyWith(
           {int? id,
           int? personalID,
           String? names,
@@ -250,7 +251,7 @@ class ProfessionalData extends DataClass
           int? professionalID,
           String? userName,
           String? password}) =>
-      ProfessionalData(
+      LocalProfessionalData(
         id: id ?? this.id,
         personalID: personalID ?? this.personalID,
         names: names ?? this.names,
@@ -262,7 +263,7 @@ class ProfessionalData extends DataClass
       );
   @override
   String toString() {
-    return (StringBuffer('ProfessionalData(')
+    return (StringBuffer('LocalProfessionalData(')
           ..write('id: $id, ')
           ..write('personalID: $personalID, ')
           ..write('names: $names, ')
@@ -281,7 +282,7 @@ class ProfessionalData extends DataClass
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is ProfessionalData &&
+      (other is LocalProfessionalData &&
           other.id == this.id &&
           other.personalID == this.personalID &&
           other.names == this.names &&
@@ -292,7 +293,8 @@ class ProfessionalData extends DataClass
           other.password == this.password);
 }
 
-class ProfessionalCompanion extends UpdateCompanion<ProfessionalData> {
+class LocalProfessionalCompanion
+    extends UpdateCompanion<LocalProfessionalData> {
   final Value<int> id;
   final Value<int> personalID;
   final Value<String> names;
@@ -301,7 +303,7 @@ class ProfessionalCompanion extends UpdateCompanion<ProfessionalData> {
   final Value<int> professionalID;
   final Value<String> userName;
   final Value<String> password;
-  const ProfessionalCompanion({
+  const LocalProfessionalCompanion({
     this.id = const Value.absent(),
     this.personalID = const Value.absent(),
     this.names = const Value.absent(),
@@ -311,7 +313,7 @@ class ProfessionalCompanion extends UpdateCompanion<ProfessionalData> {
     this.userName = const Value.absent(),
     this.password = const Value.absent(),
   });
-  ProfessionalCompanion.insert({
+  LocalProfessionalCompanion.insert({
     this.id = const Value.absent(),
     required int personalID,
     required String names,
@@ -327,7 +329,7 @@ class ProfessionalCompanion extends UpdateCompanion<ProfessionalData> {
         professionalID = Value(professionalID),
         userName = Value(userName),
         password = Value(password);
-  static Insertable<ProfessionalData> custom({
+  static Insertable<LocalProfessionalData> custom({
     Expression<int>? id,
     Expression<int>? personalID,
     Expression<String>? names,
@@ -349,7 +351,7 @@ class ProfessionalCompanion extends UpdateCompanion<ProfessionalData> {
     });
   }
 
-  ProfessionalCompanion copyWith(
+  LocalProfessionalCompanion copyWith(
       {Value<int>? id,
       Value<int>? personalID,
       Value<String>? names,
@@ -358,7 +360,7 @@ class ProfessionalCompanion extends UpdateCompanion<ProfessionalData> {
       Value<int>? professionalID,
       Value<String>? userName,
       Value<String>? password}) {
-    return ProfessionalCompanion(
+    return LocalProfessionalCompanion(
       id: id ?? this.id,
       personalID: personalID ?? this.personalID,
       names: names ?? this.names,
@@ -402,7 +404,7 @@ class ProfessionalCompanion extends UpdateCompanion<ProfessionalData> {
 
   @override
   String toString() {
-    return (StringBuffer('ProfessionalCompanion(')
+    return (StringBuffer('LocalProfessionalCompanion(')
           ..write('id: $id, ')
           ..write('personalID: $personalID, ')
           ..write('names: $names, ')
@@ -416,11 +418,12 @@ class ProfessionalCompanion extends UpdateCompanion<ProfessionalData> {
   }
 }
 
-class $PatientsTable extends Patients with TableInfo<$PatientsTable, Patient> {
+class $LocalPatientsTable extends LocalPatients
+    with TableInfo<$LocalPatientsTable, LocalPatient> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $PatientsTable(this.attachedDatabase, [this._alias]);
+  $LocalPatientsTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -537,7 +540,7 @@ class $PatientsTable extends Patients with TableInfo<$PatientsTable, Patient> {
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES professional (professional_i_d)'));
+          'REFERENCES local_professional (professional_i_d)'));
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -560,11 +563,11 @@ class $PatientsTable extends Patients with TableInfo<$PatientsTable, Patient> {
         professionalID
       ];
   @override
-  String get aliasedName => _alias ?? 'patients';
+  String get aliasedName => _alias ?? 'local_patients';
   @override
-  String get actualTableName => 'patients';
+  String get actualTableName => 'local_patients';
   @override
-  VerificationContext validateIntegrity(Insertable<Patient> instance,
+  VerificationContext validateIntegrity(Insertable<LocalPatient> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -689,9 +692,9 @@ class $PatientsTable extends Patients with TableInfo<$PatientsTable, Patient> {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Patient map(Map<String, dynamic> data, {String? tablePrefix}) {
+  LocalPatient map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Patient(
+    return LocalPatient(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       names: attachedDatabase.typeMapping
@@ -734,12 +737,12 @@ class $PatientsTable extends Patients with TableInfo<$PatientsTable, Patient> {
   }
 
   @override
-  $PatientsTable createAlias(String alias) {
-    return $PatientsTable(attachedDatabase, alias);
+  $LocalPatientsTable createAlias(String alias) {
+    return $LocalPatientsTable(attachedDatabase, alias);
   }
 }
 
-class Patient extends DataClass implements Insertable<Patient> {
+class LocalPatient extends DataClass implements Insertable<LocalPatient> {
   final int id;
   final String names;
   final String lastNames;
@@ -758,7 +761,7 @@ class Patient extends DataClass implements Insertable<Patient> {
   final DateTime creationDate;
   final bool isActive;
   final int professionalID;
-  const Patient(
+  const LocalPatient(
       {required this.id,
       required this.names,
       required this.lastNames,
@@ -801,8 +804,8 @@ class Patient extends DataClass implements Insertable<Patient> {
     return map;
   }
 
-  PatientsCompanion toCompanion(bool nullToAbsent) {
-    return PatientsCompanion(
+  LocalPatientsCompanion toCompanion(bool nullToAbsent) {
+    return LocalPatientsCompanion(
       id: Value(id),
       names: Value(names),
       lastNames: Value(lastNames),
@@ -824,10 +827,10 @@ class Patient extends DataClass implements Insertable<Patient> {
     );
   }
 
-  factory Patient.fromJson(Map<String, dynamic> json,
+  factory LocalPatient.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Patient(
+    return LocalPatient(
       id: serializer.fromJson<int>(json['id']),
       names: serializer.fromJson<String>(json['names']),
       lastNames: serializer.fromJson<String>(json['lastNames']),
@@ -875,7 +878,7 @@ class Patient extends DataClass implements Insertable<Patient> {
     };
   }
 
-  Patient copyWith(
+  LocalPatient copyWith(
           {int? id,
           String? names,
           String? lastNames,
@@ -894,7 +897,7 @@ class Patient extends DataClass implements Insertable<Patient> {
           DateTime? creationDate,
           bool? isActive,
           int? professionalID}) =>
-      Patient(
+      LocalPatient(
         id: id ?? this.id,
         names: names ?? this.names,
         lastNames: lastNames ?? this.lastNames,
@@ -917,7 +920,7 @@ class Patient extends DataClass implements Insertable<Patient> {
       );
   @override
   String toString() {
-    return (StringBuffer('Patient(')
+    return (StringBuffer('LocalPatient(')
           ..write('id: $id, ')
           ..write('names: $names, ')
           ..write('lastNames: $lastNames, ')
@@ -963,7 +966,7 @@ class Patient extends DataClass implements Insertable<Patient> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Patient &&
+      (other is LocalPatient &&
           other.id == this.id &&
           other.names == this.names &&
           other.lastNames == this.lastNames &&
@@ -984,7 +987,7 @@ class Patient extends DataClass implements Insertable<Patient> {
           other.professionalID == this.professionalID);
 }
 
-class PatientsCompanion extends UpdateCompanion<Patient> {
+class LocalPatientsCompanion extends UpdateCompanion<LocalPatient> {
   final Value<int> id;
   final Value<String> names;
   final Value<String> lastNames;
@@ -1003,7 +1006,7 @@ class PatientsCompanion extends UpdateCompanion<Patient> {
   final Value<DateTime> creationDate;
   final Value<bool> isActive;
   final Value<int> professionalID;
-  const PatientsCompanion({
+  const LocalPatientsCompanion({
     this.id = const Value.absent(),
     this.names = const Value.absent(),
     this.lastNames = const Value.absent(),
@@ -1023,7 +1026,7 @@ class PatientsCompanion extends UpdateCompanion<Patient> {
     this.isActive = const Value.absent(),
     this.professionalID = const Value.absent(),
   });
-  PatientsCompanion.insert({
+  LocalPatientsCompanion.insert({
     this.id = const Value.absent(),
     required String names,
     required String lastNames,
@@ -1059,7 +1062,7 @@ class PatientsCompanion extends UpdateCompanion<Patient> {
         creationDate = Value(creationDate),
         isActive = Value(isActive),
         professionalID = Value(professionalID);
-  static Insertable<Patient> custom({
+  static Insertable<LocalPatient> custom({
     Expression<int>? id,
     Expression<String>? names,
     Expression<String>? lastNames,
@@ -1103,7 +1106,7 @@ class PatientsCompanion extends UpdateCompanion<Patient> {
     });
   }
 
-  PatientsCompanion copyWith(
+  LocalPatientsCompanion copyWith(
       {Value<int>? id,
       Value<String>? names,
       Value<String>? lastNames,
@@ -1122,7 +1125,7 @@ class PatientsCompanion extends UpdateCompanion<Patient> {
       Value<DateTime>? creationDate,
       Value<bool>? isActive,
       Value<int>? professionalID}) {
-    return PatientsCompanion(
+    return LocalPatientsCompanion(
       id: id ?? this.id,
       names: names ?? this.names,
       lastNames: lastNames ?? this.lastNames,
@@ -1209,7 +1212,7 @@ class PatientsCompanion extends UpdateCompanion<Patient> {
 
   @override
   String toString() {
-    return (StringBuffer('PatientsCompanion(')
+    return (StringBuffer('LocalPatientsCompanion(')
           ..write('id: $id, ')
           ..write('names: $names, ')
           ..write('lastNames: $lastNames, ')
@@ -1233,12 +1236,12 @@ class PatientsCompanion extends UpdateCompanion<Patient> {
   }
 }
 
-class $ClinicHistoryTable extends ClinicHistory
-    with TableInfo<$ClinicHistoryTable, ClinicHistoryData> {
+class $LocalClinicHistoryTable extends LocalClinicHistory
+    with TableInfo<$LocalClinicHistoryTable, LocalClinicHistoryData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $ClinicHistoryTable(this.attachedDatabase, [this._alias]);
+  $LocalClinicHistoryTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -1316,7 +1319,7 @@ class $ClinicHistoryTable extends ClinicHistory
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES patients (id_number)'));
+          'REFERENCES local_patients (id_number)'));
   static const VerificationMeta _professionalIDMeta =
       const VerificationMeta('professionalID');
   @override
@@ -1325,7 +1328,7 @@ class $ClinicHistoryTable extends ClinicHistory
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES professional (professional_i_d)'));
+          'REFERENCES local_professional (professional_i_d)'));
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -1343,11 +1346,12 @@ class $ClinicHistoryTable extends ClinicHistory
         professionalID
       ];
   @override
-  String get aliasedName => _alias ?? 'clinic_history';
+  String get aliasedName => _alias ?? 'local_clinic_history';
   @override
-  String get actualTableName => 'clinic_history';
+  String get actualTableName => 'local_clinic_history';
   @override
-  VerificationContext validateIntegrity(Insertable<ClinicHistoryData> instance,
+  VerificationContext validateIntegrity(
+      Insertable<LocalClinicHistoryData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -1452,9 +1456,9 @@ class $ClinicHistoryTable extends ClinicHistory
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  ClinicHistoryData map(Map<String, dynamic> data, {String? tablePrefix}) {
+  LocalClinicHistoryData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ClinicHistoryData(
+    return LocalClinicHistoryData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       registerNumber: attachedDatabase.typeMapping.read(
@@ -1485,13 +1489,13 @@ class $ClinicHistoryTable extends ClinicHistory
   }
 
   @override
-  $ClinicHistoryTable createAlias(String alias) {
-    return $ClinicHistoryTable(attachedDatabase, alias);
+  $LocalClinicHistoryTable createAlias(String alias) {
+    return $LocalClinicHistoryTable(attachedDatabase, alias);
   }
 }
 
-class ClinicHistoryData extends DataClass
-    implements Insertable<ClinicHistoryData> {
+class LocalClinicHistoryData extends DataClass
+    implements Insertable<LocalClinicHistoryData> {
   final int id;
   final String registerNumber;
   final DateTime currentDate;
@@ -1505,7 +1509,7 @@ class ClinicHistoryData extends DataClass
   final String diagnostic;
   final int idNumber;
   final int professionalID;
-  const ClinicHistoryData(
+  const LocalClinicHistoryData(
       {required this.id,
       required this.registerNumber,
       required this.currentDate,
@@ -1538,8 +1542,8 @@ class ClinicHistoryData extends DataClass
     return map;
   }
 
-  ClinicHistoryCompanion toCompanion(bool nullToAbsent) {
-    return ClinicHistoryCompanion(
+  LocalClinicHistoryCompanion toCompanion(bool nullToAbsent) {
+    return LocalClinicHistoryCompanion(
       id: Value(id),
       registerNumber: Value(registerNumber),
       currentDate: Value(currentDate),
@@ -1556,10 +1560,10 @@ class ClinicHistoryData extends DataClass
     );
   }
 
-  factory ClinicHistoryData.fromJson(Map<String, dynamic> json,
+  factory LocalClinicHistoryData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ClinicHistoryData(
+    return LocalClinicHistoryData(
       id: serializer.fromJson<int>(json['id']),
       registerNumber: serializer.fromJson<String>(json['registerNumber']),
       currentDate: serializer.fromJson<DateTime>(json['currentDate']),
@@ -1596,7 +1600,7 @@ class ClinicHistoryData extends DataClass
     };
   }
 
-  ClinicHistoryData copyWith(
+  LocalClinicHistoryData copyWith(
           {int? id,
           String? registerNumber,
           DateTime? currentDate,
@@ -1610,7 +1614,7 @@ class ClinicHistoryData extends DataClass
           String? diagnostic,
           int? idNumber,
           int? professionalID}) =>
-      ClinicHistoryData(
+      LocalClinicHistoryData(
         id: id ?? this.id,
         registerNumber: registerNumber ?? this.registerNumber,
         currentDate: currentDate ?? this.currentDate,
@@ -1627,7 +1631,7 @@ class ClinicHistoryData extends DataClass
       );
   @override
   String toString() {
-    return (StringBuffer('ClinicHistoryData(')
+    return (StringBuffer('LocalClinicHistoryData(')
           ..write('id: $id, ')
           ..write('registerNumber: $registerNumber, ')
           ..write('currentDate: $currentDate, ')
@@ -1663,7 +1667,7 @@ class ClinicHistoryData extends DataClass
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is ClinicHistoryData &&
+      (other is LocalClinicHistoryData &&
           other.id == this.id &&
           other.registerNumber == this.registerNumber &&
           other.currentDate == this.currentDate &&
@@ -1679,7 +1683,8 @@ class ClinicHistoryData extends DataClass
           other.professionalID == this.professionalID);
 }
 
-class ClinicHistoryCompanion extends UpdateCompanion<ClinicHistoryData> {
+class LocalClinicHistoryCompanion
+    extends UpdateCompanion<LocalClinicHistoryData> {
   final Value<int> id;
   final Value<String> registerNumber;
   final Value<DateTime> currentDate;
@@ -1693,7 +1698,7 @@ class ClinicHistoryCompanion extends UpdateCompanion<ClinicHistoryData> {
   final Value<String> diagnostic;
   final Value<int> idNumber;
   final Value<int> professionalID;
-  const ClinicHistoryCompanion({
+  const LocalClinicHistoryCompanion({
     this.id = const Value.absent(),
     this.registerNumber = const Value.absent(),
     this.currentDate = const Value.absent(),
@@ -1708,7 +1713,7 @@ class ClinicHistoryCompanion extends UpdateCompanion<ClinicHistoryData> {
     this.idNumber = const Value.absent(),
     this.professionalID = const Value.absent(),
   });
-  ClinicHistoryCompanion.insert({
+  LocalClinicHistoryCompanion.insert({
     this.id = const Value.absent(),
     required String registerNumber,
     required DateTime currentDate,
@@ -1734,7 +1739,7 @@ class ClinicHistoryCompanion extends UpdateCompanion<ClinicHistoryData> {
         diagnostic = Value(diagnostic),
         idNumber = Value(idNumber),
         professionalID = Value(professionalID);
-  static Insertable<ClinicHistoryData> custom({
+  static Insertable<LocalClinicHistoryData> custom({
     Expression<int>? id,
     Expression<String>? registerNumber,
     Expression<DateTime>? currentDate,
@@ -1766,7 +1771,7 @@ class ClinicHistoryCompanion extends UpdateCompanion<ClinicHistoryData> {
     });
   }
 
-  ClinicHistoryCompanion copyWith(
+  LocalClinicHistoryCompanion copyWith(
       {Value<int>? id,
       Value<String>? registerNumber,
       Value<DateTime>? currentDate,
@@ -1780,7 +1785,7 @@ class ClinicHistoryCompanion extends UpdateCompanion<ClinicHistoryData> {
       Value<String>? diagnostic,
       Value<int>? idNumber,
       Value<int>? professionalID}) {
-    return ClinicHistoryCompanion(
+    return LocalClinicHistoryCompanion(
       id: id ?? this.id,
       registerNumber: registerNumber ?? this.registerNumber,
       currentDate: currentDate ?? this.currentDate,
@@ -1844,7 +1849,7 @@ class ClinicHistoryCompanion extends UpdateCompanion<ClinicHistoryData> {
 
   @override
   String toString() {
-    return (StringBuffer('ClinicHistoryCompanion(')
+    return (StringBuffer('LocalClinicHistoryCompanion(')
           ..write('id: $id, ')
           ..write('registerNumber: $registerNumber, ')
           ..write('currentDate: $currentDate, ')
@@ -1863,11 +1868,12 @@ class ClinicHistoryCompanion extends UpdateCompanion<ClinicHistoryData> {
   }
 }
 
-class $SessionsTable extends Sessions with TableInfo<$SessionsTable, Session> {
+class $LocalSessionsTable extends LocalSessions
+    with TableInfo<$LocalSessionsTable, LocalSession> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $SessionsTable(this.attachedDatabase, [this._alias]);
+  $LocalSessionsTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _sessionIdMeta =
       const VerificationMeta('sessionId');
   @override
@@ -1929,7 +1935,7 @@ class $SessionsTable extends Sessions with TableInfo<$SessionsTable, Session> {
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES patients (id_number)'));
+          'REFERENCES local_patients (id_number)'));
   static const VerificationMeta _professionalIDMeta =
       const VerificationMeta('professionalID');
   @override
@@ -1938,7 +1944,7 @@ class $SessionsTable extends Sessions with TableInfo<$SessionsTable, Session> {
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES professional (professional_i_d)'));
+          'REFERENCES local_professional (professional_i_d)'));
   @override
   List<GeneratedColumn> get $columns => [
         sessionId,
@@ -1953,11 +1959,11 @@ class $SessionsTable extends Sessions with TableInfo<$SessionsTable, Session> {
         professionalID
       ];
   @override
-  String get aliasedName => _alias ?? 'sessions';
+  String get aliasedName => _alias ?? 'local_sessions';
   @override
-  String get actualTableName => 'sessions';
+  String get actualTableName => 'local_sessions';
   @override
-  VerificationContext validateIntegrity(Insertable<Session> instance,
+  VerificationContext validateIntegrity(Insertable<LocalSession> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -2039,9 +2045,9 @@ class $SessionsTable extends Sessions with TableInfo<$SessionsTable, Session> {
   @override
   Set<GeneratedColumn> get $primaryKey => {sessionId};
   @override
-  Session map(Map<String, dynamic> data, {String? tablePrefix}) {
+  LocalSession map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Session(
+    return LocalSession(
       sessionId: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}session_id'])!,
       sessionDate: attachedDatabase.typeMapping
@@ -2068,12 +2074,12 @@ class $SessionsTable extends Sessions with TableInfo<$SessionsTable, Session> {
   }
 
   @override
-  $SessionsTable createAlias(String alias) {
-    return $SessionsTable(attachedDatabase, alias);
+  $LocalSessionsTable createAlias(String alias) {
+    return $LocalSessionsTable(attachedDatabase, alias);
   }
 }
 
-class Session extends DataClass implements Insertable<Session> {
+class LocalSession extends DataClass implements Insertable<LocalSession> {
   final int sessionId;
   final DateTime sessionDate;
   final String sessionSummary;
@@ -2084,7 +2090,7 @@ class Session extends DataClass implements Insertable<Session> {
   final String? sessionPerformanceExplanation;
   final int idNumber;
   final int professionalID;
-  const Session(
+  const LocalSession(
       {required this.sessionId,
       required this.sessionDate,
       required this.sessionSummary,
@@ -2117,8 +2123,8 @@ class Session extends DataClass implements Insertable<Session> {
     return map;
   }
 
-  SessionsCompanion toCompanion(bool nullToAbsent) {
-    return SessionsCompanion(
+  LocalSessionsCompanion toCompanion(bool nullToAbsent) {
+    return LocalSessionsCompanion(
       sessionId: Value(sessionId),
       sessionDate: Value(sessionDate),
       sessionSummary: Value(sessionSummary),
@@ -2137,10 +2143,10 @@ class Session extends DataClass implements Insertable<Session> {
     );
   }
 
-  factory Session.fromJson(Map<String, dynamic> json,
+  factory LocalSession.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Session(
+    return LocalSession(
       sessionId: serializer.fromJson<int>(json['sessionId']),
       sessionDate: serializer.fromJson<DateTime>(json['sessionDate']),
       sessionSummary: serializer.fromJson<String>(json['sessionSummary']),
@@ -2175,7 +2181,7 @@ class Session extends DataClass implements Insertable<Session> {
     };
   }
 
-  Session copyWith(
+  LocalSession copyWith(
           {int? sessionId,
           DateTime? sessionDate,
           String? sessionSummary,
@@ -2186,7 +2192,7 @@ class Session extends DataClass implements Insertable<Session> {
           Value<String?> sessionPerformanceExplanation = const Value.absent(),
           int? idNumber,
           int? professionalID}) =>
-      Session(
+      LocalSession(
         sessionId: sessionId ?? this.sessionId,
         sessionDate: sessionDate ?? this.sessionDate,
         sessionSummary: sessionSummary ?? this.sessionSummary,
@@ -2204,7 +2210,7 @@ class Session extends DataClass implements Insertable<Session> {
       );
   @override
   String toString() {
-    return (StringBuffer('Session(')
+    return (StringBuffer('LocalSession(')
           ..write('sessionId: $sessionId, ')
           ..write('sessionDate: $sessionDate, ')
           ..write('sessionSummary: $sessionSummary, ')
@@ -2235,7 +2241,7 @@ class Session extends DataClass implements Insertable<Session> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Session &&
+      (other is LocalSession &&
           other.sessionId == this.sessionId &&
           other.sessionDate == this.sessionDate &&
           other.sessionSummary == this.sessionSummary &&
@@ -2249,7 +2255,7 @@ class Session extends DataClass implements Insertable<Session> {
           other.professionalID == this.professionalID);
 }
 
-class SessionsCompanion extends UpdateCompanion<Session> {
+class LocalSessionsCompanion extends UpdateCompanion<LocalSession> {
   final Value<int> sessionId;
   final Value<DateTime> sessionDate;
   final Value<String> sessionSummary;
@@ -2260,7 +2266,7 @@ class SessionsCompanion extends UpdateCompanion<Session> {
   final Value<String?> sessionPerformanceExplanation;
   final Value<int> idNumber;
   final Value<int> professionalID;
-  const SessionsCompanion({
+  const LocalSessionsCompanion({
     this.sessionId = const Value.absent(),
     this.sessionDate = const Value.absent(),
     this.sessionSummary = const Value.absent(),
@@ -2272,7 +2278,7 @@ class SessionsCompanion extends UpdateCompanion<Session> {
     this.idNumber = const Value.absent(),
     this.professionalID = const Value.absent(),
   });
-  SessionsCompanion.insert({
+  LocalSessionsCompanion.insert({
     this.sessionId = const Value.absent(),
     required DateTime sessionDate,
     required String sessionSummary,
@@ -2290,7 +2296,7 @@ class SessionsCompanion extends UpdateCompanion<Session> {
         sessionPerformance = Value(sessionPerformance),
         idNumber = Value(idNumber),
         professionalID = Value(professionalID);
-  static Insertable<Session> custom({
+  static Insertable<LocalSession> custom({
     Expression<int>? sessionId,
     Expression<DateTime>? sessionDate,
     Expression<String>? sessionSummary,
@@ -2318,7 +2324,7 @@ class SessionsCompanion extends UpdateCompanion<Session> {
     });
   }
 
-  SessionsCompanion copyWith(
+  LocalSessionsCompanion copyWith(
       {Value<int>? sessionId,
       Value<DateTime>? sessionDate,
       Value<String>? sessionSummary,
@@ -2329,7 +2335,7 @@ class SessionsCompanion extends UpdateCompanion<Session> {
       Value<String?>? sessionPerformanceExplanation,
       Value<int>? idNumber,
       Value<int>? professionalID}) {
-    return SessionsCompanion(
+    return LocalSessionsCompanion(
       sessionId: sessionId ?? this.sessionId,
       sessionDate: sessionDate ?? this.sessionDate,
       sessionSummary: sessionSummary ?? this.sessionSummary,
@@ -2385,7 +2391,7 @@ class SessionsCompanion extends UpdateCompanion<Session> {
 
   @override
   String toString() {
-    return (StringBuffer('SessionsCompanion(')
+    return (StringBuffer('LocalSessionsCompanion(')
           ..write('sessionId: $sessionId, ')
           ..write('sessionDate: $sessionDate, ')
           ..write('sessionSummary: $sessionSummary, ')
@@ -2402,11 +2408,12 @@ class SessionsCompanion extends UpdateCompanion<Session> {
   }
 }
 
-class $TestsTable extends Tests with TableInfo<$TestsTable, Test> {
+class $LocalTestsTable extends LocalTests
+    with TableInfo<$LocalTestsTable, LocalTest> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $TestsTable(this.attachedDatabase, [this._alias]);
+  $LocalTestsTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -2430,7 +2437,7 @@ class $TestsTable extends Tests with TableInfo<$TestsTable, Test> {
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES patients (id_number)'));
+          'REFERENCES local_patients (id_number)'));
   static const VerificationMeta _professionalIDMeta =
       const VerificationMeta('professionalID');
   @override
@@ -2439,7 +2446,7 @@ class $TestsTable extends Tests with TableInfo<$TestsTable, Test> {
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES professional (professional_i_d)'));
+          'REFERENCES local_professional (professional_i_d)'));
   static const VerificationMeta _sessionIDMeta =
       const VerificationMeta('sessionID');
   @override
@@ -2448,7 +2455,7 @@ class $TestsTable extends Tests with TableInfo<$TestsTable, Test> {
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES sessions (session_id)'));
+          'REFERENCES local_sessions (session_id)'));
   static const VerificationMeta _testReasonMeta =
       const VerificationMeta('testReason');
   @override
@@ -2479,11 +2486,11 @@ class $TestsTable extends Tests with TableInfo<$TestsTable, Test> {
         testData
       ];
   @override
-  String get aliasedName => _alias ?? 'tests';
+  String get aliasedName => _alias ?? 'local_tests';
   @override
-  String get actualTableName => 'tests';
+  String get actualTableName => 'local_tests';
   @override
-  VerificationContext validateIntegrity(Insertable<Test> instance,
+  VerificationContext validateIntegrity(Insertable<LocalTest> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -2546,9 +2553,9 @@ class $TestsTable extends Tests with TableInfo<$TestsTable, Test> {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Test map(Map<String, dynamic> data, {String? tablePrefix}) {
+  LocalTest map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Test(
+    return LocalTest(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       testDate: attachedDatabase.typeMapping
@@ -2569,12 +2576,12 @@ class $TestsTable extends Tests with TableInfo<$TestsTable, Test> {
   }
 
   @override
-  $TestsTable createAlias(String alias) {
-    return $TestsTable(attachedDatabase, alias);
+  $LocalTestsTable createAlias(String alias) {
+    return $LocalTestsTable(attachedDatabase, alias);
   }
 }
 
-class Test extends DataClass implements Insertable<Test> {
+class LocalTest extends DataClass implements Insertable<LocalTest> {
   final int id;
   final DateTime testDate;
   final int patientID;
@@ -2583,7 +2590,7 @@ class Test extends DataClass implements Insertable<Test> {
   final String testReason;
   final String category;
   final String testData;
-  const Test(
+  const LocalTest(
       {required this.id,
       required this.testDate,
       required this.patientID,
@@ -2606,8 +2613,8 @@ class Test extends DataClass implements Insertable<Test> {
     return map;
   }
 
-  TestsCompanion toCompanion(bool nullToAbsent) {
-    return TestsCompanion(
+  LocalTestsCompanion toCompanion(bool nullToAbsent) {
+    return LocalTestsCompanion(
       id: Value(id),
       testDate: Value(testDate),
       patientID: Value(patientID),
@@ -2619,10 +2626,10 @@ class Test extends DataClass implements Insertable<Test> {
     );
   }
 
-  factory Test.fromJson(Map<String, dynamic> json,
+  factory LocalTest.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Test(
+    return LocalTest(
       id: serializer.fromJson<int>(json['id']),
       testDate: serializer.fromJson<DateTime>(json['testDate']),
       patientID: serializer.fromJson<int>(json['patientID']),
@@ -2648,7 +2655,7 @@ class Test extends DataClass implements Insertable<Test> {
     };
   }
 
-  Test copyWith(
+  LocalTest copyWith(
           {int? id,
           DateTime? testDate,
           int? patientID,
@@ -2657,7 +2664,7 @@ class Test extends DataClass implements Insertable<Test> {
           String? testReason,
           String? category,
           String? testData}) =>
-      Test(
+      LocalTest(
         id: id ?? this.id,
         testDate: testDate ?? this.testDate,
         patientID: patientID ?? this.patientID,
@@ -2669,7 +2676,7 @@ class Test extends DataClass implements Insertable<Test> {
       );
   @override
   String toString() {
-    return (StringBuffer('Test(')
+    return (StringBuffer('LocalTest(')
           ..write('id: $id, ')
           ..write('testDate: $testDate, ')
           ..write('patientID: $patientID, ')
@@ -2688,7 +2695,7 @@ class Test extends DataClass implements Insertable<Test> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Test &&
+      (other is LocalTest &&
           other.id == this.id &&
           other.testDate == this.testDate &&
           other.patientID == this.patientID &&
@@ -2699,7 +2706,7 @@ class Test extends DataClass implements Insertable<Test> {
           other.testData == this.testData);
 }
 
-class TestsCompanion extends UpdateCompanion<Test> {
+class LocalTestsCompanion extends UpdateCompanion<LocalTest> {
   final Value<int> id;
   final Value<DateTime> testDate;
   final Value<int> patientID;
@@ -2708,7 +2715,7 @@ class TestsCompanion extends UpdateCompanion<Test> {
   final Value<String> testReason;
   final Value<String> category;
   final Value<String> testData;
-  const TestsCompanion({
+  const LocalTestsCompanion({
     this.id = const Value.absent(),
     this.testDate = const Value.absent(),
     this.patientID = const Value.absent(),
@@ -2718,7 +2725,7 @@ class TestsCompanion extends UpdateCompanion<Test> {
     this.category = const Value.absent(),
     this.testData = const Value.absent(),
   });
-  TestsCompanion.insert({
+  LocalTestsCompanion.insert({
     this.id = const Value.absent(),
     required DateTime testDate,
     required int patientID,
@@ -2734,7 +2741,7 @@ class TestsCompanion extends UpdateCompanion<Test> {
         testReason = Value(testReason),
         category = Value(category),
         testData = Value(testData);
-  static Insertable<Test> custom({
+  static Insertable<LocalTest> custom({
     Expression<int>? id,
     Expression<DateTime>? testDate,
     Expression<int>? patientID,
@@ -2756,7 +2763,7 @@ class TestsCompanion extends UpdateCompanion<Test> {
     });
   }
 
-  TestsCompanion copyWith(
+  LocalTestsCompanion copyWith(
       {Value<int>? id,
       Value<DateTime>? testDate,
       Value<int>? patientID,
@@ -2765,7 +2772,7 @@ class TestsCompanion extends UpdateCompanion<Test> {
       Value<String>? testReason,
       Value<String>? category,
       Value<String>? testData}) {
-    return TestsCompanion(
+    return LocalTestsCompanion(
       id: id ?? this.id,
       testDate: testDate ?? this.testDate,
       patientID: patientID ?? this.patientID,
@@ -2809,7 +2816,7 @@ class TestsCompanion extends UpdateCompanion<Test> {
 
   @override
   String toString() {
-    return (StringBuffer('TestsCompanion(')
+    return (StringBuffer('LocalTestsCompanion(')
           ..write('id: $id, ')
           ..write('testDate: $testDate, ')
           ..write('patientID: $patientID, ')
@@ -2823,11 +2830,12 @@ class TestsCompanion extends UpdateCompanion<Test> {
   }
 }
 
-class $TodosTable extends Todos with TableInfo<$TodosTable, Todo> {
+class $LocalTodosTable extends LocalTodos
+    with TableInfo<$LocalTodosTable, LocalTodo> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $TodosTable(this.attachedDatabase, [this._alias]);
+  $LocalTodosTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -2882,11 +2890,11 @@ class $TodosTable extends Todos with TableInfo<$TodosTable, Todo> {
   List<GeneratedColumn> get $columns =>
       [id, creationDate, todo, description, category, itemColor, isComplete];
   @override
-  String get aliasedName => _alias ?? 'todos';
+  String get aliasedName => _alias ?? 'local_todos';
   @override
-  String get actualTableName => 'todos';
+  String get actualTableName => 'local_todos';
   @override
-  VerificationContext validateIntegrity(Insertable<Todo> instance,
+  VerificationContext validateIntegrity(Insertable<LocalTodo> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -2937,9 +2945,9 @@ class $TodosTable extends Todos with TableInfo<$TodosTable, Todo> {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Todo map(Map<String, dynamic> data, {String? tablePrefix}) {
+  LocalTodo map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Todo(
+    return LocalTodo(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       creationDate: attachedDatabase.typeMapping.read(
@@ -2958,12 +2966,12 @@ class $TodosTable extends Todos with TableInfo<$TodosTable, Todo> {
   }
 
   @override
-  $TodosTable createAlias(String alias) {
-    return $TodosTable(attachedDatabase, alias);
+  $LocalTodosTable createAlias(String alias) {
+    return $LocalTodosTable(attachedDatabase, alias);
   }
 }
 
-class Todo extends DataClass implements Insertable<Todo> {
+class LocalTodo extends DataClass implements Insertable<LocalTodo> {
   final int id;
   final DateTime creationDate;
   final String todo;
@@ -2971,7 +2979,7 @@ class Todo extends DataClass implements Insertable<Todo> {
   final String? category;
   final int itemColor;
   final bool isComplete;
-  const Todo(
+  const LocalTodo(
       {required this.id,
       required this.creationDate,
       required this.todo,
@@ -2996,8 +3004,8 @@ class Todo extends DataClass implements Insertable<Todo> {
     return map;
   }
 
-  TodosCompanion toCompanion(bool nullToAbsent) {
-    return TodosCompanion(
+  LocalTodosCompanion toCompanion(bool nullToAbsent) {
+    return LocalTodosCompanion(
       id: Value(id),
       creationDate: Value(creationDate),
       todo: Value(todo),
@@ -3012,10 +3020,10 @@ class Todo extends DataClass implements Insertable<Todo> {
     );
   }
 
-  factory Todo.fromJson(Map<String, dynamic> json,
+  factory LocalTodo.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Todo(
+    return LocalTodo(
       id: serializer.fromJson<int>(json['id']),
       creationDate: serializer.fromJson<DateTime>(json['creationDate']),
       todo: serializer.fromJson<String>(json['todo']),
@@ -3039,7 +3047,7 @@ class Todo extends DataClass implements Insertable<Todo> {
     };
   }
 
-  Todo copyWith(
+  LocalTodo copyWith(
           {int? id,
           DateTime? creationDate,
           String? todo,
@@ -3047,7 +3055,7 @@ class Todo extends DataClass implements Insertable<Todo> {
           Value<String?> category = const Value.absent(),
           int? itemColor,
           bool? isComplete}) =>
-      Todo(
+      LocalTodo(
         id: id ?? this.id,
         creationDate: creationDate ?? this.creationDate,
         todo: todo ?? this.todo,
@@ -3058,7 +3066,7 @@ class Todo extends DataClass implements Insertable<Todo> {
       );
   @override
   String toString() {
-    return (StringBuffer('Todo(')
+    return (StringBuffer('LocalTodo(')
           ..write('id: $id, ')
           ..write('creationDate: $creationDate, ')
           ..write('todo: $todo, ')
@@ -3076,7 +3084,7 @@ class Todo extends DataClass implements Insertable<Todo> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Todo &&
+      (other is LocalTodo &&
           other.id == this.id &&
           other.creationDate == this.creationDate &&
           other.todo == this.todo &&
@@ -3086,7 +3094,7 @@ class Todo extends DataClass implements Insertable<Todo> {
           other.isComplete == this.isComplete);
 }
 
-class TodosCompanion extends UpdateCompanion<Todo> {
+class LocalTodosCompanion extends UpdateCompanion<LocalTodo> {
   final Value<int> id;
   final Value<DateTime> creationDate;
   final Value<String> todo;
@@ -3094,7 +3102,7 @@ class TodosCompanion extends UpdateCompanion<Todo> {
   final Value<String?> category;
   final Value<int> itemColor;
   final Value<bool> isComplete;
-  const TodosCompanion({
+  const LocalTodosCompanion({
     this.id = const Value.absent(),
     this.creationDate = const Value.absent(),
     this.todo = const Value.absent(),
@@ -3103,7 +3111,7 @@ class TodosCompanion extends UpdateCompanion<Todo> {
     this.itemColor = const Value.absent(),
     this.isComplete = const Value.absent(),
   });
-  TodosCompanion.insert({
+  LocalTodosCompanion.insert({
     this.id = const Value.absent(),
     required DateTime creationDate,
     required String todo,
@@ -3115,7 +3123,7 @@ class TodosCompanion extends UpdateCompanion<Todo> {
         todo = Value(todo),
         itemColor = Value(itemColor),
         isComplete = Value(isComplete);
-  static Insertable<Todo> custom({
+  static Insertable<LocalTodo> custom({
     Expression<int>? id,
     Expression<DateTime>? creationDate,
     Expression<String>? todo,
@@ -3135,7 +3143,7 @@ class TodosCompanion extends UpdateCompanion<Todo> {
     });
   }
 
-  TodosCompanion copyWith(
+  LocalTodosCompanion copyWith(
       {Value<int>? id,
       Value<DateTime>? creationDate,
       Value<String>? todo,
@@ -3143,7 +3151,7 @@ class TodosCompanion extends UpdateCompanion<Todo> {
       Value<String?>? category,
       Value<int>? itemColor,
       Value<bool>? isComplete}) {
-    return TodosCompanion(
+    return LocalTodosCompanion(
       id: id ?? this.id,
       creationDate: creationDate ?? this.creationDate,
       todo: todo ?? this.todo,
@@ -3183,7 +3191,7 @@ class TodosCompanion extends UpdateCompanion<Todo> {
 
   @override
   String toString() {
-    return (StringBuffer('TodosCompanion(')
+    return (StringBuffer('LocalTodosCompanion(')
           ..write('id: $id, ')
           ..write('creationDate: $creationDate, ')
           ..write('todo: $todo, ')
@@ -3196,12 +3204,12 @@ class TodosCompanion extends UpdateCompanion<Todo> {
   }
 }
 
-class $AppointmentsTable extends Appointments
-    with TableInfo<$AppointmentsTable, Appointment> {
+class $LocalAppointmentsTable extends LocalAppointments
+    with TableInfo<$LocalAppointmentsTable, LocalAppointment> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $AppointmentsTable(this.attachedDatabase, [this._alias]);
+  $LocalAppointmentsTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -3224,7 +3232,7 @@ class $AppointmentsTable extends Appointments
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES professional (professional_i_d)'));
+          'REFERENCES local_professional (professional_i_d)'));
   static const VerificationMeta _patientIDMeta =
       const VerificationMeta('patientID');
   @override
@@ -3233,7 +3241,7 @@ class $AppointmentsTable extends Appointments
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES patients (id_number)'));
+          'REFERENCES local_patients (id_number)'));
   static const VerificationMeta _descriptionMeta =
       const VerificationMeta('description');
   @override
@@ -3255,11 +3263,11 @@ class $AppointmentsTable extends Appointments
   List<GeneratedColumn> get $columns =>
       [id, date, professionalID, patientID, description, status, sessionType];
   @override
-  String get aliasedName => _alias ?? 'appointments';
+  String get aliasedName => _alias ?? 'local_appointments';
   @override
-  String get actualTableName => 'appointments';
+  String get actualTableName => 'local_appointments';
   @override
-  VerificationContext validateIntegrity(Insertable<Appointment> instance,
+  VerificationContext validateIntegrity(Insertable<LocalAppointment> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -3314,9 +3322,9 @@ class $AppointmentsTable extends Appointments
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Appointment map(Map<String, dynamic> data, {String? tablePrefix}) {
+  LocalAppointment map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Appointment(
+    return LocalAppointment(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       date: attachedDatabase.typeMapping
@@ -3335,12 +3343,13 @@ class $AppointmentsTable extends Appointments
   }
 
   @override
-  $AppointmentsTable createAlias(String alias) {
-    return $AppointmentsTable(attachedDatabase, alias);
+  $LocalAppointmentsTable createAlias(String alias) {
+    return $LocalAppointmentsTable(attachedDatabase, alias);
   }
 }
 
-class Appointment extends DataClass implements Insertable<Appointment> {
+class LocalAppointment extends DataClass
+    implements Insertable<LocalAppointment> {
   final int id;
   final DateTime date;
   final int professionalID;
@@ -3348,7 +3357,7 @@ class Appointment extends DataClass implements Insertable<Appointment> {
   final String? description;
   final String status;
   final String sessionType;
-  const Appointment(
+  const LocalAppointment(
       {required this.id,
       required this.date,
       required this.professionalID,
@@ -3371,8 +3380,8 @@ class Appointment extends DataClass implements Insertable<Appointment> {
     return map;
   }
 
-  AppointmentsCompanion toCompanion(bool nullToAbsent) {
-    return AppointmentsCompanion(
+  LocalAppointmentsCompanion toCompanion(bool nullToAbsent) {
+    return LocalAppointmentsCompanion(
       id: Value(id),
       date: Value(date),
       professionalID: Value(professionalID),
@@ -3385,10 +3394,10 @@ class Appointment extends DataClass implements Insertable<Appointment> {
     );
   }
 
-  factory Appointment.fromJson(Map<String, dynamic> json,
+  factory LocalAppointment.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Appointment(
+    return LocalAppointment(
       id: serializer.fromJson<int>(json['id']),
       date: serializer.fromJson<DateTime>(json['date']),
       professionalID: serializer.fromJson<int>(json['professionalID']),
@@ -3412,7 +3421,7 @@ class Appointment extends DataClass implements Insertable<Appointment> {
     };
   }
 
-  Appointment copyWith(
+  LocalAppointment copyWith(
           {int? id,
           DateTime? date,
           int? professionalID,
@@ -3420,7 +3429,7 @@ class Appointment extends DataClass implements Insertable<Appointment> {
           Value<String?> description = const Value.absent(),
           String? status,
           String? sessionType}) =>
-      Appointment(
+      LocalAppointment(
         id: id ?? this.id,
         date: date ?? this.date,
         professionalID: professionalID ?? this.professionalID,
@@ -3431,7 +3440,7 @@ class Appointment extends DataClass implements Insertable<Appointment> {
       );
   @override
   String toString() {
-    return (StringBuffer('Appointment(')
+    return (StringBuffer('LocalAppointment(')
           ..write('id: $id, ')
           ..write('date: $date, ')
           ..write('professionalID: $professionalID, ')
@@ -3449,7 +3458,7 @@ class Appointment extends DataClass implements Insertable<Appointment> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Appointment &&
+      (other is LocalAppointment &&
           other.id == this.id &&
           other.date == this.date &&
           other.professionalID == this.professionalID &&
@@ -3459,7 +3468,7 @@ class Appointment extends DataClass implements Insertable<Appointment> {
           other.sessionType == this.sessionType);
 }
 
-class AppointmentsCompanion extends UpdateCompanion<Appointment> {
+class LocalAppointmentsCompanion extends UpdateCompanion<LocalAppointment> {
   final Value<int> id;
   final Value<DateTime> date;
   final Value<int> professionalID;
@@ -3467,7 +3476,7 @@ class AppointmentsCompanion extends UpdateCompanion<Appointment> {
   final Value<String?> description;
   final Value<String> status;
   final Value<String> sessionType;
-  const AppointmentsCompanion({
+  const LocalAppointmentsCompanion({
     this.id = const Value.absent(),
     this.date = const Value.absent(),
     this.professionalID = const Value.absent(),
@@ -3476,7 +3485,7 @@ class AppointmentsCompanion extends UpdateCompanion<Appointment> {
     this.status = const Value.absent(),
     this.sessionType = const Value.absent(),
   });
-  AppointmentsCompanion.insert({
+  LocalAppointmentsCompanion.insert({
     this.id = const Value.absent(),
     required DateTime date,
     required int professionalID,
@@ -3489,7 +3498,7 @@ class AppointmentsCompanion extends UpdateCompanion<Appointment> {
         patientID = Value(patientID),
         status = Value(status),
         sessionType = Value(sessionType);
-  static Insertable<Appointment> custom({
+  static Insertable<LocalAppointment> custom({
     Expression<int>? id,
     Expression<DateTime>? date,
     Expression<int>? professionalID,
@@ -3509,7 +3518,7 @@ class AppointmentsCompanion extends UpdateCompanion<Appointment> {
     });
   }
 
-  AppointmentsCompanion copyWith(
+  LocalAppointmentsCompanion copyWith(
       {Value<int>? id,
       Value<DateTime>? date,
       Value<int>? professionalID,
@@ -3517,7 +3526,7 @@ class AppointmentsCompanion extends UpdateCompanion<Appointment> {
       Value<String?>? description,
       Value<String>? status,
       Value<String>? sessionType}) {
-    return AppointmentsCompanion(
+    return LocalAppointmentsCompanion(
       id: id ?? this.id,
       date: date ?? this.date,
       professionalID: professionalID ?? this.professionalID,
@@ -3557,7 +3566,7 @@ class AppointmentsCompanion extends UpdateCompanion<Appointment> {
 
   @override
   String toString() {
-    return (StringBuffer('AppointmentsCompanion(')
+    return (StringBuffer('LocalAppointmentsCompanion(')
           ..write('id: $id, ')
           ..write('date: $date, ')
           ..write('professionalID: $professionalID, ')
@@ -4173,13 +4182,16 @@ class ServerDatabaseCompanion extends UpdateCompanion<ServerDatabaseData> {
 
 abstract class _$LocalDatabase extends GeneratedDatabase {
   _$LocalDatabase(QueryExecutor e) : super(e);
-  late final $ProfessionalTable professional = $ProfessionalTable(this);
-  late final $PatientsTable patients = $PatientsTable(this);
-  late final $ClinicHistoryTable clinicHistory = $ClinicHistoryTable(this);
-  late final $SessionsTable sessions = $SessionsTable(this);
-  late final $TestsTable tests = $TestsTable(this);
-  late final $TodosTable todos = $TodosTable(this);
-  late final $AppointmentsTable appointments = $AppointmentsTable(this);
+  late final $LocalProfessionalTable localProfessional =
+      $LocalProfessionalTable(this);
+  late final $LocalPatientsTable localPatients = $LocalPatientsTable(this);
+  late final $LocalClinicHistoryTable localClinicHistory =
+      $LocalClinicHistoryTable(this);
+  late final $LocalSessionsTable localSessions = $LocalSessionsTable(this);
+  late final $LocalTestsTable localTests = $LocalTestsTable(this);
+  late final $LocalTodosTable localTodos = $LocalTodosTable(this);
+  late final $LocalAppointmentsTable localAppointments =
+      $LocalAppointmentsTable(this);
   late final $SettingsTable settings = $SettingsTable(this);
   late final $ServerDatabaseTable serverDatabase = $ServerDatabaseTable(this);
   @override
@@ -4187,13 +4199,13 @@ abstract class _$LocalDatabase extends GeneratedDatabase {
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [
-        professional,
-        patients,
-        clinicHistory,
-        sessions,
-        tests,
-        todos,
-        appointments,
+        localProfessional,
+        localPatients,
+        localClinicHistory,
+        localSessions,
+        localTests,
+        localTodos,
+        localAppointments,
         settings,
         serverDatabase
       ];

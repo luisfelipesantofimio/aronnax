@@ -8,13 +8,13 @@ import 'package:path_provider/path_provider.dart';
 part 'local_model.g.dart';
 
 @DriftDatabase(tables: [
-  Patients,
-  ClinicHistory,
-  Sessions,
-  Professional,
-  Tests,
-  Todos,
-  Appointments,
+  LocalPatients,
+  LocalClinicHistory,
+  LocalSessions,
+  LocalProfessional,
+  LocalTests,
+  LocalTodos,
+  LocalAppointments,
   Settings,
   ServerDatabase
 ])
@@ -26,32 +26,32 @@ class LocalDatabase extends _$LocalDatabase {
 
   //Data insertion
 
-  Future<void> insertPatient(PatientsCompanion data) {
-    return into(patients).insert(data);
+  Future<void> insertPatient(LocalPatientsCompanion data) {
+    return into(localPatients).insert(data);
   }
 
-  Future<void> insertClinicHistory(ClinicHistoryCompanion data) {
-    return into(clinicHistory).insert(data);
+  Future<void> insertClinicHistory(LocalClinicHistoryCompanion data) {
+    return into(localClinicHistory).insert(data);
   }
 
-  Future<void> insertSession(SessionsCompanion data) {
-    return into(sessions).insert(data);
+  Future<void> insertSession(LocalSessionsCompanion data) {
+    return into(localSessions).insert(data);
   }
 
   Future<void> insertSettings(SettingsCompanion data) {
     return into(settings).insert(data);
   }
 
-  Future<void> insertProfessional(ProfessionalCompanion data) {
-    return into(professional).insert(data);
+  Future<void> insertProfessional(LocalProfessionalCompanion data) {
+    return into(localProfessional).insert(data);
   }
 
   Future<void> insertDatabaseAccess(ServerDatabaseCompanion data) {
     return into(serverDatabase).insert(data);
   }
 
-  Future<void> insertTodo(TodosCompanion data) {
-    return into(todos).insert(data);
+  Future<void> insertTodo(LocalTodosCompanion data) {
+    return into(localTodos).insert(data);
   }
 
   // Data update
@@ -73,51 +73,52 @@ class LocalDatabase extends _$LocalDatabase {
   }
 
   Future updateLocalUserPassword(int userID, String newEncodedValue) async {
-    return (update(professional)..where((t) => t.id.equals(userID))).write(
-      ProfessionalCompanion(
+    return (update(localProfessional)..where((t) => t.id.equals(userID))).write(
+      LocalProfessionalCompanion(
         password: Value(newEncodedValue),
       ),
     );
   }
 
-  // Data fetching
+  // Data read
 
-  Future<List<Patient>> userConsultation(String userNames) {
-    return (select(patients)
+  Future<List<LocalPatient>> userConsultation(String userNames) {
+    return (select(localPatients)
           ..where(
             (tbl) => tbl.names.contains(userNames),
           ))
         .get();
   }
 
-  Future<List<ProfessionalData>> getProfessionalsList() {
-    return (select(professional)).get();
+  Future<List<LocalProfessionalData>> getProfessionalsList() {
+    return (select(localProfessional)).get();
   }
 
-  Future<List<ProfessionalData>> loginProfessional(int userID) {
-    return (select(professional)
+  Future<List<LocalProfessionalData>> loginProfessional(int userID) {
+    return (select(localProfessional)
           ..where(
             (tbl) => tbl.personalID.equals(userID),
           ))
         .get();
   }
 
-  Stream<List<ProfessionalData>> initalProfessionalFetch() {
-    return (select(professional)).watch();
+  Stream<List<LocalProfessionalData>> initalProfessionalFetch() {
+    return (select(localProfessional)).watch();
   }
 
   Stream<Setting> watchCurrentSettings() {
     return (select(settings)..where((tbl) => tbl.id.equals(0))).watchSingle();
   }
 
-  Future<List<ClinicHistoryData>> clinicHistoryConsultation(int idNumber) {
-    return (select(clinicHistory)
+  Future<List<LocalClinicHistoryData>> clinicHistoryConsultation(int idNumber) {
+    return (select(localClinicHistory)
           ..where((tbl) => tbl.idNumber.equals(idNumber)))
         .get();
   }
 
-  Future<List<Session>> sessionsConsultation(int idNumber) {
-    return (select(sessions)..where((tbl) => tbl.idNumber.equals(idNumber)))
+  Future<List<LocalSession>> sessionsConsultation(int idNumber) {
+    return (select(localSessions)
+          ..where((tbl) => tbl.idNumber.equals(idNumber)))
         .get();
   }
 
@@ -128,6 +129,10 @@ class LocalDatabase extends _$LocalDatabase {
 
   Future<Setting> getLocalSettings() {
     return (select(settings)..where((tbl) => tbl.id.equals(0))).getSingle();
+  }
+
+  Future<List<LocalAppointment>> getLocalAppointments() {
+    return (select(localAppointments)).get();
   }
 
   Future<List<ServerDatabaseData>> getServerConfigurations() {

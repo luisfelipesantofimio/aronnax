@@ -21,7 +21,7 @@ addLocalPatient({
   required DateTime creationDate,
   required int professionalID,
 }) {
-  final entity = PatientsCompanion(
+  final entity = LocalPatientsCompanion(
       names: Value(names),
       lastNames: Value(lastNames),
       birthDate: Value(birthDate),
@@ -57,7 +57,7 @@ Future<void> addLocalClinicHistory(
   int idNumber,
   int professionalID,
 ) async {
-  final entity = ClinicHistoryCompanion(
+  final entity = LocalClinicHistoryCompanion(
     registerNumber: Value(registerCode),
     currentDate: Value(dateTime),
     consultationReason: Value(consultationReason),
@@ -83,7 +83,7 @@ Future<void> addLocalSession(
   int professionalID,
   DateTime sessionDate,
 ) async {
-  final entity = SessionsCompanion(
+  final entity = LocalSessionsCompanion(
     idNumber: Value(idNumber),
     professionalID: Value(professionalID),
     sessionDate: Value(sessionDate),
@@ -96,7 +96,7 @@ Future<void> addLocalSession(
 
 addLocalProfessional(int personalID, String names, String lastNames,
     int professionalID, String userName, String password, String cuntryCode) {
-  final entity = ProfessionalCompanion(
+  final entity = LocalProfessionalCompanion(
     countryCode: Value(cuntryCode),
     userName: Value(userName),
     names: Value(names),
@@ -121,14 +121,14 @@ void updateLocalUserPassword(int userID, String newEncodedValue) {
   localDB.updateLocalUserPassword(userID, newEncodedValue);
 }
 
-Future<List<Patient>> searchPatient(String user) {
+Future<List<LocalPatient>> searchPatient(String user) {
   return localDB.userConsultation(user);
 }
 
-Future<List<ProfessionalData>> loginExistingProfessional(int userID) {
+Future<List<LocalProfessionalData>> loginExistingProfessional(int userID) {
   return localDB.loginProfessional(userID);
 }
 
-Stream<List<ProfessionalData>> fetchInitialRegisterUsers() {
+Stream<List<LocalProfessionalData>> fetchInitialRegisterUsers() {
   return localDB.initalProfessionalFetch();
 }
