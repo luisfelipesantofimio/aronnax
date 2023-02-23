@@ -1,6 +1,5 @@
-import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/repositories/auth_repository.dart';
-import 'package:aronnax/src/domain/entities/remote_professional.dart';
+import 'package:aronnax/src/domain/entities/remote_model/remote_professional.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class AuthRepositoryInterface {

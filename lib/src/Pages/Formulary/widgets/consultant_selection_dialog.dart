@@ -3,10 +3,10 @@ import 'dart:developer';
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/database/local_model/local_queries.dart';
 import 'package:aronnax/src/data/interfaces/user_search_repository_interface.dart';
-import 'package:aronnax/src/domain/entities/remote_patient.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/consultations_provider.dart';
 import 'package:aronnax/src/data/providers/patient_search_provider.dart';
+import 'package:aronnax/src/domain/entities/remote_model/remote_patient.dart';
 import 'package:aronnax/src/presentation/widgets/consultation_element.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -37,7 +37,7 @@ class ConsultantSelectionDialogState
   Widget build(BuildContext context) {
     bool isOfflineEnabled = ref.watch(offlineStatusProvider).value!;
 
-    List<Patient> localPatientsListProvider = ref.watch(
+    List<LocalPatient> localPatientsListProvider = ref.watch(
       localQueriedPatientSearchListProvider,
     );
     List<RemotePatient>? remotePatientsList =
@@ -95,7 +95,8 @@ class ConsultantSelectionDialogState
                                 .toList()[index]
                                 .toString(),
                             onTap: () async {
-                              List<ClinicHistoryData> localClinicHistoryData =
+                              List<LocalClinicHistoryData>
+                                  localClinicHistoryData =
                                   await localDB.clinicHistoryConsultation(
                                       localPatientsListProvider
                                           .map((e) => e.idNumber)

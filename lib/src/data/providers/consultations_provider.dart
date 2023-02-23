@@ -1,11 +1,11 @@
 import 'dart:developer';
 
-import 'package:aronnax/src/data/remote_database/server_api.dart';
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
+import 'package:aronnax/src/data/remote_database/server_api.dart';
 import 'package:aronnax/src/data/database/local_model/local_queries.dart';
-import 'package:aronnax/src/domain/entities/remode_session_resume.dart';
-import 'package:aronnax/src/domain/entities/remote_clinic_history.dart';
-import 'package:aronnax/src/domain/entities/remote_patient.dart';
+import 'package:aronnax/src/domain/entities/remote_model/remode_session_resume.dart';
+import 'package:aronnax/src/domain/entities/remote_model/remote_clinic_history.dart';
+import 'package:aronnax/src/domain/entities/remote_model/remote_patient.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class GlobalPatientConsultationState
@@ -129,10 +129,10 @@ class GlobalRemoteSessionsState extends StateNotifier<List<RemoteSession>> {
   }
 }
 
-class LocalSessionsState extends StateNotifier<List<Session>> {
+class LocalSessionsState extends StateNotifier<List<LocalSession>> {
   LocalSessionsState() : super([]);
 
-  List<Session> currentSearchedSessions = [];
+  List<LocalSession> currentSearchedSessions = [];
 
   Future<void> searchLocalSessions(int idNumber) async {
     state = await localDB.sessionsConsultation(idNumber);
@@ -144,10 +144,10 @@ class LocalSessionsState extends StateNotifier<List<Session>> {
 }
 
 class LocalClinicHistoryConsultationState
-    extends StateNotifier<List<ClinicHistoryData>> {
+    extends StateNotifier<List<LocalClinicHistoryData>> {
   LocalClinicHistoryConsultationState() : super([]);
 
-  List<ClinicHistoryData> currentSearchedClinicHistory = [];
+  List<LocalClinicHistoryData> currentSearchedClinicHistory = [];
 
   Future<void> searchLocalClinicHistory(int idNumber) async {
     state = await localDB.clinicHistoryConsultation(idNumber);
@@ -175,11 +175,11 @@ final globalQueriedSessionsProvider =
 );
 
 final localQueriedSessionsProvider =
-    StateNotifierProvider<LocalSessionsState, List<Session>>(
+    StateNotifierProvider<LocalSessionsState, List<LocalSession>>(
   (ref) => LocalSessionsState(),
 );
 
 final localQueriedClinicHistoryProvider = StateNotifierProvider<
-    LocalClinicHistoryConsultationState, List<ClinicHistoryData>>(
+    LocalClinicHistoryConsultationState, List<LocalClinicHistoryData>>(
   (ref) => LocalClinicHistoryConsultationState(),
 );

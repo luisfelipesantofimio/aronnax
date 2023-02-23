@@ -5,7 +5,7 @@ import 'package:aronnax/src/data/interfaces/auth_repository_interface.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/providers/global_user_information_provider.dart';
 import 'package:aronnax/src/data/providers/login_provider.dart';
-import 'package:aronnax/src/domain/entities/remote_professional.dart';
+import 'package:aronnax/src/domain/entities/remote_model/remote_professional.dart';
 import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:crypt/crypt.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -48,7 +48,7 @@ class AuthRepository implements AuthRepositoryInterface {
     required WidgetRef ref,
     required int userID,
   }) async {
-    List<ProfessionalData> professionalData = await ref
+    List<LocalProfessionalData> professionalData = await ref
         .read(localDatabaseRepositoryProvider)
         .loginExistingProfessional(userID);
     log(professionalData.toString());

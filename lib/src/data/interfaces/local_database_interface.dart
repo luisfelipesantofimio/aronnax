@@ -50,11 +50,11 @@ abstract class LocalDatabaseInteface {
   void addLocalProfessional(int personalID, String names, String lastNames,
       int professionalID, String userName, String password);
 
-  Future<List<Patient>> searchPatient(String user);
+  Future<List<LocalPatient>> searchPatient(String user);
 
-  Future<List<ProfessionalData>> loginExistingProfessional(int userID);
+  Future<List<LocalProfessionalData>> loginExistingProfessional(int userID);
 
-  Stream<List<ProfessionalData>> fetchInitialRegisterUsers();
+  Stream<List<LocalProfessionalData>> fetchInitialRegisterUsers();
 
   Future<Setting?> verifySettingsData();
 
@@ -89,11 +89,12 @@ abstract class LocalDatabaseInteface {
 
   Future<List<ServerDatabaseData>> getServerConfigurationList();
 
-  Future<List<ProfessionalData>> getProfessionalsList();
+  Future<List<LocalProfessionalData>> getProfessionalsList();
 
   Stream<Setting> getSettingsAsStream();
 
   Future<Setting> getLocalSettings();
+  Future<List<LocalAppointment>> getLocalAppointments();
 }
 
 final localDatabaseRepositoryProvider = Provider<LocalDatabaseInteface>(
