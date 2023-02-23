@@ -479,6 +479,11 @@ class $LocalPatientsTable extends LocalPatients
   late final GeneratedColumn<String> state = GeneratedColumn<String>(
       'state', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _genderMeta = const VerificationMeta('gender');
+  @override
+  late final GeneratedColumn<String> gender = GeneratedColumn<String>(
+      'gender', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _adressMeta = const VerificationMeta('adress');
   @override
   late final GeneratedColumn<String> adress = GeneratedColumn<String>(
@@ -552,6 +557,7 @@ class $LocalPatientsTable extends LocalPatients
         mail,
         city,
         state,
+        gender,
         adress,
         education,
         ocupation,
@@ -623,6 +629,12 @@ class $LocalPatientsTable extends LocalPatients
           _stateMeta, state.isAcceptableOrUnknown(data['state']!, _stateMeta));
     } else if (isInserting) {
       context.missing(_stateMeta);
+    }
+    if (data.containsKey('gender')) {
+      context.handle(_genderMeta,
+          gender.isAcceptableOrUnknown(data['gender']!, _genderMeta));
+    } else if (isInserting) {
+      context.missing(_genderMeta);
     }
     if (data.containsKey('adress')) {
       context.handle(_adressMeta,
@@ -713,6 +725,8 @@ class $LocalPatientsTable extends LocalPatients
           .read(DriftSqlType.string, data['${effectivePrefix}city'])!,
       state: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}state'])!,
+      gender: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}gender'])!,
       adress: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}adress'])!,
       education: attachedDatabase.typeMapping
@@ -752,6 +766,7 @@ class LocalPatient extends DataClass implements Insertable<LocalPatient> {
   final String mail;
   final String city;
   final String state;
+  final String gender;
   final String adress;
   final String education;
   final String ocupation;
@@ -771,6 +786,7 @@ class LocalPatient extends DataClass implements Insertable<LocalPatient> {
       required this.mail,
       required this.city,
       required this.state,
+      required this.gender,
       required this.adress,
       required this.education,
       required this.ocupation,
@@ -792,6 +808,7 @@ class LocalPatient extends DataClass implements Insertable<LocalPatient> {
     map['mail'] = Variable<String>(mail);
     map['city'] = Variable<String>(city);
     map['state'] = Variable<String>(state);
+    map['gender'] = Variable<String>(gender);
     map['adress'] = Variable<String>(adress);
     map['education'] = Variable<String>(education);
     map['ocupation'] = Variable<String>(ocupation);
@@ -815,6 +832,7 @@ class LocalPatient extends DataClass implements Insertable<LocalPatient> {
       mail: Value(mail),
       city: Value(city),
       state: Value(state),
+      gender: Value(gender),
       adress: Value(adress),
       education: Value(education),
       ocupation: Value(ocupation),
@@ -840,6 +858,7 @@ class LocalPatient extends DataClass implements Insertable<LocalPatient> {
       mail: serializer.fromJson<String>(json['mail']),
       city: serializer.fromJson<String>(json['city']),
       state: serializer.fromJson<String>(json['state']),
+      gender: serializer.fromJson<String>(json['gender']),
       adress: serializer.fromJson<String>(json['adress']),
       education: serializer.fromJson<String>(json['education']),
       ocupation: serializer.fromJson<String>(json['ocupation']),
@@ -866,6 +885,7 @@ class LocalPatient extends DataClass implements Insertable<LocalPatient> {
       'mail': serializer.toJson<String>(mail),
       'city': serializer.toJson<String>(city),
       'state': serializer.toJson<String>(state),
+      'gender': serializer.toJson<String>(gender),
       'adress': serializer.toJson<String>(adress),
       'education': serializer.toJson<String>(education),
       'ocupation': serializer.toJson<String>(ocupation),
@@ -888,6 +908,7 @@ class LocalPatient extends DataClass implements Insertable<LocalPatient> {
           String? mail,
           String? city,
           String? state,
+          String? gender,
           String? adress,
           String? education,
           String? ocupation,
@@ -907,6 +928,7 @@ class LocalPatient extends DataClass implements Insertable<LocalPatient> {
         mail: mail ?? this.mail,
         city: city ?? this.city,
         state: state ?? this.state,
+        gender: gender ?? this.gender,
         adress: adress ?? this.adress,
         education: education ?? this.education,
         ocupation: ocupation ?? this.ocupation,
@@ -930,6 +952,7 @@ class LocalPatient extends DataClass implements Insertable<LocalPatient> {
           ..write('mail: $mail, ')
           ..write('city: $city, ')
           ..write('state: $state, ')
+          ..write('gender: $gender, ')
           ..write('adress: $adress, ')
           ..write('education: $education, ')
           ..write('ocupation: $ocupation, ')
@@ -954,6 +977,7 @@ class LocalPatient extends DataClass implements Insertable<LocalPatient> {
       mail,
       city,
       state,
+      gender,
       adress,
       education,
       ocupation,
@@ -976,6 +1000,7 @@ class LocalPatient extends DataClass implements Insertable<LocalPatient> {
           other.mail == this.mail &&
           other.city == this.city &&
           other.state == this.state &&
+          other.gender == this.gender &&
           other.adress == this.adress &&
           other.education == this.education &&
           other.ocupation == this.ocupation &&
@@ -997,6 +1022,7 @@ class LocalPatientsCompanion extends UpdateCompanion<LocalPatient> {
   final Value<String> mail;
   final Value<String> city;
   final Value<String> state;
+  final Value<String> gender;
   final Value<String> adress;
   final Value<String> education;
   final Value<String> ocupation;
@@ -1016,6 +1042,7 @@ class LocalPatientsCompanion extends UpdateCompanion<LocalPatient> {
     this.mail = const Value.absent(),
     this.city = const Value.absent(),
     this.state = const Value.absent(),
+    this.gender = const Value.absent(),
     this.adress = const Value.absent(),
     this.education = const Value.absent(),
     this.ocupation = const Value.absent(),
@@ -1036,6 +1063,7 @@ class LocalPatientsCompanion extends UpdateCompanion<LocalPatient> {
     required String mail,
     required String city,
     required String state,
+    required String gender,
     required String adress,
     required String education,
     required String ocupation,
@@ -1053,6 +1081,7 @@ class LocalPatientsCompanion extends UpdateCompanion<LocalPatient> {
         mail = Value(mail),
         city = Value(city),
         state = Value(state),
+        gender = Value(gender),
         adress = Value(adress),
         education = Value(education),
         ocupation = Value(ocupation),
@@ -1072,6 +1101,7 @@ class LocalPatientsCompanion extends UpdateCompanion<LocalPatient> {
     Expression<String>? mail,
     Expression<String>? city,
     Expression<String>? state,
+    Expression<String>? gender,
     Expression<String>? adress,
     Expression<String>? education,
     Expression<String>? ocupation,
@@ -1092,6 +1122,7 @@ class LocalPatientsCompanion extends UpdateCompanion<LocalPatient> {
       if (mail != null) 'mail': mail,
       if (city != null) 'city': city,
       if (state != null) 'state': state,
+      if (gender != null) 'gender': gender,
       if (adress != null) 'adress': adress,
       if (education != null) 'education': education,
       if (ocupation != null) 'ocupation': ocupation,
@@ -1116,6 +1147,7 @@ class LocalPatientsCompanion extends UpdateCompanion<LocalPatient> {
       Value<String>? mail,
       Value<String>? city,
       Value<String>? state,
+      Value<String>? gender,
       Value<String>? adress,
       Value<String>? education,
       Value<String>? ocupation,
@@ -1135,6 +1167,7 @@ class LocalPatientsCompanion extends UpdateCompanion<LocalPatient> {
       mail: mail ?? this.mail,
       city: city ?? this.city,
       state: state ?? this.state,
+      gender: gender ?? this.gender,
       adress: adress ?? this.adress,
       education: education ?? this.education,
       ocupation: ocupation ?? this.ocupation,
@@ -1177,6 +1210,9 @@ class LocalPatientsCompanion extends UpdateCompanion<LocalPatient> {
     }
     if (state.present) {
       map['state'] = Variable<String>(state.value);
+    }
+    if (gender.present) {
+      map['gender'] = Variable<String>(gender.value);
     }
     if (adress.present) {
       map['adress'] = Variable<String>(adress.value);
@@ -1222,6 +1258,7 @@ class LocalPatientsCompanion extends UpdateCompanion<LocalPatient> {
           ..write('mail: $mail, ')
           ..write('city: $city, ')
           ..write('state: $state, ')
+          ..write('gender: $gender, ')
           ..write('adress: $adress, ')
           ..write('education: $education, ')
           ..write('ocupation: $ocupation, ')

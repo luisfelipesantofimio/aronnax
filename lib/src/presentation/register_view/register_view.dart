@@ -100,6 +100,8 @@ class MainViewRegister extends ConsumerWidget {
                                               ref.read(registerAdressProvider),
                                           birthDate: ref
                                               .read(registerBirthDateProvider),
+                                          gender:
+                                              ref.read(registerGenderProvider),
                                           city: ref.read(registerCityProvider),
                                           state:
                                               ref.read(registerStateProvider),

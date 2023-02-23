@@ -10,6 +10,7 @@ class LocalPatients extends Table {
   TextColumn get mail => text()();
   TextColumn get city => text()();
   TextColumn get state => text()();
+  TextColumn get gender => text()();
   TextColumn get adress => text()();
   TextColumn get education => text()();
   TextColumn get ocupation => text()();

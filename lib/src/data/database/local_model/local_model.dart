@@ -90,6 +90,10 @@ class LocalDatabase extends _$LocalDatabase {
         .get();
   }
 
+  Future<List<LocalPatient>> getPatientsList() {
+    return (select(localPatients)).get();
+  }
+
   Future<List<LocalProfessionalData>> getProfessionalsList() {
     return (select(localProfessional)).get();
   }
