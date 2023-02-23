@@ -95,7 +95,7 @@ class _SessionPerformanceDialogState
                             ref.read(sessionObjectivesProvider),
                             ref.read(sessionTherapeuticArchievementsProvider),
                             ref.read(globalSelectedConsultantIDProvider),
-                            ref.read(globalProfessionalPersonalIDProvider),
+                            ref.read(globalUserInformationProvider)!.personalID,
                             DateTime.now(),
                           )
                         : insertSessionData(
@@ -104,7 +104,7 @@ class _SessionPerformanceDialogState
                             ref.read(sessionObjectivesProvider),
                             ref.read(sessionTherapeuticArchievementsProvider),
                             ref.read(globalSelectedConsultantIDProvider),
-                            ref.read(globalProfessionalPersonalIDProvider),
+                            ref.read(globalUserInformationProvider)!.personalID,
                           );
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(

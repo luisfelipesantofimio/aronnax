@@ -22,7 +22,7 @@ class SessionsFormState extends ConsumerState<SessionsForm> {
     bool isOfflineEnabled = ref.watch(globalOfflineStatusProvider);
 
     String professionalName =
-        "${ref.read(globalUserNameProvider)} ${ref.read(globalUserLastNameProvider)}";
+        "${ref.read(globalUserInformationProvider)!.names} ${ref.read(globalUserInformationProvider)!.lastNames}";
 
     return ListView(
       controller: ScrollController(),

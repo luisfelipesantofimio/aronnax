@@ -4,6 +4,7 @@ import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/providers/global_user_information_provider.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/login_provider.dart';
+import 'package:aronnax/src/domain/entities/professional.dart';
 import 'package:aronnax/src/presentation/core/constants.dart';
 import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:aronnax/src/presentation/main_menu/main_menu.dart';
@@ -41,7 +42,15 @@ class LoginFormState extends ConsumerState<LoginForm> {
   @override
   Widget build(BuildContext context) {
     final conectionMode = ref.watch(offlineStatusProvider);
-
+    final professionalData = ref.watch(globalUserInformationProvider) ??
+        Professional(
+            personalID: 0,
+            names: '',
+            lastNames: '',
+            countryCode: '',
+            professionalID: 0,
+            userName: '',
+            password: '');
     return conectionMode.when(
       data: (offlineEnabled) {
         return Form(
@@ -105,8 +114,9 @@ class LoginFormState extends ConsumerState<LoginForm> {
                       if (value!.isEmpty) {
                         return "Ingresa tu contraseña";
                       }
-                      if (!ref.read(authenticationProvider).validatePassword(
-                          ref.watch(userPasswordProvider), value)) {
+                      if (!ref
+                          .read(authenticationProvider)
+                          .validatePassword(professionalData.password, value)) {
                         return "Contraseña incorrecta";
                       } else {
                         Future(
@@ -125,7 +135,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
                       contentPadding: const EdgeInsets.all(0),
                       labelText: "Contraseña",
                       hintText:
-                          "Contraseña para ${ref.watch(globalUserNameProvider)} ${ref.watch(globalUserLastNameProvider)}",
+                          "Contraseña para ${professionalData.names} ${professionalData.lastNames}",
                       labelStyle: Theme.of(context).textTheme.bodyMedium,
                       hintStyle: Theme.of(context).textTheme.bodyMedium,
                       prefixIcon: const Icon(

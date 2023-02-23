@@ -4,14 +4,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final stateListProvider = FutureProvider.autoDispose<List<State>>(
   (ref) => getStatesOfCountry(
-    ref.read(globalProfessionalCountryCodeProvider),
+    ref.read(globalUserInformationProvider)!.countryCode,
   ),
 );
 
 final citiesListProvider =
     FutureProvider.family.autoDispose<List<City>, String>(
   (ref, stateCode) => getStateCities(
-      ref.read(globalProfessionalCountryCodeProvider), stateCode),
+      ref.read(globalUserInformationProvider)!.countryCode, stateCode),
 );
 
 final countriesListProvider = FutureProvider.autoDispose<List<Country>>(

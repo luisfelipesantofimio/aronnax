@@ -42,7 +42,7 @@ class _ClinicHistoryRegisterViewState
   Widget build(BuildContext context) {
     bool isOfflineEnabled = ref.watch(offlineStatusProvider).value!;
 
-    int professionalID = ref.watch(globalProfessionalPersonalIDProvider);
+    int professionalID = ref.watch(globalUserInformationProvider)!.personalID;
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 166, 211, 227),
       body: Stack(

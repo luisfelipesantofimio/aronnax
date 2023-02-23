@@ -64,7 +64,7 @@ class UpdatePasswordDialogState extends ConsumerState<UpdatePasswordDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(
-          "Actualizar contraseña para ${ref.read(globalUserNameProvider)}"),
+          "Actualizar contraseña para ${ref.read(globalUserInformationProvider)!.names}"),
       content: SizedBox(
         height: 250,
         child: Column(
@@ -147,14 +147,15 @@ class UpdatePasswordDialogState extends ConsumerState<UpdatePasswordDialog> {
                             _updatePasswordKey.currentState!.validate();
 
                             updatePassword(
-                                int.parse(
-                                    ref.read(globalProfessionalIDProvider)),
+                                ref
+                                    .read(globalUserInformationProvider)!
+                                    .personalID,
                                 _hashNewPassword.toString());
 
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
-                                    "${ref.read(globalUserNameProvider)}, se ha actualizado tu contraseña"),
+                                    "${ref.read(globalUserInformationProvider)!.names}, se ha actualizado tu contraseña"),
                               ),
                             );
                             Navigator.pop(context);

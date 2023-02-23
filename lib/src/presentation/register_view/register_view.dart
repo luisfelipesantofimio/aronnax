@@ -119,8 +119,10 @@ class MainViewRegister extends ConsumerWidget {
                                               registerEmergencyContactNameProvider),
                                           emergencyContactNumber: ref.read(
                                               registerEmergencyContactNumberProvider),
-                                          professionalID: ref.read(
-                                              globalProfessionalPersonalIDProvider),
+                                          professionalID: ref
+                                              .read(
+                                                  globalUserInformationProvider)!
+                                              .professionalID,
                                         );
                                         // : insertPatientData(
                                         //     names,

@@ -21,11 +21,11 @@ class SettingsOptionsProfile extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "${ref.read(globalUserNameProvider)}  ${ref.read(globalUserLastNameProvider)}",
+                "${ref.read(globalUserInformationProvider)!.names}  ${ref.read(globalUserInformationProvider)!.lastNames}",
                 style: Theme.of(context).textTheme.displayLarge,
               ),
               Text(
-                  "Tarjeta profesional: ${ref.read(globalProfessionalIDProvider)}"),
+                  "Tarjeta profesional: ${ref.read(globalUserInformationProvider)!.professionalID}"),
               TextButton(
                 child: const Text("Cambiar mi contraseña"),
                 onPressed: () {

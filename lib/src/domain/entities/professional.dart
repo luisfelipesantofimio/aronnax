@@ -3,6 +3,7 @@ import 'package:aronnax/src/domain/entities/remote_model/remote_professional.dar
 
 class Professional {
   final int personalID;
+  final String names;
   final String lastNames;
   final String countryCode;
   final int professionalID;
@@ -10,6 +11,7 @@ class Professional {
   final String password;
   Professional({
     required this.personalID,
+    required this.names,
     required this.lastNames,
     required this.countryCode,
     required this.professionalID,
@@ -20,6 +22,7 @@ class Professional {
   factory Professional.fromLocalModel(LocalProfessionalData data) {
     return Professional(
       personalID: data.personalID,
+      names: data.names,
       lastNames: data.lastNames,
       countryCode: data.countryCode,
       professionalID: data.professionalID,
@@ -30,6 +33,7 @@ class Professional {
   factory Professional.fromRemoteModel(RemoteProfessional data) {
     return Professional(
       personalID: data.personalID,
+      names: data.names,
       lastNames: data.lastNames,
       countryCode: data.countryCode,
       professionalID: data.professionalID,
