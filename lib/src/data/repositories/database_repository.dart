@@ -232,4 +232,9 @@ class DatabaseRepository implements LocalDatabaseInteface {
   Future<List<LocalAppointment>> getLocalAppointments() {
     return localDB.getLocalAppointments();
   }
+
+  @override
+  Future<List<LocalPatient>> getLocalPatientsList() {
+    return localDB.getPatientsList();
+  }
 }
