@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:aronnax/src/Pages/Formulary/professionalForm/professional_form.dart';
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
+import 'package:aronnax/src/domain/entities/calendar_event.dart';
 import 'package:aronnax/src/presentation/settings/configOptions/localdb_selection.dart';
 import 'package:aronnax/src/presentation/settings/configOptions/theme_select.dart';
 import 'package:aronnax/src/presentation/settings/setting_options_view_profile.dart';
@@ -66,6 +67,34 @@ class AppMethods {
         return SettingsOptionsProfile(
           settingsData: settings,
         );
+    }
+  }
+
+  CalendarEventStates parseCalendarEventStateFromString(String state) {
+    switch (state) {
+      case 'scheduled':
+        return CalendarEventStates.scheduled;
+
+      case 'cancelled':
+        return CalendarEventStates.cancelled;
+      case 'done':
+        return CalendarEventStates.done;
+      default:
+        return CalendarEventStates.scheduled;
+    }
+  }
+
+  CalendarEventType parseCalendarEventTypeFromString(String type) {
+    switch (type) {
+      case 'meeting':
+        return CalendarEventType.meeting;
+
+      case 'consultation':
+        return CalendarEventType.consultation;
+      case 'following':
+        return CalendarEventType.following;
+      default:
+        return CalendarEventType.meeting;
     }
   }
 }
