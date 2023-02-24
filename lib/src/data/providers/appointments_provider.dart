@@ -6,3 +6,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final appointmentsListProvider = StateProvider<List<CalendarEvent>>(
   (ref) => [],
 );
+
+final appointmentDateProvider = StateProvider<DateTime?>(
+  (ref) => DateTime.now(),
+);
+
+final appointmentPatientIdProvider = StateProvider<int?>(
+  (ref) => null,
+);
+final appointmentDescriptionProvider = StateProvider<String?>(
+  (ref) => null,
+);
+
+final appointmentStatusProvider =
+    StateProvider<CalendarEventStates?>((ref) => null);
+
+final appointmentTypeProvider =
+    StateProvider<CalendarEventType?>((ref) => null);

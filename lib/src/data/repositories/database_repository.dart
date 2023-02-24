@@ -1,9 +1,12 @@
-import 'dart:ui';
+import 'dart:developer';
 
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/remote_database/server_api.dart';
+import 'package:aronnax/src/domain/entities/calendar_event.dart';
+import 'package:aronnax/src/presentation/core/methods.dart';
 import 'package:drift/drift.dart';
+import 'package:flutter/material.dart';
 
 class DatabaseRepository implements LocalDatabaseInteface {
   LocalDatabase localDB = LocalDatabase();
@@ -236,5 +239,27 @@ class DatabaseRepository implements LocalDatabaseInteface {
   @override
   Future<List<LocalPatient>> getLocalPatientsList() {
     return localDB.getPatientsList();
+  }
+
+  @override
+  Future<void> addLocalAppointMent(
+      {required DateTime date,
+      required int professionalId,
+      required int patientId,
+      required String? description,
+      required CalendarEventStates state,
+      required CalendarEventType eventType}) async {
+    String eventStatus = AppMethods().parseCalendarEventStateFromEnum(state);
+    String type = AppMethods().parseCalendarEventTypeFromEnum(eventType);
+    final data = LocalAppointmentsCompanion(
+      date: Value(date),
+      description: Value(description),
+      patientID: Value(patientId),
+      professionalID: Value(professionalId),
+      sessionType: Value(type),
+      status: Value(eventStatus),
+    );
+    log(data.toString());
+    await localDB.insertAppointment(data);
   }
 }

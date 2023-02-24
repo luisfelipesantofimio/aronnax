@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/interfaces/calendar_repository_interface.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/domain/entities/calendar_event.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
 class CalendarRepository implements CalendarRepositoryInterface {
   @override
@@ -16,12 +19,14 @@ class CalendarRepository implements CalendarRepositoryInterface {
 
     List<CalendarEvent> parsedCalendarEvents =
         list.map((e) => CalendarEvent.fromLocalModel(e)).toList();
-    Future<List<CalendarEvent>> filteredList = Future.value(parsedCalendarEvents
+
+    return parsedCalendarEvents
         .where(
-          (element) => element.date == date,
+          (element) =>
+              DateFormat('dd/MM/yyyy').format(element.date) ==
+              DateFormat('dd/MM/yyyy').format(date),
         )
-        .toList());
-    return filteredList;
+        .toList();
   }
 
   @override

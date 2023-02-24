@@ -54,6 +54,10 @@ class LocalDatabase extends _$LocalDatabase {
     return into(localTodos).insert(data);
   }
 
+  Future<void> insertAppointment(LocalAppointmentsCompanion data) {
+    return into(localAppointments).insert(data);
+  }
+
   // Data update
 
   Future updateThemeMode(bool currentThemeMode) async {

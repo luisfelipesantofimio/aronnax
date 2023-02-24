@@ -1,5 +1,6 @@
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/repositories/database_repository.dart';
+import 'package:aronnax/src/domain/entities/calendar_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -79,6 +80,15 @@ abstract class LocalDatabaseInteface {
     required List<String> categoryList,
     required Color itemColor,
     required bool isComplete,
+  });
+
+  Future<void> addLocalAppointMent({
+    required DateTime date,
+    required int professionalId,
+    required int patientId,
+    required String? description,
+    required CalendarEventStates state,
+    required CalendarEventType eventType,
   });
 
   void updateConfigurationState(bool isConfigured);
