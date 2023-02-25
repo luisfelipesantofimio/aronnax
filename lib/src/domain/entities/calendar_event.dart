@@ -15,6 +15,7 @@ enum CalendarEventType {
 }
 
 class CalendarEvent {
+  final int id;
   final DateTime date;
   final CalendarEventStates state;
   final CalendarEventType eventType;
@@ -22,6 +23,7 @@ class CalendarEvent {
   final int professionalID;
   final int patientID;
   CalendarEvent({
+    required this.id,
     required this.date,
     required this.state,
     required this.eventType,
@@ -32,6 +34,7 @@ class CalendarEvent {
 
   factory CalendarEvent.fromLocalModel(LocalAppointment data) {
     return CalendarEvent(
+      id: data.id,
       patientID: data.patientID,
       professionalID: data.professionalID,
       date: data.date,
