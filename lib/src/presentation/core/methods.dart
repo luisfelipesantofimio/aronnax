@@ -9,6 +9,7 @@ import 'package:aronnax/src/presentation/settings/setting_options_view_profile.d
 import 'package:crypt/crypt.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -84,8 +85,24 @@ class AppMethods {
     }
   }
 
-  CalendarEventType parseCalendarEventTypeFromString(String type) {
-    switch (type) {
+  String parseCalendarEventStateFromEnum(CalendarEventStates state) {
+    switch (state) {
+      case CalendarEventStates.scheduled:
+        return 'scheduled';
+
+      case CalendarEventStates.cancelled:
+        return 'cancelled';
+
+      case CalendarEventStates.done:
+        return 'done';
+
+      default:
+        return 'scheduled';
+    }
+  }
+
+  CalendarEventType parseCalendarEventTypeFromString(String data) {
+    switch (data) {
       case 'meeting':
         return CalendarEventType.meeting;
 
@@ -95,6 +112,50 @@ class AppMethods {
         return CalendarEventType.following;
       default:
         return CalendarEventType.meeting;
+    }
+  }
+
+  String parseCalendarEventTypeFromEnum(CalendarEventType data) {
+    switch (data) {
+      case CalendarEventType.meeting:
+        return 'meeting';
+
+      case CalendarEventType.consultation:
+        return 'consultation';
+
+      case CalendarEventType.following:
+        return 'following';
+
+      default:
+        return 'meeting';
+    }
+  }
+
+  Color setEventTypeColor(CalendarEventType type) {
+    switch (type) {
+      case CalendarEventType.meeting:
+        return const Color.fromARGB(255, 232, 219, 181);
+
+      case CalendarEventType.consultation:
+        return const Color.fromARGB(255, 138, 194, 227);
+      case CalendarEventType.following:
+        return const Color.fromARGB(255, 153, 221, 190);
+      default:
+        return Colors.grey;
+    }
+  }
+
+  Color setEventStatusColor(CalendarEventStates state) {
+    switch (state) {
+      case CalendarEventStates.cancelled:
+        return const Color.fromARGB(255, 249, 184, 179);
+
+      case CalendarEventStates.done:
+        return const Color.fromARGB(255, 177, 245, 202);
+      case CalendarEventStates.scheduled:
+        return const Color.fromARGB(255, 240, 224, 176);
+      default:
+        return Colors.grey;
     }
   }
 }
