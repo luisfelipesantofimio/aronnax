@@ -15,6 +15,16 @@ abstract class CalendarRepositoryInterface {
     required bool isOfflineEnabled,
     required WidgetRef ref,
   });
+  Future<List<CalendarEvent>> getCompleteEventsList(
+    WidgetRef ref,
+  );
+
+  List<CalendarEvent> filterEventsByDate(
+      List<CalendarEvent> snapshot, DateTime date);
+  void deleteEvent({
+    required int eventID,
+    required WidgetRef ref,
+  });
 }
 
 final calendarRepositoryProvider = Provider<CalendarRepositoryInterface>(

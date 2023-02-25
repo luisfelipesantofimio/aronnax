@@ -50,4 +50,29 @@ class CalendarRepository implements CalendarRepositoryInterface {
         .toList());
     return filteredList;
   }
+
+  @override
+  Future<List<CalendarEvent>> getCompleteEventsList(WidgetRef ref) async {
+    List<LocalAppointment> list =
+        await ref.read(localDatabaseRepositoryProvider).getLocalAppointments();
+
+    List<CalendarEvent> parsedCalendarEvents =
+        list.map((e) => CalendarEvent.fromLocalModel(e)).toList();
+    return parsedCalendarEvents;
+  }
+
+  @override
+  void deleteEvent({required int eventID, required WidgetRef ref}) {
+    ref.read(localDatabaseRepositoryProvider).deleteAppointments(eventID);
+  }
+
+  @override
+  List<CalendarEvent> filterEventsByDate(
+      List<CalendarEvent> snapshot, DateTime date) {
+    return snapshot
+        .where((element) =>
+            DateFormat('dd/MM/yyyy').format(element.date) ==
+            DateFormat('dd/MM/yyyy').format(date))
+        .toList();
+  }
 }
