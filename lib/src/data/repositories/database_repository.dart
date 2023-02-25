@@ -267,4 +267,14 @@ class DatabaseRepository implements LocalDatabaseInteface {
   void deleteAppointments(int eventId) async {
     await localDB.deleteLocalEvent(eventId);
   }
+
+  @override
+  void deleteTodo(int todoId) async {
+    await localDB.deleteLocalTodo(todoId);
+  }
+
+  @override
+  Future<List<LocalTodo>> getLocalTodos() async {
+    return await localDB.getLocalTodos();
+  }
 }
