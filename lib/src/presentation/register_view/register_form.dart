@@ -19,6 +19,7 @@ class RegisterForm extends ConsumerStatefulWidget {
 class RegisterFormState extends ConsumerState<RegisterForm> {
   String stateCode = '';
   String selectedCity = '';
+  List<String> genders = ["Masculino", "Femenino", "Otro"];
 
   @override
   Widget build(BuildContext context) {
@@ -111,6 +112,30 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                 ),
               ),
               const Padding(
+                padding: EdgeInsets.all(10),
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.15,
+                child: DropdownButtonFormField(
+                  decoration: const InputDecoration(
+                    hintText: 'Género',
+                  ),
+                  items: genders
+                      .map(
+                        (e) => DropdownMenuItem(
+                          value: e,
+                          child: Text(e),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (value) {
+                    ref
+                        .read(registerGenderProvider.notifier)
+                        .update((state) => value as String);
+                  },
+                ),
+              ),
+              Padding(
                 padding: EdgeInsets.all(10),
               ),
               DateSelector(

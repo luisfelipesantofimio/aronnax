@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class UserSearchRepository implements UserSearchRepositoryInterface {
   @override
   void searchLocalUserByName(WidgetRef ref, String query) async {
-    List<Patient> queriedData =
+    List<LocalPatient> queriedData =
         await ref.read(localDatabaseRepositoryProvider).searchPatient(query);
 
     ref
@@ -16,7 +16,7 @@ class UserSearchRepository implements UserSearchRepositoryInterface {
   }
 
   @override
-  Future<List<Patient>> searchremoteUserByName(String query) {
+  Future<List<LocalPatient>> searchremoteUserByName(String query) {
     // TODO: implement searchremoteUserByName
     throw UnimplementedError();
   }

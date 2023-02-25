@@ -30,7 +30,7 @@ class SessionInformationView extends ConsumerWidget {
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
         Text(
-            "${ref.read(globalUserNameProvider)} ${ref.read(globalUserLastNameProvider)}"),
+            "${ref.read(globalUserInformationProvider)!.names} ${ref.read(globalUserInformationProvider)!.lastNames}"),
         const Padding(
           padding: EdgeInsets.all(10),
         ),

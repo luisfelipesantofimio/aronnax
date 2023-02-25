@@ -100,6 +100,8 @@ class MainViewRegister extends ConsumerWidget {
                                               ref.read(registerAdressProvider),
                                           birthDate: ref
                                               .read(registerBirthDateProvider),
+                                          gender:
+                                              ref.read(registerGenderProvider),
                                           city: ref.read(registerCityProvider),
                                           state:
                                               ref.read(registerStateProvider),
@@ -119,8 +121,10 @@ class MainViewRegister extends ConsumerWidget {
                                               registerEmergencyContactNameProvider),
                                           emergencyContactNumber: ref.read(
                                               registerEmergencyContactNumberProvider),
-                                          professionalID: ref.read(
-                                              globalProfessionalPersonalIDProvider),
+                                          professionalID: ref
+                                              .read(
+                                                  globalUserInformationProvider)!
+                                              .professionalID,
                                         );
                                         // : insertPatientData(
                                         //     names,

@@ -10,3 +10,4 @@ class AppConstants {
 }
 
 final loginKey = GlobalKey<FormState>();
+final appointmentCreationKey = GlobalKey<FormState>();

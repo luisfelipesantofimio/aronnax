@@ -1,9 +1,12 @@
-import 'dart:ui';
+import 'dart:developer';
 
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/remote_database/server_api.dart';
+import 'package:aronnax/src/domain/entities/calendar_event.dart';
+import 'package:aronnax/src/presentation/core/methods.dart';
 import 'package:drift/drift.dart';
+import 'package:flutter/material.dart';
 
 class DatabaseRepository implements LocalDatabaseInteface {
   LocalDatabase localDB = LocalDatabase();
@@ -27,7 +30,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
     required DateTime creationDate,
     required int professionalID,
   }) {
-    final entity = PatientsCompanion(
+    final entity = LocalPatientsCompanion(
         names: Value(names),
         lastNames: Value(lastNames),
         birthDate: Value(birthDate),
@@ -64,7 +67,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
     int idNumber,
     int professionalID,
   ) async {
-    final entity = ClinicHistoryCompanion(
+    final entity = LocalClinicHistoryCompanion(
       registerNumber: Value(registerCode),
       currentDate: Value(dateTime),
       consultationReason: Value(consultationReason),
@@ -91,7 +94,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
     int professionalID,
     DateTime sessionDate,
   ) async {
-    final entity = SessionsCompanion(
+    final entity = LocalSessionsCompanion(
       idNumber: Value(idNumber),
       professionalID: Value(professionalID),
       sessionDate: Value(sessionDate),
@@ -105,7 +108,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
   @override
   addLocalProfessional(int personalID, String names, String lastNames,
       int professionalID, String userName, String password) {
-    final entity = ProfessionalCompanion(
+    final entity = LocalProfessionalCompanion(
       userName: Value(userName),
       names: Value(names),
       lastNames: Value(lastNames),
@@ -118,17 +121,17 @@ class DatabaseRepository implements LocalDatabaseInteface {
   }
 
   @override
-  Future<List<Patient>> searchPatient(String user) {
+  Future<List<LocalPatient>> searchPatient(String user) {
     return localDB.userConsultation(user);
   }
 
   @override
-  Future<List<ProfessionalData>> loginExistingProfessional(int userID) {
+  Future<List<LocalProfessionalData>> loginExistingProfessional(int userID) {
     return localDB.loginProfessional(userID);
   }
 
   @override
-  Stream<List<ProfessionalData>> fetchInitialRegisterUsers() {
+  Stream<List<LocalProfessionalData>> fetchInitialRegisterUsers() {
     return localDB.initalProfessionalFetch();
   }
 
@@ -195,7 +198,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
   }
 
   @override
-  Future<List<ProfessionalData>> getProfessionalsList() {
+  Future<List<LocalProfessionalData>> getProfessionalsList() {
     return localDB.getProfessionalsList();
   }
 
@@ -213,7 +216,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
     required Color itemColor,
     required bool isComplete,
   }) {
-    final data = TodosCompanion(
+    final data = LocalTodosCompanion(
       todo: Value(todoTitle),
       description: Value(todoDescription),
       creationDate: Value(date),
@@ -226,5 +229,42 @@ class DatabaseRepository implements LocalDatabaseInteface {
       isComplete: Value(isComplete),
     );
     return localDB.insertTodo(data);
+  }
+
+  @override
+  Future<List<LocalAppointment>> getLocalAppointments() {
+    return localDB.getLocalAppointments();
+  }
+
+  @override
+  Future<List<LocalPatient>> getLocalPatientsList() {
+    return localDB.getPatientsList();
+  }
+
+  @override
+  Future<void> addLocalAppointMent(
+      {required DateTime date,
+      required int professionalId,
+      required int patientId,
+      required String? description,
+      required CalendarEventStates state,
+      required CalendarEventType eventType}) async {
+    String eventStatus = AppMethods().parseCalendarEventStateFromEnum(state);
+    String type = AppMethods().parseCalendarEventTypeFromEnum(eventType);
+    final data = LocalAppointmentsCompanion(
+      date: Value(date),
+      description: Value(description),
+      patientID: Value(patientId),
+      professionalID: Value(professionalId),
+      sessionType: Value(type),
+      status: Value(eventStatus),
+    );
+
+    await localDB.insertAppointment(data);
+  }
+
+  @override
+  void deleteAppointments(int eventId) async {
+    await localDB.deleteLocalEvent(eventId);
   }
 }

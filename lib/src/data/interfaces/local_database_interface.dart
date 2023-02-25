@@ -1,5 +1,6 @@
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/repositories/database_repository.dart';
+import 'package:aronnax/src/domain/entities/calendar_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -50,11 +51,11 @@ abstract class LocalDatabaseInteface {
   void addLocalProfessional(int personalID, String names, String lastNames,
       int professionalID, String userName, String password);
 
-  Future<List<Patient>> searchPatient(String user);
+  Future<List<LocalPatient>> searchPatient(String user);
 
-  Future<List<ProfessionalData>> loginExistingProfessional(int userID);
+  Future<List<LocalProfessionalData>> loginExistingProfessional(int userID);
 
-  Stream<List<ProfessionalData>> fetchInitialRegisterUsers();
+  Stream<List<LocalProfessionalData>> fetchInitialRegisterUsers();
 
   Future<Setting?> verifySettingsData();
 
@@ -81,6 +82,15 @@ abstract class LocalDatabaseInteface {
     required bool isComplete,
   });
 
+  Future<void> addLocalAppointMent({
+    required DateTime date,
+    required int professionalId,
+    required int patientId,
+    required String? description,
+    required CalendarEventStates state,
+    required CalendarEventType eventType,
+  });
+
   void updateConfigurationState(bool isConfigured);
 
   Future updateThemeMode(bool isDarkEnabled);
@@ -89,11 +99,15 @@ abstract class LocalDatabaseInteface {
 
   Future<List<ServerDatabaseData>> getServerConfigurationList();
 
-  Future<List<ProfessionalData>> getProfessionalsList();
+  Future<List<LocalProfessionalData>> getProfessionalsList();
 
   Stream<Setting> getSettingsAsStream();
 
   Future<Setting> getLocalSettings();
+  Future<List<LocalAppointment>> getLocalAppointments();
+  Future<List<LocalPatient>> getLocalPatientsList();
+
+  void deleteAppointments(int eventId);
 }
 
 final localDatabaseRepositoryProvider = Provider<LocalDatabaseInteface>(

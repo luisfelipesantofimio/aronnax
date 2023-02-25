@@ -41,7 +41,7 @@ class LocalDBActivationScreenState
                         .watch(localDatabaseRepositoryProvider)
                         .getServerConfigurationList();
 
-                    List<ProfessionalData> professionalsList = await ref
+                    List<LocalProfessionalData> professionalsList = await ref
                         .read(localDatabaseRepositoryProvider)
                         .getProfessionalsList();
 

@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// It's value gets updated when the input parameter of
 /// the [UserSearchRepository] local query method
 /// is used
-final localQueriedPatientSearchListProvider = StateProvider<List<Patient>>(
+final localQueriedPatientSearchListProvider = StateProvider<List<LocalPatient>>(
   (ref) => [],
 );
 

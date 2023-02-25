@@ -4,11 +4,11 @@ import 'package:aronnax/src/Pages/ClinicHistory/widgets/clinic_history_no_clinic
 import 'package:aronnax/src/Pages/Formulary/widgets/consultant_selection_dialog.dart';
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/database/local_model/local_queries.dart';
-import 'package:aronnax/src/domain/entities/remote_clinic_history.dart';
-import 'package:aronnax/src/domain/entities/remote_patient.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/consultations_provider.dart';
 import 'package:aronnax/src/data/providers/patient_search_provider.dart';
+import 'package:aronnax/src/domain/entities/remote_model/remote_clinic_history.dart';
+import 'package:aronnax/src/domain/entities/remote_model/remote_patient.dart';
 import 'package:aronnax/src/presentation/clinic_history_form_screen/clinic_history_register_view.dart';
 import 'package:aronnax/src/presentation/widgets/consultation_element.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +30,7 @@ class ClinicHistorySearchFormState
     bool isOfflineEnabled = ref.watch(globalOfflineStatusProvider);
     List<RemotePatient> remotePatientsList =
         isOfflineEnabled ? [] : ref.watch(globalQueriedPatientProvider);
-    List<Patient> localPatientsList = ref.watch(
+    List<LocalPatient> localPatientsList = ref.watch(
       localQueriedPatientSearchListProvider,
     );
     return SizedBox(
@@ -82,7 +82,8 @@ class ClinicHistorySearchFormState
                                 .toList()[index]
                                 .toString(),
                             onTap: () async {
-                              List<ClinicHistoryData> localClinicHistoryData =
+                              List<LocalClinicHistoryData>
+                                  localClinicHistoryData =
                                   await localDB.clinicHistoryConsultation(
                                       localPatientsList
                                           .map((e) => e.idNumber)

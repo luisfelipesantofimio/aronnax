@@ -12,6 +12,10 @@ final registerIdNumberProvider = StateProvider<int>(
   (ref) => 0,
 );
 
+final registerGenderProvider = StateProvider<String>(
+  (ref) => '',
+);
+
 final registerBirthDateProvider = StateProvider<DateTime>(
   (ref) => DateTime(
     DateTime.now().year - 10,
