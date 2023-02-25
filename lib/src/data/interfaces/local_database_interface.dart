@@ -106,6 +106,8 @@ abstract class LocalDatabaseInteface {
   Future<Setting> getLocalSettings();
   Future<List<LocalAppointment>> getLocalAppointments();
   Future<List<LocalPatient>> getLocalPatientsList();
+
+  void deleteAppointments(int eventId);
 }
 
 final localDatabaseRepositoryProvider = Provider<LocalDatabaseInteface>(

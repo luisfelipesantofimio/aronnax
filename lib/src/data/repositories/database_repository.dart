@@ -259,7 +259,12 @@ class DatabaseRepository implements LocalDatabaseInteface {
       sessionType: Value(type),
       status: Value(eventStatus),
     );
-    log(data.toString());
+
     await localDB.insertAppointment(data);
+  }
+
+  @override
+  void deleteAppointments(int eventId) async {
+    await localDB.deleteLocalEvent(eventId);
   }
 }

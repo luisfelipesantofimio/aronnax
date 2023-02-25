@@ -154,6 +154,16 @@ class LocalDatabase extends _$LocalDatabase {
       ),
     );
   }
+
+  //Delete
+
+  Future deleteLocalEvent(int eventId) {
+    return (delete(localAppointments)
+          ..where(
+            (tbl) => tbl.id.equals(eventId),
+          ))
+        .go();
+  }
 }
 
 LazyDatabase _openConnection() {
