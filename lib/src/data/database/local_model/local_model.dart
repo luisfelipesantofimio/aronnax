@@ -161,6 +161,14 @@ class LocalDatabase extends _$LocalDatabase {
     );
   }
 
+  Future updateTodoState(int todoId, bool newState) {
+    return (update(localTodos)..where((tbl) => tbl.id.equals(todoId))).write(
+      LocalTodosCompanion(
+        isComplete: Value(newState),
+      ),
+    );
+  }
+
   //Delete
 
   Future deleteLocalEvent(int eventId) {

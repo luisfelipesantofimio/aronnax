@@ -97,6 +97,8 @@ abstract class LocalDatabaseInteface {
 
   Future updateConnectionMode(bool isOfflineEnabled);
 
+  Future updateTodoState(int todoId, bool newState);
+
   Future<List<ServerDatabaseData>> getServerConfigurationList();
 
   Future<List<LocalProfessionalData>> getProfessionalsList();
