@@ -23,6 +23,8 @@ class Todo {
       id: data.id,
       date: data.creationDate,
       todo: data.todo,
+      catergory: data.category,
+      description: data.description,
       colorCode: data.itemColor,
       isComplete: data.isComplete,
     );
