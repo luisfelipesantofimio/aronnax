@@ -26,7 +26,7 @@ class EventsListView extends ConsumerWidget {
               itemBuilder: (context, index) => Padding(
                 padding: const EdgeInsets.only(bottom: 8.0),
                 child: SizedBox(
-                  height: 150,
+                  height: 120,
                   child: EventListElement(
                     date: filtedEventsList[index].date,
                     eventStates: filtedEventsList[index].state,

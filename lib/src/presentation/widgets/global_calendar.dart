@@ -43,7 +43,6 @@ class _GlobalCalendarState extends ConsumerState<GlobalCalendar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.4,
       decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(
@@ -56,80 +55,83 @@ class _GlobalCalendarState extends ConsumerState<GlobalCalendar> {
               offset: Offset(0, 3),
             ),
           ]),
-      child: TableCalendar<CalendarEvent>(
-        calendarStyle: const CalendarStyle(
-          outsideDaysVisible: true,
-          markersMaxCount: 1,
-          markerDecoration: BoxDecoration(
-            color: Colors.black,
-            shape: BoxShape.circle,
-          ),
-        ),
-        daysOfWeekStyle: DaysOfWeekStyle(
-          dowTextFormatter: (date, locale) {
-            return DateFormat.E(locale).format(date)[0].toUpperCase();
-          },
-        ),
-        firstDay: DateTime(DateTime.now().year - 10),
-        lastDay: DateTime(DateTime.now().year + 10),
-        rangeStartDay: _rangeStartDay,
-        rangeEndDay: _rangeEndDay,
-        focusedDay: _focusedDay,
-
-        headerStyle: const HeaderStyle(
-          formatButtonVisible: false,
-        ),
-        onDaySelected: (selectedDay, focusedDay) async {
-          setState(() {
-            _focusedDay = focusedDay;
-            _userSelectedDay = selectedDay;
-
-            rangeSelectionMode = RangeSelectionMode.toggledOff;
-          });
-
-          List<CalendarEvent> eventsList = await ref
-              .read(calendarRepositoryProvider)
-              .getListOfEventsByDay(
-                  date: selectedDay,
-                  isOfflineEnabled: ref.read(globalOfflineStatusProvider),
-                  ref: ref);
-          ref
-              .read(appointmentsListProvider.notifier)
-              .update((state) => eventsList);
-          ref.read(selectedDateProvider.notifier).update(
-                (state) => selectedDay,
-              );
-          Future(
-            () => showDialog(
-              context: context,
-              builder: (context) =>
-                  AppointmentCreationDialog(selectedDate: selectedDay),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: TableCalendar<CalendarEvent>(
+          calendarStyle: const CalendarStyle(
+            outsideDaysVisible: true,
+            markersMaxCount: 1,
+            markerDecoration: BoxDecoration(
+              color: Colors.black,
+              shape: BoxShape.circle,
             ),
-          );
-        },
-        selectedDayPredicate: (day) {
-          return isSameDay(_userSelectedDay, day);
-        },
-        rangeSelectionMode: rangeSelectionMode,
-        // onRangeSelected: (start, end, focusedDay) async {
-        //   setState(() {
-        //     rangeSelectionMode = RangeSelectionMode.toggledOn;
-        //   });
-        //   List<CalendarEvent> eventsList = await ref
-        //       .read(calendarRepositoryProvider)
-        //       .getListOfEventsByRange(
-        //           start: start,
-        //           end: end,
-        //           selectedDate: focusedDay,
-        //           isOfflineEnabled: ref.read(globalOfflineStatusProvider),
-        //           ref: ref);
+          ),
+          daysOfWeekStyle: DaysOfWeekStyle(
+            dowTextFormatter: (date, locale) {
+              return DateFormat.E(locale).format(date)[0].toUpperCase();
+            },
+          ),
+          firstDay: DateTime(DateTime.now().year - 10),
+          lastDay: DateTime(DateTime.now().year + 10),
+          rangeStartDay: _rangeStartDay,
+          rangeEndDay: _rangeEndDay,
+          focusedDay: _focusedDay,
 
-        //   ref
-        //       .read(appointmentsListProvider.notifier)
-        //       .update((state) => eventsList);
-        // },
-        eventLoader: (day) => _getEventsByDay(day),
-        locale: 'es',
+          headerStyle: const HeaderStyle(
+            formatButtonVisible: false,
+          ),
+          onDaySelected: (selectedDay, focusedDay) async {
+            setState(() {
+              _focusedDay = focusedDay;
+              _userSelectedDay = selectedDay;
+
+              rangeSelectionMode = RangeSelectionMode.toggledOff;
+            });
+
+            List<CalendarEvent> eventsList = await ref
+                .read(calendarRepositoryProvider)
+                .getListOfEventsByDay(
+                    date: selectedDay,
+                    isOfflineEnabled: ref.read(globalOfflineStatusProvider),
+                    ref: ref);
+            ref
+                .read(appointmentsListProvider.notifier)
+                .update((state) => eventsList);
+            ref.read(selectedDateProvider.notifier).update(
+                  (state) => selectedDay,
+                );
+            Future(
+              () => showDialog(
+                context: context,
+                builder: (context) =>
+                    AppointmentCreationDialog(selectedDate: selectedDay),
+              ),
+            );
+          },
+          selectedDayPredicate: (day) {
+            return isSameDay(_userSelectedDay, day);
+          },
+          rangeSelectionMode: rangeSelectionMode,
+          // onRangeSelected: (start, end, focusedDay) async {
+          //   setState(() {
+          //     rangeSelectionMode = RangeSelectionMode.toggledOn;
+          //   });
+          //   List<CalendarEvent> eventsList = await ref
+          //       .read(calendarRepositoryProvider)
+          //       .getListOfEventsByRange(
+          //           start: start,
+          //           end: end,
+          //           selectedDate: focusedDay,
+          //           isOfflineEnabled: ref.read(globalOfflineStatusProvider),
+          //           ref: ref);
+
+          //   ref
+          //       .read(appointmentsListProvider.notifier)
+          //       .update((state) => eventsList);
+          // },
+          eventLoader: (day) => _getEventsByDay(day),
+          locale: 'es',
+        ),
       ),
     );
   }
