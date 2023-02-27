@@ -221,7 +221,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
       description: Value(todoDescription),
       creationDate: Value(date),
       category: Value(
-        categoryList.join(','),
+        categoryList.isEmpty ? null : categoryList.join(','),
       ),
       itemColor: Value(
         itemColor.value,
@@ -276,5 +276,10 @@ class DatabaseRepository implements LocalDatabaseInteface {
   @override
   Future<List<LocalTodo>> getLocalTodos() async {
     return await localDB.getLocalTodos();
+  }
+
+  @override
+  Future updateTodoState(int todoId, bool newState) async {
+    await localDB.updateTodoState(todoId, newState);
   }
 }
