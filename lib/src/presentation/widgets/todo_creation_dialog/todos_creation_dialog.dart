@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
+import 'package:aronnax/src/data/providers/todos_provider.dart';
 import 'package:aronnax/src/presentation/widgets/todo_creation_dialog/todo_category_item.dart';
 import 'package:aronnax/src/presentation/widgets/todo_creation_dialog/todos_color_selection.dart';
 import 'package:flutter/material.dart';
@@ -29,11 +30,12 @@ class _TodosCreationDialogState extends ConsumerState<TodosCreationDialog> {
     return Dialog(
       child: Container(
         color: selectedColor,
-        height: MediaQuery.of(context).size.height * 0.5,
+        height: MediaQuery.of(context).size.height * 0.58,
         width: MediaQuery.of(context).size.width * 0.5,
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Row(
                 children: [
@@ -53,7 +55,11 @@ class _TodosCreationDialogState extends ConsumerState<TodosCreationDialog> {
                     child: TextField(
                       decoration:
                           const InputDecoration(hintText: 'Nueva tarea'),
-                      onChanged: (value) {},
+                      onChanged: (value) {
+                        setState(() {
+                          todoTitle = value;
+                        });
+                      },
                     ),
                   ),
                   const Padding(
@@ -67,7 +73,11 @@ class _TodosCreationDialogState extends ConsumerState<TodosCreationDialog> {
               TextField(
                 maxLines: 3,
                 decoration: const InputDecoration(hintText: 'Descripción'),
-                onChanged: (value) {},
+                onChanged: (value) {
+                  setState(() {
+                    todoDescription = value;
+                  });
+                },
               ),
               const Padding(
                 padding: EdgeInsets.all(10),
@@ -214,6 +224,8 @@ class _TodosCreationDialogState extends ConsumerState<TodosCreationDialog> {
                             itemColor: selectedColor,
                             isComplete: false,
                           );
+                      ref.invalidate(todosListProvider);
+                      Navigator.pop(context);
                     },
                     child: Container(
                       width: 180,
