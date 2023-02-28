@@ -97,6 +97,8 @@ abstract class LocalDatabaseInteface {
 
   Future updateConnectionMode(bool isOfflineEnabled);
 
+  Future updateTodoState(int todoId, bool newState);
+
   Future<List<ServerDatabaseData>> getServerConfigurationList();
 
   Future<List<LocalProfessionalData>> getProfessionalsList();
@@ -106,8 +108,11 @@ abstract class LocalDatabaseInteface {
   Future<Setting> getLocalSettings();
   Future<List<LocalAppointment>> getLocalAppointments();
   Future<List<LocalPatient>> getLocalPatientsList();
+  Future<List<LocalTodo>> getLocalTodos();
 
   void deleteAppointments(int eventId);
+
+  void deleteTodo(int todoId);
 }
 
 final localDatabaseRepositoryProvider = Provider<LocalDatabaseInteface>(

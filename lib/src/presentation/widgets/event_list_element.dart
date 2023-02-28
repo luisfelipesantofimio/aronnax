@@ -115,7 +115,7 @@ class _EventListElementState extends ConsumerState<EventListElement> {
             ],
           ),
           SizedBox(
-            width: 200,
+            width: MediaQuery.of(context).size.width * 0.1,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -152,7 +152,9 @@ class _EventListElementState extends ConsumerState<EventListElement> {
                         ? const Color.fromARGB(255, 243, 84, 73)
                         : const Color.fromARGB(255, 241, 142, 135),
                   ),
-                  width: isMouseHover ? 100 : 50,
+                  width: isMouseHover
+                      ? MediaQuery.of(context).size.width * 0.08
+                      : MediaQuery.of(context).size.width * 0.04,
                   duration: const Duration(milliseconds: 200),
                   child: Center(
                     child: Padding(

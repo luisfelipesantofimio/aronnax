@@ -38,6 +38,7 @@ dependencies:
   table_calendar: ^3.0.8
   flutter_localizations:
     sdk: flutter
+  icons_launcher: ^2.1.0
   
 
 dev_dependencies:
@@ -64,3 +65,13 @@ flutter:
   - assets/img/aronnax-icon-light.png
   - assets/img/aronnax-icon-dark.png
  
+
+icons_launcher:
+  image_path: 'assets/img/aronnax-icon-light.png'
+  platforms:
+    windows:
+      enable: true
+    linux:
+      enable: true
+    macos:
+      enable: true

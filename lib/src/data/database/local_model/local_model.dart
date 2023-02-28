@@ -147,10 +147,24 @@ class LocalDatabase extends _$LocalDatabase {
     return (select(serverDatabase)).get();
   }
 
+  Future<List<LocalTodo>> getLocalTodos() {
+    return (select(localTodos)).get();
+  }
+
+  //Update
+
   Future updateConfigurationState(bool isConfigured) {
     return (update(settings)..where((t) => t.id.equals(0))).write(
       SettingsCompanion(
         isConfigured: Value(isConfigured),
+      ),
+    );
+  }
+
+  Future updateTodoState(int todoId, bool newState) {
+    return (update(localTodos)..where((tbl) => tbl.id.equals(todoId))).write(
+      LocalTodosCompanion(
+        isComplete: Value(newState),
       ),
     );
   }
@@ -161,6 +175,14 @@ class LocalDatabase extends _$LocalDatabase {
     return (delete(localAppointments)
           ..where(
             (tbl) => tbl.id.equals(eventId),
+          ))
+        .go();
+  }
+
+  Future deleteLocalTodo(int todoId) {
+    return (delete(localTodos)
+          ..where(
+            (tbl) => tbl.id.equals(todoId),
           ))
         .go();
   }
