@@ -19,7 +19,6 @@ class TodosListElement extends ConsumerWidget {
         todoData.catergory != null ? todoData.catergory!.split(',') : [];
 
     return Container(
-      width: 300,
       margin: const EdgeInsets.all(5),
       decoration: BoxDecoration(
         color: Color(todoData.colorCode),
@@ -30,65 +29,63 @@ class TodosListElement extends ConsumerWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: 200,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: 118,
-                        child: Text(
-                          todoData.todo,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            decoration: todoData.isComplete
-                                ? TextDecoration.lineThrough
-                                : TextDecoration.none,
-                          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.2,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: 118,
+                      child: Text(
+                        todoData.todo,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          decoration: todoData.isComplete
+                              ? TextDecoration.lineThrough
+                              : TextDecoration.none,
                         ),
                       ),
-                      Text(
-                        DateFormat('dd/MM/yyyy').format(todoData.date),
-                      ),
-                    ],
-                  ),
+                    ),
+                    Text(
+                      DateFormat('dd/MM/yyyy').format(todoData.date),
+                    ),
+                  ],
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(5),
-                ),
-                Visibility(
-                  visible: categoryList.isNotEmpty,
-                  child: SizedBox(
-                    width: categoryList.isEmpty ? null : 200,
-                    height: 20,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: categoryList.length,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) => Container(
-                        margin: const EdgeInsets.only(right: 5),
-                        decoration: const BoxDecoration(
-                          color: Color.fromARGB(255, 192, 158, 230),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(30),
-                          ),
+              ),
+              const Padding(
+                padding: EdgeInsets.all(5),
+              ),
+              Visibility(
+                visible: categoryList.isNotEmpty,
+                child: SizedBox(
+                  width: categoryList.isEmpty ? null : 200,
+                  height: 20,
+                  child: ListView.builder(
+                    padding: const EdgeInsets.all(0),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: categoryList.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) => Container(
+                      margin: const EdgeInsets.only(right: 5),
+                      decoration: const BoxDecoration(
+                        color: Color.fromARGB(255, 192, 158, 230),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(30),
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 8, right: 8, top: 2, bottom: 2),
-                          child: Center(
-                            child: Text(
-                              categoryList[index],
-                              style: const TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.bold,
-                              ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 8, right: 8, top: 2, bottom: 2),
+                        child: Center(
+                          child: Text(
+                            categoryList[index],
+                            style: const TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
@@ -96,19 +93,19 @@ class TodosListElement extends ConsumerWidget {
                     ),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(5),
+              ),
+              const Padding(
+                padding: EdgeInsets.all(5),
+              ),
+              Text(
+                todoData.description ?? 'Sin descripción',
+                style: TextStyle(
+                  decoration: todoData.isComplete
+                      ? TextDecoration.lineThrough
+                      : TextDecoration.none,
                 ),
-                Text(
-                  todoData.description ?? 'Sin descripción',
-                  style: TextStyle(
-                    decoration: todoData.isComplete
-                        ? TextDecoration.lineThrough
-                        : TextDecoration.none,
-                  ),
-                )
-              ],
-            ),
+              )
+            ],
           ),
           Container(
             decoration: BoxDecoration(
