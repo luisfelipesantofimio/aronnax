@@ -545,7 +545,7 @@ class $LocalPatientsTable extends LocalPatients
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES local_professional (professional_i_d)'));
+          'REFERENCES local_professional (personal_i_d)'));
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -1365,7 +1365,7 @@ class $LocalClinicHistoryTable extends LocalClinicHistory
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES local_professional (professional_i_d)'));
+          'REFERENCES local_professional (personal_i_d)'));
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -1981,7 +1981,7 @@ class $LocalSessionsTable extends LocalSessions
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES local_professional (professional_i_d)'));
+          'REFERENCES local_professional (personal_i_d)'));
   @override
   List<GeneratedColumn> get $columns => [
         sessionId,
@@ -2483,7 +2483,7 @@ class $LocalTestsTable extends LocalTests
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES local_professional (professional_i_d)'));
+          'REFERENCES local_professional (personal_i_d)'));
   static const VerificationMeta _sessionIDMeta =
       const VerificationMeta('sessionID');
   @override
@@ -3269,7 +3269,7 @@ class $LocalAppointmentsTable extends LocalAppointments
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES local_professional (professional_i_d)'));
+          'REFERENCES local_professional (personal_i_d)'));
   static const VerificationMeta _patientIDMeta =
       const VerificationMeta('patientID');
   @override
@@ -3611,6 +3611,790 @@ class LocalAppointmentsCompanion extends UpdateCompanion<LocalAppointment> {
           ..write('description: $description, ')
           ..write('status: $status, ')
           ..write('sessionType: $sessionType')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $LocalTreatmentPlansTable extends LocalTreatmentPlans
+    with TableInfo<$LocalTreatmentPlansTable, LocalTreatmentPlan> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $LocalTreatmentPlansTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _creationDateMeta =
+      const VerificationMeta('creationDate');
+  @override
+  late final GeneratedColumn<DateTime> creationDate = GeneratedColumn<DateTime>(
+      'creation_date', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _treatmentIdMeta =
+      const VerificationMeta('treatmentId');
+  @override
+  late final GeneratedColumn<String> treatmentId = GeneratedColumn<String>(
+      'treatment_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _treatmentTitleMeta =
+      const VerificationMeta('treatmentTitle');
+  @override
+  late final GeneratedColumn<String> treatmentTitle = GeneratedColumn<String>(
+      'treatment_title', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _treatmentDescriptionMeta =
+      const VerificationMeta('treatmentDescription');
+  @override
+  late final GeneratedColumn<String> treatmentDescription =
+      GeneratedColumn<String>('treatment_description', aliasedName, false,
+          type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _treatmentDataMeta =
+      const VerificationMeta('treatmentData');
+  @override
+  late final GeneratedColumn<String> treatmentData = GeneratedColumn<String>(
+      'treatment_data', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _professionalIDMeta =
+      const VerificationMeta('professionalID');
+  @override
+  late final GeneratedColumn<int> professionalID = GeneratedColumn<int>(
+      'professional_i_d', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES local_professional (personal_i_d)'));
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        creationDate,
+        treatmentId,
+        treatmentTitle,
+        treatmentDescription,
+        treatmentData,
+        professionalID
+      ];
+  @override
+  String get aliasedName => _alias ?? 'local_treatment_plans';
+  @override
+  String get actualTableName => 'local_treatment_plans';
+  @override
+  VerificationContext validateIntegrity(Insertable<LocalTreatmentPlan> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('creation_date')) {
+      context.handle(
+          _creationDateMeta,
+          creationDate.isAcceptableOrUnknown(
+              data['creation_date']!, _creationDateMeta));
+    } else if (isInserting) {
+      context.missing(_creationDateMeta);
+    }
+    if (data.containsKey('treatment_id')) {
+      context.handle(
+          _treatmentIdMeta,
+          treatmentId.isAcceptableOrUnknown(
+              data['treatment_id']!, _treatmentIdMeta));
+    } else if (isInserting) {
+      context.missing(_treatmentIdMeta);
+    }
+    if (data.containsKey('treatment_title')) {
+      context.handle(
+          _treatmentTitleMeta,
+          treatmentTitle.isAcceptableOrUnknown(
+              data['treatment_title']!, _treatmentTitleMeta));
+    } else if (isInserting) {
+      context.missing(_treatmentTitleMeta);
+    }
+    if (data.containsKey('treatment_description')) {
+      context.handle(
+          _treatmentDescriptionMeta,
+          treatmentDescription.isAcceptableOrUnknown(
+              data['treatment_description']!, _treatmentDescriptionMeta));
+    } else if (isInserting) {
+      context.missing(_treatmentDescriptionMeta);
+    }
+    if (data.containsKey('treatment_data')) {
+      context.handle(
+          _treatmentDataMeta,
+          treatmentData.isAcceptableOrUnknown(
+              data['treatment_data']!, _treatmentDataMeta));
+    } else if (isInserting) {
+      context.missing(_treatmentDataMeta);
+    }
+    if (data.containsKey('professional_i_d')) {
+      context.handle(
+          _professionalIDMeta,
+          professionalID.isAcceptableOrUnknown(
+              data['professional_i_d']!, _professionalIDMeta));
+    } else if (isInserting) {
+      context.missing(_professionalIDMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  LocalTreatmentPlan map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return LocalTreatmentPlan(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      creationDate: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime, data['${effectivePrefix}creation_date'])!,
+      treatmentId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}treatment_id'])!,
+      treatmentTitle: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}treatment_title'])!,
+      treatmentDescription: attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}treatment_description'])!,
+      treatmentData: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}treatment_data'])!,
+      professionalID: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}professional_i_d'])!,
+    );
+  }
+
+  @override
+  $LocalTreatmentPlansTable createAlias(String alias) {
+    return $LocalTreatmentPlansTable(attachedDatabase, alias);
+  }
+}
+
+class LocalTreatmentPlan extends DataClass
+    implements Insertable<LocalTreatmentPlan> {
+  final int id;
+  final DateTime creationDate;
+  final String treatmentId;
+  final String treatmentTitle;
+  final String treatmentDescription;
+  final String treatmentData;
+  final int professionalID;
+  const LocalTreatmentPlan(
+      {required this.id,
+      required this.creationDate,
+      required this.treatmentId,
+      required this.treatmentTitle,
+      required this.treatmentDescription,
+      required this.treatmentData,
+      required this.professionalID});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['creation_date'] = Variable<DateTime>(creationDate);
+    map['treatment_id'] = Variable<String>(treatmentId);
+    map['treatment_title'] = Variable<String>(treatmentTitle);
+    map['treatment_description'] = Variable<String>(treatmentDescription);
+    map['treatment_data'] = Variable<String>(treatmentData);
+    map['professional_i_d'] = Variable<int>(professionalID);
+    return map;
+  }
+
+  LocalTreatmentPlansCompanion toCompanion(bool nullToAbsent) {
+    return LocalTreatmentPlansCompanion(
+      id: Value(id),
+      creationDate: Value(creationDate),
+      treatmentId: Value(treatmentId),
+      treatmentTitle: Value(treatmentTitle),
+      treatmentDescription: Value(treatmentDescription),
+      treatmentData: Value(treatmentData),
+      professionalID: Value(professionalID),
+    );
+  }
+
+  factory LocalTreatmentPlan.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return LocalTreatmentPlan(
+      id: serializer.fromJson<int>(json['id']),
+      creationDate: serializer.fromJson<DateTime>(json['creationDate']),
+      treatmentId: serializer.fromJson<String>(json['treatmentId']),
+      treatmentTitle: serializer.fromJson<String>(json['treatmentTitle']),
+      treatmentDescription:
+          serializer.fromJson<String>(json['treatmentDescription']),
+      treatmentData: serializer.fromJson<String>(json['treatmentData']),
+      professionalID: serializer.fromJson<int>(json['professionalID']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'creationDate': serializer.toJson<DateTime>(creationDate),
+      'treatmentId': serializer.toJson<String>(treatmentId),
+      'treatmentTitle': serializer.toJson<String>(treatmentTitle),
+      'treatmentDescription': serializer.toJson<String>(treatmentDescription),
+      'treatmentData': serializer.toJson<String>(treatmentData),
+      'professionalID': serializer.toJson<int>(professionalID),
+    };
+  }
+
+  LocalTreatmentPlan copyWith(
+          {int? id,
+          DateTime? creationDate,
+          String? treatmentId,
+          String? treatmentTitle,
+          String? treatmentDescription,
+          String? treatmentData,
+          int? professionalID}) =>
+      LocalTreatmentPlan(
+        id: id ?? this.id,
+        creationDate: creationDate ?? this.creationDate,
+        treatmentId: treatmentId ?? this.treatmentId,
+        treatmentTitle: treatmentTitle ?? this.treatmentTitle,
+        treatmentDescription: treatmentDescription ?? this.treatmentDescription,
+        treatmentData: treatmentData ?? this.treatmentData,
+        professionalID: professionalID ?? this.professionalID,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('LocalTreatmentPlan(')
+          ..write('id: $id, ')
+          ..write('creationDate: $creationDate, ')
+          ..write('treatmentId: $treatmentId, ')
+          ..write('treatmentTitle: $treatmentTitle, ')
+          ..write('treatmentDescription: $treatmentDescription, ')
+          ..write('treatmentData: $treatmentData, ')
+          ..write('professionalID: $professionalID')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, creationDate, treatmentId, treatmentTitle,
+      treatmentDescription, treatmentData, professionalID);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is LocalTreatmentPlan &&
+          other.id == this.id &&
+          other.creationDate == this.creationDate &&
+          other.treatmentId == this.treatmentId &&
+          other.treatmentTitle == this.treatmentTitle &&
+          other.treatmentDescription == this.treatmentDescription &&
+          other.treatmentData == this.treatmentData &&
+          other.professionalID == this.professionalID);
+}
+
+class LocalTreatmentPlansCompanion extends UpdateCompanion<LocalTreatmentPlan> {
+  final Value<int> id;
+  final Value<DateTime> creationDate;
+  final Value<String> treatmentId;
+  final Value<String> treatmentTitle;
+  final Value<String> treatmentDescription;
+  final Value<String> treatmentData;
+  final Value<int> professionalID;
+  const LocalTreatmentPlansCompanion({
+    this.id = const Value.absent(),
+    this.creationDate = const Value.absent(),
+    this.treatmentId = const Value.absent(),
+    this.treatmentTitle = const Value.absent(),
+    this.treatmentDescription = const Value.absent(),
+    this.treatmentData = const Value.absent(),
+    this.professionalID = const Value.absent(),
+  });
+  LocalTreatmentPlansCompanion.insert({
+    this.id = const Value.absent(),
+    required DateTime creationDate,
+    required String treatmentId,
+    required String treatmentTitle,
+    required String treatmentDescription,
+    required String treatmentData,
+    required int professionalID,
+  })  : creationDate = Value(creationDate),
+        treatmentId = Value(treatmentId),
+        treatmentTitle = Value(treatmentTitle),
+        treatmentDescription = Value(treatmentDescription),
+        treatmentData = Value(treatmentData),
+        professionalID = Value(professionalID);
+  static Insertable<LocalTreatmentPlan> custom({
+    Expression<int>? id,
+    Expression<DateTime>? creationDate,
+    Expression<String>? treatmentId,
+    Expression<String>? treatmentTitle,
+    Expression<String>? treatmentDescription,
+    Expression<String>? treatmentData,
+    Expression<int>? professionalID,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (creationDate != null) 'creation_date': creationDate,
+      if (treatmentId != null) 'treatment_id': treatmentId,
+      if (treatmentTitle != null) 'treatment_title': treatmentTitle,
+      if (treatmentDescription != null)
+        'treatment_description': treatmentDescription,
+      if (treatmentData != null) 'treatment_data': treatmentData,
+      if (professionalID != null) 'professional_i_d': professionalID,
+    });
+  }
+
+  LocalTreatmentPlansCompanion copyWith(
+      {Value<int>? id,
+      Value<DateTime>? creationDate,
+      Value<String>? treatmentId,
+      Value<String>? treatmentTitle,
+      Value<String>? treatmentDescription,
+      Value<String>? treatmentData,
+      Value<int>? professionalID}) {
+    return LocalTreatmentPlansCompanion(
+      id: id ?? this.id,
+      creationDate: creationDate ?? this.creationDate,
+      treatmentId: treatmentId ?? this.treatmentId,
+      treatmentTitle: treatmentTitle ?? this.treatmentTitle,
+      treatmentDescription: treatmentDescription ?? this.treatmentDescription,
+      treatmentData: treatmentData ?? this.treatmentData,
+      professionalID: professionalID ?? this.professionalID,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (creationDate.present) {
+      map['creation_date'] = Variable<DateTime>(creationDate.value);
+    }
+    if (treatmentId.present) {
+      map['treatment_id'] = Variable<String>(treatmentId.value);
+    }
+    if (treatmentTitle.present) {
+      map['treatment_title'] = Variable<String>(treatmentTitle.value);
+    }
+    if (treatmentDescription.present) {
+      map['treatment_description'] =
+          Variable<String>(treatmentDescription.value);
+    }
+    if (treatmentData.present) {
+      map['treatment_data'] = Variable<String>(treatmentData.value);
+    }
+    if (professionalID.present) {
+      map['professional_i_d'] = Variable<int>(professionalID.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LocalTreatmentPlansCompanion(')
+          ..write('id: $id, ')
+          ..write('creationDate: $creationDate, ')
+          ..write('treatmentId: $treatmentId, ')
+          ..write('treatmentTitle: $treatmentTitle, ')
+          ..write('treatmentDescription: $treatmentDescription, ')
+          ..write('treatmentData: $treatmentData, ')
+          ..write('professionalID: $professionalID')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $LocaltreatmentResultsTable extends LocaltreatmentResults
+    with TableInfo<$LocaltreatmentResultsTable, LocaltreatmentResult> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $LocaltreatmentResultsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _sessionNumberMeta =
+      const VerificationMeta('sessionNumber');
+  @override
+  late final GeneratedColumn<int> sessionNumber = GeneratedColumn<int>(
+      'session_number', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _applicationDateMeta =
+      const VerificationMeta('applicationDate');
+  @override
+  late final GeneratedColumn<DateTime> applicationDate =
+      GeneratedColumn<DateTime>('application_date', aliasedName, false,
+          type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _patientIDMeta =
+      const VerificationMeta('patientID');
+  @override
+  late final GeneratedColumn<int> patientID = GeneratedColumn<int>(
+      'patient_i_d', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES local_patients (id_number)'));
+  static const VerificationMeta _professionalIDMeta =
+      const VerificationMeta('professionalID');
+  @override
+  late final GeneratedColumn<int> professionalID = GeneratedColumn<int>(
+      'professional_i_d', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES local_professional (personal_i_d)'));
+  static const VerificationMeta _treatmentPlanIDMeta =
+      const VerificationMeta('treatmentPlanID');
+  @override
+  late final GeneratedColumn<String> treatmentPlanID = GeneratedColumn<String>(
+      'treatment_plan_i_d', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES local_treatment_plans (treatment_id)'));
+  static const VerificationMeta _treatmentResultsDataMeta =
+      const VerificationMeta('treatmentResultsData');
+  @override
+  late final GeneratedColumn<String> treatmentResultsData =
+      GeneratedColumn<String>('treatment_results_data', aliasedName, false,
+          type: DriftSqlType.string, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        sessionNumber,
+        applicationDate,
+        patientID,
+        professionalID,
+        treatmentPlanID,
+        treatmentResultsData
+      ];
+  @override
+  String get aliasedName => _alias ?? 'localtreatment_results';
+  @override
+  String get actualTableName => 'localtreatment_results';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<LocaltreatmentResult> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('session_number')) {
+      context.handle(
+          _sessionNumberMeta,
+          sessionNumber.isAcceptableOrUnknown(
+              data['session_number']!, _sessionNumberMeta));
+    } else if (isInserting) {
+      context.missing(_sessionNumberMeta);
+    }
+    if (data.containsKey('application_date')) {
+      context.handle(
+          _applicationDateMeta,
+          applicationDate.isAcceptableOrUnknown(
+              data['application_date']!, _applicationDateMeta));
+    } else if (isInserting) {
+      context.missing(_applicationDateMeta);
+    }
+    if (data.containsKey('patient_i_d')) {
+      context.handle(
+          _patientIDMeta,
+          patientID.isAcceptableOrUnknown(
+              data['patient_i_d']!, _patientIDMeta));
+    } else if (isInserting) {
+      context.missing(_patientIDMeta);
+    }
+    if (data.containsKey('professional_i_d')) {
+      context.handle(
+          _professionalIDMeta,
+          professionalID.isAcceptableOrUnknown(
+              data['professional_i_d']!, _professionalIDMeta));
+    } else if (isInserting) {
+      context.missing(_professionalIDMeta);
+    }
+    if (data.containsKey('treatment_plan_i_d')) {
+      context.handle(
+          _treatmentPlanIDMeta,
+          treatmentPlanID.isAcceptableOrUnknown(
+              data['treatment_plan_i_d']!, _treatmentPlanIDMeta));
+    } else if (isInserting) {
+      context.missing(_treatmentPlanIDMeta);
+    }
+    if (data.containsKey('treatment_results_data')) {
+      context.handle(
+          _treatmentResultsDataMeta,
+          treatmentResultsData.isAcceptableOrUnknown(
+              data['treatment_results_data']!, _treatmentResultsDataMeta));
+    } else if (isInserting) {
+      context.missing(_treatmentResultsDataMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  LocaltreatmentResult map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return LocaltreatmentResult(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      sessionNumber: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}session_number'])!,
+      applicationDate: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime, data['${effectivePrefix}application_date'])!,
+      patientID: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}patient_i_d'])!,
+      professionalID: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}professional_i_d'])!,
+      treatmentPlanID: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}treatment_plan_i_d'])!,
+      treatmentResultsData: attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}treatment_results_data'])!,
+    );
+  }
+
+  @override
+  $LocaltreatmentResultsTable createAlias(String alias) {
+    return $LocaltreatmentResultsTable(attachedDatabase, alias);
+  }
+}
+
+class LocaltreatmentResult extends DataClass
+    implements Insertable<LocaltreatmentResult> {
+  final int id;
+  final int sessionNumber;
+  final DateTime applicationDate;
+  final int patientID;
+  final int professionalID;
+  final String treatmentPlanID;
+  final String treatmentResultsData;
+  const LocaltreatmentResult(
+      {required this.id,
+      required this.sessionNumber,
+      required this.applicationDate,
+      required this.patientID,
+      required this.professionalID,
+      required this.treatmentPlanID,
+      required this.treatmentResultsData});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['session_number'] = Variable<int>(sessionNumber);
+    map['application_date'] = Variable<DateTime>(applicationDate);
+    map['patient_i_d'] = Variable<int>(patientID);
+    map['professional_i_d'] = Variable<int>(professionalID);
+    map['treatment_plan_i_d'] = Variable<String>(treatmentPlanID);
+    map['treatment_results_data'] = Variable<String>(treatmentResultsData);
+    return map;
+  }
+
+  LocaltreatmentResultsCompanion toCompanion(bool nullToAbsent) {
+    return LocaltreatmentResultsCompanion(
+      id: Value(id),
+      sessionNumber: Value(sessionNumber),
+      applicationDate: Value(applicationDate),
+      patientID: Value(patientID),
+      professionalID: Value(professionalID),
+      treatmentPlanID: Value(treatmentPlanID),
+      treatmentResultsData: Value(treatmentResultsData),
+    );
+  }
+
+  factory LocaltreatmentResult.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return LocaltreatmentResult(
+      id: serializer.fromJson<int>(json['id']),
+      sessionNumber: serializer.fromJson<int>(json['sessionNumber']),
+      applicationDate: serializer.fromJson<DateTime>(json['applicationDate']),
+      patientID: serializer.fromJson<int>(json['patientID']),
+      professionalID: serializer.fromJson<int>(json['professionalID']),
+      treatmentPlanID: serializer.fromJson<String>(json['treatmentPlanID']),
+      treatmentResultsData:
+          serializer.fromJson<String>(json['treatmentResultsData']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'sessionNumber': serializer.toJson<int>(sessionNumber),
+      'applicationDate': serializer.toJson<DateTime>(applicationDate),
+      'patientID': serializer.toJson<int>(patientID),
+      'professionalID': serializer.toJson<int>(professionalID),
+      'treatmentPlanID': serializer.toJson<String>(treatmentPlanID),
+      'treatmentResultsData': serializer.toJson<String>(treatmentResultsData),
+    };
+  }
+
+  LocaltreatmentResult copyWith(
+          {int? id,
+          int? sessionNumber,
+          DateTime? applicationDate,
+          int? patientID,
+          int? professionalID,
+          String? treatmentPlanID,
+          String? treatmentResultsData}) =>
+      LocaltreatmentResult(
+        id: id ?? this.id,
+        sessionNumber: sessionNumber ?? this.sessionNumber,
+        applicationDate: applicationDate ?? this.applicationDate,
+        patientID: patientID ?? this.patientID,
+        professionalID: professionalID ?? this.professionalID,
+        treatmentPlanID: treatmentPlanID ?? this.treatmentPlanID,
+        treatmentResultsData: treatmentResultsData ?? this.treatmentResultsData,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('LocaltreatmentResult(')
+          ..write('id: $id, ')
+          ..write('sessionNumber: $sessionNumber, ')
+          ..write('applicationDate: $applicationDate, ')
+          ..write('patientID: $patientID, ')
+          ..write('professionalID: $professionalID, ')
+          ..write('treatmentPlanID: $treatmentPlanID, ')
+          ..write('treatmentResultsData: $treatmentResultsData')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, sessionNumber, applicationDate, patientID,
+      professionalID, treatmentPlanID, treatmentResultsData);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is LocaltreatmentResult &&
+          other.id == this.id &&
+          other.sessionNumber == this.sessionNumber &&
+          other.applicationDate == this.applicationDate &&
+          other.patientID == this.patientID &&
+          other.professionalID == this.professionalID &&
+          other.treatmentPlanID == this.treatmentPlanID &&
+          other.treatmentResultsData == this.treatmentResultsData);
+}
+
+class LocaltreatmentResultsCompanion
+    extends UpdateCompanion<LocaltreatmentResult> {
+  final Value<int> id;
+  final Value<int> sessionNumber;
+  final Value<DateTime> applicationDate;
+  final Value<int> patientID;
+  final Value<int> professionalID;
+  final Value<String> treatmentPlanID;
+  final Value<String> treatmentResultsData;
+  const LocaltreatmentResultsCompanion({
+    this.id = const Value.absent(),
+    this.sessionNumber = const Value.absent(),
+    this.applicationDate = const Value.absent(),
+    this.patientID = const Value.absent(),
+    this.professionalID = const Value.absent(),
+    this.treatmentPlanID = const Value.absent(),
+    this.treatmentResultsData = const Value.absent(),
+  });
+  LocaltreatmentResultsCompanion.insert({
+    this.id = const Value.absent(),
+    required int sessionNumber,
+    required DateTime applicationDate,
+    required int patientID,
+    required int professionalID,
+    required String treatmentPlanID,
+    required String treatmentResultsData,
+  })  : sessionNumber = Value(sessionNumber),
+        applicationDate = Value(applicationDate),
+        patientID = Value(patientID),
+        professionalID = Value(professionalID),
+        treatmentPlanID = Value(treatmentPlanID),
+        treatmentResultsData = Value(treatmentResultsData);
+  static Insertable<LocaltreatmentResult> custom({
+    Expression<int>? id,
+    Expression<int>? sessionNumber,
+    Expression<DateTime>? applicationDate,
+    Expression<int>? patientID,
+    Expression<int>? professionalID,
+    Expression<String>? treatmentPlanID,
+    Expression<String>? treatmentResultsData,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (sessionNumber != null) 'session_number': sessionNumber,
+      if (applicationDate != null) 'application_date': applicationDate,
+      if (patientID != null) 'patient_i_d': patientID,
+      if (professionalID != null) 'professional_i_d': professionalID,
+      if (treatmentPlanID != null) 'treatment_plan_i_d': treatmentPlanID,
+      if (treatmentResultsData != null)
+        'treatment_results_data': treatmentResultsData,
+    });
+  }
+
+  LocaltreatmentResultsCompanion copyWith(
+      {Value<int>? id,
+      Value<int>? sessionNumber,
+      Value<DateTime>? applicationDate,
+      Value<int>? patientID,
+      Value<int>? professionalID,
+      Value<String>? treatmentPlanID,
+      Value<String>? treatmentResultsData}) {
+    return LocaltreatmentResultsCompanion(
+      id: id ?? this.id,
+      sessionNumber: sessionNumber ?? this.sessionNumber,
+      applicationDate: applicationDate ?? this.applicationDate,
+      patientID: patientID ?? this.patientID,
+      professionalID: professionalID ?? this.professionalID,
+      treatmentPlanID: treatmentPlanID ?? this.treatmentPlanID,
+      treatmentResultsData: treatmentResultsData ?? this.treatmentResultsData,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (sessionNumber.present) {
+      map['session_number'] = Variable<int>(sessionNumber.value);
+    }
+    if (applicationDate.present) {
+      map['application_date'] = Variable<DateTime>(applicationDate.value);
+    }
+    if (patientID.present) {
+      map['patient_i_d'] = Variable<int>(patientID.value);
+    }
+    if (professionalID.present) {
+      map['professional_i_d'] = Variable<int>(professionalID.value);
+    }
+    if (treatmentPlanID.present) {
+      map['treatment_plan_i_d'] = Variable<String>(treatmentPlanID.value);
+    }
+    if (treatmentResultsData.present) {
+      map['treatment_results_data'] =
+          Variable<String>(treatmentResultsData.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LocaltreatmentResultsCompanion(')
+          ..write('id: $id, ')
+          ..write('sessionNumber: $sessionNumber, ')
+          ..write('applicationDate: $applicationDate, ')
+          ..write('patientID: $patientID, ')
+          ..write('professionalID: $professionalID, ')
+          ..write('treatmentPlanID: $treatmentPlanID, ')
+          ..write('treatmentResultsData: $treatmentResultsData')
           ..write(')'))
         .toString();
   }
@@ -4229,6 +5013,10 @@ abstract class _$LocalDatabase extends GeneratedDatabase {
   late final $LocalTodosTable localTodos = $LocalTodosTable(this);
   late final $LocalAppointmentsTable localAppointments =
       $LocalAppointmentsTable(this);
+  late final $LocalTreatmentPlansTable localTreatmentPlans =
+      $LocalTreatmentPlansTable(this);
+  late final $LocaltreatmentResultsTable localtreatmentResults =
+      $LocaltreatmentResultsTable(this);
   late final $SettingsTable settings = $SettingsTable(this);
   late final $ServerDatabaseTable serverDatabase = $ServerDatabaseTable(this);
   @override
@@ -4243,6 +5031,8 @@ abstract class _$LocalDatabase extends GeneratedDatabase {
         localTests,
         localTodos,
         localAppointments,
+        localTreatmentPlans,
+        localtreatmentResults,
         settings,
         serverDatabase
       ];

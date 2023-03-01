@@ -15,6 +15,8 @@ part 'local_model.g.dart';
   LocalTests,
   LocalTodos,
   LocalAppointments,
+  LocalTreatmentPlans,
+  LocaltreatmentResults,
   Settings,
   ServerDatabase
 ])
@@ -56,6 +58,14 @@ class LocalDatabase extends _$LocalDatabase {
 
   Future<void> insertAppointment(LocalAppointmentsCompanion data) {
     return into(localAppointments).insert(data);
+  }
+
+  Future<void> insertTreatmentPlan(LocalTreatmentPlansCompanion data) {
+    return into(localTreatmentPlans).insert(data);
+  }
+
+  Future<void> insertTreatmentPlanResult(LocaltreatmentResultsCompanion data) {
+    return into(localtreatmentResults).insert(data);
   }
 
   // Data update

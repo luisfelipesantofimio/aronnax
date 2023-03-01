@@ -20,7 +20,7 @@ class LocalPatients extends Table {
   DateTimeColumn get creationDate => dateTime()();
   BoolColumn get isActive => boolean()();
   IntColumn get professionalID =>
-      integer().references(LocalProfessional, #professionalID)();
+      integer().references(LocalProfessional, #personalID)();
 }
 
 class LocalClinicHistory extends Table {
@@ -37,7 +37,7 @@ class LocalClinicHistory extends Table {
   TextColumn get diagnostic => text()();
   IntColumn get idNumber => integer().references(LocalPatients, #idNumber)();
   IntColumn get professionalID =>
-      integer().references(LocalProfessional, #professionalID)();
+      integer().references(LocalProfessional, #personalID)();
 }
 
 class LocalSessions extends Table {
@@ -51,7 +51,7 @@ class LocalSessions extends Table {
   TextColumn get sessionPerformanceExplanation => text().nullable()();
   IntColumn get idNumber => integer().references(LocalPatients, #idNumber)();
   IntColumn get professionalID =>
-      integer().references(LocalProfessional, #professionalID)();
+      integer().references(LocalProfessional, #personalID)();
 }
 
 class LocalProfessional extends Table {
@@ -70,7 +70,7 @@ class LocalTests extends Table {
   DateTimeColumn get testDate => dateTime()();
   IntColumn get patientID => integer().references(LocalPatients, #idNumber)();
   IntColumn get professionalID =>
-      integer().references(LocalProfessional, #professionalID)();
+      integer().references(LocalProfessional, #personalID)();
   IntColumn get sessionID => integer().references(LocalSessions, #sessionId)();
   TextColumn get testReason => text()();
   TextColumn get category => text()();
@@ -91,11 +91,34 @@ class LocalAppointments extends Table {
   IntColumn get id => integer().autoIncrement()();
   DateTimeColumn get date => dateTime()();
   IntColumn get professionalID =>
-      integer().references(LocalProfessional, #professionalID)();
+      integer().references(LocalProfessional, #personalID)();
   IntColumn get patientID => integer().references(LocalPatients, #idNumber)();
   TextColumn get description => text().nullable()();
   TextColumn get status => text()();
   TextColumn get sessionType => text()();
+}
+
+class LocalTreatmentPlans extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  DateTimeColumn get creationDate => dateTime()();
+  TextColumn get treatmentId => text()();
+  TextColumn get treatmentTitle => text()();
+  TextColumn get treatmentDescription => text()();
+  TextColumn get treatmentData => text()();
+  IntColumn get professionalID =>
+      integer().references(LocalProfessional, #personalID)();
+}
+
+class LocaltreatmentResults extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  IntColumn get sessionNumber => integer()();
+  DateTimeColumn get applicationDate => dateTime()();
+  IntColumn get patientID => integer().references(LocalPatients, #idNumber)();
+  IntColumn get professionalID =>
+      integer().references(LocalProfessional, #personalID)();
+  TextColumn get treatmentPlanID =>
+      text().references(LocalTreatmentPlans, #treatmentId)();
+  TextColumn get treatmentResultsData => text()();
 }
 
 class Settings extends Table {
