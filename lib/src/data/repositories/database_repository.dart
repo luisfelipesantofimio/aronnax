@@ -282,4 +282,45 @@ class DatabaseRepository implements LocalDatabaseInteface {
   Future updateTodoState(int todoId, bool newState) async {
     await localDB.updateTodoState(todoId, newState);
   }
+
+  @override
+  void insertLocalTreatmentPlan({
+    required DateTime date,
+    required String treatmentPlanID,
+    required String treatmentTitle,
+    required String treatmentDescription,
+    required int professionalID,
+    required String treatmentData,
+  }) async {
+    final data = LocalTreatmentPlansCompanion(
+      creationDate: Value(date),
+      professionalID: Value(professionalID),
+      treatmentId: Value(treatmentPlanID),
+      treatmentTitle: Value(treatmentTitle),
+      treatmentDescription: Value(treatmentDescription),
+      treatmentData: Value(treatmentData),
+    );
+
+    await localDB.insertTreatmentPlan(data);
+  }
+
+  @override
+  void insertLocalTreatmentPlanResult({
+    required int sessionNumber,
+    required DateTime applicationDate,
+    required String treatmentPlanID,
+    required int patientID,
+    required int professionalID,
+    required String treatmentResultData,
+  }) async {
+    final data = LocaltreatmentResultsCompanion(
+      applicationDate: Value(applicationDate),
+      patientID: Value(patientID),
+      professionalID: Value(professionalID),
+      treatmentPlanID: Value(treatmentPlanID),
+      sessionNumber: Value(sessionNumber),
+      treatmentResultsData: Value(treatmentResultData),
+    );
+    localDB.insertTreatmentPlanResult(data);
+  }
 }

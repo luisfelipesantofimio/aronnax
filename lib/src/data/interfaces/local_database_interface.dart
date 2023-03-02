@@ -73,6 +73,24 @@ abstract class LocalDatabaseInteface {
     required String databasePassword,
   });
 
+  void insertLocalTreatmentPlan({
+    required DateTime date,
+    required String treatmentPlanID,
+    required String treatmentTitle,
+    required String treatmentDescription,
+    required int professionalID,
+    required String treatmentData,
+  });
+
+  void insertLocalTreatmentPlanResult({
+    required int sessionNumber,
+    required DateTime applicationDate,
+    required String treatmentPlanID,
+    required int patientID,
+    required int professionalID,
+    required String treatmentResultData,
+  });
+
   Future<void> addLocalTodo({
     required DateTime date,
     required String todoTitle,
