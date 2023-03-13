@@ -140,7 +140,8 @@ class _ComponentSelectionItemState extends State<ComponentSelectionItem> {
                       ),
                       Visibility(
                         visible: selectedComponent != null &&
-                            selectedComponent!.componentType != 'textField',
+                                selectedComponent!.componentType == 'scale' ||
+                            selectedComponent?.componentType == 'selection',
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -168,7 +169,7 @@ class _ComponentSelectionItemState extends State<ComponentSelectionItem> {
                               ],
                             ),
                             ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
+                              physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               itemCount: optionTypeList.length,
                               itemBuilder: (context, index) => Column(
@@ -199,7 +200,7 @@ class _ComponentSelectionItemState extends State<ComponentSelectionItem> {
                           widget.onComponentSelected(
                             TreatmentPlanComponent(
                               componentType: selectedComponent!.componentType,
-                              inputType: '',
+                              componentTitle: componentTitle!,
                               componentDescription: componentDescription!,
                               isRequired: isRequired,
                               optionsList: optionTypeList

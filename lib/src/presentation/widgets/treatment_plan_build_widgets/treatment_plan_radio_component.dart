@@ -5,14 +5,14 @@ class TreatmentPlanScaleComponent extends StatefulWidget {
   const TreatmentPlanScaleComponent({
     Key? key,
     required this.valuesList,
-    required this.isHorizontal,
     required this.title,
     this.description,
+    required this.isRequired,
   }) : super(key: key);
   final String title;
   final String? description;
   final List<TreatmentPlanOption> valuesList;
-  final bool isHorizontal;
+  final bool isRequired;
 
   @override
   State<TreatmentPlanScaleComponent> createState() =>
@@ -33,19 +33,26 @@ class _TreatmentPlanScaleComponentState
           visible: widget.description != null,
           child: Text(widget.description ?? ''),
         ),
-        ListView.builder(
-          itemCount: widget.valuesList.length,
-          scrollDirection:
-              widget.isHorizontal ? Axis.horizontal : Axis.vertical,
-          shrinkWrap: true,
-          itemBuilder: (context, index) => Radio(
-            value: widget.valuesList[index],
-            groupValue: selectedValue,
-            onChanged: (value) {
-              setState(() {
-                selectedValue = value;
-              });
-            },
+        SizedBox(
+          height: 80,
+          width: MediaQuery.of(context).size.width * 0.4,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: widget.valuesList.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) => SizedBox(
+              width: 200,
+              child: RadioListTile(
+                title: Text(widget.valuesList[index].optionName),
+                value: widget.valuesList[index],
+                groupValue: selectedValue,
+                onChanged: (value) {
+                  setState(() {
+                    selectedValue = value;
+                  });
+                },
+              ),
+            ),
           ),
         ),
       ],

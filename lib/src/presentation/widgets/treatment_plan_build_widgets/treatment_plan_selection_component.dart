@@ -2,18 +2,17 @@ import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_pla
 import 'package:flutter/material.dart';
 
 class TreatmentPlanSelectionComponent extends StatefulWidget {
-  const TreatmentPlanSelectionComponent(
-      {Key? key,
-      required this.title,
-      this.description,
-      required this.valuesList,
-      required this.isHorizontal})
-      : super(key: key);
+  const TreatmentPlanSelectionComponent({
+    Key? key,
+    required this.title,
+    this.description,
+    required this.valuesList,
+    required this.isRequired,
+  }) : super(key: key);
   final String title;
   final String? description;
   final List<TreatmentPlanOption> valuesList;
-  final bool isHorizontal;
-
+  final bool isRequired;
   @override
   State<TreatmentPlanSelectionComponent> createState() =>
       _TreatmentPlanSelectionComponentState();
@@ -33,23 +32,37 @@ class _TreatmentPlanSelectionComponentState
           visible: widget.description != null,
           child: Text(widget.description ?? ''),
         ),
-        ListView.builder(
-          itemBuilder: (context, index) => CheckboxListTile(
-            value: selectedItems.contains(widget.valuesList[index].value),
-            title: Text(widget.valuesList[index].optionName),
-            onChanged: (value) {
-              if (selectedItems.contains(widget.valuesList[index].value)) {
-                selectedItems.removeAt(
-                  selectedItems.indexWhere(
-                    (element) => element == widget.valuesList[index],
-                  ),
-                );
-              } else {
-                selectedItems.add(
-                  widget.valuesList[index],
-                );
-              }
-            },
+        SizedBox(
+          height: 80,
+          width: MediaQuery.of(context).size.width * 0.4,
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: widget.valuesList.length,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) => SizedBox(
+              width: 150,
+              child: CheckboxListTile(
+                value: selectedItems.contains(widget.valuesList[index]),
+                title: Text(widget.valuesList[index].optionName),
+                onChanged: (value) {
+                  if (selectedItems.contains(widget.valuesList[index])) {
+                    setState(() {
+                      selectedItems.removeAt(
+                        selectedItems.indexWhere(
+                          (element) => element == widget.valuesList[index],
+                        ),
+                      );
+                    });
+                  } else {
+                    setState(() {
+                      selectedItems.add(
+                        widget.valuesList[index],
+                      );
+                    });
+                  }
+                },
+              ),
+            ),
           ),
         )
       ],

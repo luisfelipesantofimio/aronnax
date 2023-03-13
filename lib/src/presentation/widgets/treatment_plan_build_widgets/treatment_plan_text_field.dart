@@ -18,8 +18,12 @@ class TreatmentPlanTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(fieldTitle),
+        Text(
+          fieldTitle,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
         Visibility(
           visible: fieldDescription != null,
           child: Text(fieldDescription ?? ''),
