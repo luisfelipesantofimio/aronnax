@@ -3,6 +3,8 @@ import 'package:aronnax/src/data/interfaces/treatment_plans_repository_interface
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_component.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_option.dart';
 import 'package:aronnax/src/presentation/widgets/treatment_plan_build_widgets/treatment_plan_radio_component.dart';
+import 'package:aronnax/src/presentation/widgets/treatment_plan_build_widgets/treatment_plan_selection_component.dart';
+import 'package:aronnax/src/presentation/widgets/treatment_plan_build_widgets/treatment_plan_task_component.dart';
 import 'package:aronnax/src/presentation/widgets/treatment_plan_build_widgets/treatment_plan_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,6 +26,7 @@ class TreatmentPlanRepository implements TreatmentPlanRepositoryInterface {
       if (component.componentType == 'textField') {
         decodedWidgets.add(
           TreatmentPlanTextField(
+            fieldDescription: component.componentDescription,
             fieldTitle: component.componentTitle,
             hintText: component.componentHint ?? '',
             maxLenght: 1,
@@ -35,7 +38,29 @@ class TreatmentPlanRepository implements TreatmentPlanRepositoryInterface {
         List<TreatmentPlanOption> optionsList = component.optionsList ?? [];
         decodedWidgets.add(
           TreatmentPlanScaleComponent(
+            isRequired: component.isRequired,
+            description: component.componentDescription,
             valuesList: optionsList,
+            title: component.componentTitle,
+          ),
+        );
+      }
+      if (component.componentType == 'selection') {
+        List<TreatmentPlanOption> optionsList = component.optionsList ?? [];
+        decodedWidgets.add(
+          TreatmentPlanSelectionComponent(
+            isRequired: component.isRequired,
+            description: component.componentDescription,
+            valuesList: optionsList,
+            title: component.componentTitle,
+          ),
+        );
+      }
+      if (component.componentType == 'task') {
+        decodedWidgets.add(
+          TreatmentPlanTaskComponent(
+            isRequired: component.isRequired,
+            description: component.componentDescription,
             title: component.componentTitle,
           ),
         );
