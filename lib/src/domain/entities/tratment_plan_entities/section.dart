@@ -37,6 +37,17 @@ class Section {
     );
   }
 
+  Section copyWith(
+      {String? name,
+      String? description,
+      List<TreatmentPlanComponent>? components}) {
+    return Section(
+      name: name ?? this.name,
+      description: description ?? this.description,
+      components: components ?? this.components,
+    );
+  }
+
   String toJson() => json.encode(toMap());
 
   factory Section.fromJson(String source) =>
