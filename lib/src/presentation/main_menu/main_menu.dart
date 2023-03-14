@@ -7,6 +7,7 @@ import 'package:aronnax/src/domain/entities/calendar_event.dart';
 import 'package:aronnax/src/presentation/core/methods.dart';
 import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:aronnax/src/presentation/main_menu/menu_options_bar.dart';
+import 'package:aronnax/src/presentation/treatment_plans/treatment_plan_creation/treatment_plan_creation_view.dart';
 import 'package:aronnax/src/presentation/widgets/calendar_components/events_list_view.dart';
 import 'package:aronnax/src/presentation/widgets/global_calendar.dart';
 import 'package:aronnax/src/presentation/widgets/todo_creation_dialog/todos_creation_dialog.dart';
@@ -65,6 +66,15 @@ class MainMenuState extends ConsumerState<MainMenu> {
                     ),
                     Column(
                       children: [
+                        TextButton(
+                          onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    TreatmentPlanCreationView(),
+                              )),
+                          child: Text('Treatment'),
+                        ),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [

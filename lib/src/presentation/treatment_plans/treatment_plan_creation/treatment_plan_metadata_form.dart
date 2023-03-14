@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 
 class TreatmentPlanMetadataForm extends StatefulWidget {
-  const TreatmentPlanMetadataForm({Key? key}) : super(key: key);
+  const TreatmentPlanMetadataForm(
+      {Key? key,
+      required this.onTitleChanged,
+      required this.onDescriptionChanged})
+      : super(key: key);
+  final Function(String data) onTitleChanged;
+  final Function(String data) onDescriptionChanged;
 
   @override
   State<TreatmentPlanMetadataForm> createState() =>
@@ -31,15 +37,11 @@ class _TreatmentPlanMetadataFormState extends State<TreatmentPlanMetadataForm> {
             style: TextStyle(fontSize: 30),
             validator: (value) {
               if (value!.isEmpty) {
-                setState(() {
-                  titleValue = 'Your title';
-                });
+                return 'The field must not be empty';
               }
             },
             onChanged: (value) {
-              setState(() {
-                titleValue = value;
-              });
+              widget.onTitleChanged(value);
               treatmentPlanMetadataFormKey.currentState!.validate();
             },
           ),
@@ -55,15 +57,11 @@ class _TreatmentPlanMetadataFormState extends State<TreatmentPlanMetadataForm> {
             ),
             validator: (value) {
               if (value!.isEmpty) {
-                setState(() {
-                  description = "What's this treatment plan about?";
-                });
+                return 'The field must not be empty';
               }
             },
             onChanged: (value) {
-              setState(() {
-                description = value;
-              });
+              widget.onDescriptionChanged(value);
               treatmentPlanMetadataFormKey.currentState!.validate();
             },
           ),

@@ -1,9 +1,14 @@
 import 'dart:developer';
 
+import 'package:aronnax/src/data/interfaces/treatment_plans_repository_interface.dart';
+import 'package:aronnax/src/data/providers/treatment_plan_providers.dart';
+import 'package:aronnax/src/domain/entities/tratment_plan_entities/section.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_component.dart';
 import 'package:aronnax/src/presentation/treatment_plans/treatment_plan_creation/treatment_plan_metadata_form.dart';
 import 'package:aronnax/src/presentation/widgets/component_selection/component_selection_item.dart';
+import 'package:aronnax/src/presentation/widgets/component_selection/section_metadata_dialog.dart';
 import 'package:aronnax/src/presentation/widgets/generic_icon_button.dart';
+import 'package:aronnax/src/presentation/widgets/treatment_plan_build_widgets/section_list_element.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -18,9 +23,33 @@ class TreatmentPlanCreationView extends ConsumerStatefulWidget {
 class _TreatmentPlanCreationViewState
     extends ConsumerState<TreatmentPlanCreationView> {
   bool componentSelectionItemSelected = false;
+  int selectedSectionIndex = 0;
   List<TreatmentPlanComponent> dataToEncode = [];
+  List<List<TreatmentPlanComponent>> componentsBySection = [];
+  List<Section> sectionList = [];
+  @override
+  void initState() {
+    sectionList.add(
+      Section(
+        name: 'Section 1',
+        components: [],
+      ),
+    );
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final decodedComponents = ref.watch(
+      treatmentPlanComponentDecoding(
+        ref
+            .read(treatmentPlanRepositoryProvider)
+            .encodeTreatmentComponentPlanData(
+              sectionList[selectedSectionIndex].components,
+            ),
+      ),
+    );
+
     return Scaffold(
       body: Row(
         children: [
@@ -28,17 +57,135 @@ class _TreatmentPlanCreationViewState
             width: MediaQuery.of(context).size.width * 0.7,
             child: Stack(
               children: [
-                Column(),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: GenericIconButon(
-                    icon: Icons.add,
-                    title: 'New component',
-                    onTap: () {
-                      setState(() {
-                        componentSelectionItemSelected = true;
-                      });
-                    },
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          SizedBox(
+                            height: 150,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: sectionList.length,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(
+                                    right: 10,
+                                  ),
+                                  child: SizedBox(
+                                    height: 150,
+                                    width: 150,
+                                    child: SectionListElement(
+                                      onDelete: () {
+                                        if (sectionList.length > 1) {
+                                          sectionList.removeAt(index);
+                                          setState(() {});
+                                        } else {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                              backgroundColor: Colors.red,
+                                              content: Text(
+                                                  'There must be at least one section!'),
+                                            ),
+                                          );
+                                        }
+                                      },
+                                      onEdit: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) =>
+                                              SectionMetadataDialog(
+                                            sectionData: sectionList[index],
+                                            onSelectedMetadata:
+                                                (title, description) {
+                                              sectionList[index] =
+                                                  sectionList[index].copyWith(
+                                                name: title,
+                                                description: description,
+                                              );
+                                              setState(() {});
+                                            },
+                                          ),
+                                        );
+                                      },
+                                      sectionTitle: sectionList[index].name,
+                                      sectionDescription:
+                                          sectionList[index].description ??
+                                              'No description',
+                                      onTap: () {
+                                        setState(() {
+                                          selectedSectionIndex = index;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => SectionMetadataDialog(
+                                  onSelectedMetadata: (title, description) {
+                                    sectionList.add(
+                                      Section(
+                                        name: title,
+                                        description: description,
+                                        components: [],
+                                      ),
+                                    );
+                                    setState(() {});
+                                  },
+                                ),
+                              );
+                            },
+                            child: Row(
+                              children: [
+                                const Text('Add section'),
+                                const Icon(
+                                  Icons.add,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(20),
+                      ),
+                      decodedComponents.isEmpty
+                          ? const Text('Aún no seleccionas componentes')
+                          : SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.7,
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: decodedComponents.length,
+                                itemBuilder: (context, index) =>
+                                    decodedComponents[index],
+                              ),
+                            ),
+                    ],
+                  ),
+                ),
+                Visibility(
+                  visible: sectionList.isNotEmpty,
+                  child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: GenericIconButon(
+                      icon: Icons.add,
+                      title: 'New component',
+                      onTap: () {
+                        setState(() {
+                          componentSelectionItemSelected = true;
+                        });
+                      },
+                    ),
                   ),
                 ),
                 Align(
@@ -62,7 +209,12 @@ class _TreatmentPlanCreationViewState
                             ),
                           ),
                           ComponentSelectionItem(
-                            onComponentSelected: (component) {},
+                            onComponentSelected: (component) {
+                              sectionList[selectedSectionIndex]
+                                  .components
+                                  .add(component);
+                              setState(() {});
+                            },
                           ),
                         ],
                       ),
@@ -88,10 +240,13 @@ class _TreatmentPlanCreationViewState
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TreatmentPlanMetadataForm(),
+                  TreatmentPlanMetadataForm(
+                    onTitleChanged: (data) {},
+                    onDescriptionChanged: (data) {},
+                  ),
                   IconButton(
                     onPressed: () => Navigator.pop(context),
-                    icon: Icon(Icons.arrow_back),
+                    icon: const Icon(Icons.arrow_back),
                   ),
                 ],
               ),
