@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_option.dart';
@@ -61,4 +62,22 @@ class TreatmentPlanComponent {
   factory TreatmentPlanComponent.fromJson(String source) =>
       TreatmentPlanComponent.fromMap(
           json.decode(source) as Map<String, dynamic>);
+
+  TreatmentPlanComponent copyWith({
+    String? componentType,
+    String? componentTitle,
+    String? componentDescription,
+    String? componentHint,
+    bool? isRequired,
+    List<TreatmentPlanOption>? optionsList,
+  }) {
+    return TreatmentPlanComponent(
+      componentType: componentType ?? this.componentType,
+      componentTitle: componentTitle ?? this.componentTitle,
+      componentDescription: componentDescription ?? this.componentDescription,
+      componentHint: componentHint ?? this.componentHint,
+      isRequired: isRequired ?? this.isRequired,
+      optionsList: optionsList ?? this.optionsList,
+    );
+  }
 }
