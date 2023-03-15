@@ -34,7 +34,7 @@ class SessionFormView extends ConsumerWidget {
                   width: MediaQuery.of(context).size.width * 0.2,
                   child: Row(
                     children: [
-                      GenericIconButon(
+                      GenericIconButton(
                         icon: FontAwesomeIcons.noteSticky,
                         title: 'Añadir nota',
                         onTap: () => showDialog(
@@ -42,7 +42,7 @@ class SessionFormView extends ConsumerWidget {
                           builder: (context) => const NoteCreationDialog(),
                         ),
                       ),
-                      GenericIconButon(
+                      GenericIconButton(
                         icon: FontAwesomeIcons.squareCheck,
                         title: 'Añadir tarea',
                         onTap: () => showDialog(
@@ -50,7 +50,7 @@ class SessionFormView extends ConsumerWidget {
                           builder: (context) => const TodosCreationDialog(),
                         ),
                       ),
-                      GenericIconButon(
+                      GenericIconButton(
                         icon: FontAwesomeIcons.microscope,
                         title: 'Iniciar prueba',
                         onTap: () => ScaffoldMessenger.of(context).showSnackBar(
