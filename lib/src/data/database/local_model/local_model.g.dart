@@ -3637,12 +3637,6 @@ class $LocalTreatmentPlansTable extends LocalTreatmentPlans
   late final GeneratedColumn<DateTime> creationDate = GeneratedColumn<DateTime>(
       'creation_date', aliasedName, false,
       type: DriftSqlType.dateTime, requiredDuringInsert: true);
-  static const VerificationMeta _treatmentIdMeta =
-      const VerificationMeta('treatmentId');
-  @override
-  late final GeneratedColumn<String> treatmentId = GeneratedColumn<String>(
-      'treatment_id', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _treatmentTitleMeta =
       const VerificationMeta('treatmentTitle');
   @override
@@ -3674,7 +3668,6 @@ class $LocalTreatmentPlansTable extends LocalTreatmentPlans
   List<GeneratedColumn> get $columns => [
         id,
         creationDate,
-        treatmentId,
         treatmentTitle,
         treatmentDescription,
         treatmentData,
@@ -3699,14 +3692,6 @@ class $LocalTreatmentPlansTable extends LocalTreatmentPlans
               data['creation_date']!, _creationDateMeta));
     } else if (isInserting) {
       context.missing(_creationDateMeta);
-    }
-    if (data.containsKey('treatment_id')) {
-      context.handle(
-          _treatmentIdMeta,
-          treatmentId.isAcceptableOrUnknown(
-              data['treatment_id']!, _treatmentIdMeta));
-    } else if (isInserting) {
-      context.missing(_treatmentIdMeta);
     }
     if (data.containsKey('treatment_title')) {
       context.handle(
@@ -3753,8 +3738,6 @@ class $LocalTreatmentPlansTable extends LocalTreatmentPlans
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       creationDate: attachedDatabase.typeMapping.read(
           DriftSqlType.dateTime, data['${effectivePrefix}creation_date'])!,
-      treatmentId: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}treatment_id'])!,
       treatmentTitle: attachedDatabase.typeMapping.read(
           DriftSqlType.string, data['${effectivePrefix}treatment_title'])!,
       treatmentDescription: attachedDatabase.typeMapping.read(
@@ -3777,7 +3760,6 @@ class LocalTreatmentPlan extends DataClass
     implements Insertable<LocalTreatmentPlan> {
   final int id;
   final DateTime creationDate;
-  final String treatmentId;
   final String treatmentTitle;
   final String treatmentDescription;
   final String treatmentData;
@@ -3785,7 +3767,6 @@ class LocalTreatmentPlan extends DataClass
   const LocalTreatmentPlan(
       {required this.id,
       required this.creationDate,
-      required this.treatmentId,
       required this.treatmentTitle,
       required this.treatmentDescription,
       required this.treatmentData,
@@ -3795,7 +3776,6 @@ class LocalTreatmentPlan extends DataClass
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['creation_date'] = Variable<DateTime>(creationDate);
-    map['treatment_id'] = Variable<String>(treatmentId);
     map['treatment_title'] = Variable<String>(treatmentTitle);
     map['treatment_description'] = Variable<String>(treatmentDescription);
     map['treatment_data'] = Variable<String>(treatmentData);
@@ -3807,7 +3787,6 @@ class LocalTreatmentPlan extends DataClass
     return LocalTreatmentPlansCompanion(
       id: Value(id),
       creationDate: Value(creationDate),
-      treatmentId: Value(treatmentId),
       treatmentTitle: Value(treatmentTitle),
       treatmentDescription: Value(treatmentDescription),
       treatmentData: Value(treatmentData),
@@ -3821,7 +3800,6 @@ class LocalTreatmentPlan extends DataClass
     return LocalTreatmentPlan(
       id: serializer.fromJson<int>(json['id']),
       creationDate: serializer.fromJson<DateTime>(json['creationDate']),
-      treatmentId: serializer.fromJson<String>(json['treatmentId']),
       treatmentTitle: serializer.fromJson<String>(json['treatmentTitle']),
       treatmentDescription:
           serializer.fromJson<String>(json['treatmentDescription']),
@@ -3835,7 +3813,6 @@ class LocalTreatmentPlan extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'creationDate': serializer.toJson<DateTime>(creationDate),
-      'treatmentId': serializer.toJson<String>(treatmentId),
       'treatmentTitle': serializer.toJson<String>(treatmentTitle),
       'treatmentDescription': serializer.toJson<String>(treatmentDescription),
       'treatmentData': serializer.toJson<String>(treatmentData),
@@ -3846,7 +3823,6 @@ class LocalTreatmentPlan extends DataClass
   LocalTreatmentPlan copyWith(
           {int? id,
           DateTime? creationDate,
-          String? treatmentId,
           String? treatmentTitle,
           String? treatmentDescription,
           String? treatmentData,
@@ -3854,7 +3830,6 @@ class LocalTreatmentPlan extends DataClass
       LocalTreatmentPlan(
         id: id ?? this.id,
         creationDate: creationDate ?? this.creationDate,
-        treatmentId: treatmentId ?? this.treatmentId,
         treatmentTitle: treatmentTitle ?? this.treatmentTitle,
         treatmentDescription: treatmentDescription ?? this.treatmentDescription,
         treatmentData: treatmentData ?? this.treatmentData,
@@ -3865,7 +3840,6 @@ class LocalTreatmentPlan extends DataClass
     return (StringBuffer('LocalTreatmentPlan(')
           ..write('id: $id, ')
           ..write('creationDate: $creationDate, ')
-          ..write('treatmentId: $treatmentId, ')
           ..write('treatmentTitle: $treatmentTitle, ')
           ..write('treatmentDescription: $treatmentDescription, ')
           ..write('treatmentData: $treatmentData, ')
@@ -3875,7 +3849,7 @@ class LocalTreatmentPlan extends DataClass
   }
 
   @override
-  int get hashCode => Object.hash(id, creationDate, treatmentId, treatmentTitle,
+  int get hashCode => Object.hash(id, creationDate, treatmentTitle,
       treatmentDescription, treatmentData, professionalID);
   @override
   bool operator ==(Object other) =>
@@ -3883,7 +3857,6 @@ class LocalTreatmentPlan extends DataClass
       (other is LocalTreatmentPlan &&
           other.id == this.id &&
           other.creationDate == this.creationDate &&
-          other.treatmentId == this.treatmentId &&
           other.treatmentTitle == this.treatmentTitle &&
           other.treatmentDescription == this.treatmentDescription &&
           other.treatmentData == this.treatmentData &&
@@ -3893,7 +3866,6 @@ class LocalTreatmentPlan extends DataClass
 class LocalTreatmentPlansCompanion extends UpdateCompanion<LocalTreatmentPlan> {
   final Value<int> id;
   final Value<DateTime> creationDate;
-  final Value<String> treatmentId;
   final Value<String> treatmentTitle;
   final Value<String> treatmentDescription;
   final Value<String> treatmentData;
@@ -3901,7 +3873,6 @@ class LocalTreatmentPlansCompanion extends UpdateCompanion<LocalTreatmentPlan> {
   const LocalTreatmentPlansCompanion({
     this.id = const Value.absent(),
     this.creationDate = const Value.absent(),
-    this.treatmentId = const Value.absent(),
     this.treatmentTitle = const Value.absent(),
     this.treatmentDescription = const Value.absent(),
     this.treatmentData = const Value.absent(),
@@ -3910,13 +3881,11 @@ class LocalTreatmentPlansCompanion extends UpdateCompanion<LocalTreatmentPlan> {
   LocalTreatmentPlansCompanion.insert({
     this.id = const Value.absent(),
     required DateTime creationDate,
-    required String treatmentId,
     required String treatmentTitle,
     required String treatmentDescription,
     required String treatmentData,
     required int professionalID,
   })  : creationDate = Value(creationDate),
-        treatmentId = Value(treatmentId),
         treatmentTitle = Value(treatmentTitle),
         treatmentDescription = Value(treatmentDescription),
         treatmentData = Value(treatmentData),
@@ -3924,7 +3893,6 @@ class LocalTreatmentPlansCompanion extends UpdateCompanion<LocalTreatmentPlan> {
   static Insertable<LocalTreatmentPlan> custom({
     Expression<int>? id,
     Expression<DateTime>? creationDate,
-    Expression<String>? treatmentId,
     Expression<String>? treatmentTitle,
     Expression<String>? treatmentDescription,
     Expression<String>? treatmentData,
@@ -3933,7 +3901,6 @@ class LocalTreatmentPlansCompanion extends UpdateCompanion<LocalTreatmentPlan> {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (creationDate != null) 'creation_date': creationDate,
-      if (treatmentId != null) 'treatment_id': treatmentId,
       if (treatmentTitle != null) 'treatment_title': treatmentTitle,
       if (treatmentDescription != null)
         'treatment_description': treatmentDescription,
@@ -3945,7 +3912,6 @@ class LocalTreatmentPlansCompanion extends UpdateCompanion<LocalTreatmentPlan> {
   LocalTreatmentPlansCompanion copyWith(
       {Value<int>? id,
       Value<DateTime>? creationDate,
-      Value<String>? treatmentId,
       Value<String>? treatmentTitle,
       Value<String>? treatmentDescription,
       Value<String>? treatmentData,
@@ -3953,7 +3919,6 @@ class LocalTreatmentPlansCompanion extends UpdateCompanion<LocalTreatmentPlan> {
     return LocalTreatmentPlansCompanion(
       id: id ?? this.id,
       creationDate: creationDate ?? this.creationDate,
-      treatmentId: treatmentId ?? this.treatmentId,
       treatmentTitle: treatmentTitle ?? this.treatmentTitle,
       treatmentDescription: treatmentDescription ?? this.treatmentDescription,
       treatmentData: treatmentData ?? this.treatmentData,
@@ -3969,9 +3934,6 @@ class LocalTreatmentPlansCompanion extends UpdateCompanion<LocalTreatmentPlan> {
     }
     if (creationDate.present) {
       map['creation_date'] = Variable<DateTime>(creationDate.value);
-    }
-    if (treatmentId.present) {
-      map['treatment_id'] = Variable<String>(treatmentId.value);
     }
     if (treatmentTitle.present) {
       map['treatment_title'] = Variable<String>(treatmentTitle.value);
@@ -3994,7 +3956,6 @@ class LocalTreatmentPlansCompanion extends UpdateCompanion<LocalTreatmentPlan> {
     return (StringBuffer('LocalTreatmentPlansCompanion(')
           ..write('id: $id, ')
           ..write('creationDate: $creationDate, ')
-          ..write('treatmentId: $treatmentId, ')
           ..write('treatmentTitle: $treatmentTitle, ')
           ..write('treatmentDescription: $treatmentDescription, ')
           ..write('treatmentData: $treatmentData, ')
@@ -4057,7 +4018,7 @@ class $LocaltreatmentResultsTable extends LocaltreatmentResults
       type: DriftSqlType.string,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES local_treatment_plans (treatment_id)'));
+          'REFERENCES local_treatment_plans (id)'));
   static const VerificationMeta _treatmentResultsDataMeta =
       const VerificationMeta('treatmentResultsData');
   @override

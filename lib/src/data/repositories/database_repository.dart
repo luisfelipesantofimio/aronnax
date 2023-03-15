@@ -286,7 +286,6 @@ class DatabaseRepository implements LocalDatabaseInteface {
   @override
   void insertLocalTreatmentPlan({
     required DateTime date,
-    required String treatmentPlanID,
     required String treatmentTitle,
     required String treatmentDescription,
     required int professionalID,
@@ -295,7 +294,6 @@ class DatabaseRepository implements LocalDatabaseInteface {
     final data = LocalTreatmentPlansCompanion(
       creationDate: Value(date),
       professionalID: Value(professionalID),
-      treatmentId: Value(treatmentPlanID),
       treatmentTitle: Value(treatmentTitle),
       treatmentDescription: Value(treatmentDescription),
       treatmentData: Value(treatmentData),
@@ -322,5 +320,20 @@ class DatabaseRepository implements LocalDatabaseInteface {
       treatmentResultsData: Value(treatmentResultData),
     );
     localDB.insertTreatmentPlanResult(data);
+  }
+
+  @override
+  void deleteLocalTreatmentPlan(int treatmentId) {
+    localDB.deleteLocalTreatmentPlan(treatmentId);
+  }
+
+  @override
+  Future<List<LocalTreatmentPlan>> getLocalTreatmentPlans() async {
+    return localDB.getLocalTreatmentPlans();
+  }
+
+  @override
+  void updateLocalTreatmentPlan() {
+    // TODO: implement updateLocalTreatmentPlan
   }
 }

@@ -161,6 +161,10 @@ class LocalDatabase extends _$LocalDatabase {
     return (select(localTodos)).get();
   }
 
+  Future<List<LocalTreatmentPlan>> getLocalTreatmentPlans() {
+    return (select(localTreatmentPlans)).get();
+  }
+
   //Update
 
   Future updateConfigurationState(bool isConfigured) {
@@ -193,6 +197,14 @@ class LocalDatabase extends _$LocalDatabase {
     return (delete(localTodos)
           ..where(
             (tbl) => tbl.id.equals(todoId),
+          ))
+        .go();
+  }
+
+  Future deleteLocalTreatmentPlan(int treatmentId) {
+    return (delete(localTreatmentPlans)
+          ..where(
+            (tbl) => tbl.id.equals(treatmentId),
           ))
         .go();
   }

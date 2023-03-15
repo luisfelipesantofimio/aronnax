@@ -1,5 +1,10 @@
 import 'dart:convert';
+import 'dart:developer';
+import 'package:aronnax/src/data/database/local_model/local_model.dart';
+import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/interfaces/treatment_plans_repository_interface.dart';
+import 'package:aronnax/src/domain/entities/tratment_plan_entities/section.dart';
+import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_component.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_option.dart';
 import 'package:aronnax/src/presentation/widgets/treatment_plan_build_widgets/treatment_plan_radio_component.dart';
@@ -79,5 +84,31 @@ class TreatmentPlanRepository implements TreatmentPlanRepositoryInterface {
       String treatmentData,
       int professionalID) {
     // TODO: implement saveLocalTreatmentPlan
+  }
+
+  @override
+  List<Widget> decodeTreatmentPlanData(String jsonData) {
+    // TODO: implement decodeTreatmentPlanData
+    throw UnimplementedError();
+  }
+
+  @override
+  String encodeTreatmentPlanData(List<Section> components) {
+    log(json.encode(components.map((e) => e.toJson()).toList()));
+    return json.encode(components.map((e) => e.toJson()).toList());
+  }
+
+  @override
+  Future<List<TreatmentPlan>> getTreatmentPlansList(
+      bool isOffline, Ref ref) async {
+    if (isOffline) {
+      List<LocalTreatmentPlan> localPlans = await ref
+          .read(localDatabaseRepositoryProvider)
+          .getLocalTreatmentPlans();
+      log(localPlans.toString());
+      return localPlans.map((e) => TreatmentPlan.fromLocalModel(e)).toList();
+    } else {
+      return [];
+    }
   }
 }

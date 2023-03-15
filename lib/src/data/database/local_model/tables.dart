@@ -101,7 +101,6 @@ class LocalAppointments extends Table {
 class LocalTreatmentPlans extends Table {
   IntColumn get id => integer().autoIncrement()();
   DateTimeColumn get creationDate => dateTime()();
-  TextColumn get treatmentId => text()();
   TextColumn get treatmentTitle => text()();
   TextColumn get treatmentDescription => text()();
   TextColumn get treatmentData => text()();
@@ -117,7 +116,7 @@ class LocaltreatmentResults extends Table {
   IntColumn get professionalID =>
       integer().references(LocalProfessional, #personalID)();
   TextColumn get treatmentPlanID =>
-      text().references(LocalTreatmentPlans, #treatmentId)();
+      text().references(LocalTreatmentPlans, #id)();
   TextColumn get treatmentResultsData => text()();
 }
 

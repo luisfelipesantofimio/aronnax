@@ -75,7 +75,6 @@ abstract class LocalDatabaseInteface {
 
   void insertLocalTreatmentPlan({
     required DateTime date,
-    required String treatmentPlanID,
     required String treatmentTitle,
     required String treatmentDescription,
     required int professionalID,
@@ -131,6 +130,10 @@ abstract class LocalDatabaseInteface {
   void deleteAppointments(int eventId);
 
   void deleteTodo(int todoId);
+
+  Future<List<LocalTreatmentPlan>> getLocalTreatmentPlans();
+  void deleteLocalTreatmentPlan(int treatmentId);
+  void updateLocalTreatmentPlan();
 }
 
 final localDatabaseRepositoryProvider = Provider<LocalDatabaseInteface>(
