@@ -213,7 +213,7 @@ class _TreatmentPlanComponentUpdateDialogState
                       ),
                     ),
                     GenericMinimalButton(
-                      title: 'Añadir componente',
+                      title: 'Actualizar componente',
                       onTap: () {
                         widget.onComponentUpdated(
                           TreatmentPlanComponent(
