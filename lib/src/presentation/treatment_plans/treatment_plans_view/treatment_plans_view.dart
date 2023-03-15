@@ -32,7 +32,8 @@ class TreatmentPlansView extends ConsumerWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => TreatmentPlanCreationView(),
+                      builder: (context) =>
+                          const TreatmentPlanCreationView(null),
                     ),
                   );
                 },

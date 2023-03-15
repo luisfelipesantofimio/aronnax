@@ -1,11 +1,14 @@
+import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan.dart';
 import 'package:flutter/material.dart';
 
 class TreatmentPlanMetadataForm extends StatefulWidget {
   const TreatmentPlanMetadataForm(
       {Key? key,
       required this.onTitleChanged,
-      required this.onDescriptionChanged})
+      required this.onDescriptionChanged,
+      this.treatmentPlanData})
       : super(key: key);
+  final TreatmentPlan? treatmentPlanData;
   final Function(String data) onTitleChanged;
   final Function(String data) onDescriptionChanged;
 
@@ -19,6 +22,17 @@ class _TreatmentPlanMetadataFormState extends State<TreatmentPlanMetadataForm> {
 
   String titleValue = 'Your title';
   String description = "What's this treatment plan about?";
+
+  @override
+  void initState() {
+    if (widget.treatmentPlanData != null) {
+      setState(() {
+        titleValue = widget.treatmentPlanData!.title;
+        description = widget.treatmentPlanData!.description;
+      });
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

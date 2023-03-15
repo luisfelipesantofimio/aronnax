@@ -4,7 +4,7 @@ import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/interfaces/treatment_plans_repository_interface.dart';
 import 'package:aronnax/src/data/providers/treatment_plan_providers.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/section.dart';
-import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_component.dart';
+import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan.dart';
 import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:aronnax/src/presentation/treatment_plans/treatment_plan_creation/treatment_plan_metadata_form.dart';
 import 'package:aronnax/src/presentation/treatment_plans/treatment_plan_creation/treatment_plan_update_dialog.dart';
@@ -18,7 +18,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TreatmentPlanCreationView extends ConsumerStatefulWidget {
-  const TreatmentPlanCreationView({Key? key}) : super(key: key);
+  const TreatmentPlanCreationView(this.treatmentPlanData, {Key? key})
+      : super(key: key);
+  final TreatmentPlan? treatmentPlanData;
 
   @override
   ConsumerState<TreatmentPlanCreationView> createState() =>
@@ -40,6 +42,14 @@ class _TreatmentPlanCreationViewState
         components: [],
       ),
     );
+    if (widget.treatmentPlanData != null) {
+      sectionList.clear();
+      sectionList = widget.treatmentPlanData!.sectionsList;
+      setState(() {
+        treatmentPlanTitle = widget.treatmentPlanData!.title;
+        treatmentPlanDescription = widget.treatmentPlanData!.description;
+      });
+    }
     super.initState();
   }
 
@@ -299,6 +309,7 @@ class _TreatmentPlanCreationViewState
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TreatmentPlanMetadataForm(
+                    treatmentPlanData: widget.treatmentPlanData,
                     onTitleChanged: (data) {
                       setState(() {
                         treatmentPlanTitle = data;
@@ -318,7 +329,9 @@ class _TreatmentPlanCreationViewState
                         icon: const Icon(Icons.arrow_back),
                       ),
                       GenericMinimalButton(
-                        title: 'Save treatment plan',
+                        title: widget.treatmentPlanData == null
+                            ? 'Save treatment plan'
+                            : 'Update treatment plan',
                         onTap: () {
                           if (treatmentPlanTitle == null ||
                               treatmentPlanDescription == null) {
@@ -330,29 +343,38 @@ class _TreatmentPlanCreationViewState
                               ),
                             );
                           } else {
-                            ref
-                                .read(localDatabaseRepositoryProvider)
-                                .insertLocalTreatmentPlan(
-                                  date: DateTime.now(),
-                                  treatmentTitle:
-                                      treatmentPlanTitle ?? 'No data',
-                                  treatmentDescription:
-                                      treatmentPlanDescription ?? 'No data',
-                                  professionalID: ref
-                                      .read(globalUserInformationProvider)!
-                                      .personalID,
-                                  treatmentData: ref
-                                      .read(treatmentPlanRepositoryProvider)
-                                      .encodeTreatmentPlanData(sectionList),
-                                );
-                            ref.invalidate(treatmentPlanListProvider);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                backgroundColor: Colors.green,
-                                content: Text('Treatment plan created!'),
-                              ),
-                            );
-                            Navigator.pop(context);
+                            if (widget.treatmentPlanData == null) {
+                              ref
+                                  .read(localDatabaseRepositoryProvider)
+                                  .insertLocalTreatmentPlan(
+                                    date: DateTime.now(),
+                                    treatmentTitle:
+                                        treatmentPlanTitle ?? 'No data',
+                                    treatmentDescription:
+                                        treatmentPlanDescription ?? 'No data',
+                                    professionalID: ref
+                                        .read(globalUserInformationProvider)!
+                                        .personalID,
+                                    treatmentData: ref
+                                        .read(treatmentPlanRepositoryProvider)
+                                        .encodeTreatmentPlanData(sectionList),
+                                  );
+                              ref.invalidate(treatmentPlanListProvider);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  backgroundColor: Colors.green,
+                                  content: Text('Treatment plan created!'),
+                                ),
+                              );
+                              Navigator.pop(context);
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  backgroundColor: Colors.blue,
+                                  content: Text('The update logic!'),
+                                ),
+                              );
+                            }
                           }
                         },
                       ),
