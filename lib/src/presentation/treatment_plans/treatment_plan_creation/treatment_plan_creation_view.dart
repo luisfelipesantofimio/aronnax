@@ -1,14 +1,18 @@
 import 'dart:developer';
 
+import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/interfaces/treatment_plans_repository_interface.dart';
 import 'package:aronnax/src/data/providers/treatment_plan_providers.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/section.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_component.dart';
+import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:aronnax/src/presentation/treatment_plans/treatment_plan_creation/treatment_plan_metadata_form.dart';
 import 'package:aronnax/src/presentation/widgets/component_selection/component_selection_item.dart';
 import 'package:aronnax/src/presentation/widgets/component_selection/section_metadata_dialog.dart';
 import 'package:aronnax/src/presentation/widgets/generic_icon_button.dart';
+import 'package:aronnax/src/presentation/widgets/generic_minimal_button.dart';
 import 'package:aronnax/src/presentation/widgets/treatment_plan_build_widgets/section_list_element.dart';
+import 'package:aronnax/src/presentation/widgets/treatment_plan_build_widgets/treatment_plan_list_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -24,9 +28,9 @@ class _TreatmentPlanCreationViewState
     extends ConsumerState<TreatmentPlanCreationView> {
   bool componentSelectionItemSelected = false;
   int selectedSectionIndex = 0;
-  List<TreatmentPlanComponent> dataToEncode = [];
-  List<List<TreatmentPlanComponent>> componentsBySection = [];
   List<Section> sectionList = [];
+  String? treatmentPlanTitle;
+  String? treatmentPlanDescription;
   @override
   void initState() {
     sectionList.add(
@@ -146,9 +150,9 @@ class _TreatmentPlanCreationViewState
                               );
                             },
                             child: Row(
-                              children: [
-                                const Text('Add section'),
-                                const Icon(
+                              children: const [
+                                Text('Add section'),
+                                Icon(
                                   Icons.add,
                                 ),
                               ],
@@ -156,7 +160,7 @@ class _TreatmentPlanCreationViewState
                           ),
                         ],
                       ),
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.all(20),
                       ),
                       decodedComponents.isEmpty
@@ -167,7 +171,25 @@ class _TreatmentPlanCreationViewState
                                 shrinkWrap: true,
                                 itemCount: decodedComponents.length,
                                 itemBuilder: (context, index) =>
-                                    decodedComponents[index],
+                                    TreatmentPlanListComponent(
+                                  component: decodedComponents[index],
+                                  onEdit: () {},
+                                  onDelete: () {
+                                    sectionList[selectedSectionIndex]
+                                        .components
+                                        .removeAt(index);
+                                    setState(() {});
+                                  },
+                                  onDuplicate: () {
+                                    sectionList[selectedSectionIndex]
+                                        .components
+                                        .add(
+                                          sectionList[selectedSectionIndex]
+                                              .components[index],
+                                        );
+                                    setState(() {});
+                                  },
+                                ),
                               ),
                             ),
                     ],
@@ -177,7 +199,7 @@ class _TreatmentPlanCreationViewState
                   visible: sectionList.isNotEmpty,
                   child: Align(
                     alignment: Alignment.bottomRight,
-                    child: GenericIconButon(
+                    child: GenericIconButton(
                       icon: Icons.add,
                       title: 'New component',
                       onTap: () {
@@ -241,12 +263,52 @@ class _TreatmentPlanCreationViewState
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TreatmentPlanMetadataForm(
-                    onTitleChanged: (data) {},
-                    onDescriptionChanged: (data) {},
+                    onTitleChanged: (data) {
+                      setState(() {
+                        treatmentPlanTitle = data;
+                      });
+                    },
+                    onDescriptionChanged: (data) {
+                      setState(() {
+                        treatmentPlanDescription = data;
+                      });
+                    },
                   ),
-                  IconButton(
-                    onPressed: () => Navigator.pop(context),
-                    icon: const Icon(Icons.arrow_back),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        onPressed: () => Navigator.pop(context),
+                        icon: const Icon(Icons.arrow_back),
+                      ),
+                      GenericMinimalButton(
+                        title: 'Save treatment plan',
+                        onTap: () {
+                          ref
+                              .read(localDatabaseRepositoryProvider)
+                              .insertLocalTreatmentPlan(
+                                date: DateTime.now(),
+                                treatmentTitle: treatmentPlanTitle ?? 'No data',
+                                treatmentDescription:
+                                    treatmentPlanDescription ?? 'No data',
+                                professionalID: ref
+                                    .read(globalUserInformationProvider)!
+                                    .personalID,
+                                treatmentData: ref
+                                    .read(treatmentPlanRepositoryProvider)
+                                    .encodeTreatmentPlanData(sectionList),
+                              );
+                          ref.invalidate(treatmentPlanListProvider);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              backgroundColor: Colors.green,
+                              content: Text('Treatment plan created!'),
+                            ),
+                          );
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
                   ),
                 ],
               ),
