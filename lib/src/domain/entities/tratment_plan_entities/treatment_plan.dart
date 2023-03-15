@@ -1,13 +1,16 @@
 import 'dart:convert';
+import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/section.dart';
 
 class TreatmentPlan {
+  final int id;
   final String title;
   final String description;
   final DateTime creationDate;
   final int creatorId;
   final List<Section> sectionsList;
   TreatmentPlan({
+    required this.id,
     required this.title,
     required this.description,
     required this.creationDate,
@@ -17,6 +20,7 @@ class TreatmentPlan {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'id': id,
       'title': title,
       'description': description,
       'creationDate': creationDate.millisecondsSinceEpoch,
@@ -25,8 +29,32 @@ class TreatmentPlan {
     };
   }
 
+  factory TreatmentPlan.fromLocalModel(LocalTreatmentPlan data) {
+    final decodedItems = jsonDecode(data.treatmentData) as List;
+    List<Section> sectionsList = decodedItems
+        .map(
+          (e) => Section.fromJson(e),
+        )
+        .toList();
+
+    return TreatmentPlan(
+        id: data.id,
+        title: data.treatmentTitle,
+        description: data.treatmentDescription,
+        creationDate: data.creationDate,
+        creatorId: data.professionalID,
+        sectionsList: sectionsList
+        // List<Section>.from(
+        //   (jsonDecode(data.treatmentData) as List).map<Section>(
+        //     (x) => Section.fromJson(x),
+        //   ),
+        // ),
+        );
+  }
+
   factory TreatmentPlan.fromMap(Map<String, dynamic> map) {
     return TreatmentPlan(
+      id: map['id'] as int,
       title: map['title'] as String,
       description: map['description'] as String,
       creationDate:

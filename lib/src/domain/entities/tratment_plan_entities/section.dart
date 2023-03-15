@@ -25,15 +25,22 @@ class Section {
   }
 
   factory Section.fromMap(Map<String, dynamic> map) {
+    List data = map['components'];
+    List<TreatmentPlanComponent> componentsList = data
+        .map(
+          (e) => TreatmentPlanComponent.fromMap(e),
+        )
+        .toList();
     return Section(
       name: map['name'] as String,
       description:
           map['description'] != null ? map['description'] as String : null,
-      components: List<TreatmentPlanComponent>.from(
-        (map['components'] as List<int>).map<TreatmentPlanComponent>(
-          (x) => TreatmentPlanComponent.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
+      components: componentsList,
+      //  List<TreatmentPlanComponent>.from(
+      //   (map['components'] as List<int>).map<TreatmentPlanComponent>(
+      //     (x) => TreatmentPlanComponent.fromMap(x as Map<String, dynamic>),
+      //   ),
+      // ),
     );
   }
 
