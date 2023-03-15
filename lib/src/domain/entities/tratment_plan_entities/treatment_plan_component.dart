@@ -7,13 +7,11 @@ class TreatmentPlanComponent {
   final String componentType;
   final String componentTitle;
   final String componentDescription;
-  final String? componentHint;
   final bool isRequired;
   final List<TreatmentPlanOption>? optionsList;
   TreatmentPlanComponent({
     required this.componentType,
     required this.componentTitle,
-    this.componentHint,
     required this.componentDescription,
     required this.isRequired,
     required this.optionsList,
@@ -23,7 +21,6 @@ class TreatmentPlanComponent {
     return <String, dynamic>{
       'componentType': componentType,
       'componentTitle': componentTitle,
-      'componentHint': componentHint,
       'componentDescription': componentDescription,
       'isRequired': isRequired,
       'optionsList': optionsList
@@ -40,14 +37,12 @@ class TreatmentPlanComponent {
     final componentDescription = map['componentDescription'] as String;
     final optionsList =
         map['optionsList'] != null ? map['optionsList'] as List : null;
-    final componentHint = map['componentHint'] as String?;
     final isRequired = map['isRequired'] as bool;
 
     return TreatmentPlanComponent(
       componentType: componentType,
       componentTitle: componentTitle,
       componentDescription: componentDescription,
-      componentHint: componentHint,
       isRequired: isRequired,
       optionsList: optionsList
           ?.map(
@@ -67,7 +62,6 @@ class TreatmentPlanComponent {
     String? componentType,
     String? componentTitle,
     String? componentDescription,
-    String? componentHint,
     bool? isRequired,
     List<TreatmentPlanOption>? optionsList,
   }) {
@@ -75,7 +69,6 @@ class TreatmentPlanComponent {
       componentType: componentType ?? this.componentType,
       componentTitle: componentTitle ?? this.componentTitle,
       componentDescription: componentDescription ?? this.componentDescription,
-      componentHint: componentHint ?? this.componentHint,
       isRequired: isRequired ?? this.isRequired,
       optionsList: optionsList ?? this.optionsList,
     );

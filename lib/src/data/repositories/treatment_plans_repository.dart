@@ -33,7 +33,7 @@ class TreatmentPlanRepository implements TreatmentPlanRepositoryInterface {
           TreatmentPlanTextField(
             fieldDescription: component.componentDescription,
             fieldTitle: component.componentTitle,
-            hintText: component.componentHint ?? '',
+            hintText: component.componentTitle,
             maxLenght: 1,
             isRequired: component.isRequired,
           ),

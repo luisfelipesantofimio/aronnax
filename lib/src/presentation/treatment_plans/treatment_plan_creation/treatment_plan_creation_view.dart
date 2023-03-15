@@ -194,8 +194,6 @@ class _TreatmentPlanCreationViewState
                                                         componentDescription:
                                                             component
                                                                 .componentDescription,
-                                                        componentHint: component
-                                                            .componentTitle,
                                                         componentType: component
                                                             .componentType,
                                                         isRequired: component
