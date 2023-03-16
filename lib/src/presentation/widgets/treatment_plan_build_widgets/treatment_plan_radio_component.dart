@@ -28,20 +28,23 @@ class _TreatmentPlanScaleComponentState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(widget.title),
+        Text(
+          widget.title,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
         Visibility(
           visible: widget.description != null,
           child: Text(widget.description ?? ''),
         ),
         SizedBox(
           height: 80,
-          width: MediaQuery.of(context).size.width * 0.4,
+          width: MediaQuery.of(context).size.width * 0.5,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: widget.valuesList.length,
             shrinkWrap: true,
             itemBuilder: (context, index) => SizedBox(
-              width: 200,
+              width: 100,
               child: RadioListTile(
                 title: Text(widget.valuesList[index].optionName),
                 value: widget.valuesList[index],

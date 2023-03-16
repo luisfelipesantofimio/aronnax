@@ -27,20 +27,23 @@ class _TreatmentPlanSelectionComponentState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(widget.title),
+        Text(
+          widget.title,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
         Visibility(
           visible: widget.description != null,
           child: Text(widget.description ?? ''),
         ),
         SizedBox(
           height: 80,
-          width: MediaQuery.of(context).size.width * 0.4,
+          width: MediaQuery.of(context).size.width * 0.5,
           child: ListView.builder(
             shrinkWrap: true,
             itemCount: widget.valuesList.length,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) => SizedBox(
-              width: 150,
+              width: 100,
               child: CheckboxListTile(
                 value: selectedItems.contains(widget.valuesList[index]),
                 title: Text(widget.valuesList[index].optionName),

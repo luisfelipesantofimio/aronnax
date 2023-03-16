@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/interfaces/treatment_plans_repository_interface.dart';
+import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/treatment_plan_providers.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/section.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan.dart';
@@ -368,10 +369,18 @@ class _TreatmentPlanCreationViewState
                               );
                               Navigator.pop(context);
                             } else {
+                              ref
+                                  .read(treatmentPlanRepositoryProvider)
+                                  .updateTreatmentPlan(
+                                      ref.read(offlineStatusProvider).value!,
+                                      widget.treatmentPlanData!,
+                                      ref);
+                              ref.invalidate(treatmentPlanListProvider);
+                              Navigator.pop(context);
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
-                                  backgroundColor: Colors.blue,
-                                  content: Text('The update logic!'),
+                                  backgroundColor: Colors.green,
+                                  content: Text('Treatment plan updated!'),
                                 ),
                               );
                             }

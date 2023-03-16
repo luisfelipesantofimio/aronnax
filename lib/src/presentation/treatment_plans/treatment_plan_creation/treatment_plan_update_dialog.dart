@@ -55,6 +55,9 @@ class _TreatmentPlanComponentUpdateDialogState
         componentTypeList.indexWhere((element) =>
             element.componentType == widget.dataToUpdate!.componentType),
       );
+      optionTypeList = widget.dataToUpdate!.optionsList!
+          .map((e) => OptionType(value: e.value, title: e.optionName))
+          .toList();
     });
     super.initState();
   }
