@@ -1,9 +1,11 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/remote_database/server_api.dart';
 import 'package:aronnax/src/domain/entities/calendar_event.dart';
+import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan.dart';
 import 'package:aronnax/src/presentation/core/methods.dart';
 import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
@@ -333,7 +335,17 @@ class DatabaseRepository implements LocalDatabaseInteface {
   }
 
   @override
-  void updateLocalTreatmentPlan() {
-    // TODO: implement updateLocalTreatmentPlan
+  void updateLocalTreatmentPlan(TreatmentPlan newTreatmentPlanData) {
+    localDB.updateTreatmentPlan(
+      LocalTreatmentPlan(
+          id: newTreatmentPlanData.id,
+          creationDate: newTreatmentPlanData.creationDate,
+          treatmentTitle: newTreatmentPlanData.title,
+          treatmentDescription: newTreatmentPlanData.description,
+          treatmentData: json.encode(newTreatmentPlanData.sectionsList
+              .map((e) => e.toJson())
+              .toList()),
+          professionalID: newTreatmentPlanData.creatorId),
+    );
   }
 }

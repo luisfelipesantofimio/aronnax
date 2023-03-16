@@ -94,7 +94,6 @@ class TreatmentPlanRepository implements TreatmentPlanRepositoryInterface {
 
   @override
   String encodeTreatmentPlanData(List<Section> components) {
-    log(json.encode(components.map((e) => e.toJson()).toList()));
     return json.encode(components.map((e) => e.toJson()).toList());
   }
 
@@ -105,10 +104,19 @@ class TreatmentPlanRepository implements TreatmentPlanRepositoryInterface {
       List<LocalTreatmentPlan> localPlans = await ref
           .read(localDatabaseRepositoryProvider)
           .getLocalTreatmentPlans();
-      log(localPlans.toString());
       return localPlans.map((e) => TreatmentPlan.fromLocalModel(e)).toList();
     } else {
       return [];
+    }
+  }
+
+  @override
+  void updateTreatmentPlan(
+      bool isOffline, TreatmentPlan treatmentPlanData, WidgetRef ref) {
+    if (isOffline) {
+      ref
+          .read(localDatabaseRepositoryProvider)
+          .updateLocalTreatmentPlan(treatmentPlanData);
     }
   }
 }

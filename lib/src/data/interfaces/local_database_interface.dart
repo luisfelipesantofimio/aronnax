@@ -1,6 +1,7 @@
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/repositories/database_repository.dart';
 import 'package:aronnax/src/domain/entities/calendar_event.dart';
+import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -133,7 +134,7 @@ abstract class LocalDatabaseInteface {
 
   Future<List<LocalTreatmentPlan>> getLocalTreatmentPlans();
   void deleteLocalTreatmentPlan(int treatmentId);
-  void updateLocalTreatmentPlan();
+  void updateLocalTreatmentPlan(TreatmentPlan newTreatmentPlanData);
 }
 
 final localDatabaseRepositoryProvider = Provider<LocalDatabaseInteface>(

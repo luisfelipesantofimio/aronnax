@@ -22,6 +22,9 @@ abstract class TreatmentPlanRepositoryInterface {
     String treatmentData,
     int professionalID,
   );
+
+  void updateTreatmentPlan(
+      bool isOffline, TreatmentPlan treatmentPlanData, WidgetRef ref);
 }
 
 final treatmentPlanRepositoryProvider =

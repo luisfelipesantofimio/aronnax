@@ -183,6 +183,14 @@ class LocalDatabase extends _$LocalDatabase {
     );
   }
 
+  Future updateTreatmentPlan(LocalTreatmentPlan newData) {
+    return (update(localTreatmentPlans)
+          ..where(
+            (tbl) => tbl.id.equals(newData.id),
+          ))
+        .write(newData);
+  }
+
   //Delete
 
   Future deleteLocalEvent(int eventId) {
