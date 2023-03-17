@@ -1,5 +1,6 @@
 import 'package:aronnax/src/data/providers/forms_providers/register_form_provider.dart';
 import 'package:aronnax/src/data/providers/location_data_provider.dart';
+import 'package:aronnax/src/domain/entities/gender.dart';
 import 'package:aronnax/src/presentation/core/controllers.dart';
 import 'package:aronnax/src/presentation/core/methods.dart';
 import 'package:aronnax/src/presentation/widgets/date_selector.dart';
@@ -19,7 +20,11 @@ class RegisterForm extends ConsumerStatefulWidget {
 class RegisterFormState extends ConsumerState<RegisterForm> {
   String stateCode = '';
   String selectedCity = '';
-  List<String> genders = ["Masculino", "Femenino", "Otro"];
+  List<Gender> genders = [
+    Gender(value: 'masculine', name: 'Masculino'),
+    Gender(value: 'femenine', name: 'Femenino'),
+    Gender(value: 'other', name: 'Otro'),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -124,18 +129,18 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                       .map(
                         (e) => DropdownMenuItem(
                           value: e,
-                          child: Text(e),
+                          child: Text(e.name),
                         ),
                       )
                       .toList(),
-                  onChanged: (value) {
+                  onChanged: (Gender? value) {
                     ref
                         .read(registerGenderProvider.notifier)
-                        .update((state) => value as String);
+                        .update((state) => value!.value);
                   },
                 ),
               ),
-              Padding(
+              const Padding(
                 padding: EdgeInsets.all(10),
               ),
               DateSelector(
