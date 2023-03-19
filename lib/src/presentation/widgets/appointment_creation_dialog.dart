@@ -1,6 +1,6 @@
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/providers/appointments_provider.dart';
-import 'package:aronnax/src/data/providers/patients_list_provider.dart';
+import 'package:aronnax/src/data/providers/patients_provider.dart';
 import 'package:aronnax/src/domain/entities/calendar_event.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:aronnax/src/presentation/core/constants.dart';

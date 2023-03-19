@@ -48,7 +48,7 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                   .single);
               ref.read(currentPsyAntecedents.notifier).update((state) => ref
                   .watch(localQueriedClinicHistoryProvider)
-                  .map((e) => e.psiAntecedents)
+                  .map((e) => e.psyAntecedents)
                   .toList()
                   .single);
               ref.read(currentFamilyHistory.notifier).update((state) => ref

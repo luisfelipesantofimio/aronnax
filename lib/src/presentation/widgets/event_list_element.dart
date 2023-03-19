@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
-import 'package:aronnax/src/data/providers/patients_list_provider.dart';
+import 'package:aronnax/src/data/providers/patients_provider.dart';
 import 'package:aronnax/src/domain/entities/calendar_event.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:aronnax/src/presentation/core/methods.dart';
