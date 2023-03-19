@@ -21,4 +21,18 @@ class PatientsRepository implements PatientsRepositoryInterface {
     }
     return patientsList;
   }
+
+  @override
+  void updateLocalPatientActiveState(
+    WidgetRef ref,
+    int patientId,
+    bool newState,
+    bool isOffline,
+  ) {
+    if (isOffline) {
+      ref
+          .read(localDatabaseRepositoryProvider)
+          .updateLocalPatientActiveState(patientId, newState);
+    }
+  }
 }
