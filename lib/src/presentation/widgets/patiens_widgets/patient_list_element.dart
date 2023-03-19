@@ -1,5 +1,6 @@
 import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:aronnax/src/presentation/core/methods.dart';
+import 'package:aronnax/src/presentation/patiens_view/patients_dialog/patients_dialog_view.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -13,7 +14,10 @@ class PatientListElement extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        // TODO: implement dialog with user information
+        showDialog(
+          context: context,
+          builder: (context) => PatientsDialogView(patientData: patientData),
+        );
       },
       child: Container(
         decoration: const BoxDecoration(
@@ -69,8 +73,12 @@ class PatientListElement extends StatelessWidget {
                             width: constrains.maxWidth * 0.4,
                             child: Text(
                               '${patientData.names} ${patientData.lastNames}',
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
+                              style: TextStyle(
+                                  decoration: patientData.isActive
+                                      ? TextDecoration.none
+                                      : TextDecoration.lineThrough,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18),
                             ),
                           ),
                         ],
