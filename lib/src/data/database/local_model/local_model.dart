@@ -191,6 +191,18 @@ class LocalDatabase extends _$LocalDatabase {
         .write(newData);
   }
 
+  Future updatePatientActiveState(int patientId, bool newState) {
+    return (update(localPatients)
+          ..where(
+            (tbl) => tbl.id.equals(patientId),
+          ))
+        .write(
+      LocalPatientsCompanion(
+        isActive: Value(newState),
+      ),
+    );
+  }
+
   //Delete
 
   Future deleteLocalEvent(int eventId) {

@@ -135,6 +135,7 @@ abstract class LocalDatabaseInteface {
   Future<List<LocalTreatmentPlan>> getLocalTreatmentPlans();
   void deleteLocalTreatmentPlan(int treatmentId);
   void updateLocalTreatmentPlan(TreatmentPlan newTreatmentPlanData);
+  void updateLocalPatientActiveState(int patientId, bool newState);
 }
 
 final localDatabaseRepositoryProvider = Provider<LocalDatabaseInteface>(

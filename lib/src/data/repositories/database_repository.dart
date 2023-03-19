@@ -348,4 +348,12 @@ class DatabaseRepository implements LocalDatabaseInteface {
           professionalID: newTreatmentPlanData.creatorId),
     );
   }
+
+  @override
+  void updateLocalPatientActiveState(int patientId, bool newState) {
+    localDB.updatePatientActiveState(
+      patientId,
+      newState,
+    );
+  }
 }
