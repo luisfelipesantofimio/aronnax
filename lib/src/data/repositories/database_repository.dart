@@ -75,7 +75,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
       consultationReason: Value(consultationReason),
       mentalExamination: Value(mentalExamn),
       medAntecedents: Value(medAntecedents),
-      psiAntecedents: Value(psiAntecedents),
+      psyAntecedents: Value(psiAntecedents),
       familyHistory: Value(familyHistory),
       personalHistory: Value(personalHistory),
       diagnostic: Value(diagnostic),
