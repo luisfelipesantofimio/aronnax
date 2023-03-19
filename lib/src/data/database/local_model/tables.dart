@@ -31,7 +31,7 @@ class LocalClinicHistory extends Table {
   TextColumn get mentalExamination => text()();
   TextColumn get treatment => text()();
   TextColumn get medAntecedents => text()();
-  TextColumn get psiAntecedents => text()();
+  TextColumn get psyAntecedents => text()();
   TextColumn get familyHistory => text()();
   TextColumn get personalHistory => text()();
   TextColumn get diagnostic => text()();
@@ -118,6 +118,20 @@ class LocaltreatmentResults extends Table {
   TextColumn get treatmentPlanID =>
       text().references(LocalTreatmentPlans, #id)();
   TextColumn get treatmentResultsData => text()();
+}
+
+class LocalPatientTreatmentPlans extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  BoolColumn get treatmentPlanFinished => boolean()();
+
+  ///String with a positive, neutral or negative result
+  TextColumn get treatmentPlanResult => text().nullable()();
+  IntColumn get patientId => integer().references(LocalPatients, #idNumber)();
+  IntColumn get treatmentPlanId =>
+      integer().references(LocalTreatmentPlans, #id)();
+  IntColumn get localTreatmentPlanResults =>
+      integer().references(LocaltreatmentResults, #id).nullable()();
+  DateTimeColumn get creationDate => dateTime()();
 }
 
 class Settings extends Table {

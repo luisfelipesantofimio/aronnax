@@ -1324,11 +1324,11 @@ class $LocalClinicHistoryTable extends LocalClinicHistory
   late final GeneratedColumn<String> medAntecedents = GeneratedColumn<String>(
       'med_antecedents', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _psiAntecedentsMeta =
-      const VerificationMeta('psiAntecedents');
+  static const VerificationMeta _psyAntecedentsMeta =
+      const VerificationMeta('psyAntecedents');
   @override
-  late final GeneratedColumn<String> psiAntecedents = GeneratedColumn<String>(
-      'psi_antecedents', aliasedName, false,
+  late final GeneratedColumn<String> psyAntecedents = GeneratedColumn<String>(
+      'psy_antecedents', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _familyHistoryMeta =
       const VerificationMeta('familyHistory');
@@ -1375,7 +1375,7 @@ class $LocalClinicHistoryTable extends LocalClinicHistory
         mentalExamination,
         treatment,
         medAntecedents,
-        psiAntecedents,
+        psyAntecedents,
         familyHistory,
         personalHistory,
         diagnostic,
@@ -1441,13 +1441,13 @@ class $LocalClinicHistoryTable extends LocalClinicHistory
     } else if (isInserting) {
       context.missing(_medAntecedentsMeta);
     }
-    if (data.containsKey('psi_antecedents')) {
+    if (data.containsKey('psy_antecedents')) {
       context.handle(
-          _psiAntecedentsMeta,
-          psiAntecedents.isAcceptableOrUnknown(
-              data['psi_antecedents']!, _psiAntecedentsMeta));
+          _psyAntecedentsMeta,
+          psyAntecedents.isAcceptableOrUnknown(
+              data['psy_antecedents']!, _psyAntecedentsMeta));
     } else if (isInserting) {
-      context.missing(_psiAntecedentsMeta);
+      context.missing(_psyAntecedentsMeta);
     }
     if (data.containsKey('family_history')) {
       context.handle(
@@ -1510,8 +1510,8 @@ class $LocalClinicHistoryTable extends LocalClinicHistory
           .read(DriftSqlType.string, data['${effectivePrefix}treatment'])!,
       medAntecedents: attachedDatabase.typeMapping.read(
           DriftSqlType.string, data['${effectivePrefix}med_antecedents'])!,
-      psiAntecedents: attachedDatabase.typeMapping.read(
-          DriftSqlType.string, data['${effectivePrefix}psi_antecedents'])!,
+      psyAntecedents: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}psy_antecedents'])!,
       familyHistory: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}family_history'])!,
       personalHistory: attachedDatabase.typeMapping.read(
@@ -1540,7 +1540,7 @@ class LocalClinicHistoryData extends DataClass
   final String mentalExamination;
   final String treatment;
   final String medAntecedents;
-  final String psiAntecedents;
+  final String psyAntecedents;
   final String familyHistory;
   final String personalHistory;
   final String diagnostic;
@@ -1554,7 +1554,7 @@ class LocalClinicHistoryData extends DataClass
       required this.mentalExamination,
       required this.treatment,
       required this.medAntecedents,
-      required this.psiAntecedents,
+      required this.psyAntecedents,
       required this.familyHistory,
       required this.personalHistory,
       required this.diagnostic,
@@ -1570,7 +1570,7 @@ class LocalClinicHistoryData extends DataClass
     map['mental_examination'] = Variable<String>(mentalExamination);
     map['treatment'] = Variable<String>(treatment);
     map['med_antecedents'] = Variable<String>(medAntecedents);
-    map['psi_antecedents'] = Variable<String>(psiAntecedents);
+    map['psy_antecedents'] = Variable<String>(psyAntecedents);
     map['family_history'] = Variable<String>(familyHistory);
     map['personal_history'] = Variable<String>(personalHistory);
     map['diagnostic'] = Variable<String>(diagnostic);
@@ -1588,7 +1588,7 @@ class LocalClinicHistoryData extends DataClass
       mentalExamination: Value(mentalExamination),
       treatment: Value(treatment),
       medAntecedents: Value(medAntecedents),
-      psiAntecedents: Value(psiAntecedents),
+      psyAntecedents: Value(psyAntecedents),
       familyHistory: Value(familyHistory),
       personalHistory: Value(personalHistory),
       diagnostic: Value(diagnostic),
@@ -1609,7 +1609,7 @@ class LocalClinicHistoryData extends DataClass
       mentalExamination: serializer.fromJson<String>(json['mentalExamination']),
       treatment: serializer.fromJson<String>(json['treatment']),
       medAntecedents: serializer.fromJson<String>(json['medAntecedents']),
-      psiAntecedents: serializer.fromJson<String>(json['psiAntecedents']),
+      psyAntecedents: serializer.fromJson<String>(json['psyAntecedents']),
       familyHistory: serializer.fromJson<String>(json['familyHistory']),
       personalHistory: serializer.fromJson<String>(json['personalHistory']),
       diagnostic: serializer.fromJson<String>(json['diagnostic']),
@@ -1628,7 +1628,7 @@ class LocalClinicHistoryData extends DataClass
       'mentalExamination': serializer.toJson<String>(mentalExamination),
       'treatment': serializer.toJson<String>(treatment),
       'medAntecedents': serializer.toJson<String>(medAntecedents),
-      'psiAntecedents': serializer.toJson<String>(psiAntecedents),
+      'psyAntecedents': serializer.toJson<String>(psyAntecedents),
       'familyHistory': serializer.toJson<String>(familyHistory),
       'personalHistory': serializer.toJson<String>(personalHistory),
       'diagnostic': serializer.toJson<String>(diagnostic),
@@ -1645,7 +1645,7 @@ class LocalClinicHistoryData extends DataClass
           String? mentalExamination,
           String? treatment,
           String? medAntecedents,
-          String? psiAntecedents,
+          String? psyAntecedents,
           String? familyHistory,
           String? personalHistory,
           String? diagnostic,
@@ -1659,7 +1659,7 @@ class LocalClinicHistoryData extends DataClass
         mentalExamination: mentalExamination ?? this.mentalExamination,
         treatment: treatment ?? this.treatment,
         medAntecedents: medAntecedents ?? this.medAntecedents,
-        psiAntecedents: psiAntecedents ?? this.psiAntecedents,
+        psyAntecedents: psyAntecedents ?? this.psyAntecedents,
         familyHistory: familyHistory ?? this.familyHistory,
         personalHistory: personalHistory ?? this.personalHistory,
         diagnostic: diagnostic ?? this.diagnostic,
@@ -1676,7 +1676,7 @@ class LocalClinicHistoryData extends DataClass
           ..write('mentalExamination: $mentalExamination, ')
           ..write('treatment: $treatment, ')
           ..write('medAntecedents: $medAntecedents, ')
-          ..write('psiAntecedents: $psiAntecedents, ')
+          ..write('psyAntecedents: $psyAntecedents, ')
           ..write('familyHistory: $familyHistory, ')
           ..write('personalHistory: $personalHistory, ')
           ..write('diagnostic: $diagnostic, ')
@@ -1695,7 +1695,7 @@ class LocalClinicHistoryData extends DataClass
       mentalExamination,
       treatment,
       medAntecedents,
-      psiAntecedents,
+      psyAntecedents,
       familyHistory,
       personalHistory,
       diagnostic,
@@ -1712,7 +1712,7 @@ class LocalClinicHistoryData extends DataClass
           other.mentalExamination == this.mentalExamination &&
           other.treatment == this.treatment &&
           other.medAntecedents == this.medAntecedents &&
-          other.psiAntecedents == this.psiAntecedents &&
+          other.psyAntecedents == this.psyAntecedents &&
           other.familyHistory == this.familyHistory &&
           other.personalHistory == this.personalHistory &&
           other.diagnostic == this.diagnostic &&
@@ -1729,7 +1729,7 @@ class LocalClinicHistoryCompanion
   final Value<String> mentalExamination;
   final Value<String> treatment;
   final Value<String> medAntecedents;
-  final Value<String> psiAntecedents;
+  final Value<String> psyAntecedents;
   final Value<String> familyHistory;
   final Value<String> personalHistory;
   final Value<String> diagnostic;
@@ -1743,7 +1743,7 @@ class LocalClinicHistoryCompanion
     this.mentalExamination = const Value.absent(),
     this.treatment = const Value.absent(),
     this.medAntecedents = const Value.absent(),
-    this.psiAntecedents = const Value.absent(),
+    this.psyAntecedents = const Value.absent(),
     this.familyHistory = const Value.absent(),
     this.personalHistory = const Value.absent(),
     this.diagnostic = const Value.absent(),
@@ -1758,7 +1758,7 @@ class LocalClinicHistoryCompanion
     required String mentalExamination,
     required String treatment,
     required String medAntecedents,
-    required String psiAntecedents,
+    required String psyAntecedents,
     required String familyHistory,
     required String personalHistory,
     required String diagnostic,
@@ -1770,7 +1770,7 @@ class LocalClinicHistoryCompanion
         mentalExamination = Value(mentalExamination),
         treatment = Value(treatment),
         medAntecedents = Value(medAntecedents),
-        psiAntecedents = Value(psiAntecedents),
+        psyAntecedents = Value(psyAntecedents),
         familyHistory = Value(familyHistory),
         personalHistory = Value(personalHistory),
         diagnostic = Value(diagnostic),
@@ -1784,7 +1784,7 @@ class LocalClinicHistoryCompanion
     Expression<String>? mentalExamination,
     Expression<String>? treatment,
     Expression<String>? medAntecedents,
-    Expression<String>? psiAntecedents,
+    Expression<String>? psyAntecedents,
     Expression<String>? familyHistory,
     Expression<String>? personalHistory,
     Expression<String>? diagnostic,
@@ -1799,7 +1799,7 @@ class LocalClinicHistoryCompanion
       if (mentalExamination != null) 'mental_examination': mentalExamination,
       if (treatment != null) 'treatment': treatment,
       if (medAntecedents != null) 'med_antecedents': medAntecedents,
-      if (psiAntecedents != null) 'psi_antecedents': psiAntecedents,
+      if (psyAntecedents != null) 'psy_antecedents': psyAntecedents,
       if (familyHistory != null) 'family_history': familyHistory,
       if (personalHistory != null) 'personal_history': personalHistory,
       if (diagnostic != null) 'diagnostic': diagnostic,
@@ -1816,7 +1816,7 @@ class LocalClinicHistoryCompanion
       Value<String>? mentalExamination,
       Value<String>? treatment,
       Value<String>? medAntecedents,
-      Value<String>? psiAntecedents,
+      Value<String>? psyAntecedents,
       Value<String>? familyHistory,
       Value<String>? personalHistory,
       Value<String>? diagnostic,
@@ -1830,7 +1830,7 @@ class LocalClinicHistoryCompanion
       mentalExamination: mentalExamination ?? this.mentalExamination,
       treatment: treatment ?? this.treatment,
       medAntecedents: medAntecedents ?? this.medAntecedents,
-      psiAntecedents: psiAntecedents ?? this.psiAntecedents,
+      psyAntecedents: psyAntecedents ?? this.psyAntecedents,
       familyHistory: familyHistory ?? this.familyHistory,
       personalHistory: personalHistory ?? this.personalHistory,
       diagnostic: diagnostic ?? this.diagnostic,
@@ -1863,8 +1863,8 @@ class LocalClinicHistoryCompanion
     if (medAntecedents.present) {
       map['med_antecedents'] = Variable<String>(medAntecedents.value);
     }
-    if (psiAntecedents.present) {
-      map['psi_antecedents'] = Variable<String>(psiAntecedents.value);
+    if (psyAntecedents.present) {
+      map['psy_antecedents'] = Variable<String>(psyAntecedents.value);
     }
     if (familyHistory.present) {
       map['family_history'] = Variable<String>(familyHistory.value);
@@ -1894,7 +1894,7 @@ class LocalClinicHistoryCompanion
           ..write('mentalExamination: $mentalExamination, ')
           ..write('treatment: $treatment, ')
           ..write('medAntecedents: $medAntecedents, ')
-          ..write('psiAntecedents: $psiAntecedents, ')
+          ..write('psyAntecedents: $psyAntecedents, ')
           ..write('familyHistory: $familyHistory, ')
           ..write('personalHistory: $personalHistory, ')
           ..write('diagnostic: $diagnostic, ')
