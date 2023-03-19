@@ -30,12 +30,10 @@ abstract class LocalDatabaseInteface {
     DateTime dateTime,
     String consultationReason,
     String mentalExamn,
-    String treatment,
     String medAntecedents,
     String psiAntecedents,
     String familyHistory,
     String personalHistory,
-    String diagnostic,
     int idNumber,
     int professionalID,
   );

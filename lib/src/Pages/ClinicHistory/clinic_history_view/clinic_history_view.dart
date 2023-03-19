@@ -19,106 +19,106 @@ class ClinicHistoryView extends ConsumerStatefulWidget {
 class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
   bool isMouseOn = false;
 
-  @override
-  void didChangeDependencies() {
-    ref.watch(globalOfflineStatusProvider)
-        ? Future(
-            () {
-              ref.read(currentConsultationReason.notifier).update((state) => ref
-                  .watch(localQueriedClinicHistoryProvider)
-                  .map((e) => e.consultationReason)
-                  .toList()
-                  .single);
+  // @override
+  // void didChangeDependencies() {
+  //   ref.watch(globalOfflineStatusProvider)
+  //       ? Future(
+  //           () {
+  //             ref.read(currentConsultationReason.notifier).update((state) => ref
+  //                 .watch(localQueriedClinicHistoryProvider)
+  //                 .map((e) => e.consultationReason)
+  //                 .toList()
+  //                 .single);
 
-              ref.read(currentMentalExamn.notifier).update((state) => ref
-                  .watch(localQueriedClinicHistoryProvider)
-                  .map((e) => e.mentalExamination)
-                  .toList()
-                  .single);
+  //             ref.read(currentMentalExamn.notifier).update((state) => ref
+  //                 .watch(localQueriedClinicHistoryProvider)
+  //                 .map((e) => e.mentalExamination)
+  //                 .toList()
+  //                 .single);
 
-              ref.read(currentTreatment.notifier).update((state) => ref
-                  .watch(localQueriedClinicHistoryProvider)
-                  .map((e) => e.treatment)
-                  .toList()
-                  .single);
-              ref.read(currentMedAntecedents.notifier).update((state) => ref
-                  .watch(localQueriedClinicHistoryProvider)
-                  .map((e) => e.medAntecedents)
-                  .toList()
-                  .single);
-              ref.read(currentPsyAntecedents.notifier).update((state) => ref
-                  .watch(localQueriedClinicHistoryProvider)
-                  .map((e) => e.psyAntecedents)
-                  .toList()
-                  .single);
-              ref.read(currentFamilyHistory.notifier).update((state) => ref
-                  .watch(localQueriedClinicHistoryProvider)
-                  .map((e) => e.familyHistory)
-                  .toList()
-                  .single);
-              ref.read(currentPersonalHistory.notifier).update((state) => ref
-                  .watch(localQueriedClinicHistoryProvider)
-                  .map((e) => e.personalHistory)
-                  .toList()
-                  .single);
-              ref.read(currentDiagnostic.notifier).update((state) => ref
-                  .watch(localQueriedClinicHistoryProvider)
-                  .map((e) => e.diagnostic)
-                  .toList()
-                  .single);
-              ref.read(currentDiagnostic.notifier).update((state) => ref
-                  .watch(localQueriedClinicHistoryProvider)
-                  .map((e) => e.diagnostic)
-                  .toList()
-                  .single);
-            },
-          )
-        : Future(
-            () {
-              ref.read(currentConsultationReason.notifier).update((state) => ref
-                  .watch(globalQueriedClinicHistoryProvider)
-                  .map((e) => e.consultationReason)
-                  .toList()
-                  .single);
-              ref.read(currentMentalExamn.notifier).update((state) => ref
-                  .watch(globalQueriedClinicHistoryProvider)
-                  .map((e) => e.mentalExamn)
-                  .toList()
-                  .single);
-              ref.read(currentTreatment.notifier).update((state) => ref
-                  .watch(globalQueriedClinicHistoryProvider)
-                  .map((e) => e.treatment)
-                  .toList()
-                  .single);
-              ref.read(currentMedAntecedents.notifier).update((state) => ref
-                  .watch(globalQueriedClinicHistoryProvider)
-                  .map((e) => e.medAntecedents)
-                  .toList()
-                  .single);
-              ref.read(currentPsyAntecedents.notifier).update((state) => ref
-                  .watch(globalQueriedClinicHistoryProvider)
-                  .map((e) => e.psyAntecedents)
-                  .toList()
-                  .single);
-              ref.read(currentFamilyHistory.notifier).update((state) => ref
-                  .watch(globalQueriedClinicHistoryProvider)
-                  .map((e) => e.familyHistory)
-                  .toList()
-                  .single);
-              ref.read(currentPersonalHistory.notifier).update((state) => ref
-                  .watch(globalQueriedClinicHistoryProvider)
-                  .map((e) => e.personalHistory)
-                  .toList()
-                  .single);
-              ref.read(currentDiagnostic.notifier).update((state) => ref
-                  .watch(globalQueriedClinicHistoryProvider)
-                  .map((e) => e.diagnostic)
-                  .toList()
-                  .single);
-            },
-          );
-    super.didChangeDependencies();
-  }
+  //             ref.read(currentTreatment.notifier).update((state) => ref
+  //                 .watch(localQueriedClinicHistoryProvider)
+  //                 .map((e) => e.treatment)
+  //                 .toList()
+  //                 .single);
+  //             ref.read(currentMedAntecedents.notifier).update((state) => ref
+  //                 .watch(localQueriedClinicHistoryProvider)
+  //                 .map((e) => e.medAntecedents)
+  //                 .toList()
+  //                 .single);
+  //             ref.read(currentPsyAntecedents.notifier).update((state) => ref
+  //                 .watch(localQueriedClinicHistoryProvider)
+  //                 .map((e) => e.psyAntecedents)
+  //                 .toList()
+  //                 .single);
+  //             ref.read(currentFamilyHistory.notifier).update((state) => ref
+  //                 .watch(localQueriedClinicHistoryProvider)
+  //                 .map((e) => e.familyHistory)
+  //                 .toList()
+  //                 .single);
+  //             ref.read(currentPersonalHistory.notifier).update((state) => ref
+  //                 .watch(localQueriedClinicHistoryProvider)
+  //                 .map((e) => e.personalHistory)
+  //                 .toList()
+  //                 .single);
+  //             ref.read(currentDiagnostic.notifier).update((state) => ref
+  //                 .watch(localQueriedClinicHistoryProvider)
+  //                 .map((e) => e.diagnostic)
+  //                 .toList()
+  //                 .single);
+  //             ref.read(currentDiagnostic.notifier).update((state) => ref
+  //                 .watch(localQueriedClinicHistoryProvider)
+  //                 .map((e) => e.diagnostic)
+  //                 .toList()
+  //                 .single);
+  //           },
+  //         )
+  //       : Future(
+  //           () {
+  //             ref.read(currentConsultationReason.notifier).update((state) => ref
+  //                 .watch(globalQueriedClinicHistoryProvider)
+  //                 .map((e) => e.consultationReason)
+  //                 .toList()
+  //                 .single);
+  //             ref.read(currentMentalExamn.notifier).update((state) => ref
+  //                 .watch(globalQueriedClinicHistoryProvider)
+  //                 .map((e) => e.mentalExamn)
+  //                 .toList()
+  //                 .single);
+  //             ref.read(currentTreatment.notifier).update((state) => ref
+  //                 .watch(globalQueriedClinicHistoryProvider)
+  //                 .map((e) => e.treatment)
+  //                 .toList()
+  //                 .single);
+  //             ref.read(currentMedAntecedents.notifier).update((state) => ref
+  //                 .watch(globalQueriedClinicHistoryProvider)
+  //                 .map((e) => e.medAntecedents)
+  //                 .toList()
+  //                 .single);
+  //             ref.read(currentPsyAntecedents.notifier).update((state) => ref
+  //                 .watch(globalQueriedClinicHistoryProvider)
+  //                 .map((e) => e.psyAntecedents)
+  //                 .toList()
+  //                 .single);
+  //             ref.read(currentFamilyHistory.notifier).update((state) => ref
+  //                 .watch(globalQueriedClinicHistoryProvider)
+  //                 .map((e) => e.familyHistory)
+  //                 .toList()
+  //                 .single);
+  //             ref.read(currentPersonalHistory.notifier).update((state) => ref
+  //                 .watch(globalQueriedClinicHistoryProvider)
+  //                 .map((e) => e.personalHistory)
+  //                 .toList()
+  //                 .single);
+  //             ref.read(currentDiagnostic.notifier).update((state) => ref
+  //                 .watch(globalQueriedClinicHistoryProvider)
+  //                 .map((e) => e.diagnostic)
+  //                 .toList()
+  //                 .single);
+  //           },
+  //         );
+  //   super.didChangeDependencies();
+  // }
 
   @override
   Widget build(BuildContext context) {

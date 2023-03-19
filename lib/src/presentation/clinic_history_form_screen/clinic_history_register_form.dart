@@ -177,54 +177,6 @@ class _ClinicHistoryRegisterFormState
                   },
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.all(20),
-                child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  maxLines: 5,
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    labelText: "Impresión diagnóstica",
-                    labelStyle: Theme.of(context).textTheme.bodyMedium,
-                    floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  onChanged: (value) {
-                    ref.read(clinicHistoryDiagnosticProvider.notifier).update(
-                          (state) => value,
-                        );
-                  },
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Inserta un valor";
-                    }
-                    return null;
-                  },
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.all(20),
-                child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  maxLines: 10,
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    labelText: "Propuesta de tratamiento",
-                    labelStyle: Theme.of(context).textTheme.bodyMedium,
-                    floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  onChanged: (value) {
-                    ref.read(clinicHistoryTreatmentProvider.notifier).update(
-                          (state) => value,
-                        );
-                  },
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Inserta un valor";
-                    }
-                    return null;
-                  },
-                ),
-              ),
             ],
           ),
         ),

@@ -1312,12 +1312,6 @@ class $LocalClinicHistoryTable extends LocalClinicHistory
   late final GeneratedColumn<String> mentalExamination =
       GeneratedColumn<String>('mental_examination', aliasedName, false,
           type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _treatmentMeta =
-      const VerificationMeta('treatment');
-  @override
-  late final GeneratedColumn<String> treatment = GeneratedColumn<String>(
-      'treatment', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _medAntecedentsMeta =
       const VerificationMeta('medAntecedents');
   @override
@@ -1341,12 +1335,6 @@ class $LocalClinicHistoryTable extends LocalClinicHistory
   @override
   late final GeneratedColumn<String> personalHistory = GeneratedColumn<String>(
       'personal_history', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _diagnosticMeta =
-      const VerificationMeta('diagnostic');
-  @override
-  late final GeneratedColumn<String> diagnostic = GeneratedColumn<String>(
-      'diagnostic', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _idNumberMeta =
       const VerificationMeta('idNumber');
@@ -1373,12 +1361,10 @@ class $LocalClinicHistoryTable extends LocalClinicHistory
         currentDate,
         consultationReason,
         mentalExamination,
-        treatment,
         medAntecedents,
         psyAntecedents,
         familyHistory,
         personalHistory,
-        diagnostic,
         idNumber,
         professionalID
       ];
@@ -1427,12 +1413,6 @@ class $LocalClinicHistoryTable extends LocalClinicHistory
     } else if (isInserting) {
       context.missing(_mentalExaminationMeta);
     }
-    if (data.containsKey('treatment')) {
-      context.handle(_treatmentMeta,
-          treatment.isAcceptableOrUnknown(data['treatment']!, _treatmentMeta));
-    } else if (isInserting) {
-      context.missing(_treatmentMeta);
-    }
     if (data.containsKey('med_antecedents')) {
       context.handle(
           _medAntecedentsMeta,
@@ -1464,14 +1444,6 @@ class $LocalClinicHistoryTable extends LocalClinicHistory
               data['personal_history']!, _personalHistoryMeta));
     } else if (isInserting) {
       context.missing(_personalHistoryMeta);
-    }
-    if (data.containsKey('diagnostic')) {
-      context.handle(
-          _diagnosticMeta,
-          diagnostic.isAcceptableOrUnknown(
-              data['diagnostic']!, _diagnosticMeta));
-    } else if (isInserting) {
-      context.missing(_diagnosticMeta);
     }
     if (data.containsKey('id_number')) {
       context.handle(_idNumberMeta,
@@ -1506,8 +1478,6 @@ class $LocalClinicHistoryTable extends LocalClinicHistory
           DriftSqlType.string, data['${effectivePrefix}consultation_reason'])!,
       mentalExamination: attachedDatabase.typeMapping.read(
           DriftSqlType.string, data['${effectivePrefix}mental_examination'])!,
-      treatment: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}treatment'])!,
       medAntecedents: attachedDatabase.typeMapping.read(
           DriftSqlType.string, data['${effectivePrefix}med_antecedents'])!,
       psyAntecedents: attachedDatabase.typeMapping.read(
@@ -1516,8 +1486,6 @@ class $LocalClinicHistoryTable extends LocalClinicHistory
           .read(DriftSqlType.string, data['${effectivePrefix}family_history'])!,
       personalHistory: attachedDatabase.typeMapping.read(
           DriftSqlType.string, data['${effectivePrefix}personal_history'])!,
-      diagnostic: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}diagnostic'])!,
       idNumber: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id_number'])!,
       professionalID: attachedDatabase.typeMapping
@@ -1538,12 +1506,10 @@ class LocalClinicHistoryData extends DataClass
   final DateTime currentDate;
   final String consultationReason;
   final String mentalExamination;
-  final String treatment;
   final String medAntecedents;
   final String psyAntecedents;
   final String familyHistory;
   final String personalHistory;
-  final String diagnostic;
   final int idNumber;
   final int professionalID;
   const LocalClinicHistoryData(
@@ -1552,12 +1518,10 @@ class LocalClinicHistoryData extends DataClass
       required this.currentDate,
       required this.consultationReason,
       required this.mentalExamination,
-      required this.treatment,
       required this.medAntecedents,
       required this.psyAntecedents,
       required this.familyHistory,
       required this.personalHistory,
-      required this.diagnostic,
       required this.idNumber,
       required this.professionalID});
   @override
@@ -1568,12 +1532,10 @@ class LocalClinicHistoryData extends DataClass
     map['current_date'] = Variable<DateTime>(currentDate);
     map['consultation_reason'] = Variable<String>(consultationReason);
     map['mental_examination'] = Variable<String>(mentalExamination);
-    map['treatment'] = Variable<String>(treatment);
     map['med_antecedents'] = Variable<String>(medAntecedents);
     map['psy_antecedents'] = Variable<String>(psyAntecedents);
     map['family_history'] = Variable<String>(familyHistory);
     map['personal_history'] = Variable<String>(personalHistory);
-    map['diagnostic'] = Variable<String>(diagnostic);
     map['id_number'] = Variable<int>(idNumber);
     map['professional_i_d'] = Variable<int>(professionalID);
     return map;
@@ -1586,12 +1548,10 @@ class LocalClinicHistoryData extends DataClass
       currentDate: Value(currentDate),
       consultationReason: Value(consultationReason),
       mentalExamination: Value(mentalExamination),
-      treatment: Value(treatment),
       medAntecedents: Value(medAntecedents),
       psyAntecedents: Value(psyAntecedents),
       familyHistory: Value(familyHistory),
       personalHistory: Value(personalHistory),
-      diagnostic: Value(diagnostic),
       idNumber: Value(idNumber),
       professionalID: Value(professionalID),
     );
@@ -1607,12 +1567,10 @@ class LocalClinicHistoryData extends DataClass
       consultationReason:
           serializer.fromJson<String>(json['consultationReason']),
       mentalExamination: serializer.fromJson<String>(json['mentalExamination']),
-      treatment: serializer.fromJson<String>(json['treatment']),
       medAntecedents: serializer.fromJson<String>(json['medAntecedents']),
       psyAntecedents: serializer.fromJson<String>(json['psyAntecedents']),
       familyHistory: serializer.fromJson<String>(json['familyHistory']),
       personalHistory: serializer.fromJson<String>(json['personalHistory']),
-      diagnostic: serializer.fromJson<String>(json['diagnostic']),
       idNumber: serializer.fromJson<int>(json['idNumber']),
       professionalID: serializer.fromJson<int>(json['professionalID']),
     );
@@ -1626,12 +1584,10 @@ class LocalClinicHistoryData extends DataClass
       'currentDate': serializer.toJson<DateTime>(currentDate),
       'consultationReason': serializer.toJson<String>(consultationReason),
       'mentalExamination': serializer.toJson<String>(mentalExamination),
-      'treatment': serializer.toJson<String>(treatment),
       'medAntecedents': serializer.toJson<String>(medAntecedents),
       'psyAntecedents': serializer.toJson<String>(psyAntecedents),
       'familyHistory': serializer.toJson<String>(familyHistory),
       'personalHistory': serializer.toJson<String>(personalHistory),
-      'diagnostic': serializer.toJson<String>(diagnostic),
       'idNumber': serializer.toJson<int>(idNumber),
       'professionalID': serializer.toJson<int>(professionalID),
     };
@@ -1643,12 +1599,10 @@ class LocalClinicHistoryData extends DataClass
           DateTime? currentDate,
           String? consultationReason,
           String? mentalExamination,
-          String? treatment,
           String? medAntecedents,
           String? psyAntecedents,
           String? familyHistory,
           String? personalHistory,
-          String? diagnostic,
           int? idNumber,
           int? professionalID}) =>
       LocalClinicHistoryData(
@@ -1657,12 +1611,10 @@ class LocalClinicHistoryData extends DataClass
         currentDate: currentDate ?? this.currentDate,
         consultationReason: consultationReason ?? this.consultationReason,
         mentalExamination: mentalExamination ?? this.mentalExamination,
-        treatment: treatment ?? this.treatment,
         medAntecedents: medAntecedents ?? this.medAntecedents,
         psyAntecedents: psyAntecedents ?? this.psyAntecedents,
         familyHistory: familyHistory ?? this.familyHistory,
         personalHistory: personalHistory ?? this.personalHistory,
-        diagnostic: diagnostic ?? this.diagnostic,
         idNumber: idNumber ?? this.idNumber,
         professionalID: professionalID ?? this.professionalID,
       );
@@ -1674,12 +1626,10 @@ class LocalClinicHistoryData extends DataClass
           ..write('currentDate: $currentDate, ')
           ..write('consultationReason: $consultationReason, ')
           ..write('mentalExamination: $mentalExamination, ')
-          ..write('treatment: $treatment, ')
           ..write('medAntecedents: $medAntecedents, ')
           ..write('psyAntecedents: $psyAntecedents, ')
           ..write('familyHistory: $familyHistory, ')
           ..write('personalHistory: $personalHistory, ')
-          ..write('diagnostic: $diagnostic, ')
           ..write('idNumber: $idNumber, ')
           ..write('professionalID: $professionalID')
           ..write(')'))
@@ -1693,12 +1643,10 @@ class LocalClinicHistoryData extends DataClass
       currentDate,
       consultationReason,
       mentalExamination,
-      treatment,
       medAntecedents,
       psyAntecedents,
       familyHistory,
       personalHistory,
-      diagnostic,
       idNumber,
       professionalID);
   @override
@@ -1710,12 +1658,10 @@ class LocalClinicHistoryData extends DataClass
           other.currentDate == this.currentDate &&
           other.consultationReason == this.consultationReason &&
           other.mentalExamination == this.mentalExamination &&
-          other.treatment == this.treatment &&
           other.medAntecedents == this.medAntecedents &&
           other.psyAntecedents == this.psyAntecedents &&
           other.familyHistory == this.familyHistory &&
           other.personalHistory == this.personalHistory &&
-          other.diagnostic == this.diagnostic &&
           other.idNumber == this.idNumber &&
           other.professionalID == this.professionalID);
 }
@@ -1727,12 +1673,10 @@ class LocalClinicHistoryCompanion
   final Value<DateTime> currentDate;
   final Value<String> consultationReason;
   final Value<String> mentalExamination;
-  final Value<String> treatment;
   final Value<String> medAntecedents;
   final Value<String> psyAntecedents;
   final Value<String> familyHistory;
   final Value<String> personalHistory;
-  final Value<String> diagnostic;
   final Value<int> idNumber;
   final Value<int> professionalID;
   const LocalClinicHistoryCompanion({
@@ -1741,12 +1685,10 @@ class LocalClinicHistoryCompanion
     this.currentDate = const Value.absent(),
     this.consultationReason = const Value.absent(),
     this.mentalExamination = const Value.absent(),
-    this.treatment = const Value.absent(),
     this.medAntecedents = const Value.absent(),
     this.psyAntecedents = const Value.absent(),
     this.familyHistory = const Value.absent(),
     this.personalHistory = const Value.absent(),
-    this.diagnostic = const Value.absent(),
     this.idNumber = const Value.absent(),
     this.professionalID = const Value.absent(),
   });
@@ -1756,24 +1698,20 @@ class LocalClinicHistoryCompanion
     required DateTime currentDate,
     required String consultationReason,
     required String mentalExamination,
-    required String treatment,
     required String medAntecedents,
     required String psyAntecedents,
     required String familyHistory,
     required String personalHistory,
-    required String diagnostic,
     required int idNumber,
     required int professionalID,
   })  : registerNumber = Value(registerNumber),
         currentDate = Value(currentDate),
         consultationReason = Value(consultationReason),
         mentalExamination = Value(mentalExamination),
-        treatment = Value(treatment),
         medAntecedents = Value(medAntecedents),
         psyAntecedents = Value(psyAntecedents),
         familyHistory = Value(familyHistory),
         personalHistory = Value(personalHistory),
-        diagnostic = Value(diagnostic),
         idNumber = Value(idNumber),
         professionalID = Value(professionalID);
   static Insertable<LocalClinicHistoryData> custom({
@@ -1782,12 +1720,10 @@ class LocalClinicHistoryCompanion
     Expression<DateTime>? currentDate,
     Expression<String>? consultationReason,
     Expression<String>? mentalExamination,
-    Expression<String>? treatment,
     Expression<String>? medAntecedents,
     Expression<String>? psyAntecedents,
     Expression<String>? familyHistory,
     Expression<String>? personalHistory,
-    Expression<String>? diagnostic,
     Expression<int>? idNumber,
     Expression<int>? professionalID,
   }) {
@@ -1797,12 +1733,10 @@ class LocalClinicHistoryCompanion
       if (currentDate != null) 'current_date': currentDate,
       if (consultationReason != null) 'consultation_reason': consultationReason,
       if (mentalExamination != null) 'mental_examination': mentalExamination,
-      if (treatment != null) 'treatment': treatment,
       if (medAntecedents != null) 'med_antecedents': medAntecedents,
       if (psyAntecedents != null) 'psy_antecedents': psyAntecedents,
       if (familyHistory != null) 'family_history': familyHistory,
       if (personalHistory != null) 'personal_history': personalHistory,
-      if (diagnostic != null) 'diagnostic': diagnostic,
       if (idNumber != null) 'id_number': idNumber,
       if (professionalID != null) 'professional_i_d': professionalID,
     });
@@ -1814,12 +1748,10 @@ class LocalClinicHistoryCompanion
       Value<DateTime>? currentDate,
       Value<String>? consultationReason,
       Value<String>? mentalExamination,
-      Value<String>? treatment,
       Value<String>? medAntecedents,
       Value<String>? psyAntecedents,
       Value<String>? familyHistory,
       Value<String>? personalHistory,
-      Value<String>? diagnostic,
       Value<int>? idNumber,
       Value<int>? professionalID}) {
     return LocalClinicHistoryCompanion(
@@ -1828,12 +1760,10 @@ class LocalClinicHistoryCompanion
       currentDate: currentDate ?? this.currentDate,
       consultationReason: consultationReason ?? this.consultationReason,
       mentalExamination: mentalExamination ?? this.mentalExamination,
-      treatment: treatment ?? this.treatment,
       medAntecedents: medAntecedents ?? this.medAntecedents,
       psyAntecedents: psyAntecedents ?? this.psyAntecedents,
       familyHistory: familyHistory ?? this.familyHistory,
       personalHistory: personalHistory ?? this.personalHistory,
-      diagnostic: diagnostic ?? this.diagnostic,
       idNumber: idNumber ?? this.idNumber,
       professionalID: professionalID ?? this.professionalID,
     );
@@ -1857,9 +1787,6 @@ class LocalClinicHistoryCompanion
     if (mentalExamination.present) {
       map['mental_examination'] = Variable<String>(mentalExamination.value);
     }
-    if (treatment.present) {
-      map['treatment'] = Variable<String>(treatment.value);
-    }
     if (medAntecedents.present) {
       map['med_antecedents'] = Variable<String>(medAntecedents.value);
     }
@@ -1871,9 +1798,6 @@ class LocalClinicHistoryCompanion
     }
     if (personalHistory.present) {
       map['personal_history'] = Variable<String>(personalHistory.value);
-    }
-    if (diagnostic.present) {
-      map['diagnostic'] = Variable<String>(diagnostic.value);
     }
     if (idNumber.present) {
       map['id_number'] = Variable<int>(idNumber.value);
@@ -1892,12 +1816,10 @@ class LocalClinicHistoryCompanion
           ..write('currentDate: $currentDate, ')
           ..write('consultationReason: $consultationReason, ')
           ..write('mentalExamination: $mentalExamination, ')
-          ..write('treatment: $treatment, ')
           ..write('medAntecedents: $medAntecedents, ')
           ..write('psyAntecedents: $psyAntecedents, ')
           ..write('familyHistory: $familyHistory, ')
           ..write('personalHistory: $personalHistory, ')
-          ..write('diagnostic: $diagnostic, ')
           ..write('idNumber: $idNumber, ')
           ..write('professionalID: $professionalID')
           ..write(')'))

@@ -60,12 +60,10 @@ class DatabaseRepository implements LocalDatabaseInteface {
     DateTime dateTime,
     String consultationReason,
     String mentalExamn,
-    String treatment,
     String medAntecedents,
     String psiAntecedents,
     String familyHistory,
     String personalHistory,
-    String diagnostic,
     int idNumber,
     int professionalID,
   ) async {
@@ -78,8 +76,6 @@ class DatabaseRepository implements LocalDatabaseInteface {
       psyAntecedents: Value(psiAntecedents),
       familyHistory: Value(familyHistory),
       personalHistory: Value(personalHistory),
-      diagnostic: Value(diagnostic),
-      treatment: Value(treatment),
       idNumber: Value(idNumber),
       professionalID: Value(professionalID),
     );

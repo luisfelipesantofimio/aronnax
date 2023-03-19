@@ -110,12 +110,10 @@ insertClinicHistory(
     dateTime,
     consultationReason,
     mentalExamn,
-    treatment,
     medAntecedents,
     psiAntecedents,
     familyHistory,
     personalHistory,
-    diagnostic,
     idNumber,
     createdBy) async {
   final conn = await MySqlConnection.connect(
@@ -135,12 +133,10 @@ insertClinicHistory(
       dateTime,
       consultationReason,
       mentalExamn,
-      treatment,
       medAntecedents,
       psiAntecedents,
       familyHistory,
       personalHistory,
-      diagnostic,
       idNumber,
       createdBy
     ],

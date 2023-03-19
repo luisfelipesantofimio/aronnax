@@ -123,8 +123,6 @@ class _ClinicHistoryRegisterViewState
                                                 ref.read(
                                                     clinicHistoryMentalExaminationProvider),
                                                 ref.read(
-                                                    clinicHistoryTreatmentProvider),
-                                                ref.read(
                                                     clinicHistoryMedAntecedentsProvider),
                                                 ref.read(
                                                     clinicHistoryPsyAntecedentsProvider),
@@ -132,8 +130,6 @@ class _ClinicHistoryRegisterViewState
                                                     clinicHistoryFamilyHistoryProvider),
                                                 ref.read(
                                                     clinicHistoryPersonalHistoryProvider),
-                                                ref.read(
-                                                    clinicHistoryDiagnosticProvider),
                                                 ref.read(
                                                     globalSelectedConsultantIDProvider),
                                                 professionalID)
@@ -145,8 +141,6 @@ class _ClinicHistoryRegisterViewState
                                                 ref.read(
                                                     clinicHistoryMentalExaminationProvider),
                                                 ref.read(
-                                                    clinicHistoryTreatmentProvider),
-                                                ref.read(
                                                     clinicHistoryMedAntecedentsProvider),
                                                 ref.read(
                                                     clinicHistoryPsyAntecedentsProvider),
@@ -154,8 +148,6 @@ class _ClinicHistoryRegisterViewState
                                                     clinicHistoryFamilyHistoryProvider),
                                                 ref.read(
                                                     clinicHistoryPersonalHistoryProvider),
-                                                ref.read(
-                                                    clinicHistoryDiagnosticProvider),
                                                 ref.read(
                                                     globalSelectedConsultantIDProvider),
                                                 professionalID);
