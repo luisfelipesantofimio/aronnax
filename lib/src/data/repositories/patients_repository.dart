@@ -35,4 +35,23 @@ class PatientsRepository implements PatientsRepositoryInterface {
           .updateLocalPatientActiveState(patientId, newState);
     }
   }
+
+  @override
+  List<Patient> queryPatients(List<Patient> patientsList, String query) {
+    List<Patient> queriedPatientsList = [];
+    queriedPatientsList.clear();
+
+    if (query.isEmpty) {
+      queriedPatientsList = patientsList;
+    } else {
+      for (var element in patientsList) {
+        if (element.names.toLowerCase().contains(query) ||
+            element.lastNames.toLowerCase().contains(query) ||
+            element.idNumber.toString().toLowerCase().contains(query)) {
+          queriedPatientsList.add(element);
+        }
+      }
+    }
+    return queriedPatientsList;
+  }
 }

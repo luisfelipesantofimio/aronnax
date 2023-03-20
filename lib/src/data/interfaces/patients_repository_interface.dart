@@ -4,6 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class PatientsRepositoryInterface {
   Future<List<Patient>> getPatientsList(Ref ref, bool isOffline);
+
+  List<Patient> queryPatients(List<Patient> patientsList, String query);
+
   void updateLocalPatientActiveState(
     WidgetRef ref,
     int patientId,
