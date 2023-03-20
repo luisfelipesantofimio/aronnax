@@ -7,7 +7,7 @@ import 'package:aronnax/src/domain/entities/calendar_event.dart';
 import 'package:aronnax/src/presentation/core/methods.dart';
 import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:aronnax/src/presentation/main_menu/menu_options_bar.dart';
-import 'package:aronnax/src/presentation/treatment_plans/treatment_plan_creation/treatment_plan_creation_view.dart';
+import 'package:aronnax/src/presentation/patiens_view/patients_view.dart';
 import 'package:aronnax/src/presentation/treatment_plans/treatment_plans_view/treatment_plans_view.dart';
 import 'package:aronnax/src/presentation/widgets/calendar_components/events_list_view.dart';
 import 'package:aronnax/src/presentation/widgets/generic_icon_button.dart';
@@ -183,7 +183,14 @@ class MainMenuState extends ConsumerState<MainMenu> {
                             GenericIconButton(
                               icon: FontAwesomeIcons.userGroup,
                               title: 'Patiens list',
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => PatientsView(),
+                                  ),
+                                );
+                              },
                             ),
                           ],
                         ),

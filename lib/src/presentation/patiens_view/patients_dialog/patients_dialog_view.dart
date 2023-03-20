@@ -23,7 +23,7 @@ class _PatientsDialogViewState extends ConsumerState<PatientsDialogView> {
     return Dialog(
       child: SizedBox(
         height: MediaQuery.of(context).size.height * 0.5,
-        width: MediaQuery.of(context).size.width * 0.5,
+        width: MediaQuery.of(context).size.width * 0.45,
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: LayoutBuilder(
@@ -148,17 +148,9 @@ class _PatientsDialogViewState extends ConsumerState<PatientsDialogView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         TextButton(
-                          onPressed: () {},
-                          child: const Text(
-                            'Go to clinic history',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            //TODO: validate to create a clinic history if the user does not have
+                          },
                           child: const Text(
                             'Go to current case information',
                             style: TextStyle(

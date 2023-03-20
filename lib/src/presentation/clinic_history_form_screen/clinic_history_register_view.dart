@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:aronnax/src/Pages/Formulary/widgets/consultant_selection_dialog.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/forms_providers/clinic_history_form_provider.dart';
+import 'package:aronnax/src/data/providers/forms_providers/register_form_provider.dart';
 import 'package:aronnax/src/data/remote_database/server_api.dart';
 import 'package:aronnax/src/presentation/clinic_history_form_screen/clinic_history_register_form.dart';
 import 'package:aronnax/src/data/database/local_model/local_queries.dart';
@@ -10,6 +11,7 @@ import 'package:aronnax/src/presentation/clinic_history_form_screen/clinic_histo
 import 'package:aronnax/src/presentation/core/controllers.dart';
 import 'package:aronnax/src/presentation/core/methods.dart';
 import 'package:aronnax/src/presentation/core/user_global_values.dart';
+import 'package:aronnax/src/presentation/main_menu/main_menu.dart';
 import 'package:aronnax/src/presentation/widgets/generic_global_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,7 +20,9 @@ import 'package:intl/intl.dart';
 class ClinicHistoryRegisterView extends ConsumerStatefulWidget {
   const ClinicHistoryRegisterView({
     Key? key,
+    required this.patientName,
   }) : super(key: key);
+  final String patientName;
 
   @override
   ConsumerState<ClinicHistoryRegisterView> createState() =>
@@ -95,75 +99,81 @@ class _ClinicHistoryRegisterViewState
                             ),
                           ),
                           Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  IconButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    icon: const Icon(Icons.arrow_back),
-                                    tooltip: "Volver",
-                                  ),
-                                  const Padding(padding: EdgeInsets.all(20)),
-                                  GenericGlobalButton(
-                                    height: 40,
-                                    width: 200,
-                                    title: "Guardar registro",
-                                    onPressed: () {
-                                      if (clinicHistoryKey.currentState!
-                                          .validate()) {
-                                        isOfflineEnabled
-                                            ? addLocalClinicHistory(
-                                                registerCode,
-                                                DateTime.now(),
-                                                ref.read(
-                                                    clinicHistoryConsultationReasonProvider),
-                                                ref.read(
-                                                    clinicHistoryMentalExaminationProvider),
-                                                ref.read(
-                                                    clinicHistoryMedAntecedentsProvider),
-                                                ref.read(
-                                                    clinicHistoryPsyAntecedentsProvider),
-                                                ref.read(
-                                                    clinicHistoryFamilyHistoryProvider),
-                                                ref.read(
-                                                    clinicHistoryPersonalHistoryProvider),
-                                                ref.read(
-                                                    globalSelectedConsultantIDProvider),
-                                                professionalID)
-                                            : insertClinicHistory(
-                                                registerCode,
-                                                DateTime.now(),
-                                                ref.read(
-                                                    clinicHistoryConsultationReasonProvider),
-                                                ref.read(
-                                                    clinicHistoryMentalExaminationProvider),
-                                                ref.read(
-                                                    clinicHistoryMedAntecedentsProvider),
-                                                ref.read(
-                                                    clinicHistoryPsyAntecedentsProvider),
-                                                ref.read(
-                                                    clinicHistoryFamilyHistoryProvider),
-                                                ref.read(
-                                                    clinicHistoryPersonalHistoryProvider),
-                                                ref.read(
-                                                    globalSelectedConsultantIDProvider),
-                                                professionalID);
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                            content: Text("Historia guardada"),
-                                          ),
-                                        );
+                            padding: const EdgeInsets.all(15.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                IconButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  icon: const Icon(Icons.arrow_back),
+                                  tooltip: "Volver",
+                                ),
+                                const Padding(padding: EdgeInsets.all(20)),
+                                GenericGlobalButton(
+                                  height: 40,
+                                  width: 200,
+                                  title: "Guardar registro",
+                                  onPressed: () {
+                                    if (clinicHistoryKey.currentState!
+                                        .validate()) {
+                                      isOfflineEnabled
+                                          ? addLocalClinicHistory(
+                                              registerCode,
+                                              DateTime.now(),
+                                              ref.read(
+                                                  clinicHistoryConsultationReasonProvider),
+                                              ref.read(
+                                                  clinicHistoryMentalExaminationProvider),
+                                              ref.read(
+                                                  clinicHistoryMedAntecedentsProvider),
+                                              ref.read(
+                                                  clinicHistoryPsyAntecedentsProvider),
+                                              ref.read(
+                                                  clinicHistoryFamilyHistoryProvider),
+                                              ref.read(
+                                                  clinicHistoryPersonalHistoryProvider),
+                                              ref.read(
+                                                  registerIdNumberProvider),
+                                              professionalID)
+                                          : insertClinicHistory(
+                                              registerCode,
+                                              DateTime.now(),
+                                              ref.read(
+                                                  clinicHistoryConsultationReasonProvider),
+                                              ref.read(
+                                                  clinicHistoryMentalExaminationProvider),
+                                              ref.read(
+                                                  clinicHistoryMedAntecedentsProvider),
+                                              ref.read(
+                                                  clinicHistoryPsyAntecedentsProvider),
+                                              ref.read(
+                                                  clinicHistoryFamilyHistoryProvider),
+                                              ref.read(
+                                                  clinicHistoryPersonalHistoryProvider),
+                                              ref.read(
+                                                  globalSelectedConsultantIDProvider),
+                                              professionalID);
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Text("Historia guardada"),
+                                        ),
+                                      );
 
-                                        Navigator.pop(context);
-                                      }
-                                    },
-                                  )
-                                ],
-                              )),
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => MainMenu(),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                )
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),

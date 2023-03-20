@@ -1,6 +1,7 @@
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/forms_providers/register_form_provider.dart';
 import 'package:aronnax/src/data/database/local_model/local_queries.dart';
+import 'package:aronnax/src/presentation/clinic_history_form_screen/clinic_history_register_view.dart';
 import 'package:aronnax/src/presentation/core/controllers.dart';
 import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:aronnax/src/presentation/register_view/register_form.dart';
@@ -15,7 +16,7 @@ class MainViewRegister extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     bool isOfflineEnabled = ref.watch(globalOfflineStatusProvider);
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 166, 211, 227),
+      backgroundColor: const Color.fromARGB(255, 166, 211, 227),
       body: Padding(
         padding: const EdgeInsets.only(left: 40, right: 40),
         child: Center(
@@ -145,11 +146,19 @@ class MainViewRegister extends ConsumerWidget {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           const SnackBar(
-                                            content:
-                                                Text("Información guardada"),
+                                            content: Text(
+                                                "Paciente registrado guardada"),
                                           ),
                                         );
-                                        Navigator.pop(context);
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                ClinicHistoryRegisterView(
+                                                    patientName:
+                                                        '${ref.read(registerNamesProvider)} ${ref.read(registerLastNamesProvider)}'),
+                                          ),
+                                        );
                                       }
                                     },
                                   )

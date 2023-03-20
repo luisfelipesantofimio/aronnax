@@ -48,7 +48,7 @@ class _MenuOptionsBarState extends State<MenuOptionsBar> {
                     height: 200,
                   ),
                   MenuOptionsBarItem(
-                    icon: FontAwesomeIcons.comment,
+                    icon: FontAwesomeIcons.clipboardUser,
                     title: 'Registrar consultante',
                     isFullSize: isMouseIn,
                     onTap: () => Navigator.push(
@@ -59,13 +59,13 @@ class _MenuOptionsBarState extends State<MenuOptionsBar> {
                     ),
                   ),
                   MenuOptionsBarItem(
-                    icon: FontAwesomeIcons.filePen,
-                    title: 'Abrir historia clínica',
+                    icon: FontAwesomeIcons.notesMedical,
+                    title: 'Abrir nuevo caso',
                     onTap: () => showDialog(
                       context: context,
                       builder: (context) {
-                        return const ConsultantSelectionDialog(
-                          destinationRoute: ClinicHistoryRegisterView(),
+                        return ConsultantSelectionDialog(
+                          destinationRoute: Container(),
                           title:
                               "Selecciona a quién se asignará la historia clínica",
                         );

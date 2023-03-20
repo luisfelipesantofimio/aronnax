@@ -124,13 +124,13 @@ class ClinicHistorySearchFormState
                                               (state) =>
                                                   '${localPatientsList.map((e) => e.names).toList()[index]} ${localPatientsList.map((e) => e.lastNames).toList()[index]}',
                                             );
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const ClinicHistoryRegisterView(),
-                                          ),
-                                        );
+                                        // Navigator.push(
+                                        //   context,
+                                        //   MaterialPageRoute(
+                                        //     builder: (context) =>
+                                        //         const ClinicHistoryRegisterView(),
+                                        //   ),
+                                        // );
                                       },
                                     ),
                                   ),
@@ -202,13 +202,13 @@ class ClinicHistorySearchFormState
                                               (state) =>
                                                   '${remotePatientsList.map((e) => e.names).toList()[index]} ${remotePatientsList.map((e) => e.lastNames).toList()[index]}',
                                             );
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const ClinicHistoryRegisterView(),
-                                          ),
-                                        );
+                                        // Navigator.push(
+                                        //   context,
+                                        //   MaterialPageRoute(
+                                        //     builder: (context) =>
+                                        //         const ClinicHistoryRegisterView(),
+                                        //   ),
+                                        // );
                                       },
                                     ),
                                   );
