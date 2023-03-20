@@ -48,7 +48,6 @@ addLocalPatient({
 Future<void> addLocalClinicHistory(
   String registerCode,
   DateTime dateTime,
-  String consultationReason,
   String mentalExamn,
   String medAntecedents,
   String psiAntecedents,
@@ -60,7 +59,6 @@ Future<void> addLocalClinicHistory(
   final entity = LocalClinicHistoryCompanion(
     registerNumber: Value(registerCode),
     currentDate: Value(dateTime),
-    consultationReason: Value(consultationReason),
     mentalExamination: Value(mentalExamn),
     medAntecedents: Value(medAntecedents),
     psyAntecedents: Value(psiAntecedents),

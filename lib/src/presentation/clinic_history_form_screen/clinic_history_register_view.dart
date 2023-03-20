@@ -123,8 +123,6 @@ class _ClinicHistoryRegisterViewState
                                               registerCode,
                                               DateTime.now(),
                                               ref.read(
-                                                  clinicHistoryConsultationReasonProvider),
-                                              ref.read(
                                                   clinicHistoryMentalExaminationProvider),
                                               ref.read(
                                                   clinicHistoryMedAntecedentsProvider),
@@ -140,8 +138,6 @@ class _ClinicHistoryRegisterViewState
                                           : insertClinicHistory(
                                               registerCode,
                                               DateTime.now(),
-                                              ref.read(
-                                                  clinicHistoryConsultationReasonProvider),
                                               ref.read(
                                                   clinicHistoryMentalExaminationProvider),
                                               ref.read(

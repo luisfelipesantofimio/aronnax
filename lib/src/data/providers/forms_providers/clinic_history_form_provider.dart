@@ -6,10 +6,6 @@ final clinicHistoryRegisterNumberProvider = StateProvider<String>(
   (ref) => '',
 );
 
-final clinicHistoryConsultationReasonProvider = StateProvider<String>(
-  (ref) => '',
-);
-
 final clinicHistoryMentalExaminationProvider = StateProvider<String>(
   (ref) => '',
 );

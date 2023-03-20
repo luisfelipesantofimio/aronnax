@@ -4,7 +4,6 @@ class ClinicHistory {
   final int id;
   final String registerNumber;
   final DateTime creationDate;
-  final String consultationReason;
   final String mentalExamination;
   final String medAntecedents;
   final String psyAntecedents;
@@ -16,7 +15,6 @@ class ClinicHistory {
     required this.id,
     required this.registerNumber,
     required this.creationDate,
-    required this.consultationReason,
     required this.mentalExamination,
     required this.medAntecedents,
     required this.psyAntecedents,
@@ -31,7 +29,6 @@ class ClinicHistory {
       id: data.id,
       registerNumber: data.registerNumber,
       creationDate: data.currentDate,
-      consultationReason: data.consultationReason,
       mentalExamination: data.mentalExamination,
       medAntecedents: data.medAntecedents,
       psyAntecedents: data.psyAntecedents,
@@ -46,7 +43,6 @@ class ClinicHistory {
     int? id,
     String? registerNumber,
     DateTime? creationDate,
-    String? consultationReason,
     String? mentalExamination,
     String? medAntecedents,
     String? psyAntecedents,
@@ -59,7 +55,6 @@ class ClinicHistory {
       id: id ?? this.id,
       registerNumber: registerNumber ?? this.registerNumber,
       creationDate: creationDate ?? this.creationDate,
-      consultationReason: consultationReason ?? this.consultationReason,
       mentalExamination: mentalExamination ?? this.mentalExamination,
       medAntecedents: medAntecedents ?? this.medAntecedents,
       psyAntecedents: psyAntecedents ?? this.psyAntecedents,

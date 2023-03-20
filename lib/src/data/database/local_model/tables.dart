@@ -27,7 +27,6 @@ class LocalClinicHistory extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get registerNumber => text()();
   DateTimeColumn get currentDate => dateTime()();
-  TextColumn get consultationReason => text()();
   TextColumn get mentalExamination => text()();
   TextColumn get medAntecedents => text()();
   TextColumn get psyAntecedents => text()();
@@ -44,7 +43,10 @@ class LocalPatientCase extends Table {
   IntColumn get patientId => integer().references(LocalPatients, #idNumber)();
   IntColumn get professionalId =>
       integer().references(LocalProfessional, #personalID)();
+  TextColumn get consultationReason => text()();
   TextColumn get diagnostic => text()();
+  TextColumn get treatmentProposal => text()();
+  TextColumn get caseNotes => text().nullable()();
 }
 
 class LocalSessions extends Table {

@@ -28,32 +28,6 @@ class _ClinicHistoryRegisterFormState
                   maxLines: 5,
                   autofocus: true,
                   decoration: InputDecoration(
-                      labelText: "Motivo de consulta",
-                      labelStyle: Theme.of(context).textTheme.bodyMedium,
-                      floatingLabelStyle:
-                          Theme.of(context).textTheme.bodyMedium),
-                  onChanged: (value) {
-                    ref
-                        .read(clinicHistoryConsultationReasonProvider.notifier)
-                        .update(
-                          (state) => value,
-                        );
-                  },
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Inserta un valor";
-                    }
-                    return null;
-                  },
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.all(20),
-                child: TextFormField(
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  maxLines: 5,
-                  autofocus: true,
-                  decoration: InputDecoration(
                     labelText: "Examen mental",
                     labelStyle: Theme.of(context).textTheme.bodyMedium,
                     floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,

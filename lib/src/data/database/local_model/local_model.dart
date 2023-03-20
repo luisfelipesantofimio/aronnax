@@ -10,6 +10,7 @@ part 'local_model.g.dart';
 @DriftDatabase(tables: [
   LocalPatients,
   LocalClinicHistory,
+  LocalPatientCase,
   LocalSessions,
   LocalProfessional,
   LocalTests,
@@ -17,6 +18,7 @@ part 'local_model.g.dart';
   LocalAppointments,
   LocalTreatmentPlans,
   LocaltreatmentResults,
+  LocalPatientTreatmentPlans,
   Settings,
   ServerDatabase
 ])

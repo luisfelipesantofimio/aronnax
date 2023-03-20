@@ -1300,12 +1300,6 @@ class $LocalClinicHistoryTable extends LocalClinicHistory
   late final GeneratedColumn<DateTime> currentDate = GeneratedColumn<DateTime>(
       'current_date', aliasedName, false,
       type: DriftSqlType.dateTime, requiredDuringInsert: true);
-  static const VerificationMeta _consultationReasonMeta =
-      const VerificationMeta('consultationReason');
-  @override
-  late final GeneratedColumn<String> consultationReason =
-      GeneratedColumn<String>('consultation_reason', aliasedName, false,
-          type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _mentalExaminationMeta =
       const VerificationMeta('mentalExamination');
   @override
@@ -1359,7 +1353,6 @@ class $LocalClinicHistoryTable extends LocalClinicHistory
         id,
         registerNumber,
         currentDate,
-        consultationReason,
         mentalExamination,
         medAntecedents,
         psyAntecedents,
@@ -1396,14 +1389,6 @@ class $LocalClinicHistoryTable extends LocalClinicHistory
               data['current_date']!, _currentDateMeta));
     } else if (isInserting) {
       context.missing(_currentDateMeta);
-    }
-    if (data.containsKey('consultation_reason')) {
-      context.handle(
-          _consultationReasonMeta,
-          consultationReason.isAcceptableOrUnknown(
-              data['consultation_reason']!, _consultationReasonMeta));
-    } else if (isInserting) {
-      context.missing(_consultationReasonMeta);
     }
     if (data.containsKey('mental_examination')) {
       context.handle(
@@ -1474,8 +1459,6 @@ class $LocalClinicHistoryTable extends LocalClinicHistory
           DriftSqlType.string, data['${effectivePrefix}register_number'])!,
       currentDate: attachedDatabase.typeMapping
           .read(DriftSqlType.dateTime, data['${effectivePrefix}current_date'])!,
-      consultationReason: attachedDatabase.typeMapping.read(
-          DriftSqlType.string, data['${effectivePrefix}consultation_reason'])!,
       mentalExamination: attachedDatabase.typeMapping.read(
           DriftSqlType.string, data['${effectivePrefix}mental_examination'])!,
       medAntecedents: attachedDatabase.typeMapping.read(
@@ -1504,7 +1487,6 @@ class LocalClinicHistoryData extends DataClass
   final int id;
   final String registerNumber;
   final DateTime currentDate;
-  final String consultationReason;
   final String mentalExamination;
   final String medAntecedents;
   final String psyAntecedents;
@@ -1516,7 +1498,6 @@ class LocalClinicHistoryData extends DataClass
       {required this.id,
       required this.registerNumber,
       required this.currentDate,
-      required this.consultationReason,
       required this.mentalExamination,
       required this.medAntecedents,
       required this.psyAntecedents,
@@ -1530,7 +1511,6 @@ class LocalClinicHistoryData extends DataClass
     map['id'] = Variable<int>(id);
     map['register_number'] = Variable<String>(registerNumber);
     map['current_date'] = Variable<DateTime>(currentDate);
-    map['consultation_reason'] = Variable<String>(consultationReason);
     map['mental_examination'] = Variable<String>(mentalExamination);
     map['med_antecedents'] = Variable<String>(medAntecedents);
     map['psy_antecedents'] = Variable<String>(psyAntecedents);
@@ -1546,7 +1526,6 @@ class LocalClinicHistoryData extends DataClass
       id: Value(id),
       registerNumber: Value(registerNumber),
       currentDate: Value(currentDate),
-      consultationReason: Value(consultationReason),
       mentalExamination: Value(mentalExamination),
       medAntecedents: Value(medAntecedents),
       psyAntecedents: Value(psyAntecedents),
@@ -1564,8 +1543,6 @@ class LocalClinicHistoryData extends DataClass
       id: serializer.fromJson<int>(json['id']),
       registerNumber: serializer.fromJson<String>(json['registerNumber']),
       currentDate: serializer.fromJson<DateTime>(json['currentDate']),
-      consultationReason:
-          serializer.fromJson<String>(json['consultationReason']),
       mentalExamination: serializer.fromJson<String>(json['mentalExamination']),
       medAntecedents: serializer.fromJson<String>(json['medAntecedents']),
       psyAntecedents: serializer.fromJson<String>(json['psyAntecedents']),
@@ -1582,7 +1559,6 @@ class LocalClinicHistoryData extends DataClass
       'id': serializer.toJson<int>(id),
       'registerNumber': serializer.toJson<String>(registerNumber),
       'currentDate': serializer.toJson<DateTime>(currentDate),
-      'consultationReason': serializer.toJson<String>(consultationReason),
       'mentalExamination': serializer.toJson<String>(mentalExamination),
       'medAntecedents': serializer.toJson<String>(medAntecedents),
       'psyAntecedents': serializer.toJson<String>(psyAntecedents),
@@ -1597,7 +1573,6 @@ class LocalClinicHistoryData extends DataClass
           {int? id,
           String? registerNumber,
           DateTime? currentDate,
-          String? consultationReason,
           String? mentalExamination,
           String? medAntecedents,
           String? psyAntecedents,
@@ -1609,7 +1584,6 @@ class LocalClinicHistoryData extends DataClass
         id: id ?? this.id,
         registerNumber: registerNumber ?? this.registerNumber,
         currentDate: currentDate ?? this.currentDate,
-        consultationReason: consultationReason ?? this.consultationReason,
         mentalExamination: mentalExamination ?? this.mentalExamination,
         medAntecedents: medAntecedents ?? this.medAntecedents,
         psyAntecedents: psyAntecedents ?? this.psyAntecedents,
@@ -1624,7 +1598,6 @@ class LocalClinicHistoryData extends DataClass
           ..write('id: $id, ')
           ..write('registerNumber: $registerNumber, ')
           ..write('currentDate: $currentDate, ')
-          ..write('consultationReason: $consultationReason, ')
           ..write('mentalExamination: $mentalExamination, ')
           ..write('medAntecedents: $medAntecedents, ')
           ..write('psyAntecedents: $psyAntecedents, ')
@@ -1641,7 +1614,6 @@ class LocalClinicHistoryData extends DataClass
       id,
       registerNumber,
       currentDate,
-      consultationReason,
       mentalExamination,
       medAntecedents,
       psyAntecedents,
@@ -1656,7 +1628,6 @@ class LocalClinicHistoryData extends DataClass
           other.id == this.id &&
           other.registerNumber == this.registerNumber &&
           other.currentDate == this.currentDate &&
-          other.consultationReason == this.consultationReason &&
           other.mentalExamination == this.mentalExamination &&
           other.medAntecedents == this.medAntecedents &&
           other.psyAntecedents == this.psyAntecedents &&
@@ -1671,7 +1642,6 @@ class LocalClinicHistoryCompanion
   final Value<int> id;
   final Value<String> registerNumber;
   final Value<DateTime> currentDate;
-  final Value<String> consultationReason;
   final Value<String> mentalExamination;
   final Value<String> medAntecedents;
   final Value<String> psyAntecedents;
@@ -1683,7 +1653,6 @@ class LocalClinicHistoryCompanion
     this.id = const Value.absent(),
     this.registerNumber = const Value.absent(),
     this.currentDate = const Value.absent(),
-    this.consultationReason = const Value.absent(),
     this.mentalExamination = const Value.absent(),
     this.medAntecedents = const Value.absent(),
     this.psyAntecedents = const Value.absent(),
@@ -1696,7 +1665,6 @@ class LocalClinicHistoryCompanion
     this.id = const Value.absent(),
     required String registerNumber,
     required DateTime currentDate,
-    required String consultationReason,
     required String mentalExamination,
     required String medAntecedents,
     required String psyAntecedents,
@@ -1706,7 +1674,6 @@ class LocalClinicHistoryCompanion
     required int professionalID,
   })  : registerNumber = Value(registerNumber),
         currentDate = Value(currentDate),
-        consultationReason = Value(consultationReason),
         mentalExamination = Value(mentalExamination),
         medAntecedents = Value(medAntecedents),
         psyAntecedents = Value(psyAntecedents),
@@ -1718,7 +1685,6 @@ class LocalClinicHistoryCompanion
     Expression<int>? id,
     Expression<String>? registerNumber,
     Expression<DateTime>? currentDate,
-    Expression<String>? consultationReason,
     Expression<String>? mentalExamination,
     Expression<String>? medAntecedents,
     Expression<String>? psyAntecedents,
@@ -1731,7 +1697,6 @@ class LocalClinicHistoryCompanion
       if (id != null) 'id': id,
       if (registerNumber != null) 'register_number': registerNumber,
       if (currentDate != null) 'current_date': currentDate,
-      if (consultationReason != null) 'consultation_reason': consultationReason,
       if (mentalExamination != null) 'mental_examination': mentalExamination,
       if (medAntecedents != null) 'med_antecedents': medAntecedents,
       if (psyAntecedents != null) 'psy_antecedents': psyAntecedents,
@@ -1746,7 +1711,6 @@ class LocalClinicHistoryCompanion
       {Value<int>? id,
       Value<String>? registerNumber,
       Value<DateTime>? currentDate,
-      Value<String>? consultationReason,
       Value<String>? mentalExamination,
       Value<String>? medAntecedents,
       Value<String>? psyAntecedents,
@@ -1758,7 +1722,6 @@ class LocalClinicHistoryCompanion
       id: id ?? this.id,
       registerNumber: registerNumber ?? this.registerNumber,
       currentDate: currentDate ?? this.currentDate,
-      consultationReason: consultationReason ?? this.consultationReason,
       mentalExamination: mentalExamination ?? this.mentalExamination,
       medAntecedents: medAntecedents ?? this.medAntecedents,
       psyAntecedents: psyAntecedents ?? this.psyAntecedents,
@@ -1780,9 +1743,6 @@ class LocalClinicHistoryCompanion
     }
     if (currentDate.present) {
       map['current_date'] = Variable<DateTime>(currentDate.value);
-    }
-    if (consultationReason.present) {
-      map['consultation_reason'] = Variable<String>(consultationReason.value);
     }
     if (mentalExamination.present) {
       map['mental_examination'] = Variable<String>(mentalExamination.value);
@@ -1814,7 +1774,6 @@ class LocalClinicHistoryCompanion
           ..write('id: $id, ')
           ..write('registerNumber: $registerNumber, ')
           ..write('currentDate: $currentDate, ')
-          ..write('consultationReason: $consultationReason, ')
           ..write('mentalExamination: $mentalExamination, ')
           ..write('medAntecedents: $medAntecedents, ')
           ..write('psyAntecedents: $psyAntecedents, ')
@@ -1822,6 +1781,431 @@ class LocalClinicHistoryCompanion
           ..write('personalHistory: $personalHistory, ')
           ..write('idNumber: $idNumber, ')
           ..write('professionalID: $professionalID')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $LocalPatientCaseTable extends LocalPatientCase
+    with TableInfo<$LocalPatientCaseTable, LocalPatientCaseData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $LocalPatientCaseTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _creationDateMeta =
+      const VerificationMeta('creationDate');
+  @override
+  late final GeneratedColumn<DateTime> creationDate = GeneratedColumn<DateTime>(
+      'creation_date', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _patientIdMeta =
+      const VerificationMeta('patientId');
+  @override
+  late final GeneratedColumn<int> patientId = GeneratedColumn<int>(
+      'patient_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES local_patients (id_number)'));
+  static const VerificationMeta _professionalIdMeta =
+      const VerificationMeta('professionalId');
+  @override
+  late final GeneratedColumn<int> professionalId = GeneratedColumn<int>(
+      'professional_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES local_professional (personal_i_d)'));
+  static const VerificationMeta _consultationReasonMeta =
+      const VerificationMeta('consultationReason');
+  @override
+  late final GeneratedColumn<String> consultationReason =
+      GeneratedColumn<String>('consultation_reason', aliasedName, false,
+          type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _diagnosticMeta =
+      const VerificationMeta('diagnostic');
+  @override
+  late final GeneratedColumn<String> diagnostic = GeneratedColumn<String>(
+      'diagnostic', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _treatmentProposalMeta =
+      const VerificationMeta('treatmentProposal');
+  @override
+  late final GeneratedColumn<String> treatmentProposal =
+      GeneratedColumn<String>('treatment_proposal', aliasedName, false,
+          type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _caseNotesMeta =
+      const VerificationMeta('caseNotes');
+  @override
+  late final GeneratedColumn<String> caseNotes = GeneratedColumn<String>(
+      'case_notes', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        creationDate,
+        patientId,
+        professionalId,
+        consultationReason,
+        diagnostic,
+        treatmentProposal,
+        caseNotes
+      ];
+  @override
+  String get aliasedName => _alias ?? 'local_patient_case';
+  @override
+  String get actualTableName => 'local_patient_case';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<LocalPatientCaseData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('creation_date')) {
+      context.handle(
+          _creationDateMeta,
+          creationDate.isAcceptableOrUnknown(
+              data['creation_date']!, _creationDateMeta));
+    } else if (isInserting) {
+      context.missing(_creationDateMeta);
+    }
+    if (data.containsKey('patient_id')) {
+      context.handle(_patientIdMeta,
+          patientId.isAcceptableOrUnknown(data['patient_id']!, _patientIdMeta));
+    } else if (isInserting) {
+      context.missing(_patientIdMeta);
+    }
+    if (data.containsKey('professional_id')) {
+      context.handle(
+          _professionalIdMeta,
+          professionalId.isAcceptableOrUnknown(
+              data['professional_id']!, _professionalIdMeta));
+    } else if (isInserting) {
+      context.missing(_professionalIdMeta);
+    }
+    if (data.containsKey('consultation_reason')) {
+      context.handle(
+          _consultationReasonMeta,
+          consultationReason.isAcceptableOrUnknown(
+              data['consultation_reason']!, _consultationReasonMeta));
+    } else if (isInserting) {
+      context.missing(_consultationReasonMeta);
+    }
+    if (data.containsKey('diagnostic')) {
+      context.handle(
+          _diagnosticMeta,
+          diagnostic.isAcceptableOrUnknown(
+              data['diagnostic']!, _diagnosticMeta));
+    } else if (isInserting) {
+      context.missing(_diagnosticMeta);
+    }
+    if (data.containsKey('treatment_proposal')) {
+      context.handle(
+          _treatmentProposalMeta,
+          treatmentProposal.isAcceptableOrUnknown(
+              data['treatment_proposal']!, _treatmentProposalMeta));
+    } else if (isInserting) {
+      context.missing(_treatmentProposalMeta);
+    }
+    if (data.containsKey('case_notes')) {
+      context.handle(_caseNotesMeta,
+          caseNotes.isAcceptableOrUnknown(data['case_notes']!, _caseNotesMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  LocalPatientCaseData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return LocalPatientCaseData(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      creationDate: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime, data['${effectivePrefix}creation_date'])!,
+      patientId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}patient_id'])!,
+      professionalId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}professional_id'])!,
+      consultationReason: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}consultation_reason'])!,
+      diagnostic: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}diagnostic'])!,
+      treatmentProposal: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}treatment_proposal'])!,
+      caseNotes: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}case_notes']),
+    );
+  }
+
+  @override
+  $LocalPatientCaseTable createAlias(String alias) {
+    return $LocalPatientCaseTable(attachedDatabase, alias);
+  }
+}
+
+class LocalPatientCaseData extends DataClass
+    implements Insertable<LocalPatientCaseData> {
+  final int id;
+  final DateTime creationDate;
+  final int patientId;
+  final int professionalId;
+  final String consultationReason;
+  final String diagnostic;
+  final String treatmentProposal;
+  final String? caseNotes;
+  const LocalPatientCaseData(
+      {required this.id,
+      required this.creationDate,
+      required this.patientId,
+      required this.professionalId,
+      required this.consultationReason,
+      required this.diagnostic,
+      required this.treatmentProposal,
+      this.caseNotes});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['creation_date'] = Variable<DateTime>(creationDate);
+    map['patient_id'] = Variable<int>(patientId);
+    map['professional_id'] = Variable<int>(professionalId);
+    map['consultation_reason'] = Variable<String>(consultationReason);
+    map['diagnostic'] = Variable<String>(diagnostic);
+    map['treatment_proposal'] = Variable<String>(treatmentProposal);
+    if (!nullToAbsent || caseNotes != null) {
+      map['case_notes'] = Variable<String>(caseNotes);
+    }
+    return map;
+  }
+
+  LocalPatientCaseCompanion toCompanion(bool nullToAbsent) {
+    return LocalPatientCaseCompanion(
+      id: Value(id),
+      creationDate: Value(creationDate),
+      patientId: Value(patientId),
+      professionalId: Value(professionalId),
+      consultationReason: Value(consultationReason),
+      diagnostic: Value(diagnostic),
+      treatmentProposal: Value(treatmentProposal),
+      caseNotes: caseNotes == null && nullToAbsent
+          ? const Value.absent()
+          : Value(caseNotes),
+    );
+  }
+
+  factory LocalPatientCaseData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return LocalPatientCaseData(
+      id: serializer.fromJson<int>(json['id']),
+      creationDate: serializer.fromJson<DateTime>(json['creationDate']),
+      patientId: serializer.fromJson<int>(json['patientId']),
+      professionalId: serializer.fromJson<int>(json['professionalId']),
+      consultationReason:
+          serializer.fromJson<String>(json['consultationReason']),
+      diagnostic: serializer.fromJson<String>(json['diagnostic']),
+      treatmentProposal: serializer.fromJson<String>(json['treatmentProposal']),
+      caseNotes: serializer.fromJson<String?>(json['caseNotes']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'creationDate': serializer.toJson<DateTime>(creationDate),
+      'patientId': serializer.toJson<int>(patientId),
+      'professionalId': serializer.toJson<int>(professionalId),
+      'consultationReason': serializer.toJson<String>(consultationReason),
+      'diagnostic': serializer.toJson<String>(diagnostic),
+      'treatmentProposal': serializer.toJson<String>(treatmentProposal),
+      'caseNotes': serializer.toJson<String?>(caseNotes),
+    };
+  }
+
+  LocalPatientCaseData copyWith(
+          {int? id,
+          DateTime? creationDate,
+          int? patientId,
+          int? professionalId,
+          String? consultationReason,
+          String? diagnostic,
+          String? treatmentProposal,
+          Value<String?> caseNotes = const Value.absent()}) =>
+      LocalPatientCaseData(
+        id: id ?? this.id,
+        creationDate: creationDate ?? this.creationDate,
+        patientId: patientId ?? this.patientId,
+        professionalId: professionalId ?? this.professionalId,
+        consultationReason: consultationReason ?? this.consultationReason,
+        diagnostic: diagnostic ?? this.diagnostic,
+        treatmentProposal: treatmentProposal ?? this.treatmentProposal,
+        caseNotes: caseNotes.present ? caseNotes.value : this.caseNotes,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('LocalPatientCaseData(')
+          ..write('id: $id, ')
+          ..write('creationDate: $creationDate, ')
+          ..write('patientId: $patientId, ')
+          ..write('professionalId: $professionalId, ')
+          ..write('consultationReason: $consultationReason, ')
+          ..write('diagnostic: $diagnostic, ')
+          ..write('treatmentProposal: $treatmentProposal, ')
+          ..write('caseNotes: $caseNotes')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, creationDate, patientId, professionalId,
+      consultationReason, diagnostic, treatmentProposal, caseNotes);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is LocalPatientCaseData &&
+          other.id == this.id &&
+          other.creationDate == this.creationDate &&
+          other.patientId == this.patientId &&
+          other.professionalId == this.professionalId &&
+          other.consultationReason == this.consultationReason &&
+          other.diagnostic == this.diagnostic &&
+          other.treatmentProposal == this.treatmentProposal &&
+          other.caseNotes == this.caseNotes);
+}
+
+class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
+  final Value<int> id;
+  final Value<DateTime> creationDate;
+  final Value<int> patientId;
+  final Value<int> professionalId;
+  final Value<String> consultationReason;
+  final Value<String> diagnostic;
+  final Value<String> treatmentProposal;
+  final Value<String?> caseNotes;
+  const LocalPatientCaseCompanion({
+    this.id = const Value.absent(),
+    this.creationDate = const Value.absent(),
+    this.patientId = const Value.absent(),
+    this.professionalId = const Value.absent(),
+    this.consultationReason = const Value.absent(),
+    this.diagnostic = const Value.absent(),
+    this.treatmentProposal = const Value.absent(),
+    this.caseNotes = const Value.absent(),
+  });
+  LocalPatientCaseCompanion.insert({
+    this.id = const Value.absent(),
+    required DateTime creationDate,
+    required int patientId,
+    required int professionalId,
+    required String consultationReason,
+    required String diagnostic,
+    required String treatmentProposal,
+    this.caseNotes = const Value.absent(),
+  })  : creationDate = Value(creationDate),
+        patientId = Value(patientId),
+        professionalId = Value(professionalId),
+        consultationReason = Value(consultationReason),
+        diagnostic = Value(diagnostic),
+        treatmentProposal = Value(treatmentProposal);
+  static Insertable<LocalPatientCaseData> custom({
+    Expression<int>? id,
+    Expression<DateTime>? creationDate,
+    Expression<int>? patientId,
+    Expression<int>? professionalId,
+    Expression<String>? consultationReason,
+    Expression<String>? diagnostic,
+    Expression<String>? treatmentProposal,
+    Expression<String>? caseNotes,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (creationDate != null) 'creation_date': creationDate,
+      if (patientId != null) 'patient_id': patientId,
+      if (professionalId != null) 'professional_id': professionalId,
+      if (consultationReason != null) 'consultation_reason': consultationReason,
+      if (diagnostic != null) 'diagnostic': diagnostic,
+      if (treatmentProposal != null) 'treatment_proposal': treatmentProposal,
+      if (caseNotes != null) 'case_notes': caseNotes,
+    });
+  }
+
+  LocalPatientCaseCompanion copyWith(
+      {Value<int>? id,
+      Value<DateTime>? creationDate,
+      Value<int>? patientId,
+      Value<int>? professionalId,
+      Value<String>? consultationReason,
+      Value<String>? diagnostic,
+      Value<String>? treatmentProposal,
+      Value<String?>? caseNotes}) {
+    return LocalPatientCaseCompanion(
+      id: id ?? this.id,
+      creationDate: creationDate ?? this.creationDate,
+      patientId: patientId ?? this.patientId,
+      professionalId: professionalId ?? this.professionalId,
+      consultationReason: consultationReason ?? this.consultationReason,
+      diagnostic: diagnostic ?? this.diagnostic,
+      treatmentProposal: treatmentProposal ?? this.treatmentProposal,
+      caseNotes: caseNotes ?? this.caseNotes,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (creationDate.present) {
+      map['creation_date'] = Variable<DateTime>(creationDate.value);
+    }
+    if (patientId.present) {
+      map['patient_id'] = Variable<int>(patientId.value);
+    }
+    if (professionalId.present) {
+      map['professional_id'] = Variable<int>(professionalId.value);
+    }
+    if (consultationReason.present) {
+      map['consultation_reason'] = Variable<String>(consultationReason.value);
+    }
+    if (diagnostic.present) {
+      map['diagnostic'] = Variable<String>(diagnostic.value);
+    }
+    if (treatmentProposal.present) {
+      map['treatment_proposal'] = Variable<String>(treatmentProposal.value);
+    }
+    if (caseNotes.present) {
+      map['case_notes'] = Variable<String>(caseNotes.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LocalPatientCaseCompanion(')
+          ..write('id: $id, ')
+          ..write('creationDate: $creationDate, ')
+          ..write('patientId: $patientId, ')
+          ..write('professionalId: $professionalId, ')
+          ..write('consultationReason: $consultationReason, ')
+          ..write('diagnostic: $diagnostic, ')
+          ..write('treatmentProposal: $treatmentProposal, ')
+          ..write('caseNotes: $caseNotes')
           ..write(')'))
         .toString();
   }
@@ -4283,6 +4667,437 @@ class LocaltreatmentResultsCompanion
   }
 }
 
+class $LocalPatientTreatmentPlansTable extends LocalPatientTreatmentPlans
+    with
+        TableInfo<$LocalPatientTreatmentPlansTable, LocalPatientTreatmentPlan> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $LocalPatientTreatmentPlansTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _treatmentPlanFinishedMeta =
+      const VerificationMeta('treatmentPlanFinished');
+  @override
+  late final GeneratedColumn<bool> treatmentPlanFinished =
+      GeneratedColumn<bool>('treatment_plan_finished', aliasedName, false,
+          type: DriftSqlType.bool,
+          requiredDuringInsert: true,
+          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
+            SqlDialect.sqlite: 'CHECK ("treatment_plan_finished" IN (0, 1))',
+            SqlDialect.mysql: '',
+            SqlDialect.postgres: '',
+          }));
+  static const VerificationMeta _treatmentPlanOutcomeMeta =
+      const VerificationMeta('treatmentPlanOutcome');
+  @override
+  late final GeneratedColumn<String> treatmentPlanOutcome =
+      GeneratedColumn<String>('treatment_plan_outcome', aliasedName, true,
+          type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _patientIdMeta =
+      const VerificationMeta('patientId');
+  @override
+  late final GeneratedColumn<int> patientId = GeneratedColumn<int>(
+      'patient_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES local_patients (id_number)'));
+  static const VerificationMeta _treatmentPlanIdMeta =
+      const VerificationMeta('treatmentPlanId');
+  @override
+  late final GeneratedColumn<int> treatmentPlanId = GeneratedColumn<int>(
+      'treatment_plan_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES local_treatment_plans (id)'));
+  static const VerificationMeta _localTreatmentPlanResultsMeta =
+      const VerificationMeta('localTreatmentPlanResults');
+  @override
+  late final GeneratedColumn<int> localTreatmentPlanResults =
+      GeneratedColumn<int>('local_treatment_plan_results', aliasedName, true,
+          type: DriftSqlType.int,
+          requiredDuringInsert: false,
+          defaultConstraints: GeneratedColumn.constraintIsAlways(
+              'REFERENCES localtreatment_results (id)'));
+  static const VerificationMeta _creationDateMeta =
+      const VerificationMeta('creationDate');
+  @override
+  late final GeneratedColumn<DateTime> creationDate = GeneratedColumn<DateTime>(
+      'creation_date', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        treatmentPlanFinished,
+        treatmentPlanOutcome,
+        patientId,
+        treatmentPlanId,
+        localTreatmentPlanResults,
+        creationDate
+      ];
+  @override
+  String get aliasedName => _alias ?? 'local_patient_treatment_plans';
+  @override
+  String get actualTableName => 'local_patient_treatment_plans';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<LocalPatientTreatmentPlan> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('treatment_plan_finished')) {
+      context.handle(
+          _treatmentPlanFinishedMeta,
+          treatmentPlanFinished.isAcceptableOrUnknown(
+              data['treatment_plan_finished']!, _treatmentPlanFinishedMeta));
+    } else if (isInserting) {
+      context.missing(_treatmentPlanFinishedMeta);
+    }
+    if (data.containsKey('treatment_plan_outcome')) {
+      context.handle(
+          _treatmentPlanOutcomeMeta,
+          treatmentPlanOutcome.isAcceptableOrUnknown(
+              data['treatment_plan_outcome']!, _treatmentPlanOutcomeMeta));
+    }
+    if (data.containsKey('patient_id')) {
+      context.handle(_patientIdMeta,
+          patientId.isAcceptableOrUnknown(data['patient_id']!, _patientIdMeta));
+    } else if (isInserting) {
+      context.missing(_patientIdMeta);
+    }
+    if (data.containsKey('treatment_plan_id')) {
+      context.handle(
+          _treatmentPlanIdMeta,
+          treatmentPlanId.isAcceptableOrUnknown(
+              data['treatment_plan_id']!, _treatmentPlanIdMeta));
+    } else if (isInserting) {
+      context.missing(_treatmentPlanIdMeta);
+    }
+    if (data.containsKey('local_treatment_plan_results')) {
+      context.handle(
+          _localTreatmentPlanResultsMeta,
+          localTreatmentPlanResults.isAcceptableOrUnknown(
+              data['local_treatment_plan_results']!,
+              _localTreatmentPlanResultsMeta));
+    }
+    if (data.containsKey('creation_date')) {
+      context.handle(
+          _creationDateMeta,
+          creationDate.isAcceptableOrUnknown(
+              data['creation_date']!, _creationDateMeta));
+    } else if (isInserting) {
+      context.missing(_creationDateMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  LocalPatientTreatmentPlan map(Map<String, dynamic> data,
+      {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return LocalPatientTreatmentPlan(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      treatmentPlanFinished: attachedDatabase.typeMapping.read(
+          DriftSqlType.bool,
+          data['${effectivePrefix}treatment_plan_finished'])!,
+      treatmentPlanOutcome: attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}treatment_plan_outcome']),
+      patientId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}patient_id'])!,
+      treatmentPlanId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}treatment_plan_id'])!,
+      localTreatmentPlanResults: attachedDatabase.typeMapping.read(
+          DriftSqlType.int,
+          data['${effectivePrefix}local_treatment_plan_results']),
+      creationDate: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime, data['${effectivePrefix}creation_date'])!,
+    );
+  }
+
+  @override
+  $LocalPatientTreatmentPlansTable createAlias(String alias) {
+    return $LocalPatientTreatmentPlansTable(attachedDatabase, alias);
+  }
+}
+
+class LocalPatientTreatmentPlan extends DataClass
+    implements Insertable<LocalPatientTreatmentPlan> {
+  final int id;
+  final bool treatmentPlanFinished;
+
+  ///String with a positive, neutral or negative result
+  final String? treatmentPlanOutcome;
+  final int patientId;
+  final int treatmentPlanId;
+  final int? localTreatmentPlanResults;
+  final DateTime creationDate;
+  const LocalPatientTreatmentPlan(
+      {required this.id,
+      required this.treatmentPlanFinished,
+      this.treatmentPlanOutcome,
+      required this.patientId,
+      required this.treatmentPlanId,
+      this.localTreatmentPlanResults,
+      required this.creationDate});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['treatment_plan_finished'] = Variable<bool>(treatmentPlanFinished);
+    if (!nullToAbsent || treatmentPlanOutcome != null) {
+      map['treatment_plan_outcome'] = Variable<String>(treatmentPlanOutcome);
+    }
+    map['patient_id'] = Variable<int>(patientId);
+    map['treatment_plan_id'] = Variable<int>(treatmentPlanId);
+    if (!nullToAbsent || localTreatmentPlanResults != null) {
+      map['local_treatment_plan_results'] =
+          Variable<int>(localTreatmentPlanResults);
+    }
+    map['creation_date'] = Variable<DateTime>(creationDate);
+    return map;
+  }
+
+  LocalPatientTreatmentPlansCompanion toCompanion(bool nullToAbsent) {
+    return LocalPatientTreatmentPlansCompanion(
+      id: Value(id),
+      treatmentPlanFinished: Value(treatmentPlanFinished),
+      treatmentPlanOutcome: treatmentPlanOutcome == null && nullToAbsent
+          ? const Value.absent()
+          : Value(treatmentPlanOutcome),
+      patientId: Value(patientId),
+      treatmentPlanId: Value(treatmentPlanId),
+      localTreatmentPlanResults:
+          localTreatmentPlanResults == null && nullToAbsent
+              ? const Value.absent()
+              : Value(localTreatmentPlanResults),
+      creationDate: Value(creationDate),
+    );
+  }
+
+  factory LocalPatientTreatmentPlan.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return LocalPatientTreatmentPlan(
+      id: serializer.fromJson<int>(json['id']),
+      treatmentPlanFinished:
+          serializer.fromJson<bool>(json['treatmentPlanFinished']),
+      treatmentPlanOutcome:
+          serializer.fromJson<String?>(json['treatmentPlanOutcome']),
+      patientId: serializer.fromJson<int>(json['patientId']),
+      treatmentPlanId: serializer.fromJson<int>(json['treatmentPlanId']),
+      localTreatmentPlanResults:
+          serializer.fromJson<int?>(json['localTreatmentPlanResults']),
+      creationDate: serializer.fromJson<DateTime>(json['creationDate']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'treatmentPlanFinished': serializer.toJson<bool>(treatmentPlanFinished),
+      'treatmentPlanOutcome': serializer.toJson<String?>(treatmentPlanOutcome),
+      'patientId': serializer.toJson<int>(patientId),
+      'treatmentPlanId': serializer.toJson<int>(treatmentPlanId),
+      'localTreatmentPlanResults':
+          serializer.toJson<int?>(localTreatmentPlanResults),
+      'creationDate': serializer.toJson<DateTime>(creationDate),
+    };
+  }
+
+  LocalPatientTreatmentPlan copyWith(
+          {int? id,
+          bool? treatmentPlanFinished,
+          Value<String?> treatmentPlanOutcome = const Value.absent(),
+          int? patientId,
+          int? treatmentPlanId,
+          Value<int?> localTreatmentPlanResults = const Value.absent(),
+          DateTime? creationDate}) =>
+      LocalPatientTreatmentPlan(
+        id: id ?? this.id,
+        treatmentPlanFinished:
+            treatmentPlanFinished ?? this.treatmentPlanFinished,
+        treatmentPlanOutcome: treatmentPlanOutcome.present
+            ? treatmentPlanOutcome.value
+            : this.treatmentPlanOutcome,
+        patientId: patientId ?? this.patientId,
+        treatmentPlanId: treatmentPlanId ?? this.treatmentPlanId,
+        localTreatmentPlanResults: localTreatmentPlanResults.present
+            ? localTreatmentPlanResults.value
+            : this.localTreatmentPlanResults,
+        creationDate: creationDate ?? this.creationDate,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('LocalPatientTreatmentPlan(')
+          ..write('id: $id, ')
+          ..write('treatmentPlanFinished: $treatmentPlanFinished, ')
+          ..write('treatmentPlanOutcome: $treatmentPlanOutcome, ')
+          ..write('patientId: $patientId, ')
+          ..write('treatmentPlanId: $treatmentPlanId, ')
+          ..write('localTreatmentPlanResults: $localTreatmentPlanResults, ')
+          ..write('creationDate: $creationDate')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      id,
+      treatmentPlanFinished,
+      treatmentPlanOutcome,
+      patientId,
+      treatmentPlanId,
+      localTreatmentPlanResults,
+      creationDate);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is LocalPatientTreatmentPlan &&
+          other.id == this.id &&
+          other.treatmentPlanFinished == this.treatmentPlanFinished &&
+          other.treatmentPlanOutcome == this.treatmentPlanOutcome &&
+          other.patientId == this.patientId &&
+          other.treatmentPlanId == this.treatmentPlanId &&
+          other.localTreatmentPlanResults == this.localTreatmentPlanResults &&
+          other.creationDate == this.creationDate);
+}
+
+class LocalPatientTreatmentPlansCompanion
+    extends UpdateCompanion<LocalPatientTreatmentPlan> {
+  final Value<int> id;
+  final Value<bool> treatmentPlanFinished;
+  final Value<String?> treatmentPlanOutcome;
+  final Value<int> patientId;
+  final Value<int> treatmentPlanId;
+  final Value<int?> localTreatmentPlanResults;
+  final Value<DateTime> creationDate;
+  const LocalPatientTreatmentPlansCompanion({
+    this.id = const Value.absent(),
+    this.treatmentPlanFinished = const Value.absent(),
+    this.treatmentPlanOutcome = const Value.absent(),
+    this.patientId = const Value.absent(),
+    this.treatmentPlanId = const Value.absent(),
+    this.localTreatmentPlanResults = const Value.absent(),
+    this.creationDate = const Value.absent(),
+  });
+  LocalPatientTreatmentPlansCompanion.insert({
+    this.id = const Value.absent(),
+    required bool treatmentPlanFinished,
+    this.treatmentPlanOutcome = const Value.absent(),
+    required int patientId,
+    required int treatmentPlanId,
+    this.localTreatmentPlanResults = const Value.absent(),
+    required DateTime creationDate,
+  })  : treatmentPlanFinished = Value(treatmentPlanFinished),
+        patientId = Value(patientId),
+        treatmentPlanId = Value(treatmentPlanId),
+        creationDate = Value(creationDate);
+  static Insertable<LocalPatientTreatmentPlan> custom({
+    Expression<int>? id,
+    Expression<bool>? treatmentPlanFinished,
+    Expression<String>? treatmentPlanOutcome,
+    Expression<int>? patientId,
+    Expression<int>? treatmentPlanId,
+    Expression<int>? localTreatmentPlanResults,
+    Expression<DateTime>? creationDate,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (treatmentPlanFinished != null)
+        'treatment_plan_finished': treatmentPlanFinished,
+      if (treatmentPlanOutcome != null)
+        'treatment_plan_outcome': treatmentPlanOutcome,
+      if (patientId != null) 'patient_id': patientId,
+      if (treatmentPlanId != null) 'treatment_plan_id': treatmentPlanId,
+      if (localTreatmentPlanResults != null)
+        'local_treatment_plan_results': localTreatmentPlanResults,
+      if (creationDate != null) 'creation_date': creationDate,
+    });
+  }
+
+  LocalPatientTreatmentPlansCompanion copyWith(
+      {Value<int>? id,
+      Value<bool>? treatmentPlanFinished,
+      Value<String?>? treatmentPlanOutcome,
+      Value<int>? patientId,
+      Value<int>? treatmentPlanId,
+      Value<int?>? localTreatmentPlanResults,
+      Value<DateTime>? creationDate}) {
+    return LocalPatientTreatmentPlansCompanion(
+      id: id ?? this.id,
+      treatmentPlanFinished:
+          treatmentPlanFinished ?? this.treatmentPlanFinished,
+      treatmentPlanOutcome: treatmentPlanOutcome ?? this.treatmentPlanOutcome,
+      patientId: patientId ?? this.patientId,
+      treatmentPlanId: treatmentPlanId ?? this.treatmentPlanId,
+      localTreatmentPlanResults:
+          localTreatmentPlanResults ?? this.localTreatmentPlanResults,
+      creationDate: creationDate ?? this.creationDate,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (treatmentPlanFinished.present) {
+      map['treatment_plan_finished'] =
+          Variable<bool>(treatmentPlanFinished.value);
+    }
+    if (treatmentPlanOutcome.present) {
+      map['treatment_plan_outcome'] =
+          Variable<String>(treatmentPlanOutcome.value);
+    }
+    if (patientId.present) {
+      map['patient_id'] = Variable<int>(patientId.value);
+    }
+    if (treatmentPlanId.present) {
+      map['treatment_plan_id'] = Variable<int>(treatmentPlanId.value);
+    }
+    if (localTreatmentPlanResults.present) {
+      map['local_treatment_plan_results'] =
+          Variable<int>(localTreatmentPlanResults.value);
+    }
+    if (creationDate.present) {
+      map['creation_date'] = Variable<DateTime>(creationDate.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LocalPatientTreatmentPlansCompanion(')
+          ..write('id: $id, ')
+          ..write('treatmentPlanFinished: $treatmentPlanFinished, ')
+          ..write('treatmentPlanOutcome: $treatmentPlanOutcome, ')
+          ..write('patientId: $patientId, ')
+          ..write('treatmentPlanId: $treatmentPlanId, ')
+          ..write('localTreatmentPlanResults: $localTreatmentPlanResults, ')
+          ..write('creationDate: $creationDate')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
   @override
   final GeneratedDatabase attachedDatabase;
@@ -4891,6 +5706,8 @@ abstract class _$LocalDatabase extends GeneratedDatabase {
   late final $LocalPatientsTable localPatients = $LocalPatientsTable(this);
   late final $LocalClinicHistoryTable localClinicHistory =
       $LocalClinicHistoryTable(this);
+  late final $LocalPatientCaseTable localPatientCase =
+      $LocalPatientCaseTable(this);
   late final $LocalSessionsTable localSessions = $LocalSessionsTable(this);
   late final $LocalTestsTable localTests = $LocalTestsTable(this);
   late final $LocalTodosTable localTodos = $LocalTodosTable(this);
@@ -4900,6 +5717,8 @@ abstract class _$LocalDatabase extends GeneratedDatabase {
       $LocalTreatmentPlansTable(this);
   late final $LocaltreatmentResultsTable localtreatmentResults =
       $LocaltreatmentResultsTable(this);
+  late final $LocalPatientTreatmentPlansTable localPatientTreatmentPlans =
+      $LocalPatientTreatmentPlansTable(this);
   late final $SettingsTable settings = $SettingsTable(this);
   late final $ServerDatabaseTable serverDatabase = $ServerDatabaseTable(this);
   @override
@@ -4910,12 +5729,14 @@ abstract class _$LocalDatabase extends GeneratedDatabase {
         localProfessional,
         localPatients,
         localClinicHistory,
+        localPatientCase,
         localSessions,
         localTests,
         localTodos,
         localAppointments,
         localTreatmentPlans,
         localtreatmentResults,
+        localPatientTreatmentPlans,
         settings,
         serverDatabase
       ];

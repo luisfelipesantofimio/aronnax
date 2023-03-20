@@ -105,17 +105,8 @@ insertPatientData(
   );
 }
 
-insertClinicHistory(
-    registerCode,
-    dateTime,
-    consultationReason,
-    mentalExamn,
-    medAntecedents,
-    psiAntecedents,
-    familyHistory,
-    personalHistory,
-    idNumber,
-    createdBy) async {
+insertClinicHistory(registerCode, dateTime, mentalExamn, medAntecedents,
+    psiAntecedents, familyHistory, personalHistory, idNumber, createdBy) async {
   final conn = await MySqlConnection.connect(
     ConnectionSettings(
       host: host,
@@ -131,7 +122,6 @@ insertClinicHistory(
     [
       registerCode,
       dateTime,
-      consultationReason,
       mentalExamn,
       medAntecedents,
       psiAntecedents,
