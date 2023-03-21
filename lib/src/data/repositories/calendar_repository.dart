@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/interfaces/calendar_repository_interface.dart';

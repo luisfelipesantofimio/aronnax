@@ -63,14 +63,14 @@ class LoginScreen extends ConsumerWidget {
                 Column(
                   children: [
                     SizedBox(height: MediaQuery.of(context).size.height / 4),
-                    SizedBox(
+                    const SizedBox(
                       width: 200,
                       child: Image(
                         height: 300,
                         image: true
-                            ? const AssetImage(
+                            ? AssetImage(
                                 "assets/img/aronnax-icon-dark.png")
-                            : const AssetImage(
+                            : AssetImage(
                                 "assets/img/aronnax-icon-light.png"),
                       ),
                     ),

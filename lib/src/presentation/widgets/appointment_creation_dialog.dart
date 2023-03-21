@@ -153,8 +153,9 @@ class _AppointmentCreationDialogState
                             if (value == null) {
                               return 'Debes seleccionar un consultante';
                             }
+                            return null;
                           },
-                          hint: Text('Consultante'),
+                          hint: const Text('Consultante'),
                           isExpanded: true,
                           items: data
                               .map(

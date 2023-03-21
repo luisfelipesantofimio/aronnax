@@ -19,6 +19,7 @@ class CaseCreationForm extends ConsumerWidget {
               if (value!.isEmpty) {
                 return 'El campo no puede estar vacío';
               }
+              return null;
             },
             onChanged: (value) {
               ref
@@ -36,6 +37,7 @@ class CaseCreationForm extends ConsumerWidget {
               if (value!.isEmpty) {
                 return 'El campo no puede estar vacío';
               }
+              return null;
             },
             onChanged: (value) {
               ref
@@ -54,6 +56,7 @@ class CaseCreationForm extends ConsumerWidget {
               if (value!.isEmpty) {
                 return 'El campo no puede estar vacío';
               }
+              return null;
             },
             onChanged: (value) {
               ref

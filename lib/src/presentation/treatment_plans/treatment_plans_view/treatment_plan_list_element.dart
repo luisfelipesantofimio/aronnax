@@ -13,7 +13,7 @@ class TreatmentPlanListElement extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       decoration: const BoxDecoration(
         color: Colors.white,
         boxShadow: [

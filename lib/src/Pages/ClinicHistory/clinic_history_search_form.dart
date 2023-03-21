@@ -9,7 +9,6 @@ import 'package:aronnax/src/data/providers/consultations_provider.dart';
 import 'package:aronnax/src/data/providers/patient_search_provider.dart';
 import 'package:aronnax/src/domain/entities/remote_model/remote_clinic_history.dart';
 import 'package:aronnax/src/domain/entities/remote_model/remote_patient.dart';
-import 'package:aronnax/src/presentation/clinic_history_form_screen/clinic_history_register_view.dart';
 import 'package:aronnax/src/presentation/widgets/consultation_element.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

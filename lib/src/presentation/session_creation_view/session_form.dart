@@ -1,7 +1,5 @@
-import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:aronnax/src/presentation/core/controllers.dart';
-import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

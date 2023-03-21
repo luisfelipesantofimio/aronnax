@@ -1,5 +1,3 @@
-import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
-import 'package:aronnax/src/data/interfaces/treatment_plans_repository_interface.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/treatment_plan_providers.dart';
 import 'package:aronnax/src/presentation/treatment_plans/treatment_plan_creation/treatment_plan_creation_view.dart';
@@ -22,7 +20,7 @@ class TreatmentPlansView extends ConsumerWidget {
       body: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          ScreenInformationContainer(),
+          const ScreenInformationContainer(),
           Column(
             children: [
               GenericIconButton(

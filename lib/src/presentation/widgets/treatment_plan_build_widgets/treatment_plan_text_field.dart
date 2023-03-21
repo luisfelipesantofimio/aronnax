@@ -38,6 +38,7 @@ class TreatmentPlanTextField extends StatelessWidget {
                   if (value!.isEmpty) {
                     return 'The field must not be empty';
                   }
+                  return null;
                 }
               : null,
           onChanged: (value) {

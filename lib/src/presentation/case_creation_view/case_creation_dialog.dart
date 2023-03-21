@@ -79,7 +79,7 @@ class _CaseCreationDialogState extends ConsumerState<CaseCreationDialog> {
                     ),
                     treatmentPlanList.when(
                       data: (data) => DropdownButtonFormField(
-                        hint: Text('Select a treatment plan'),
+                        hint: const Text('Select a treatment plan'),
                         items: data
                             .map(
                               (e) => DropdownMenuItem(

@@ -241,7 +241,7 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                 child: stateList.when(
                   data: (data) => DropdownButtonFormField(
                     isExpanded: true,
-                    style: Theme.of(context).textTheme.bodyText2,
+                    style: Theme.of(context).textTheme.bodyMedium,
                     value: data.elementAt(0),
                     items: data
                         .map(
@@ -283,7 +283,7 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                 width: MediaQuery.of(context).size.width * 0.32,
                 child: citiesList.when(
                   data: (data) => DropdownButtonFormField(
-                    style: Theme.of(context).textTheme.bodyText2,
+                    style: Theme.of(context).textTheme.bodyMedium,
                     value: data.isNotEmpty ? data.elementAt(0) : null,
                     items: data
                         .map(

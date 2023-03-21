@@ -1,7 +1,6 @@
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/interfaces/auth_repository_interface.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
-import 'package:aronnax/src/data/providers/global_user_information_provider.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/login_provider.dart';
 import 'package:aronnax/src/domain/entities/professional.dart';

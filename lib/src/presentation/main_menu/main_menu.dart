@@ -187,7 +187,7 @@ class MainMenuState extends ConsumerState<MainMenu> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => PatientsView(),
+                                    builder: (context) => const PatientsView(),
                                   ),
                                 );
                               },

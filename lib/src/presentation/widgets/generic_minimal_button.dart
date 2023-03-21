@@ -40,7 +40,7 @@ class _GenericMinimalButtonState extends State<GenericMinimalButton> {
             ),
           ),
           child: Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Center(
               child: Text(
                 widget.title,

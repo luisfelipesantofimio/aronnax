@@ -48,11 +48,12 @@ class _TreatmentPlanMetadataFormState extends State<TreatmentPlanMetadataForm> {
               disabledBorder: InputBorder.none,
               hintText: 'Your title',
             ),
-            style: TextStyle(fontSize: 30),
+            style: const TextStyle(fontSize: 30),
             validator: (value) {
               if (value!.isEmpty) {
                 return 'The field must not be empty';
               }
+              return null;
             },
             onChanged: (value) {
               widget.onTitleChanged(value);
@@ -73,6 +74,7 @@ class _TreatmentPlanMetadataFormState extends State<TreatmentPlanMetadataForm> {
               if (value!.isEmpty) {
                 return 'The field must not be empty';
               }
+              return null;
             },
             onChanged: (value) {
               widget.onDescriptionChanged(value);

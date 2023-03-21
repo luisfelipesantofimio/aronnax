@@ -97,6 +97,7 @@ class _ComponentSelectionItemState extends State<ComponentSelectionItem> {
                           if (value!.isEmpty) {
                             return 'This field must not be empty';
                           }
+                          return null;
                         },
                         onChanged: (value) {
                           setState(() {
@@ -115,6 +116,7 @@ class _ComponentSelectionItemState extends State<ComponentSelectionItem> {
                           if (value!.isEmpty) {
                             return 'This field must not be empty';
                           }
+                          return null;
                         },
                         onChanged: (value) {
                           setState(() {

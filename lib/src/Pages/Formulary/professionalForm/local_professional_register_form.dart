@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:aronnax/src/data/database/local_model/local_queries.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';

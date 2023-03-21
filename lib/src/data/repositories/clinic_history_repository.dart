@@ -1,5 +1,4 @@
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
-import 'package:aronnax/src/data/database/local_model/tables.dart';
 import 'package:aronnax/src/data/interfaces/clinic_history_repository_interface.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';

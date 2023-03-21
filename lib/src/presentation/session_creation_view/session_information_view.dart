@@ -1,6 +1,4 @@
-import 'package:aronnax/src/Pages/Formulary/widgets/consultant_selection_dialog.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
-import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
