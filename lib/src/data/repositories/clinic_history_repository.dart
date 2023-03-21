@@ -1,3 +1,5 @@
+import 'package:aronnax/src/data/database/local_model/local_model.dart';
+import 'package:aronnax/src/data/database/local_model/tables.dart';
 import 'package:aronnax/src/data/interfaces/clinic_history_repository_interface.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
@@ -34,19 +36,35 @@ class ClinicHistoryRepository implements ClinicHistoryRepositoryInterface {
 
   @override
   void deleteClinicHistory(WidgetRef ref, int clinicHistoryId) {
-    // TODO: implement deleteClinicHistory
+    if (ref.read(offlineStatusProvider).value!) {
+      ref
+          .read(localDatabaseRepositoryProvider)
+          .deleteLocalClinicHistory(clinicHistoryId);
+    }
   }
 
   @override
   Future<List<ClinicHistory>> getClinicHistoryListById(
-      WidgetRef ref, int patientId) {
-    // TODO: implement getClinicHistoryListById
-    throw UnimplementedError();
+      WidgetRef ref, int patientId) async {
+    if (ref.read(offlineStatusProvider).value!) {
+      List<LocalClinicHistoryData> localClinicHistories = await ref
+          .read(localDatabaseRepositoryProvider)
+          .getClinicHistoryListById(patientId);
+      return localClinicHistories
+          .map((e) => ClinicHistory.fromLocalModel(e))
+          .toList();
+    } else {
+      return [];
+    }
   }
 
   @override
-  Future<ClinicHistory> getPatientClinicHistory(WidgetRef ref, int patientId) {
-    // TODO: implement getPatientClinicHistory
-    throw UnimplementedError();
+  Future<ClinicHistory> getPatientClinicHistory(
+      WidgetRef ref, int patientId) async {
+    return ClinicHistory.fromLocalModel(
+      await ref
+          .read(localDatabaseRepositoryProvider)
+          .getSingleClinicHistoryById(patientId),
+    );
   }
 }
