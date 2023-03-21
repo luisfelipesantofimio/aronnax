@@ -9,7 +9,6 @@ import 'package:aronnax/src/presentation/core/constants.dart';
 import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:aronnax/src/presentation/main_menu/main_menu.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoginForm extends ConsumerStatefulWidget {
@@ -44,6 +43,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
     final conectionMode = ref.watch(offlineStatusProvider);
     final professionalData = ref.watch(globalUserInformationProvider) ??
         Professional(
+            id: 0,
             personalID: 0,
             names: '',
             lastNames: '',
@@ -62,7 +62,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 TextFormField(
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  //  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   style: Theme.of(context).textTheme.bodyMedium,
                   onFieldSubmitted: (value) {
                     loginKey.currentState!.validate();
@@ -72,7 +72,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
                       userExists =
                           await ref.read(authenticationProvider).loginLocalUser(
                                 ref: ref,
-                                userID: value.isEmpty ? 0 : int.parse(value),
+                                userName: value,
                               );
                     } else {
                       //TODO: implement remote login
@@ -82,7 +82,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Inserta número de documento";
+                      return "Inserta tu nombre de usuario";
                     }
                     if (!userExists) {
                       return "El usuario no existe";
@@ -92,8 +92,8 @@ class LoginFormState extends ConsumerState<LoginForm> {
                   autofocus: true,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.all(0),
-                    labelText: "Número de documento",
-                    hintText: "Ingresa tu número de cédula registrado",
+                    labelText: "Nombre de usuario",
+                    hintText: "Ingresa tu nombre de usuario registrado",
                     labelStyle: Theme.of(context).textTheme.bodyMedium,
                     hintStyle: Theme.of(context).textTheme.bodyMedium,
                     prefixIcon: const Icon(
