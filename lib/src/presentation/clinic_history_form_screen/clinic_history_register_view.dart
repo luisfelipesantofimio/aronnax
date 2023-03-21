@@ -1,12 +1,10 @@
-import 'dart:developer';
-
 import 'package:aronnax/src/Pages/Formulary/widgets/consultant_selection_dialog.dart';
+import 'package:aronnax/src/data/interfaces/clinic_history_repository_interface.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/forms_providers/clinic_history_form_provider.dart';
-import 'package:aronnax/src/data/providers/forms_providers/register_form_provider.dart';
 import 'package:aronnax/src/data/remote_database/server_api.dart';
+import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:aronnax/src/presentation/clinic_history_form_screen/clinic_history_register_form.dart';
-import 'package:aronnax/src/data/database/local_model/local_queries.dart';
 import 'package:aronnax/src/presentation/clinic_history_form_screen/clinic_history_register_info.dart';
 import 'package:aronnax/src/presentation/core/controllers.dart';
 import 'package:aronnax/src/presentation/core/methods.dart';
@@ -20,9 +18,9 @@ import 'package:intl/intl.dart';
 class ClinicHistoryRegisterView extends ConsumerStatefulWidget {
   const ClinicHistoryRegisterView({
     Key? key,
-    required this.patientName,
+    required this.patientData,
   }) : super(key: key);
-  final String patientName;
+  final Patient patientData;
 
   @override
   ConsumerState<ClinicHistoryRegisterView> createState() =>
@@ -56,7 +54,9 @@ class _ClinicHistoryRegisterViewState
             child: SizedBox(
               width: MediaQuery.of(context).size.width * 0.2,
               child: ClinicHistoryRegisterInformation(
-                  patientName: widget.patientName, registerCode: registerCode),
+                  patientName:
+                      '${widget.patientData.names} ${widget.patientData.lastNames}',
+                  registerCode: registerCode),
             ),
           ),
           Align(
@@ -118,22 +118,25 @@ class _ClinicHistoryRegisterViewState
                                     if (clinicHistoryKey.currentState!
                                         .validate()) {
                                       isOfflineEnabled
-                                          ? addLocalClinicHistory(
-                                              registerCode,
-                                              DateTime.now(),
-                                              ref.read(
-                                                  clinicHistoryMentalExaminationProvider),
-                                              ref.read(
-                                                  clinicHistoryMedAntecedentsProvider),
-                                              ref.read(
-                                                  clinicHistoryPsyAntecedentsProvider),
-                                              ref.read(
-                                                  clinicHistoryFamilyHistoryProvider),
-                                              ref.read(
-                                                  clinicHistoryPersonalHistoryProvider),
-                                              ref.read(
-                                                  registerIdNumberProvider),
-                                              professionalID)
+                                          ? ref
+                                              .read(
+                                                  clinicHistoryRepositoryProvider)
+                                              .addClinicHistory(
+                                                  ref,
+                                                  registerCode,
+                                                  DateTime.now(),
+                                                  ref.read(
+                                                      clinicHistoryMentalExaminationProvider),
+                                                  ref.read(
+                                                      clinicHistoryMedAntecedentsProvider),
+                                                  ref.read(
+                                                      clinicHistoryPsyAntecedentsProvider),
+                                                  ref.read(
+                                                      clinicHistoryFamilyHistoryProvider),
+                                                  ref.read(
+                                                      clinicHistoryPersonalHistoryProvider),
+                                                  widget.patientData.id,
+                                                  professionalID)
                                           : insertClinicHistory(
                                               registerCode,
                                               DateTime.now(),
@@ -153,6 +156,7 @@ class _ClinicHistoryRegisterViewState
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         const SnackBar(
+                                          backgroundColor: Colors.green,
                                           content: Text("Historia guardada"),
                                         ),
                                       );
@@ -160,7 +164,8 @@ class _ClinicHistoryRegisterViewState
                                       Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => MainMenu(),
+                                          builder: (context) =>
+                                              const MainMenu(),
                                         ),
                                       );
                                     }
