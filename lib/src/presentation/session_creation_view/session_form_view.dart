@@ -1,6 +1,6 @@
+import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:aronnax/src/presentation/widgets/note_creation_dialog.dart';
 import 'package:aronnax/src/presentation/session_creation_view/session_form.dart';
-import 'package:aronnax/src/Pages/Formulary/widgets/consultant_selection_dialog.dart';
 import 'package:aronnax/src/presentation/core/controllers.dart';
 import 'package:aronnax/src/presentation/session_creation_view/session_information_view.dart';
 import 'package:aronnax/src/presentation/widgets/generic_global_button.dart';
@@ -12,7 +12,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SessionFormView extends ConsumerWidget {
-  const SessionFormView({Key? key}) : super(key: key);
+  const SessionFormView({
+    Key? key,
+    required this.patientData,
+  }) : super(key: key);
+  final Patient patientData;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -27,7 +31,7 @@ class SessionFormView extends ConsumerWidget {
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.2,
-                  child: const SessionInformationView(),
+                  child: SessionInformationView(patientData: patientData),
                 ),
                 SizedBox(
                   height: 120,
@@ -108,9 +112,7 @@ class SessionFormView extends ConsumerWidget {
                                 top: 20,
                               ),
                               child: SessionsForm(
-                                patientID: ref
-                                    .watch(globalSelectedConsultantIDProvider)
-                                    .toString(),
+                                patientData: patientData,
                               ),
                             ),
                           ),
@@ -134,7 +136,8 @@ class SessionFormView extends ConsumerWidget {
                                     showDialog(
                                       context: context,
                                       builder: (context) =>
-                                          const SessionPerformanceDialog(),
+                                          SessionPerformanceDialog(
+                                              patientData: patientData),
                                     );
                                   }
                                 },

@@ -1,11 +1,14 @@
 import 'package:aronnax/src/Pages/Formulary/widgets/consultant_selection_dialog.dart';
+import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 class SessionInformationView extends ConsumerWidget {
-  const SessionInformationView({Key? key}) : super(key: key);
+  const SessionInformationView({Key? key, required this.patientData})
+      : super(key: key);
+  final Patient patientData;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -26,24 +29,10 @@ class SessionInformationView extends ConsumerWidget {
           padding: EdgeInsets.all(10),
         ),
         const Text(
-          'Sesión realizada por:',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        ),
-        Text(
-            "${ref.read(globalUserInformationProvider)!.names} ${ref.read(globalUserInformationProvider)!.lastNames}"),
-        const Padding(
-          padding: EdgeInsets.all(10),
-        ),
-        const Padding(
-          padding: EdgeInsets.all(10),
-        ),
-        const Text(
           'Consultante:',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
-        Text(
-          ref.read(globalSelectedConsultantNamesProvider),
-        ),
+        Text("${patientData.names} ${patientData.lastNames}"),
         const Padding(
           padding: EdgeInsets.all(10),
         ),

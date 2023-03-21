@@ -3,6 +3,7 @@ import 'package:aronnax/src/data/database/local_model/local_queries.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/forms_providers/session_form_provider.dart';
 import 'package:aronnax/src/data/remote_database/server_api.dart';
+import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:aronnax/src/presentation/widgets/generic_global_button.dart';
 import 'package:aronnax/src/presentation/widgets/session_performance_dialog/session_performance_element.dart';
@@ -11,7 +12,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SessionPerformanceDialog extends ConsumerStatefulWidget {
-  const SessionPerformanceDialog({Key? key}) : super(key: key);
+  const SessionPerformanceDialog({
+    Key? key,
+    required this.patientData,
+  }) : super(key: key);
+  final Patient patientData;
 
   @override
   ConsumerState<SessionPerformanceDialog> createState() =>
@@ -94,7 +99,7 @@ class _SessionPerformanceDialogState
                             ref.read(sessionSummaryProvider),
                             ref.read(sessionObjectivesProvider),
                             ref.read(sessionTherapeuticArchievementsProvider),
-                            ref.read(globalSelectedConsultantIDProvider),
+                            widget.patientData.id,
                             ref.read(globalUserInformationProvider)!.personalID,
                             DateTime.now(),
                           )
