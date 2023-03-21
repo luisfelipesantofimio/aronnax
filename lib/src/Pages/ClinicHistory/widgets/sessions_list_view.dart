@@ -41,7 +41,7 @@ class SessionsListView extends ConsumerWidget {
                     ? localSessions[index].sessionObjectives
                     : remoteSessions[index].sessionObjectives,
                 sessionID: isOfflineEnabled
-                    ? localSessions[index].sessionId
+                    ? localSessions[index].id
                     : remoteSessions[index].sessionId,
                 sessionDate: isOfflineEnabled
                     ? localSessions[index].sessionDate.toString()
