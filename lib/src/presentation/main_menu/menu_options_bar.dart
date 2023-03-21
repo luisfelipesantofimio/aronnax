@@ -1,6 +1,5 @@
 import 'package:aronnax/src/Pages/ClinicHistory/clinic_history_search.dart';
 import 'package:aronnax/src/Pages/Formulary/widgets/consultant_selection_dialog.dart';
-import 'package:aronnax/src/presentation/case_creation_view/case_creation_view.dart';
 import 'package:aronnax/src/presentation/main_menu/menu_settings_option_container.dart';
 import 'package:aronnax/src/presentation/register_view/register_view.dart';
 import 'package:aronnax/src/presentation/session_creation_view/session_form_view.dart';
@@ -58,29 +57,29 @@ class _MenuOptionsBarState extends State<MenuOptionsBar> {
                       ),
                     ),
                   ),
-                  MenuOptionsBarItem(
-                    icon: FontAwesomeIcons.notesMedical,
-                    title: 'Abrir nuevo caso',
-                    onTap: () => showDialog(
-                      context: context,
-                      builder: (context) {
-                        return ConsultantSelectionDialog(
-                          onSearchedPatient: (patient) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => CaseCreationView(
-                                  patientData: patient,
-                                ),
-                              ),
-                            );
-                          },
-                          title: "Selecciona a quién se asignará el caso",
-                        );
-                      },
-                    ),
-                    isFullSize: isMouseIn,
-                  ),
+                  // MenuOptionsBarItem(
+                  //   icon: FontAwesomeIcons.notesMedical,
+                  //   title: 'Abrir nuevo caso',
+                  //   onTap: () => showDialog(
+                  //     context: context,
+                  //     builder: (context) {
+                  //       return ConsultantSelectionDialog(
+                  //         onSearchedPatient: (patient) {
+                  //           Navigator.push(
+                  //             context,
+                  //             MaterialPageRoute(
+                  //               builder: (context) => CaseCreationView(
+                  //                 patientData: patient,
+                  //               ),
+                  //             ),
+                  //           );
+                  //         },
+                  //         title: "Selecciona a quién se asignará el caso",
+                  //       );
+                  //     },
+                  //   ),
+                  //   isFullSize: isMouseIn,
+                  // ),
                   MenuOptionsBarItem(
                     icon: FontAwesomeIcons.doorOpen,
                     title: 'Iniciar consulta',
