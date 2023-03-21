@@ -1,6 +1,8 @@
+import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
 import 'package:aronnax/src/data/providers/forms_providers/register_form_provider.dart';
 import 'package:aronnax/src/data/providers/location_data_provider.dart';
 import 'package:aronnax/src/domain/entities/gender.dart';
+import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:aronnax/src/presentation/core/controllers.dart';
 import 'package:aronnax/src/presentation/core/methods.dart';
 import 'package:aronnax/src/presentation/widgets/date_selector.dart';
@@ -25,7 +27,7 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
     Gender(value: 'femenine', name: 'Femenino'),
     Gender(value: 'other', name: 'Otro'),
   ];
-
+  bool patientFound = false;
   @override
   Widget build(BuildContext context) {
     final stateList = ref.watch(stateListProvider);
@@ -54,6 +56,7 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                     ref.read(registerNamesProvider.notifier).update(
                           (state) => valNames,
                         );
+                    basicKey.currentState!.validate();
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -78,6 +81,7 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                     ref.read(registerLastNamesProvider.notifier).update(
                           (state) => valLastNames,
                         );
+                    basicKey.currentState!.validate();
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -103,14 +107,30 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                   decoration: InputDecoration(
                       labelText: "Número de identificación",
                       labelStyle: Theme.of(context).textTheme.bodyMedium),
-                  onChanged: (valID) {
+                  onChanged: (valID) async {
                     ref.read(registerIdNumberProvider.notifier).update(
                           (state) => int.parse(valID),
                         );
+                    List<Patient> foundPatients = await ref
+                        .read(patientsRepositoryProvider)
+                        .getPatient(ref, int.parse(valID));
+                    if (foundPatients.isNotEmpty) {
+                      setState(() {
+                        patientFound = true;
+                      });
+                    } else {
+                      setState(() {
+                        patientFound = false;
+                      });
+                    }
+                    basicKey.currentState!.validate();
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "Inserta un valor";
+                    }
+                    if (patientFound) {
+                      return 'This user is already registered';
                     }
                     return null;
                   },
@@ -137,6 +157,7 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                     ref
                         .read(registerGenderProvider.notifier)
                         .update((state) => value!.value);
+                    basicKey.currentState!.validate();
                   },
                 ),
               ),
@@ -172,6 +193,7 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                     ref.read(registerConctatNumberProvider.notifier).update(
                           (state) => int.parse(valPhone),
                         );
+                    basicKey.currentState!.validate();
                   },
                 ),
               ),
@@ -239,6 +261,7 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                         stateCode = value!.isoCode;
                       });
                       ref.invalidate(citiesListProvider);
+                      basicKey.currentState!.validate();
                     },
                   ),
                   error: (error, stackTrace) => Row(
@@ -274,6 +297,7 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                       ref.read(registerCityProvider.notifier).update(
                             (state) => value!.name,
                           );
+                      basicKey.currentState!.validate();
                     },
                   ),
                   error: (error, stackTrace) => Row(
@@ -312,6 +336,7 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                     ref.read(registerAdressProvider.notifier).update(
                           (state) => valAdress,
                         );
+                    basicKey.currentState!.validate();
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -340,6 +365,7 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                     ref.read(registerEducationProvider.notifier).update(
                           (state) => valStudies,
                         );
+                    basicKey.currentState!.validate();
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -364,6 +390,7 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                     ref.read(registerOcupationProvider.notifier).update(
                           (state) => valOcupation,
                         );
+                    basicKey.currentState!.validate();
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -392,6 +419,7 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                     ref.read(registerInsuranceProvider.notifier).update(
                           (state) => valInsurance,
                         );
+                    basicKey.currentState!.validate();
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -418,6 +446,7 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                         .update(
                           (state) => valEmergencyName,
                         );
+                    basicKey.currentState!.validate();
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -447,6 +476,7 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                     .update(
                       (state) => int.parse(emergencyNumber),
                     );
+                basicKey.currentState!.validate();
               },
               validator: (value) {
                 if (value!.isEmpty) {
