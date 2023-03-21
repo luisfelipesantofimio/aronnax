@@ -2285,6 +2285,14 @@ class $LocalSessionsTable extends LocalSessions
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
           'REFERENCES local_professional (id)'));
+  static const VerificationMeta _caseIdMeta = const VerificationMeta('caseId');
+  @override
+  late final GeneratedColumn<int> caseId = GeneratedColumn<int>(
+      'case_id', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES local_patient_case (id)'));
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -2296,7 +2304,8 @@ class $LocalSessionsTable extends LocalSessions
         sessionPerformance,
         sessionPerformanceExplanation,
         idNumber,
-        professionalID
+        professionalID,
+        caseId
       ];
   @override
   String get aliasedName => _alias ?? 'local_sessions';
@@ -2378,6 +2387,10 @@ class $LocalSessionsTable extends LocalSessions
     } else if (isInserting) {
       context.missing(_professionalIDMeta);
     }
+    if (data.containsKey('case_id')) {
+      context.handle(_caseIdMeta,
+          caseId.isAcceptableOrUnknown(data['case_id']!, _caseIdMeta));
+    }
     return context;
   }
 
@@ -2409,6 +2422,8 @@ class $LocalSessionsTable extends LocalSessions
           .read(DriftSqlType.int, data['${effectivePrefix}id_number'])!,
       professionalID: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}professional_i_d'])!,
+      caseId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}case_id']),
     );
   }
 
@@ -2429,6 +2444,7 @@ class LocalSession extends DataClass implements Insertable<LocalSession> {
   final String? sessionPerformanceExplanation;
   final int idNumber;
   final int professionalID;
+  final int? caseId;
   const LocalSession(
       {required this.id,
       required this.sessionDate,
@@ -2439,7 +2455,8 @@ class LocalSession extends DataClass implements Insertable<LocalSession> {
       required this.sessionPerformance,
       this.sessionPerformanceExplanation,
       required this.idNumber,
-      required this.professionalID});
+      required this.professionalID,
+      this.caseId});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -2459,6 +2476,9 @@ class LocalSession extends DataClass implements Insertable<LocalSession> {
     }
     map['id_number'] = Variable<int>(idNumber);
     map['professional_i_d'] = Variable<int>(professionalID);
+    if (!nullToAbsent || caseId != null) {
+      map['case_id'] = Variable<int>(caseId);
+    }
     return map;
   }
 
@@ -2479,6 +2499,8 @@ class LocalSession extends DataClass implements Insertable<LocalSession> {
               : Value(sessionPerformanceExplanation),
       idNumber: Value(idNumber),
       professionalID: Value(professionalID),
+      caseId:
+          caseId == null && nullToAbsent ? const Value.absent() : Value(caseId),
     );
   }
 
@@ -2499,6 +2521,7 @@ class LocalSession extends DataClass implements Insertable<LocalSession> {
           serializer.fromJson<String?>(json['sessionPerformanceExplanation']),
       idNumber: serializer.fromJson<int>(json['idNumber']),
       professionalID: serializer.fromJson<int>(json['professionalID']),
+      caseId: serializer.fromJson<int?>(json['caseId']),
     );
   }
   @override
@@ -2517,6 +2540,7 @@ class LocalSession extends DataClass implements Insertable<LocalSession> {
           serializer.toJson<String?>(sessionPerformanceExplanation),
       'idNumber': serializer.toJson<int>(idNumber),
       'professionalID': serializer.toJson<int>(professionalID),
+      'caseId': serializer.toJson<int?>(caseId),
     };
   }
 
@@ -2530,7 +2554,8 @@ class LocalSession extends DataClass implements Insertable<LocalSession> {
           String? sessionPerformance,
           Value<String?> sessionPerformanceExplanation = const Value.absent(),
           int? idNumber,
-          int? professionalID}) =>
+          int? professionalID,
+          Value<int?> caseId = const Value.absent()}) =>
       LocalSession(
         id: id ?? this.id,
         sessionDate: sessionDate ?? this.sessionDate,
@@ -2546,6 +2571,7 @@ class LocalSession extends DataClass implements Insertable<LocalSession> {
             : this.sessionPerformanceExplanation,
         idNumber: idNumber ?? this.idNumber,
         professionalID: professionalID ?? this.professionalID,
+        caseId: caseId.present ? caseId.value : this.caseId,
       );
   @override
   String toString() {
@@ -2560,7 +2586,8 @@ class LocalSession extends DataClass implements Insertable<LocalSession> {
           ..write(
               'sessionPerformanceExplanation: $sessionPerformanceExplanation, ')
           ..write('idNumber: $idNumber, ')
-          ..write('professionalID: $professionalID')
+          ..write('professionalID: $professionalID, ')
+          ..write('caseId: $caseId')
           ..write(')'))
         .toString();
   }
@@ -2576,7 +2603,8 @@ class LocalSession extends DataClass implements Insertable<LocalSession> {
       sessionPerformance,
       sessionPerformanceExplanation,
       idNumber,
-      professionalID);
+      professionalID,
+      caseId);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -2591,7 +2619,8 @@ class LocalSession extends DataClass implements Insertable<LocalSession> {
           other.sessionPerformanceExplanation ==
               this.sessionPerformanceExplanation &&
           other.idNumber == this.idNumber &&
-          other.professionalID == this.professionalID);
+          other.professionalID == this.professionalID &&
+          other.caseId == this.caseId);
 }
 
 class LocalSessionsCompanion extends UpdateCompanion<LocalSession> {
@@ -2605,6 +2634,7 @@ class LocalSessionsCompanion extends UpdateCompanion<LocalSession> {
   final Value<String?> sessionPerformanceExplanation;
   final Value<int> idNumber;
   final Value<int> professionalID;
+  final Value<int?> caseId;
   const LocalSessionsCompanion({
     this.id = const Value.absent(),
     this.sessionDate = const Value.absent(),
@@ -2616,6 +2646,7 @@ class LocalSessionsCompanion extends UpdateCompanion<LocalSession> {
     this.sessionPerformanceExplanation = const Value.absent(),
     this.idNumber = const Value.absent(),
     this.professionalID = const Value.absent(),
+    this.caseId = const Value.absent(),
   });
   LocalSessionsCompanion.insert({
     this.id = const Value.absent(),
@@ -2628,6 +2659,7 @@ class LocalSessionsCompanion extends UpdateCompanion<LocalSession> {
     this.sessionPerformanceExplanation = const Value.absent(),
     required int idNumber,
     required int professionalID,
+    this.caseId = const Value.absent(),
   })  : sessionDate = Value(sessionDate),
         sessionSummary = Value(sessionSummary),
         sessionObjectives = Value(sessionObjectives),
@@ -2646,6 +2678,7 @@ class LocalSessionsCompanion extends UpdateCompanion<LocalSession> {
     Expression<String>? sessionPerformanceExplanation,
     Expression<int>? idNumber,
     Expression<int>? professionalID,
+    Expression<int>? caseId,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -2660,6 +2693,7 @@ class LocalSessionsCompanion extends UpdateCompanion<LocalSession> {
         'session_performance_explanation': sessionPerformanceExplanation,
       if (idNumber != null) 'id_number': idNumber,
       if (professionalID != null) 'professional_i_d': professionalID,
+      if (caseId != null) 'case_id': caseId,
     });
   }
 
@@ -2673,7 +2707,8 @@ class LocalSessionsCompanion extends UpdateCompanion<LocalSession> {
       Value<String>? sessionPerformance,
       Value<String?>? sessionPerformanceExplanation,
       Value<int>? idNumber,
-      Value<int>? professionalID}) {
+      Value<int>? professionalID,
+      Value<int?>? caseId}) {
     return LocalSessionsCompanion(
       id: id ?? this.id,
       sessionDate: sessionDate ?? this.sessionDate,
@@ -2687,6 +2722,7 @@ class LocalSessionsCompanion extends UpdateCompanion<LocalSession> {
           sessionPerformanceExplanation ?? this.sessionPerformanceExplanation,
       idNumber: idNumber ?? this.idNumber,
       professionalID: professionalID ?? this.professionalID,
+      caseId: caseId ?? this.caseId,
     );
   }
 
@@ -2725,6 +2761,9 @@ class LocalSessionsCompanion extends UpdateCompanion<LocalSession> {
     if (professionalID.present) {
       map['professional_i_d'] = Variable<int>(professionalID.value);
     }
+    if (caseId.present) {
+      map['case_id'] = Variable<int>(caseId.value);
+    }
     return map;
   }
 
@@ -2741,7 +2780,8 @@ class LocalSessionsCompanion extends UpdateCompanion<LocalSession> {
           ..write(
               'sessionPerformanceExplanation: $sessionPerformanceExplanation, ')
           ..write('idNumber: $idNumber, ')
-          ..write('professionalID: $professionalID')
+          ..write('professionalID: $professionalID, ')
+          ..write('caseId: $caseId')
           ..write(')'))
         .toString();
   }

@@ -61,6 +61,8 @@ class LocalSessions extends Table {
   IntColumn get idNumber => integer().references(LocalPatients, #id)();
   IntColumn get professionalID =>
       integer().references(LocalProfessional, #id)();
+  IntColumn get caseId =>
+      integer().nullable().references(LocalPatientCase, #id)();
 }
 
 class LocalProfessional extends Table {

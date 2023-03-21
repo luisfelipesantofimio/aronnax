@@ -153,6 +153,10 @@ abstract class LocalDatabaseInteface {
 
   Future<LocalPatient> getSinglePatient(int idNumber);
   Future<List<LocalPatient>> getPatientsListById(int idNumber);
+  void deleteLocalClinicHistory(int id);
+  void deletePatientTreatmentPlan(int treatmentId);
+  Future<List<LocalClinicHistoryData>> getClinicHistoryListById(int patientId);
+  Future<LocalClinicHistoryData> getSingleClinicHistoryById(int patientId);
 }
 
 final localDatabaseRepositoryProvider = Provider<LocalDatabaseInteface>(

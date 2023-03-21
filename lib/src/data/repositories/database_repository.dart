@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
-
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/remote_database/server_api.dart';
@@ -401,5 +399,25 @@ class DatabaseRepository implements LocalDatabaseInteface {
   @override
   Future<List<LocalPatient>> getPatientsListById(int idNumber) {
     return localDB.getPatientsListById(idNumber);
+  }
+
+  @override
+  void deleteLocalClinicHistory(int id) {
+    localDB.deleteLocalClinicHisoty(id);
+  }
+
+  @override
+  void deletePatientTreatmentPlan(int treatmentId) {
+    localDB.deletePatientTreatmentPlan(treatmentId);
+  }
+
+  @override
+  Future<List<LocalClinicHistoryData>> getClinicHistoryListById(int patientId) {
+    return localDB.clinicHistoryConsultation(patientId);
+  }
+
+  @override
+  Future<LocalClinicHistoryData> getSingleClinicHistoryById(int patientId) {
+    return localDB.getSingleClinicHistory(patientId);
   }
 }
