@@ -2,6 +2,7 @@ import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/patients_provider.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
+import 'package:aronnax/src/presentation/case_creation_view/case_creation_dialog.dart';
 import 'package:aronnax/src/presentation/core/methods.dart';
 import 'package:aronnax/src/presentation/widgets/patient_dialog_text_body.dart';
 import 'package:flutter/material.dart';
@@ -147,6 +148,22 @@ class _PatientsDialogViewState extends ConsumerState<PatientsDialogView> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        TextButton(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => CaseCreationDialog(
+                                  patientData: widget.patientData),
+                            );
+                          },
+                          child: const Text(
+                            'Create new case',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
                         TextButton(
                           onPressed: () {
                             //TODO: validate to create a clinic history if the user does not have
