@@ -34,7 +34,7 @@ class ClinicHistory {
       psyAntecedents: data.psyAntecedents,
       familyHistory: data.familyHistory,
       personalHistory: data.personalHistory,
-      idNumber: data.idNumber,
+      idNumber: data.patientId,
       professionalId: data.professionalID,
     );
   }
