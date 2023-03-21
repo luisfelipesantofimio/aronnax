@@ -18,6 +18,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
     required String names,
     required String lastNames,
     required DateTime birthDate,
+    required String gender,
     required int idNumber,
     required int contactNumber,
     required String mail,
@@ -36,6 +37,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
         names: Value(names),
         lastNames: Value(lastNames),
         birthDate: Value(birthDate),
+        gender: Value(gender),
         idNumber: Value(idNumber),
         contactNumber: Value(contactNumber),
         mail: Value(mail),
@@ -58,7 +60,6 @@ class DatabaseRepository implements LocalDatabaseInteface {
   Future<void> addLocalClinicHistory(
     String registerCode,
     DateTime dateTime,
-    String consultationReason,
     String mentalExamn,
     String medAntecedents,
     String psiAntecedents,
@@ -75,7 +76,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
       psyAntecedents: Value(psiAntecedents),
       familyHistory: Value(familyHistory),
       personalHistory: Value(personalHistory),
-      idNumber: Value(idNumber),
+      patientId: Value(idNumber),
       professionalID: Value(professionalID),
     );
 
@@ -390,5 +391,15 @@ class DatabaseRepository implements LocalDatabaseInteface {
       caseNotes: Value(caseNotes),
     );
     localDB.insertPatientCase(data);
+  }
+
+  @override
+  Future<LocalPatient> getSinglePatient(int idNumber) async {
+    return localDB.getSinglePatient(idNumber);
+  }
+
+  @override
+  Future<List<LocalPatient>> getPatientsListById(int idNumber) {
+    return localDB.getPatientsListById(idNumber);
   }
 }

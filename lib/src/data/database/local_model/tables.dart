@@ -32,7 +32,7 @@ class LocalClinicHistory extends Table {
   TextColumn get psyAntecedents => text()();
   TextColumn get familyHistory => text()();
   TextColumn get personalHistory => text()();
-  IntColumn get idNumber => integer().references(LocalPatients, #id)();
+  IntColumn get patientId => integer().references(LocalPatients, #id)();
   IntColumn get professionalID =>
       integer().references(LocalProfessional, #id)();
 }

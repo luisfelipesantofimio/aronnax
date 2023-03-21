@@ -119,6 +119,22 @@ class LocalDatabase extends _$LocalDatabase {
     return (select(localPatients)).get();
   }
 
+  Future<List<LocalPatient>> getPatientsListById(int idNumber) {
+    return (select(localPatients)
+          ..where(
+            (tbl) => tbl.idNumber.equals(idNumber),
+          ))
+        .get();
+  }
+
+  Future<LocalPatient> getSinglePatient(int idNumber) {
+    return (select(localPatients)
+          ..where(
+            (tbl) => tbl.idNumber.equals(idNumber),
+          ))
+        .getSingle();
+  }
+
   Future<List<LocalPatientTreatmentPlan>> getPatientTreatmentPlans(
       int patientID) {
     return (select(localPatientTreatmentPlans)
@@ -193,6 +209,12 @@ class LocalDatabase extends _$LocalDatabase {
 
   Future<List<LocalTreatmentPlan>> getLocalTreatmentPlans() {
     return (select(localTreatmentPlans)).get();
+  }
+
+  Future<List<LocalClinicHistoryData>> getClinicHistories(int patientId) {
+    return (select(localClinicHistory)
+          ..where((tbl) => tbl.patientId.equals(patientId)))
+        .get();
   }
 
   //Update

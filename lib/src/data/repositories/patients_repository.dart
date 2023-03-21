@@ -1,6 +1,7 @@
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
+import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -87,6 +88,67 @@ class PatientsRepository implements PatientsRepositoryInterface {
             patientId,
             creationDate,
           );
+    }
+  }
+
+  @override
+  Future<Patient?> addPatient(
+      {required WidgetRef ref,
+      required String names,
+      required String lastNames,
+      required DateTime birthDate,
+      required String gender,
+      required int idNumber,
+      required int contactNumber,
+      required String mail,
+      required String city,
+      required String state,
+      required String adress,
+      required String insurance,
+      required String education,
+      required String ocupation,
+      required String emergencyContactName,
+      required int emergencyContactNumber,
+      required DateTime creationDate,
+      required int professionalID}) async {
+    if (ref.read(offlineStatusProvider).value!) {
+      ref.read(localDatabaseRepositoryProvider).addLocalPatient(
+          names: names,
+          lastNames: lastNames,
+          birthDate: birthDate,
+          gender: gender,
+          idNumber: idNumber,
+          contactNumber: contactNumber,
+          mail: mail,
+          city: city,
+          state: state,
+          adress: adress,
+          insurance: insurance,
+          education: education,
+          ocupation: ocupation,
+          emergencyContactName: emergencyContactName,
+          emergencyContactNumber: emergencyContactNumber,
+          creationDate: creationDate,
+          professionalID: professionalID);
+      return Patient.fromLocalModel(
+        await ref
+            .read(localDatabaseRepositoryProvider)
+            .getSinglePatient(idNumber),
+      );
+    } else {
+      return null;
+    }
+  }
+
+  @override
+  Future<List<Patient>> getPatient(WidgetRef ref, int idNumber) async {
+    if (ref.read(offlineStatusProvider).value!) {
+      List<LocalPatient> patientsList = await ref
+          .read(localDatabaseRepositoryProvider)
+          .getPatientsListById(idNumber);
+      return patientsList.map((e) => Patient.fromLocalModel(e)).toList();
+    } else {
+      return [];
     }
   }
 }

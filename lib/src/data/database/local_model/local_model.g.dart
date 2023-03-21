@@ -1328,11 +1328,11 @@ class $LocalClinicHistoryTable extends LocalClinicHistory
   late final GeneratedColumn<String> personalHistory = GeneratedColumn<String>(
       'personal_history', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _idNumberMeta =
-      const VerificationMeta('idNumber');
+  static const VerificationMeta _patientIdMeta =
+      const VerificationMeta('patientId');
   @override
-  late final GeneratedColumn<int> idNumber = GeneratedColumn<int>(
-      'id_number', aliasedName, false,
+  late final GeneratedColumn<int> patientId = GeneratedColumn<int>(
+      'patient_id', aliasedName, false,
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       defaultConstraints:
@@ -1356,7 +1356,7 @@ class $LocalClinicHistoryTable extends LocalClinicHistory
         psyAntecedents,
         familyHistory,
         personalHistory,
-        idNumber,
+        patientId,
         professionalID
       ];
   @override
@@ -1428,11 +1428,11 @@ class $LocalClinicHistoryTable extends LocalClinicHistory
     } else if (isInserting) {
       context.missing(_personalHistoryMeta);
     }
-    if (data.containsKey('id_number')) {
-      context.handle(_idNumberMeta,
-          idNumber.isAcceptableOrUnknown(data['id_number']!, _idNumberMeta));
+    if (data.containsKey('patient_id')) {
+      context.handle(_patientIdMeta,
+          patientId.isAcceptableOrUnknown(data['patient_id']!, _patientIdMeta));
     } else if (isInserting) {
-      context.missing(_idNumberMeta);
+      context.missing(_patientIdMeta);
     }
     if (data.containsKey('professional_i_d')) {
       context.handle(
@@ -1467,8 +1467,8 @@ class $LocalClinicHistoryTable extends LocalClinicHistory
           .read(DriftSqlType.string, data['${effectivePrefix}family_history'])!,
       personalHistory: attachedDatabase.typeMapping.read(
           DriftSqlType.string, data['${effectivePrefix}personal_history'])!,
-      idNumber: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}id_number'])!,
+      patientId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}patient_id'])!,
       professionalID: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}professional_i_d'])!,
     );
@@ -1490,7 +1490,7 @@ class LocalClinicHistoryData extends DataClass
   final String psyAntecedents;
   final String familyHistory;
   final String personalHistory;
-  final int idNumber;
+  final int patientId;
   final int professionalID;
   const LocalClinicHistoryData(
       {required this.id,
@@ -1501,7 +1501,7 @@ class LocalClinicHistoryData extends DataClass
       required this.psyAntecedents,
       required this.familyHistory,
       required this.personalHistory,
-      required this.idNumber,
+      required this.patientId,
       required this.professionalID});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -1514,7 +1514,7 @@ class LocalClinicHistoryData extends DataClass
     map['psy_antecedents'] = Variable<String>(psyAntecedents);
     map['family_history'] = Variable<String>(familyHistory);
     map['personal_history'] = Variable<String>(personalHistory);
-    map['id_number'] = Variable<int>(idNumber);
+    map['patient_id'] = Variable<int>(patientId);
     map['professional_i_d'] = Variable<int>(professionalID);
     return map;
   }
@@ -1529,7 +1529,7 @@ class LocalClinicHistoryData extends DataClass
       psyAntecedents: Value(psyAntecedents),
       familyHistory: Value(familyHistory),
       personalHistory: Value(personalHistory),
-      idNumber: Value(idNumber),
+      patientId: Value(patientId),
       professionalID: Value(professionalID),
     );
   }
@@ -1546,7 +1546,7 @@ class LocalClinicHistoryData extends DataClass
       psyAntecedents: serializer.fromJson<String>(json['psyAntecedents']),
       familyHistory: serializer.fromJson<String>(json['familyHistory']),
       personalHistory: serializer.fromJson<String>(json['personalHistory']),
-      idNumber: serializer.fromJson<int>(json['idNumber']),
+      patientId: serializer.fromJson<int>(json['patientId']),
       professionalID: serializer.fromJson<int>(json['professionalID']),
     );
   }
@@ -1562,7 +1562,7 @@ class LocalClinicHistoryData extends DataClass
       'psyAntecedents': serializer.toJson<String>(psyAntecedents),
       'familyHistory': serializer.toJson<String>(familyHistory),
       'personalHistory': serializer.toJson<String>(personalHistory),
-      'idNumber': serializer.toJson<int>(idNumber),
+      'patientId': serializer.toJson<int>(patientId),
       'professionalID': serializer.toJson<int>(professionalID),
     };
   }
@@ -1576,7 +1576,7 @@ class LocalClinicHistoryData extends DataClass
           String? psyAntecedents,
           String? familyHistory,
           String? personalHistory,
-          int? idNumber,
+          int? patientId,
           int? professionalID}) =>
       LocalClinicHistoryData(
         id: id ?? this.id,
@@ -1587,7 +1587,7 @@ class LocalClinicHistoryData extends DataClass
         psyAntecedents: psyAntecedents ?? this.psyAntecedents,
         familyHistory: familyHistory ?? this.familyHistory,
         personalHistory: personalHistory ?? this.personalHistory,
-        idNumber: idNumber ?? this.idNumber,
+        patientId: patientId ?? this.patientId,
         professionalID: professionalID ?? this.professionalID,
       );
   @override
@@ -1601,7 +1601,7 @@ class LocalClinicHistoryData extends DataClass
           ..write('psyAntecedents: $psyAntecedents, ')
           ..write('familyHistory: $familyHistory, ')
           ..write('personalHistory: $personalHistory, ')
-          ..write('idNumber: $idNumber, ')
+          ..write('patientId: $patientId, ')
           ..write('professionalID: $professionalID')
           ..write(')'))
         .toString();
@@ -1617,7 +1617,7 @@ class LocalClinicHistoryData extends DataClass
       psyAntecedents,
       familyHistory,
       personalHistory,
-      idNumber,
+      patientId,
       professionalID);
   @override
   bool operator ==(Object other) =>
@@ -1631,7 +1631,7 @@ class LocalClinicHistoryData extends DataClass
           other.psyAntecedents == this.psyAntecedents &&
           other.familyHistory == this.familyHistory &&
           other.personalHistory == this.personalHistory &&
-          other.idNumber == this.idNumber &&
+          other.patientId == this.patientId &&
           other.professionalID == this.professionalID);
 }
 
@@ -1645,7 +1645,7 @@ class LocalClinicHistoryCompanion
   final Value<String> psyAntecedents;
   final Value<String> familyHistory;
   final Value<String> personalHistory;
-  final Value<int> idNumber;
+  final Value<int> patientId;
   final Value<int> professionalID;
   const LocalClinicHistoryCompanion({
     this.id = const Value.absent(),
@@ -1656,7 +1656,7 @@ class LocalClinicHistoryCompanion
     this.psyAntecedents = const Value.absent(),
     this.familyHistory = const Value.absent(),
     this.personalHistory = const Value.absent(),
-    this.idNumber = const Value.absent(),
+    this.patientId = const Value.absent(),
     this.professionalID = const Value.absent(),
   });
   LocalClinicHistoryCompanion.insert({
@@ -1668,7 +1668,7 @@ class LocalClinicHistoryCompanion
     required String psyAntecedents,
     required String familyHistory,
     required String personalHistory,
-    required int idNumber,
+    required int patientId,
     required int professionalID,
   })  : registerNumber = Value(registerNumber),
         currentDate = Value(currentDate),
@@ -1677,7 +1677,7 @@ class LocalClinicHistoryCompanion
         psyAntecedents = Value(psyAntecedents),
         familyHistory = Value(familyHistory),
         personalHistory = Value(personalHistory),
-        idNumber = Value(idNumber),
+        patientId = Value(patientId),
         professionalID = Value(professionalID);
   static Insertable<LocalClinicHistoryData> custom({
     Expression<int>? id,
@@ -1688,7 +1688,7 @@ class LocalClinicHistoryCompanion
     Expression<String>? psyAntecedents,
     Expression<String>? familyHistory,
     Expression<String>? personalHistory,
-    Expression<int>? idNumber,
+    Expression<int>? patientId,
     Expression<int>? professionalID,
   }) {
     return RawValuesInsertable({
@@ -1700,7 +1700,7 @@ class LocalClinicHistoryCompanion
       if (psyAntecedents != null) 'psy_antecedents': psyAntecedents,
       if (familyHistory != null) 'family_history': familyHistory,
       if (personalHistory != null) 'personal_history': personalHistory,
-      if (idNumber != null) 'id_number': idNumber,
+      if (patientId != null) 'patient_id': patientId,
       if (professionalID != null) 'professional_i_d': professionalID,
     });
   }
@@ -1714,7 +1714,7 @@ class LocalClinicHistoryCompanion
       Value<String>? psyAntecedents,
       Value<String>? familyHistory,
       Value<String>? personalHistory,
-      Value<int>? idNumber,
+      Value<int>? patientId,
       Value<int>? professionalID}) {
     return LocalClinicHistoryCompanion(
       id: id ?? this.id,
@@ -1725,7 +1725,7 @@ class LocalClinicHistoryCompanion
       psyAntecedents: psyAntecedents ?? this.psyAntecedents,
       familyHistory: familyHistory ?? this.familyHistory,
       personalHistory: personalHistory ?? this.personalHistory,
-      idNumber: idNumber ?? this.idNumber,
+      patientId: patientId ?? this.patientId,
       professionalID: professionalID ?? this.professionalID,
     );
   }
@@ -1757,8 +1757,8 @@ class LocalClinicHistoryCompanion
     if (personalHistory.present) {
       map['personal_history'] = Variable<String>(personalHistory.value);
     }
-    if (idNumber.present) {
-      map['id_number'] = Variable<int>(idNumber.value);
+    if (patientId.present) {
+      map['patient_id'] = Variable<int>(patientId.value);
     }
     if (professionalID.present) {
       map['professional_i_d'] = Variable<int>(professionalID.value);
@@ -1777,7 +1777,7 @@ class LocalClinicHistoryCompanion
           ..write('psyAntecedents: $psyAntecedents, ')
           ..write('familyHistory: $familyHistory, ')
           ..write('personalHistory: $personalHistory, ')
-          ..write('idNumber: $idNumber, ')
+          ..write('patientId: $patientId, ')
           ..write('professionalID: $professionalID')
           ..write(')'))
         .toString();

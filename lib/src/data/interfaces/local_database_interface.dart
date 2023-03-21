@@ -10,6 +10,7 @@ abstract class LocalDatabaseInteface {
     required String names,
     required String lastNames,
     required DateTime birthDate,
+    required String gender,
     required int idNumber,
     required int contactNumber,
     required String mail,
@@ -28,7 +29,6 @@ abstract class LocalDatabaseInteface {
   Future<void> addLocalClinicHistory(
     String registerCode,
     DateTime dateTime,
-    String consultationReason,
     String mentalExamn,
     String medAntecedents,
     String psiAntecedents,
@@ -150,6 +150,9 @@ abstract class LocalDatabaseInteface {
       String treatmentProposal,
       String diagnostic,
       String? caseNotes);
+
+  Future<LocalPatient> getSinglePatient(int idNumber);
+  Future<List<LocalPatient>> getPatientsListById(int idNumber);
 }
 
 final localDatabaseRepositoryProvider = Provider<LocalDatabaseInteface>(
