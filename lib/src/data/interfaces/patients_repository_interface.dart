@@ -7,6 +7,17 @@ abstract class PatientsRepositoryInterface {
 
   List<Patient> queryPatients(List<Patient> patientsList, String query);
 
+  void addPatientCase(
+      WidgetRef ref,
+      DateTime creationDate,
+      int patientId,
+      int professionalId,
+      String consultationReason,
+      String treatmentProposal,
+      String diagnostic,
+      String? caseNotes,
+      bool isOffline);
+
   void updateLocalPatientActiveState(
     WidgetRef ref,
     int patientId,

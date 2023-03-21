@@ -38,11 +38,11 @@ class AuthRepository implements AuthRepositoryInterface {
   @override
   Future<bool> loginLocalUser({
     required WidgetRef ref,
-    required int userID,
+    required String userName,
   }) async {
     List<LocalProfessionalData> professionalData = await ref
         .read(localDatabaseRepositoryProvider)
-        .loginExistingProfessional(userID);
+        .loginExistingProfessional(userName);
     log(professionalData.toString());
     if (professionalData.isNotEmpty) {
       ref.read(globalUserInformationProvider.notifier).update(

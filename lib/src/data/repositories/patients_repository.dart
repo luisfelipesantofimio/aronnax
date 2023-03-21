@@ -54,4 +54,27 @@ class PatientsRepository implements PatientsRepositoryInterface {
     }
     return queriedPatientsList;
   }
+
+  @override
+  void addPatientCase(
+      WidgetRef ref,
+      DateTime creationDate,
+      int patientId,
+      int professionalId,
+      String consultationReason,
+      String treatmentProposal,
+      String diagnostic,
+      String? caseNotes,
+      bool isOffline) {
+    if (isOffline) {
+      ref.read(localDatabaseRepositoryProvider).insertPatientCase(
+          creationDate,
+          patientId,
+          professionalId,
+          consultationReason,
+          treatmentProposal,
+          diagnostic,
+          caseNotes);
+    }
+  }
 }

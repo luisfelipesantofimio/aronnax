@@ -52,7 +52,9 @@ abstract class LocalDatabaseInteface {
 
   Future<List<LocalPatient>> searchPatient(String user);
 
-  Future<List<LocalProfessionalData>> loginExistingProfessional(int userID);
+  Future<List<LocalProfessionalData>> loginExistingProfessional(
+    String userName,
+  );
 
   Stream<List<LocalProfessionalData>> fetchInitialRegisterUsers();
 
@@ -134,6 +136,20 @@ abstract class LocalDatabaseInteface {
   void deleteLocalTreatmentPlan(int treatmentId);
   void updateLocalTreatmentPlan(TreatmentPlan newTreatmentPlanData);
   void updateLocalPatientActiveState(int patientId, bool newState);
+  void insertPatientTreatmentPlan(
+    int treatmentPlanId,
+    int patientId,
+    DateTime creationDate,
+  );
+  Future<List<LocalPatientCaseData>> getPatientCaseList(int patientId);
+  void insertPatientCase(
+      DateTime creationDate,
+      int patientId,
+      int professionalId,
+      String consultationReason,
+      String treatmentProposal,
+      String diagnostic,
+      String? caseNotes);
 }
 
 final localDatabaseRepositoryProvider = Provider<LocalDatabaseInteface>(

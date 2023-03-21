@@ -121,8 +121,10 @@ Future<List<LocalPatient>> searchPatient(String user) {
   return localDB.userConsultation(user);
 }
 
-Future<List<LocalProfessionalData>> loginExistingProfessional(int userID) {
-  return localDB.loginProfessional(userID);
+Future<List<LocalProfessionalData>> loginExistingProfessional(
+  String userName,
+) {
+  return localDB.loginProfessional(userName);
 }
 
 Stream<List<LocalProfessionalData>> fetchInitialRegisterUsers() {

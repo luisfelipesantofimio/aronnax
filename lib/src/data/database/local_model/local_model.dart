@@ -70,6 +70,15 @@ class LocalDatabase extends _$LocalDatabase {
     return into(localtreatmentResults).insert(data);
   }
 
+  Future<void> insertPatientTreatmentPlan(
+      LocalPatientTreatmentPlansCompanion data) {
+    return into(localPatientTreatmentPlans).insert(data);
+  }
+
+  Future<void> insertPatientCase(LocalPatientCaseCompanion data) {
+    return into(localPatientCase).insert(data);
+  }
+
   // Data update
 
   Future updateThemeMode(bool currentThemeMode) async {
@@ -110,14 +119,33 @@ class LocalDatabase extends _$LocalDatabase {
     return (select(localPatients)).get();
   }
 
+  Future<List<LocalPatientTreatmentPlan>> getPatientTreatmentPlans(
+      int patientID) {
+    return (select(localPatientTreatmentPlans)
+          ..where(
+            (tbl) => tbl.patientId.equals(patientID),
+          ))
+        .get();
+  }
+
+  Future<List<LocalPatientCaseData>> getPatientCases(int patientId) {
+    return (select(localPatientCase)
+          ..where(
+            (tbl) => tbl.patientId.equals(patientId),
+          ))
+        .get();
+  }
+
   Future<List<LocalProfessionalData>> getProfessionalsList() {
     return (select(localProfessional)).get();
   }
 
-  Future<List<LocalProfessionalData>> loginProfessional(int userID) {
+  Future<List<LocalProfessionalData>> loginProfessional(
+    String userName,
+  ) {
     return (select(localProfessional)
           ..where(
-            (tbl) => tbl.personalID.equals(userID),
+            (tbl) => tbl.userName.equals(userName),
           ))
         .get();
   }
@@ -130,15 +158,15 @@ class LocalDatabase extends _$LocalDatabase {
     return (select(settings)..where((tbl) => tbl.id.equals(0))).watchSingle();
   }
 
-  Future<List<LocalClinicHistoryData>> clinicHistoryConsultation(int idNumber) {
+  Future<List<LocalClinicHistoryData>> clinicHistoryConsultation(
+      int patientId) {
     return (select(localClinicHistory)
-          ..where((tbl) => tbl.idNumber.equals(idNumber)))
+          ..where((tbl) => tbl.id.equals(patientId)))
         .get();
   }
 
-  Future<List<LocalSession>> sessionsConsultation(int idNumber) {
-    return (select(localSessions)
-          ..where((tbl) => tbl.idNumber.equals(idNumber)))
+  Future<List<LocalSession>> sessionsConsultation(int sessionId) {
+    return (select(localSessions)..where((tbl) => tbl.id.equals(sessionId)))
         .get();
   }
 

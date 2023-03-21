@@ -123,8 +123,10 @@ class DatabaseRepository implements LocalDatabaseInteface {
   }
 
   @override
-  Future<List<LocalProfessionalData>> loginExistingProfessional(int userID) {
-    return localDB.loginProfessional(userID);
+  Future<List<LocalProfessionalData>> loginExistingProfessional(
+    String userName,
+  ) {
+    return localDB.loginProfessional(userName);
   }
 
   @override
@@ -350,5 +352,43 @@ class DatabaseRepository implements LocalDatabaseInteface {
       patientId,
       newState,
     );
+  }
+
+  @override
+  void insertPatientTreatmentPlan(
+      int treatmentPlanId, int patientId, DateTime creationDate) {
+    final data = LocalPatientTreatmentPlansCompanion(
+      creationDate: Value(creationDate),
+      patientId: Value(patientId),
+      treatmentPlanFinished: const Value(false),
+      treatmentPlanId: Value(treatmentPlanId),
+    );
+    localDB.insertPatientTreatmentPlan(data);
+  }
+
+  @override
+  Future<List<LocalPatientCaseData>> getPatientCaseList(int patientId) {
+    return localDB.getPatientCases(patientId);
+  }
+
+  @override
+  void insertPatientCase(
+      DateTime creationDate,
+      int patientId,
+      int professionalId,
+      String consultationReason,
+      String treatmentProposal,
+      String diagnostic,
+      String? caseNotes) {
+    final data = LocalPatientCaseCompanion(
+      creationDate: Value(creationDate),
+      patientId: Value(patientId),
+      professionalId: Value(professionalId),
+      consultationReason: Value(consultationReason),
+      diagnostic: Value(diagnostic),
+      treatmentProposal: Value(treatmentProposal),
+      caseNotes: Value(caseNotes),
+    );
+    localDB.insertPatientCase(data);
   }
 }

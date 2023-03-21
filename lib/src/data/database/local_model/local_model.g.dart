@@ -23,9 +23,7 @@ class $LocalProfessionalTable extends LocalProfessional
   @override
   late final GeneratedColumn<int> personalID = GeneratedColumn<int>(
       'personal_i_d', aliasedName, false,
-      type: DriftSqlType.int,
-      requiredDuringInsert: true,
-      defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'));
+      type: DriftSqlType.int, requiredDuringInsert: true);
   static const VerificationMeta _namesMeta = const VerificationMeta('names');
   @override
   late final GeneratedColumn<String> names = GeneratedColumn<String>(
@@ -545,7 +543,7 @@ class $LocalPatientsTable extends LocalPatients
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES local_professional (personal_i_d)'));
+          'REFERENCES local_professional (id)'));
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -1337,8 +1335,8 @@ class $LocalClinicHistoryTable extends LocalClinicHistory
       'id_number', aliasedName, false,
       type: DriftSqlType.int,
       requiredDuringInsert: true,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES local_patients (id_number)'));
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES local_patients (id)'));
   static const VerificationMeta _professionalIDMeta =
       const VerificationMeta('professionalID');
   @override
@@ -1347,7 +1345,7 @@ class $LocalClinicHistoryTable extends LocalClinicHistory
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES local_professional (personal_i_d)'));
+          'REFERENCES local_professional (id)'));
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -1814,8 +1812,8 @@ class $LocalPatientCaseTable extends LocalPatientCase
       'patient_id', aliasedName, false,
       type: DriftSqlType.int,
       requiredDuringInsert: true,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES local_patients (id_number)'));
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES local_patients (id)'));
   static const VerificationMeta _professionalIdMeta =
       const VerificationMeta('professionalId');
   @override
@@ -1824,7 +1822,7 @@ class $LocalPatientCaseTable extends LocalPatientCase
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES local_professional (personal_i_d)'));
+          'REFERENCES local_professional (id)'));
   static const VerificationMeta _consultationReasonMeta =
       const VerificationMeta('consultationReason');
   @override
@@ -2217,11 +2215,10 @@ class $LocalSessionsTable extends LocalSessions
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $LocalSessionsTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _sessionIdMeta =
-      const VerificationMeta('sessionId');
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
-  late final GeneratedColumn<int> sessionId = GeneratedColumn<int>(
-      'session_id', aliasedName, false,
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
       hasAutoIncrement: true,
       type: DriftSqlType.int,
       requiredDuringInsert: false,
@@ -2277,8 +2274,8 @@ class $LocalSessionsTable extends LocalSessions
       'id_number', aliasedName, false,
       type: DriftSqlType.int,
       requiredDuringInsert: true,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES local_patients (id_number)'));
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES local_patients (id)'));
   static const VerificationMeta _professionalIDMeta =
       const VerificationMeta('professionalID');
   @override
@@ -2287,10 +2284,10 @@ class $LocalSessionsTable extends LocalSessions
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES local_professional (personal_i_d)'));
+          'REFERENCES local_professional (id)'));
   @override
   List<GeneratedColumn> get $columns => [
-        sessionId,
+        id,
         sessionDate,
         sessionSummary,
         sessionObjectives,
@@ -2310,9 +2307,8 @@ class $LocalSessionsTable extends LocalSessions
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('session_id')) {
-      context.handle(_sessionIdMeta,
-          sessionId.isAcceptableOrUnknown(data['session_id']!, _sessionIdMeta));
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
     if (data.containsKey('session_date')) {
       context.handle(
@@ -2386,13 +2382,13 @@ class $LocalSessionsTable extends LocalSessions
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {sessionId};
+  Set<GeneratedColumn> get $primaryKey => {id};
   @override
   LocalSession map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return LocalSession(
-      sessionId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}session_id'])!,
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       sessionDate: attachedDatabase.typeMapping
           .read(DriftSqlType.dateTime, data['${effectivePrefix}session_date'])!,
       sessionSummary: attachedDatabase.typeMapping.read(
@@ -2423,7 +2419,7 @@ class $LocalSessionsTable extends LocalSessions
 }
 
 class LocalSession extends DataClass implements Insertable<LocalSession> {
-  final int sessionId;
+  final int id;
   final DateTime sessionDate;
   final String sessionSummary;
   final String sessionObjectives;
@@ -2434,7 +2430,7 @@ class LocalSession extends DataClass implements Insertable<LocalSession> {
   final int idNumber;
   final int professionalID;
   const LocalSession(
-      {required this.sessionId,
+      {required this.id,
       required this.sessionDate,
       required this.sessionSummary,
       required this.sessionObjectives,
@@ -2447,7 +2443,7 @@ class LocalSession extends DataClass implements Insertable<LocalSession> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['session_id'] = Variable<int>(sessionId);
+    map['id'] = Variable<int>(id);
     map['session_date'] = Variable<DateTime>(sessionDate);
     map['session_summary'] = Variable<String>(sessionSummary);
     map['session_objectives'] = Variable<String>(sessionObjectives);
@@ -2468,7 +2464,7 @@ class LocalSession extends DataClass implements Insertable<LocalSession> {
 
   LocalSessionsCompanion toCompanion(bool nullToAbsent) {
     return LocalSessionsCompanion(
-      sessionId: Value(sessionId),
+      id: Value(id),
       sessionDate: Value(sessionDate),
       sessionSummary: Value(sessionSummary),
       sessionObjectives: Value(sessionObjectives),
@@ -2490,7 +2486,7 @@ class LocalSession extends DataClass implements Insertable<LocalSession> {
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return LocalSession(
-      sessionId: serializer.fromJson<int>(json['sessionId']),
+      id: serializer.fromJson<int>(json['id']),
       sessionDate: serializer.fromJson<DateTime>(json['sessionDate']),
       sessionSummary: serializer.fromJson<String>(json['sessionSummary']),
       sessionObjectives: serializer.fromJson<String>(json['sessionObjectives']),
@@ -2509,7 +2505,7 @@ class LocalSession extends DataClass implements Insertable<LocalSession> {
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'sessionId': serializer.toJson<int>(sessionId),
+      'id': serializer.toJson<int>(id),
       'sessionDate': serializer.toJson<DateTime>(sessionDate),
       'sessionSummary': serializer.toJson<String>(sessionSummary),
       'sessionObjectives': serializer.toJson<String>(sessionObjectives),
@@ -2525,7 +2521,7 @@ class LocalSession extends DataClass implements Insertable<LocalSession> {
   }
 
   LocalSession copyWith(
-          {int? sessionId,
+          {int? id,
           DateTime? sessionDate,
           String? sessionSummary,
           String? sessionObjectives,
@@ -2536,7 +2532,7 @@ class LocalSession extends DataClass implements Insertable<LocalSession> {
           int? idNumber,
           int? professionalID}) =>
       LocalSession(
-        sessionId: sessionId ?? this.sessionId,
+        id: id ?? this.id,
         sessionDate: sessionDate ?? this.sessionDate,
         sessionSummary: sessionSummary ?? this.sessionSummary,
         sessionObjectives: sessionObjectives ?? this.sessionObjectives,
@@ -2554,7 +2550,7 @@ class LocalSession extends DataClass implements Insertable<LocalSession> {
   @override
   String toString() {
     return (StringBuffer('LocalSession(')
-          ..write('sessionId: $sessionId, ')
+          ..write('id: $id, ')
           ..write('sessionDate: $sessionDate, ')
           ..write('sessionSummary: $sessionSummary, ')
           ..write('sessionObjectives: $sessionObjectives, ')
@@ -2571,7 +2567,7 @@ class LocalSession extends DataClass implements Insertable<LocalSession> {
 
   @override
   int get hashCode => Object.hash(
-      sessionId,
+      id,
       sessionDate,
       sessionSummary,
       sessionObjectives,
@@ -2585,7 +2581,7 @@ class LocalSession extends DataClass implements Insertable<LocalSession> {
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is LocalSession &&
-          other.sessionId == this.sessionId &&
+          other.id == this.id &&
           other.sessionDate == this.sessionDate &&
           other.sessionSummary == this.sessionSummary &&
           other.sessionObjectives == this.sessionObjectives &&
@@ -2599,7 +2595,7 @@ class LocalSession extends DataClass implements Insertable<LocalSession> {
 }
 
 class LocalSessionsCompanion extends UpdateCompanion<LocalSession> {
-  final Value<int> sessionId;
+  final Value<int> id;
   final Value<DateTime> sessionDate;
   final Value<String> sessionSummary;
   final Value<String> sessionObjectives;
@@ -2610,7 +2606,7 @@ class LocalSessionsCompanion extends UpdateCompanion<LocalSession> {
   final Value<int> idNumber;
   final Value<int> professionalID;
   const LocalSessionsCompanion({
-    this.sessionId = const Value.absent(),
+    this.id = const Value.absent(),
     this.sessionDate = const Value.absent(),
     this.sessionSummary = const Value.absent(),
     this.sessionObjectives = const Value.absent(),
@@ -2622,7 +2618,7 @@ class LocalSessionsCompanion extends UpdateCompanion<LocalSession> {
     this.professionalID = const Value.absent(),
   });
   LocalSessionsCompanion.insert({
-    this.sessionId = const Value.absent(),
+    this.id = const Value.absent(),
     required DateTime sessionDate,
     required String sessionSummary,
     required String sessionObjectives,
@@ -2640,7 +2636,7 @@ class LocalSessionsCompanion extends UpdateCompanion<LocalSession> {
         idNumber = Value(idNumber),
         professionalID = Value(professionalID);
   static Insertable<LocalSession> custom({
-    Expression<int>? sessionId,
+    Expression<int>? id,
     Expression<DateTime>? sessionDate,
     Expression<String>? sessionSummary,
     Expression<String>? sessionObjectives,
@@ -2652,7 +2648,7 @@ class LocalSessionsCompanion extends UpdateCompanion<LocalSession> {
     Expression<int>? professionalID,
   }) {
     return RawValuesInsertable({
-      if (sessionId != null) 'session_id': sessionId,
+      if (id != null) 'id': id,
       if (sessionDate != null) 'session_date': sessionDate,
       if (sessionSummary != null) 'session_summary': sessionSummary,
       if (sessionObjectives != null) 'session_objectives': sessionObjectives,
@@ -2668,7 +2664,7 @@ class LocalSessionsCompanion extends UpdateCompanion<LocalSession> {
   }
 
   LocalSessionsCompanion copyWith(
-      {Value<int>? sessionId,
+      {Value<int>? id,
       Value<DateTime>? sessionDate,
       Value<String>? sessionSummary,
       Value<String>? sessionObjectives,
@@ -2679,7 +2675,7 @@ class LocalSessionsCompanion extends UpdateCompanion<LocalSession> {
       Value<int>? idNumber,
       Value<int>? professionalID}) {
     return LocalSessionsCompanion(
-      sessionId: sessionId ?? this.sessionId,
+      id: id ?? this.id,
       sessionDate: sessionDate ?? this.sessionDate,
       sessionSummary: sessionSummary ?? this.sessionSummary,
       sessionObjectives: sessionObjectives ?? this.sessionObjectives,
@@ -2697,8 +2693,8 @@ class LocalSessionsCompanion extends UpdateCompanion<LocalSession> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (sessionId.present) {
-      map['session_id'] = Variable<int>(sessionId.value);
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
     }
     if (sessionDate.present) {
       map['session_date'] = Variable<DateTime>(sessionDate.value);
@@ -2735,7 +2731,7 @@ class LocalSessionsCompanion extends UpdateCompanion<LocalSession> {
   @override
   String toString() {
     return (StringBuffer('LocalSessionsCompanion(')
-          ..write('sessionId: $sessionId, ')
+          ..write('id: $id, ')
           ..write('sessionDate: $sessionDate, ')
           ..write('sessionSummary: $sessionSummary, ')
           ..write('sessionObjectives: $sessionObjectives, ')
@@ -2779,8 +2775,8 @@ class $LocalTestsTable extends LocalTests
       'patient_i_d', aliasedName, false,
       type: DriftSqlType.int,
       requiredDuringInsert: true,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES local_patients (id_number)'));
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES local_patients (id)'));
   static const VerificationMeta _professionalIDMeta =
       const VerificationMeta('professionalID');
   @override
@@ -2789,7 +2785,7 @@ class $LocalTestsTable extends LocalTests
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES local_professional (personal_i_d)'));
+          'REFERENCES local_professional (id)'));
   static const VerificationMeta _sessionIDMeta =
       const VerificationMeta('sessionID');
   @override
@@ -2797,8 +2793,8 @@ class $LocalTestsTable extends LocalTests
       'session_i_d', aliasedName, false,
       type: DriftSqlType.int,
       requiredDuringInsert: true,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES local_sessions (session_id)'));
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES local_sessions (id)'));
   static const VerificationMeta _testReasonMeta =
       const VerificationMeta('testReason');
   @override
@@ -3575,7 +3571,7 @@ class $LocalAppointmentsTable extends LocalAppointments
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES local_professional (personal_i_d)'));
+          'REFERENCES local_professional (id)'));
   static const VerificationMeta _patientIDMeta =
       const VerificationMeta('patientID');
   @override
@@ -3583,8 +3579,8 @@ class $LocalAppointmentsTable extends LocalAppointments
       'patient_i_d', aliasedName, false,
       type: DriftSqlType.int,
       requiredDuringInsert: true,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES local_patients (id_number)'));
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES local_patients (id)'));
   static const VerificationMeta _descriptionMeta =
       const VerificationMeta('description');
   @override
@@ -3969,7 +3965,7 @@ class $LocalTreatmentPlansTable extends LocalTreatmentPlans
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES local_professional (personal_i_d)'));
+          'REFERENCES local_professional (id)'));
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -4305,8 +4301,8 @@ class $LocaltreatmentResultsTable extends LocaltreatmentResults
       'patient_i_d', aliasedName, false,
       type: DriftSqlType.int,
       requiredDuringInsert: true,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES local_patients (id_number)'));
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES local_patients (id)'));
   static const VerificationMeta _professionalIDMeta =
       const VerificationMeta('professionalID');
   @override
@@ -4315,7 +4311,7 @@ class $LocaltreatmentResultsTable extends LocaltreatmentResults
       type: DriftSqlType.int,
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES local_professional (personal_i_d)'));
+          'REFERENCES local_professional (id)'));
   static const VerificationMeta _treatmentPlanIDMeta =
       const VerificationMeta('treatmentPlanID');
   @override
@@ -4708,8 +4704,8 @@ class $LocalPatientTreatmentPlansTable extends LocalPatientTreatmentPlans
       'patient_id', aliasedName, false,
       type: DriftSqlType.int,
       requiredDuringInsert: true,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES local_patients (id_number)'));
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES local_patients (id)'));
   static const VerificationMeta _treatmentPlanIdMeta =
       const VerificationMeta('treatmentPlanId');
   @override
