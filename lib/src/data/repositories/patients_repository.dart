@@ -77,4 +77,16 @@ class PatientsRepository implements PatientsRepositoryInterface {
           caseNotes);
     }
   }
+
+  @override
+  void addPatientTreatmentPlan(WidgetRef ref, int treatmentPlanId,
+      int patientId, DateTime creationDate, bool isOffline) {
+    if (isOffline) {
+      ref.read(localDatabaseRepositoryProvider).insertPatientTreatmentPlan(
+            treatmentPlanId,
+            patientId,
+            creationDate,
+          );
+    }
+  }
 }

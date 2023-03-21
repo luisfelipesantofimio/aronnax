@@ -24,6 +24,14 @@ abstract class PatientsRepositoryInterface {
     bool newState,
     bool isOffline,
   );
+
+  void addPatientTreatmentPlan(
+    WidgetRef ref,
+    int treatmentPlanId,
+    int patientId,
+    DateTime creationDate,
+    bool isOffline,
+  );
 }
 
 final patientsRepositoryProvider = Provider<PatientsRepositoryInterface>(
