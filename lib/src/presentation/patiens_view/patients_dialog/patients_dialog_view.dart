@@ -1,8 +1,10 @@
 import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
+import 'package:aronnax/src/data/providers/clinic_history_data_provider.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/patients_provider.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:aronnax/src/presentation/case_creation_view/case_creation_dialog.dart';
+import 'package:aronnax/src/presentation/clinic_history_form_screen/clinic_history_register_view.dart';
 import 'package:aronnax/src/presentation/core/methods.dart';
 import 'package:aronnax/src/presentation/widgets/patient_dialog_text_body.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +23,10 @@ class PatientsDialogView extends ConsumerStatefulWidget {
 class _PatientsDialogViewState extends ConsumerState<PatientsDialogView> {
   @override
   Widget build(BuildContext context) {
+    final clinicHistoryList = ref.watch(
+      clinicHistoryListByIdProvider(widget.patientData.id),
+    );
+
     return Dialog(
       child: SizedBox(
         height: MediaQuery.of(context).size.height * 0.5,
@@ -148,28 +154,54 @@ class _PatientsDialogViewState extends ConsumerState<PatientsDialogView> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TextButton(
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) => CaseCreationDialog(
-                                  patientData: widget.patientData),
-                            );
-                          },
-                          child: const Text(
-                            'Create new case',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                          ),
+                        clinicHistoryList.when(
+                          data: (data) => data.isEmpty
+                              ? TextButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            ClinicHistoryRegisterView(
+                                                patientData:
+                                                    widget.patientData),
+                                      ),
+                                    );
+                                  },
+                                  child: const Text(
+                                    'Create clinic history',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                )
+                              : TextButton(
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => CaseCreationDialog(
+                                          patientData: widget.patientData),
+                                    );
+                                  },
+                                  child: const Text(
+                                    'Create new case',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                          error: (error, stackTrace) =>
+                              Text('There was an error'),
+                          loading: () => CircularProgressIndicator(),
                         ),
                         TextButton(
                           onPressed: () {
                             //TODO: validate to create a clinic history if the user does not have
                           },
                           child: const Text(
-                            'Go to current case information',
+                            'Go to current patient information',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.black,

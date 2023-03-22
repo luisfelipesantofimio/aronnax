@@ -1,3 +1,5 @@
+import 'package:aronnax/src/data/interfaces/clinic_history_repository_interface.dart';
+import 'package:aronnax/src/domain/entities/clinic_history.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 //Patient data for clinic history
@@ -95,4 +97,19 @@ final currentDiagnostic = StateProvider<String>(
 );
 final professionalID = StateProvider<int>(
   (ref) => 0,
+);
+
+// Clinic history data providers
+final clinicHistoryListByIdProvider =
+    FutureProvider.family.autoDispose<List<ClinicHistory>, int>(
+  (ref, patientId) => ref
+      .read(clinicHistoryRepositoryProvider)
+      .getClinicHistoryListById(ref, patientId),
+);
+
+final clinicHistoryByIdProvider =
+    FutureProvider.family.autoDispose<ClinicHistory?, int>(
+  (ref, patientId) => ref
+      .read(clinicHistoryRepositoryProvider)
+      .getPatientClinicHistory(ref, patientId),
 );

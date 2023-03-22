@@ -44,7 +44,7 @@ class ClinicHistoryRepository implements ClinicHistoryRepositoryInterface {
 
   @override
   Future<List<ClinicHistory>> getClinicHistoryListById(
-      WidgetRef ref, int patientId) async {
+      Ref ref, int patientId) async {
     if (ref.read(offlineStatusProvider).value!) {
       List<LocalClinicHistoryData> localClinicHistories = await ref
           .read(localDatabaseRepositoryProvider)
@@ -58,8 +58,7 @@ class ClinicHistoryRepository implements ClinicHistoryRepositoryInterface {
   }
 
   @override
-  Future<ClinicHistory> getPatientClinicHistory(
-      WidgetRef ref, int patientId) async {
+  Future<ClinicHistory> getPatientClinicHistory(Ref ref, int patientId) async {
     return ClinicHistory.fromLocalModel(
       await ref
           .read(localDatabaseRepositoryProvider)
