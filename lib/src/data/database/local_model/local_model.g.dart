@@ -1847,6 +1847,18 @@ class $LocalPatientCaseTable extends LocalPatientCase
   late final GeneratedColumn<String> caseNotes = GeneratedColumn<String>(
       'case_notes', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _isActiveMeta =
+      const VerificationMeta('isActive');
+  @override
+  late final GeneratedColumn<bool> isActive =
+      GeneratedColumn<bool>('is_active', aliasedName, false,
+          type: DriftSqlType.bool,
+          requiredDuringInsert: true,
+          defaultConstraints: GeneratedColumn.constraintsDependsOnDialect({
+            SqlDialect.sqlite: 'CHECK ("is_active" IN (0, 1))',
+            SqlDialect.mysql: '',
+            SqlDialect.postgres: '',
+          }));
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -1856,7 +1868,8 @@ class $LocalPatientCaseTable extends LocalPatientCase
         consultationReason,
         diagnostic,
         treatmentProposal,
-        caseNotes
+        caseNotes,
+        isActive
       ];
   @override
   String get aliasedName => _alias ?? 'local_patient_case';
@@ -1921,6 +1934,12 @@ class $LocalPatientCaseTable extends LocalPatientCase
       context.handle(_caseNotesMeta,
           caseNotes.isAcceptableOrUnknown(data['case_notes']!, _caseNotesMeta));
     }
+    if (data.containsKey('is_active')) {
+      context.handle(_isActiveMeta,
+          isActive.isAcceptableOrUnknown(data['is_active']!, _isActiveMeta));
+    } else if (isInserting) {
+      context.missing(_isActiveMeta);
+    }
     return context;
   }
 
@@ -1946,6 +1965,8 @@ class $LocalPatientCaseTable extends LocalPatientCase
           DriftSqlType.string, data['${effectivePrefix}treatment_proposal'])!,
       caseNotes: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}case_notes']),
+      isActive: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_active'])!,
     );
   }
 
@@ -1965,6 +1986,7 @@ class LocalPatientCaseData extends DataClass
   final String diagnostic;
   final String treatmentProposal;
   final String? caseNotes;
+  final bool isActive;
   const LocalPatientCaseData(
       {required this.id,
       required this.creationDate,
@@ -1973,7 +1995,8 @@ class LocalPatientCaseData extends DataClass
       required this.consultationReason,
       required this.diagnostic,
       required this.treatmentProposal,
-      this.caseNotes});
+      this.caseNotes,
+      required this.isActive});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -1987,6 +2010,7 @@ class LocalPatientCaseData extends DataClass
     if (!nullToAbsent || caseNotes != null) {
       map['case_notes'] = Variable<String>(caseNotes);
     }
+    map['is_active'] = Variable<bool>(isActive);
     return map;
   }
 
@@ -2002,6 +2026,7 @@ class LocalPatientCaseData extends DataClass
       caseNotes: caseNotes == null && nullToAbsent
           ? const Value.absent()
           : Value(caseNotes),
+      isActive: Value(isActive),
     );
   }
 
@@ -2018,6 +2043,7 @@ class LocalPatientCaseData extends DataClass
       diagnostic: serializer.fromJson<String>(json['diagnostic']),
       treatmentProposal: serializer.fromJson<String>(json['treatmentProposal']),
       caseNotes: serializer.fromJson<String?>(json['caseNotes']),
+      isActive: serializer.fromJson<bool>(json['isActive']),
     );
   }
   @override
@@ -2032,6 +2058,7 @@ class LocalPatientCaseData extends DataClass
       'diagnostic': serializer.toJson<String>(diagnostic),
       'treatmentProposal': serializer.toJson<String>(treatmentProposal),
       'caseNotes': serializer.toJson<String?>(caseNotes),
+      'isActive': serializer.toJson<bool>(isActive),
     };
   }
 
@@ -2043,7 +2070,8 @@ class LocalPatientCaseData extends DataClass
           String? consultationReason,
           String? diagnostic,
           String? treatmentProposal,
-          Value<String?> caseNotes = const Value.absent()}) =>
+          Value<String?> caseNotes = const Value.absent(),
+          bool? isActive}) =>
       LocalPatientCaseData(
         id: id ?? this.id,
         creationDate: creationDate ?? this.creationDate,
@@ -2053,6 +2081,7 @@ class LocalPatientCaseData extends DataClass
         diagnostic: diagnostic ?? this.diagnostic,
         treatmentProposal: treatmentProposal ?? this.treatmentProposal,
         caseNotes: caseNotes.present ? caseNotes.value : this.caseNotes,
+        isActive: isActive ?? this.isActive,
       );
   @override
   String toString() {
@@ -2064,14 +2093,15 @@ class LocalPatientCaseData extends DataClass
           ..write('consultationReason: $consultationReason, ')
           ..write('diagnostic: $diagnostic, ')
           ..write('treatmentProposal: $treatmentProposal, ')
-          ..write('caseNotes: $caseNotes')
+          ..write('caseNotes: $caseNotes, ')
+          ..write('isActive: $isActive')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode => Object.hash(id, creationDate, patientId, professionalId,
-      consultationReason, diagnostic, treatmentProposal, caseNotes);
+      consultationReason, diagnostic, treatmentProposal, caseNotes, isActive);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -2083,7 +2113,8 @@ class LocalPatientCaseData extends DataClass
           other.consultationReason == this.consultationReason &&
           other.diagnostic == this.diagnostic &&
           other.treatmentProposal == this.treatmentProposal &&
-          other.caseNotes == this.caseNotes);
+          other.caseNotes == this.caseNotes &&
+          other.isActive == this.isActive);
 }
 
 class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
@@ -2095,6 +2126,7 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
   final Value<String> diagnostic;
   final Value<String> treatmentProposal;
   final Value<String?> caseNotes;
+  final Value<bool> isActive;
   const LocalPatientCaseCompanion({
     this.id = const Value.absent(),
     this.creationDate = const Value.absent(),
@@ -2104,6 +2136,7 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
     this.diagnostic = const Value.absent(),
     this.treatmentProposal = const Value.absent(),
     this.caseNotes = const Value.absent(),
+    this.isActive = const Value.absent(),
   });
   LocalPatientCaseCompanion.insert({
     this.id = const Value.absent(),
@@ -2114,12 +2147,14 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
     required String diagnostic,
     required String treatmentProposal,
     this.caseNotes = const Value.absent(),
+    required bool isActive,
   })  : creationDate = Value(creationDate),
         patientId = Value(patientId),
         professionalId = Value(professionalId),
         consultationReason = Value(consultationReason),
         diagnostic = Value(diagnostic),
-        treatmentProposal = Value(treatmentProposal);
+        treatmentProposal = Value(treatmentProposal),
+        isActive = Value(isActive);
   static Insertable<LocalPatientCaseData> custom({
     Expression<int>? id,
     Expression<DateTime>? creationDate,
@@ -2129,6 +2164,7 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
     Expression<String>? diagnostic,
     Expression<String>? treatmentProposal,
     Expression<String>? caseNotes,
+    Expression<bool>? isActive,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -2139,6 +2175,7 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
       if (diagnostic != null) 'diagnostic': diagnostic,
       if (treatmentProposal != null) 'treatment_proposal': treatmentProposal,
       if (caseNotes != null) 'case_notes': caseNotes,
+      if (isActive != null) 'is_active': isActive,
     });
   }
 
@@ -2150,7 +2187,8 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
       Value<String>? consultationReason,
       Value<String>? diagnostic,
       Value<String>? treatmentProposal,
-      Value<String?>? caseNotes}) {
+      Value<String?>? caseNotes,
+      Value<bool>? isActive}) {
     return LocalPatientCaseCompanion(
       id: id ?? this.id,
       creationDate: creationDate ?? this.creationDate,
@@ -2160,6 +2198,7 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
       diagnostic: diagnostic ?? this.diagnostic,
       treatmentProposal: treatmentProposal ?? this.treatmentProposal,
       caseNotes: caseNotes ?? this.caseNotes,
+      isActive: isActive ?? this.isActive,
     );
   }
 
@@ -2190,6 +2229,9 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
     if (caseNotes.present) {
       map['case_notes'] = Variable<String>(caseNotes.value);
     }
+    if (isActive.present) {
+      map['is_active'] = Variable<bool>(isActive.value);
+    }
     return map;
   }
 
@@ -2203,7 +2245,8 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
           ..write('consultationReason: $consultationReason, ')
           ..write('diagnostic: $diagnostic, ')
           ..write('treatmentProposal: $treatmentProposal, ')
-          ..write('caseNotes: $caseNotes')
+          ..write('caseNotes: $caseNotes, ')
+          ..write('isActive: $isActive')
           ..write(')'))
         .toString();
   }

@@ -47,6 +47,7 @@ class LocalPatientCase extends Table {
   TextColumn get diagnostic => text()();
   TextColumn get treatmentProposal => text()();
   TextColumn get caseNotes => text().nullable()();
+  BoolColumn get isActive => boolean()();
 }
 
 class LocalSessions extends Table {

@@ -45,6 +45,10 @@ abstract class LocalDatabaseInteface {
     int idNumber,
     int professionalID,
     DateTime sessionDate,
+    String sessionNotes,
+    String sessionPerformance,
+    String sessionPerformanceExplanation,
+    int caseId,
   );
 
   void addLocalProfessional(int personalID, String names, String lastNames,
@@ -142,6 +146,10 @@ abstract class LocalDatabaseInteface {
     DateTime creationDate,
   );
   Future<List<LocalPatientCaseData>> getPatientCaseList(int patientId);
+  Future<List<LocalPatientCaseData>> getFilteredPatientCaseList(int patientId);
+  Future<List<LocalPatientCaseData>> getPatientCasesList(int patientId);
+  Future<LocalPatientCaseData> getSinglePatientCase(int patientId);
+
   void insertPatientCase(
       DateTime creationDate,
       int patientId,

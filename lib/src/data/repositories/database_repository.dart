@@ -89,6 +89,10 @@ class DatabaseRepository implements LocalDatabaseInteface {
     int idNumber,
     int professionalID,
     DateTime sessionDate,
+    String sessionNotes,
+    String sessionPerformance,
+    String sessionPerformanceExplanation,
+    int caseId,
   ) async {
     final entity = LocalSessionsCompanion(
       idNumber: Value(idNumber),
@@ -97,6 +101,10 @@ class DatabaseRepository implements LocalDatabaseInteface {
       sessionObjectives: Value(sessionObjectives),
       sessionSummary: Value(sessionSummary),
       therapeuticArchievements: Value(therapeuticArchievements),
+      sessionNotes: Value(sessionNotes),
+      sessionPerformance: Value(sessionPerformance),
+      sessionPerformanceExplanation: Value(sessionPerformanceExplanation),
+      caseId: Value(caseId),
     );
     await localDB.insertSession(entity);
   }
@@ -387,6 +395,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
       diagnostic: Value(diagnostic),
       treatmentProposal: Value(treatmentProposal),
       caseNotes: Value(caseNotes),
+      isActive: const Value(true),
     );
     localDB.insertPatientCase(data);
   }
@@ -419,5 +428,20 @@ class DatabaseRepository implements LocalDatabaseInteface {
   @override
   Future<LocalClinicHistoryData> getSingleClinicHistoryById(int patientId) {
     return localDB.getSingleClinicHistory(patientId);
+  }
+
+  @override
+  Future<List<LocalPatientCaseData>> getFilteredPatientCaseList(int patientId) {
+    return localDB.getFilteredPatientCases(patientId);
+  }
+
+  @override
+  Future<LocalPatientCaseData> getSinglePatientCase(int patientId) {
+    return localDB.getSinglePatientCase(patientId);
+  }
+
+  @override
+  Future<List<LocalPatientCaseData>> getPatientCasesList(int patientId) {
+    return localDB.getPatientCases(patientId);
   }
 }

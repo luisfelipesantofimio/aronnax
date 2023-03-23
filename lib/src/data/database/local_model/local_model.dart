@@ -152,6 +152,24 @@ class LocalDatabase extends _$LocalDatabase {
         .get();
   }
 
+  Future<List<LocalPatientCaseData>> getFilteredPatientCases(int patientId) {
+    return (select(localPatientCase)
+          ..where(
+            (tbl) =>
+                tbl.patientId.equals(patientId) & tbl.isActive.equals(true),
+          ))
+        .get();
+  }
+
+  Future<LocalPatientCaseData> getSinglePatientCase(int patientId) {
+    return (select(localPatientCase)
+          ..where(
+            (tbl) =>
+                tbl.patientId.equals(patientId) & tbl.isActive.equals(true),
+          ))
+        .getSingle();
+  }
+
   Future<List<LocalProfessionalData>> getProfessionalsList() {
     return (select(localProfessional)).get();
   }
@@ -251,6 +269,18 @@ class LocalDatabase extends _$LocalDatabase {
         .write(
       LocalPatientsCompanion(
         isActive: Value(newState),
+      ),
+    );
+  }
+
+  Future disActivatePatientCases(int caseId) {
+    return (update(localPatientCase)
+          ..where(
+            (tbl) => tbl.id.equals(caseId),
+          ))
+        .write(
+      const LocalPatientCaseCompanion(
+        isActive: Value(false),
       ),
     );
   }
