@@ -153,32 +153,31 @@ class _PatientsDialogViewState extends ConsumerState<PatientsDialogView> {
                         ),
                       ],
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        clinicHistoryList.when(
-                          data: (data) => data.isEmpty
-                              ? TextButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            ClinicHistoryRegisterView(
-                                                patientData:
-                                                    widget.patientData),
-                                      ),
-                                    );
-                                  },
-                                  child: const Text(
-                                    'Create clinic history',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
+                    clinicHistoryList.when(
+                      data: (data) => data.isEmpty
+                          ? TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        ClinicHistoryRegisterView(
+                                            patientData: widget.patientData),
                                   ),
-                                )
-                              : TextButton(
+                                );
+                              },
+                              child: const Text(
+                                'Create clinic history',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            )
+                          : Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TextButton(
                                   onPressed: () {
                                     showDialog(
                                       context: context,
@@ -195,29 +194,32 @@ class _PatientsDialogViewState extends ConsumerState<PatientsDialogView> {
                                     ),
                                   ),
                                 ),
-                          error: (error, stackTrace) =>
-                              const Text('There was an error'),
-                          loading: () => const CircularProgressIndicator(),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => PatientCaseView(
-                                    patiendData: widget.patientData),
-                              ),
-                            );
-                          },
-                          child: const Text(
-                            'Go to current patient information',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                                Visibility(
+                                  visible: data.isNotEmpty,
+                                  child: TextButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => PatientCaseView(
+                                              patiendData: widget.patientData),
+                                        ),
+                                      );
+                                    },
+                                    child: const Text(
+                                      'Go to current patient information',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ),
-                      ],
+                      error: (error, stackTrace) =>
+                          const Text('There was an error'),
+                      loading: () => const CircularProgressIndicator(),
                     ),
                   ],
                 ),
