@@ -136,7 +136,6 @@ class _CaseCreationDialogState extends ConsumerState<CaseCreationDialog> {
                       ),
                     );
                     Navigator.pop(context);
-                    Navigator.pop(context);
                   }
                 },
               )

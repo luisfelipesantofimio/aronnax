@@ -1,11 +1,13 @@
 import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
 import 'package:aronnax/src/data/providers/clinic_history_data_provider.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
+import 'package:aronnax/src/data/providers/patient_case_providers.dart';
 import 'package:aronnax/src/data/providers/patients_provider.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:aronnax/src/presentation/case_creation_view/case_creation_dialog.dart';
 import 'package:aronnax/src/presentation/clinic_history_form_screen/clinic_history_register_view.dart';
 import 'package:aronnax/src/presentation/core/methods.dart';
+import 'package:aronnax/src/presentation/patient_case_view/patient_case_view.dart';
 import 'package:aronnax/src/presentation/widgets/patient_dialog_text_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -183,6 +185,7 @@ class _PatientsDialogViewState extends ConsumerState<PatientsDialogView> {
                                       builder: (context) => CaseCreationDialog(
                                           patientData: widget.patientData),
                                     );
+                                    ref.invalidate(patientCaseListProvider);
                                   },
                                   child: const Text(
                                     'Create new case',
@@ -193,12 +196,18 @@ class _PatientsDialogViewState extends ConsumerState<PatientsDialogView> {
                                   ),
                                 ),
                           error: (error, stackTrace) =>
-                              Text('There was an error'),
-                          loading: () => CircularProgressIndicator(),
+                              const Text('There was an error'),
+                          loading: () => const CircularProgressIndicator(),
                         ),
                         TextButton(
                           onPressed: () {
-                            //TODO: validate to create a clinic history if the user does not have
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PatientCaseView(
+                                    patiendData: widget.patientData),
+                              ),
+                            );
                           },
                           child: const Text(
                             'Go to current patient information',
