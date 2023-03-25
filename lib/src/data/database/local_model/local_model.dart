@@ -273,7 +273,7 @@ class LocalDatabase extends _$LocalDatabase {
     );
   }
 
-  Future disActivatePatientCases(int caseId) {
+  Future disactivatePatientCases(int caseId) {
     return (update(localPatientCase)
           ..where(
             (tbl) => tbl.id.equals(caseId),
@@ -281,6 +281,18 @@ class LocalDatabase extends _$LocalDatabase {
         .write(
       const LocalPatientCaseCompanion(
         isActive: Value(false),
+      ),
+    );
+  }
+
+  Future activatePatientCases(int caseId) {
+    return (update(localPatientCase)
+          ..where(
+            (tbl) => tbl.id.equals(caseId),
+          ))
+        .write(
+      const LocalPatientCaseCompanion(
+        isActive: Value(true),
       ),
     );
   }

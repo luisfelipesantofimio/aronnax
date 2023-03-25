@@ -374,11 +374,6 @@ class DatabaseRepository implements LocalDatabaseInteface {
   }
 
   @override
-  Future<List<LocalPatientCaseData>> getPatientCaseList(int patientId) {
-    return localDB.getPatientCases(patientId);
-  }
-
-  @override
   void insertPatientCase(
       DateTime creationDate,
       int patientId,
@@ -395,7 +390,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
       diagnostic: Value(diagnostic),
       treatmentProposal: Value(treatmentProposal),
       caseNotes: Value(caseNotes),
-      isActive: const Value(true),
+      isActive: const Value(false),
     );
     localDB.insertPatientCase(data);
   }
@@ -431,11 +426,6 @@ class DatabaseRepository implements LocalDatabaseInteface {
   }
 
   @override
-  Future<List<LocalPatientCaseData>> getFilteredPatientCaseList(int patientId) {
-    return localDB.getFilteredPatientCases(patientId);
-  }
-
-  @override
   Future<LocalPatientCaseData> getSinglePatientCase(int patientId) {
     return localDB.getSinglePatientCase(patientId);
   }
@@ -443,5 +433,15 @@ class DatabaseRepository implements LocalDatabaseInteface {
   @override
   Future<List<LocalPatientCaseData>> getPatientCasesList(int patientId) {
     return localDB.getPatientCases(patientId);
+  }
+
+  @override
+  void disactivatePatientCases(int caseId) {
+    localDB.disactivatePatientCases(caseId);
+  }
+
+  @override
+  void activatePatientCase(int caseId) {
+    localDB.activatePatientCases(caseId);
   }
 }

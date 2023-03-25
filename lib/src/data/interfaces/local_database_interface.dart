@@ -145,8 +145,7 @@ abstract class LocalDatabaseInteface {
     int patientId,
     DateTime creationDate,
   );
-  Future<List<LocalPatientCaseData>> getPatientCaseList(int patientId);
-  Future<List<LocalPatientCaseData>> getFilteredPatientCaseList(int patientId);
+
   Future<List<LocalPatientCaseData>> getPatientCasesList(int patientId);
   Future<LocalPatientCaseData> getSinglePatientCase(int patientId);
 
@@ -165,6 +164,8 @@ abstract class LocalDatabaseInteface {
   void deletePatientTreatmentPlan(int treatmentId);
   Future<List<LocalClinicHistoryData>> getClinicHistoryListById(int patientId);
   Future<LocalClinicHistoryData> getSingleClinicHistoryById(int patientId);
+  void disactivatePatientCases(int caseId);
+  void activatePatientCase(int caseId);
 }
 
 final localDatabaseRepositoryProvider = Provider<LocalDatabaseInteface>(
