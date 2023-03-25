@@ -15,7 +15,7 @@ class PatientCaseView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
+          SizedBox(
             width: MediaQuery.of(context).size.width * 0.1,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -44,7 +44,7 @@ class PatientCaseView extends StatelessWidget {
               )
             ],
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.all(20),
           ),
           SizedBox(

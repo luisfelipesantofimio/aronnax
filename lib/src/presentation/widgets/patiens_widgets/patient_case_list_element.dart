@@ -1,8 +1,6 @@
-import 'dart:developer';
 
 import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
 import 'package:aronnax/src/data/providers/patient_case_providers.dart';
-import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:aronnax/src/domain/entities/patient_case.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -73,7 +71,7 @@ class PatientCaseListElement extends ConsumerWidget {
                           IconButton(
                             tooltip: 'Delete case',
                             onPressed: () {},
-                            icon: Icon(Icons.delete),
+                            icon: const Icon(Icons.delete),
                           ),
                         ],
                       ),
