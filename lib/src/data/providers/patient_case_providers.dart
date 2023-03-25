@@ -7,9 +7,3 @@ final patientCaseListProvider =
   (ref, patientId) =>
       ref.read(patientsRepositoryProvider).getPatientCaseList(ref, patientId),
 );
-
-final patientSingleCaseProvider =
-    FutureProvider.family.autoDispose<PatientCase, int>(
-  (ref, patientId) =>
-      ref.read(patientsRepositoryProvider).getPatientActiveCase(ref, patientId),
-);
