@@ -1,5 +1,6 @@
 import 'package:aronnax/src/data/repositories/patients_repository.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
+import 'package:aronnax/src/domain/entities/patient_case.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class PatientsRepositoryInterface {
@@ -53,6 +54,11 @@ abstract class PatientsRepositoryInterface {
   );
 
   Future<List<Patient>> getPatient(WidgetRef ref, int idNumber);
+
+  Future<List<PatientCase>> getPatientCaseList(Ref ref, int patientId);
+  Future<PatientCase> getPatientActiveCase(Ref ref, int patientId);
+  void updatePatientCaseActiveState(
+      WidgetRef ref, int patientId, int caseId, bool currentCaseState);
 }
 
 final patientsRepositoryProvider = Provider<PatientsRepositoryInterface>(

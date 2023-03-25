@@ -3,6 +3,7 @@ import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
+import 'package:aronnax/src/domain/entities/patient_case.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PatientsRepository implements PatientsRepositoryInterface {
@@ -149,6 +150,52 @@ class PatientsRepository implements PatientsRepositoryInterface {
       return patientsList.map((e) => Patient.fromLocalModel(e)).toList();
     } else {
       return [];
+    }
+  }
+
+  @override
+  Future<PatientCase> getPatientActiveCase(Ref ref, int patientId) async {
+    //if (ref.read(offlineStatusProvider).value!) {
+    LocalPatientCaseData localCase = await ref
+        .read(localDatabaseRepositoryProvider)
+        .getSinglePatientCase(patientId);
+    return PatientCase.fromLocalModel(localCase);
+    // }else{
+    //   return ?
+    // }
+  }
+
+  @override
+  Future<List<PatientCase>> getPatientCaseList(Ref ref, int patientId) async {
+    if (ref.read(offlineStatusProvider).value!) {
+      List<LocalPatientCaseData> localCasesList = await ref
+          .read(localDatabaseRepositoryProvider)
+          .getPatientCasesList(patientId);
+      return localCasesList.map((e) => PatientCase.fromLocalModel(e)).toList();
+    } else {
+      return [];
+    }
+  }
+
+  @override
+  void updatePatientCaseActiveState(
+      WidgetRef ref, int patientId, int caseId, bool currentCaseState) async {
+    if (ref.read(offlineStatusProvider).value!) {
+      List<LocalPatientCaseData> localCasesList = await ref
+          .read(localDatabaseRepositoryProvider)
+          .getPatientCasesList(patientId);
+      if (currentCaseState) {
+        ref.read(localDatabaseRepositoryProvider).disactivatePatientCases(
+              caseId,
+            );
+      } else {
+        for (var element in localCasesList) {
+          ref
+              .read(localDatabaseRepositoryProvider)
+              .disactivatePatientCases(element.id);
+          ref.read(localDatabaseRepositoryProvider).activatePatientCase(caseId);
+        }
+      }
     }
   }
 }
