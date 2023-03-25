@@ -147,7 +147,7 @@ abstract class LocalDatabaseInteface {
   );
 
   Future<List<LocalPatientCaseData>> getPatientCasesList(int patientId);
-  Future<LocalPatientCaseData> getSinglePatientCase(int patientId);
+  Future<LocalPatientCaseData?> getSinglePatientCase(int patientId);
 
   void insertPatientCase(
       DateTime creationDate,

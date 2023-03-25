@@ -161,13 +161,13 @@ class LocalDatabase extends _$LocalDatabase {
         .get();
   }
 
-  Future<LocalPatientCaseData> getSinglePatientCase(int patientId) {
+  Future<LocalPatientCaseData?> getSinglePatientCase(int patientId) {
     return (select(localPatientCase)
           ..where(
             (tbl) =>
                 tbl.patientId.equals(patientId) & tbl.isActive.equals(true),
           ))
-        .getSingle();
+        .getSingleOrNull();
   }
 
   Future<List<LocalProfessionalData>> getProfessionalsList() {

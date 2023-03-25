@@ -426,7 +426,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
   }
 
   @override
-  Future<LocalPatientCaseData> getSinglePatientCase(int patientId) {
+  Future<LocalPatientCaseData?> getSinglePatientCase(int patientId) {
     return localDB.getSinglePatientCase(patientId);
   }
 
