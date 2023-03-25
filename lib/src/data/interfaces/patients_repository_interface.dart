@@ -56,7 +56,7 @@ abstract class PatientsRepositoryInterface {
   Future<List<Patient>> getPatient(WidgetRef ref, int idNumber);
 
   Future<List<PatientCase>> getPatientCaseList(Ref ref, int patientId);
-  Future<PatientCase> getPatientActiveCase(Ref ref, int patientId);
+  Future<PatientCase?> getPatientActiveCase(WidgetRef ref, int patientId);
   void updatePatientCaseActiveState(
       WidgetRef ref, int patientId, int caseId, bool currentCaseState);
 }

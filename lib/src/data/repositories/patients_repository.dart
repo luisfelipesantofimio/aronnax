@@ -154,12 +154,17 @@ class PatientsRepository implements PatientsRepositoryInterface {
   }
 
   @override
-  Future<PatientCase> getPatientActiveCase(Ref ref, int patientId) async {
+  Future<PatientCase?> getPatientActiveCase(
+      WidgetRef ref, int patientId) async {
     //if (ref.read(offlineStatusProvider).value!) {
-    LocalPatientCaseData localCase = await ref
+    LocalPatientCaseData? localCase = await ref
         .read(localDatabaseRepositoryProvider)
         .getSinglePatientCase(patientId);
-    return PatientCase.fromLocalModel(localCase);
+    if (localCase == null) {
+      return null;
+    } else {
+      return PatientCase.fromLocalModel(localCase);
+    }
     // }else{
     //   return ?
     // }
