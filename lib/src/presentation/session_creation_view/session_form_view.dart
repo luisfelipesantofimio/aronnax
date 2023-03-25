@@ -1,4 +1,5 @@
 import 'package:aronnax/src/domain/entities/patient.dart';
+import 'package:aronnax/src/domain/entities/patient_case.dart';
 import 'package:aronnax/src/presentation/widgets/note_creation_dialog.dart';
 import 'package:aronnax/src/presentation/session_creation_view/session_form.dart';
 import 'package:aronnax/src/presentation/core/controllers.dart';
@@ -15,8 +16,10 @@ class SessionFormView extends ConsumerWidget {
   const SessionFormView({
     Key? key,
     required this.patientData,
+    required this.patientCaseData,
   }) : super(key: key);
   final Patient patientData;
+  final PatientCase patientCaseData;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
