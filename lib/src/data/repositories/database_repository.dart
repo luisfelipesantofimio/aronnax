@@ -362,26 +362,16 @@ class DatabaseRepository implements LocalDatabaseInteface {
   }
 
   @override
-  void insertPatientTreatmentPlan(
-      int treatmentPlanId, int patientId, DateTime creationDate) {
-    final data = LocalPatientTreatmentPlansCompanion(
-      creationDate: Value(creationDate),
-      patientId: Value(patientId),
-      treatmentPlanFinished: const Value(false),
-      treatmentPlanId: Value(treatmentPlanId),
-    );
-    localDB.insertPatientTreatmentPlan(data);
-  }
-
-  @override
   void insertPatientCase(
-      DateTime creationDate,
-      int patientId,
-      int professionalId,
-      String consultationReason,
-      String treatmentProposal,
-      String diagnostic,
-      String? caseNotes) {
+    DateTime creationDate,
+    int patientId,
+    int professionalId,
+    String consultationReason,
+    String treatmentProposal,
+    String diagnostic,
+    String? caseNotes,
+    int? treatmentPlanId,
+  ) {
     final data = LocalPatientCaseCompanion(
       creationDate: Value(creationDate),
       patientId: Value(patientId),
@@ -391,6 +381,8 @@ class DatabaseRepository implements LocalDatabaseInteface {
       treatmentProposal: Value(treatmentProposal),
       caseNotes: Value(caseNotes),
       isActive: const Value(false),
+      patientCaseClosed: const Value(false),
+      treatmentPlanId: Value(treatmentPlanId),
     );
     localDB.insertPatientCase(data);
   }
@@ -408,11 +400,6 @@ class DatabaseRepository implements LocalDatabaseInteface {
   @override
   void deleteLocalClinicHistory(int id) {
     localDB.deleteLocalClinicHisoty(id);
-  }
-
-  @override
-  void deletePatientTreatmentPlan(int treatmentId) {
-    localDB.deletePatientTreatmentPlan(treatmentId);
   }
 
   @override
@@ -443,5 +430,10 @@ class DatabaseRepository implements LocalDatabaseInteface {
   @override
   void activatePatientCase(int caseId) {
     localDB.activatePatientCases(caseId);
+  }
+
+  @override
+  void deleteLocalPatientCase(int caseId) {
+    localDB.deleteLocalPatientCase(caseId);
   }
 }

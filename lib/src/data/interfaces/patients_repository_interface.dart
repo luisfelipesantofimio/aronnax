@@ -36,6 +36,7 @@ abstract class PatientsRepositoryInterface {
       String treatmentProposal,
       String diagnostic,
       String? caseNotes,
+      int? treatmentPlanId,
       bool isOffline);
 
   void updateLocalPatientActiveState(
@@ -45,20 +46,14 @@ abstract class PatientsRepositoryInterface {
     bool isOffline,
   );
 
-  void addPatientTreatmentPlan(
-    WidgetRef ref,
-    int treatmentPlanId,
-    int patientId,
-    DateTime creationDate,
-    bool isOffline,
-  );
-
   Future<List<Patient>> getPatient(WidgetRef ref, int idNumber);
 
   Future<List<PatientCase>> getPatientCaseList(Ref ref, int patientId);
   Future<PatientCase?> getPatientActiveCase(WidgetRef ref, int patientId);
   void updatePatientCaseActiveState(
       WidgetRef ref, int patientId, int caseId, bool currentCaseState);
+
+  void deletePatientCase(WidgetRef ref, int caseId);
 }
 
 final patientsRepositoryProvider = Provider<PatientsRepositoryInterface>(

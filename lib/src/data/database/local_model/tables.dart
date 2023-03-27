@@ -48,6 +48,15 @@ class LocalPatientCase extends Table {
   TextColumn get treatmentProposal => text()();
   TextColumn get caseNotes => text().nullable()();
   BoolColumn get isActive => boolean()();
+  BoolColumn get patientCaseClosed => boolean()();
+
+  ///String with a positive, neutral or negative result
+  TextColumn get treatmentPlanOutcome => text().nullable()();
+
+  IntColumn get treatmentPlanId =>
+      integer().references(LocalTreatmentPlans, #id).nullable()();
+  IntColumn get localTreatmentPlanResults =>
+      integer().references(LocaltreatmentResults, #id).nullable()();
 }
 
 class LocalSessions extends Table {
@@ -130,20 +139,6 @@ class LocaltreatmentResults extends Table {
   TextColumn get treatmentPlanID =>
       text().references(LocalTreatmentPlans, #id)();
   TextColumn get treatmentResultsData => text()();
-}
-
-class LocalPatientTreatmentPlans extends Table {
-  IntColumn get id => integer().autoIncrement()();
-  BoolColumn get treatmentPlanFinished => boolean()();
-
-  ///String with a positive, neutral or negative result
-  TextColumn get treatmentPlanOutcome => text().nullable()();
-  IntColumn get patientId => integer().references(LocalPatients, #id)();
-  IntColumn get treatmentPlanId =>
-      integer().references(LocalTreatmentPlans, #id)();
-  IntColumn get localTreatmentPlanResults =>
-      integer().references(LocaltreatmentResults, #id).nullable()();
-  DateTimeColumn get creationDate => dateTime()();
 }
 
 class Settings extends Table {

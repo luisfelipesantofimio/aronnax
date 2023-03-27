@@ -67,27 +67,18 @@ class PatientsRepository implements PatientsRepositoryInterface {
       String treatmentProposal,
       String diagnostic,
       String? caseNotes,
+      int? treatmentPlanId,
       bool isOffline) {
     if (isOffline) {
       ref.read(localDatabaseRepositoryProvider).insertPatientCase(
-          creationDate,
-          patientId,
-          professionalId,
-          consultationReason,
-          treatmentProposal,
-          diagnostic,
-          caseNotes);
-    }
-  }
-
-  @override
-  void addPatientTreatmentPlan(WidgetRef ref, int treatmentPlanId,
-      int patientId, DateTime creationDate, bool isOffline) {
-    if (isOffline) {
-      ref.read(localDatabaseRepositoryProvider).insertPatientTreatmentPlan(
-            treatmentPlanId,
-            patientId,
             creationDate,
+            patientId,
+            professionalId,
+            consultationReason,
+            treatmentProposal,
+            diagnostic,
+            caseNotes,
+            treatmentPlanId,
           );
     }
   }
@@ -201,6 +192,13 @@ class PatientsRepository implements PatientsRepositoryInterface {
           ref.read(localDatabaseRepositoryProvider).activatePatientCase(caseId);
         }
       }
+    }
+  }
+
+  @override
+  void deletePatientCase(WidgetRef ref, int caseId) {
+    if (ref.read(offlineStatusProvider).value!) {
+      ref.read(localDatabaseRepositoryProvider).deleteLocalPatientCase(caseId);
     }
   }
 }

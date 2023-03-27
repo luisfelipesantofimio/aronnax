@@ -18,7 +18,6 @@ part 'local_model.g.dart';
   LocalAppointments,
   LocalTreatmentPlans,
   LocaltreatmentResults,
-  LocalPatientTreatmentPlans,
   Settings,
   ServerDatabase
 ])
@@ -68,11 +67,6 @@ class LocalDatabase extends _$LocalDatabase {
 
   Future<void> insertTreatmentPlanResult(LocaltreatmentResultsCompanion data) {
     return into(localtreatmentResults).insert(data);
-  }
-
-  Future<void> insertPatientTreatmentPlan(
-      LocalPatientTreatmentPlansCompanion data) {
-    return into(localPatientTreatmentPlans).insert(data);
   }
 
   Future<void> insertPatientCase(LocalPatientCaseCompanion data) {
@@ -133,15 +127,6 @@ class LocalDatabase extends _$LocalDatabase {
             (tbl) => tbl.idNumber.equals(idNumber),
           ))
         .getSingle();
-  }
-
-  Future<List<LocalPatientTreatmentPlan>> getPatientTreatmentPlans(
-      int patientID) {
-    return (select(localPatientTreatmentPlans)
-          ..where(
-            (tbl) => tbl.patientId.equals(patientID),
-          ))
-        .get();
   }
 
   Future<List<LocalPatientCaseData>> getPatientCases(int patientId) {
@@ -323,16 +308,16 @@ class LocalDatabase extends _$LocalDatabase {
         .go();
   }
 
-  Future deletePatientTreatmentPlan(int treatmentId) {
-    return (delete(localPatientTreatmentPlans)
+  Future deleteLocalClinicHisoty(int id) {
+    return (delete(localClinicHistory)
           ..where(
-            (tbl) => tbl.id.equals(treatmentId),
+            (tbl) => tbl.id.equals(id),
           ))
         .go();
   }
 
-  Future deleteLocalClinicHisoty(int id) {
-    return (delete(localClinicHistory)
+  Future deleteLocalPatientCase(int id) {
+    return (delete(localPatientCase)
           ..where(
             (tbl) => tbl.id.equals(id),
           ))

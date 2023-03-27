@@ -140,32 +140,30 @@ abstract class LocalDatabaseInteface {
   void deleteLocalTreatmentPlan(int treatmentId);
   void updateLocalTreatmentPlan(TreatmentPlan newTreatmentPlanData);
   void updateLocalPatientActiveState(int patientId, bool newState);
-  void insertPatientTreatmentPlan(
-    int treatmentPlanId,
-    int patientId,
-    DateTime creationDate,
-  );
 
   Future<List<LocalPatientCaseData>> getPatientCasesList(int patientId);
   Future<LocalPatientCaseData?> getSinglePatientCase(int patientId);
 
   void insertPatientCase(
-      DateTime creationDate,
-      int patientId,
-      int professionalId,
-      String consultationReason,
-      String treatmentProposal,
-      String diagnostic,
-      String? caseNotes);
+    DateTime creationDate,
+    int patientId,
+    int professionalId,
+    String consultationReason,
+    String treatmentProposal,
+    String diagnostic,
+    String? caseNotes,
+    int? treatmentPlanId,
+  );
 
   Future<LocalPatient> getSinglePatient(int idNumber);
   Future<List<LocalPatient>> getPatientsListById(int idNumber);
   void deleteLocalClinicHistory(int id);
-  void deletePatientTreatmentPlan(int treatmentId);
+
   Future<List<LocalClinicHistoryData>> getClinicHistoryListById(int patientId);
   Future<LocalClinicHistoryData> getSingleClinicHistoryById(int patientId);
   void disactivatePatientCases(int caseId);
   void activatePatientCase(int caseId);
+  void deleteLocalPatientCase(int caseId);
 }
 
 final localDatabaseRepositoryProvider = Provider<LocalDatabaseInteface>(
