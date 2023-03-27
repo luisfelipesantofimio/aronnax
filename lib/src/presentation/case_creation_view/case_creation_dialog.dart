@@ -23,6 +23,13 @@ class CaseCreationDialog extends ConsumerStatefulWidget {
 class _CaseCreationDialogState extends ConsumerState<CaseCreationDialog> {
   bool treatmentPlanActivated = false;
   @override
+  void initState() {
+    ref.read(caseFormTreatmentPlanProvider.notifier).update((state) => null);
+    ref.read(caseFormCaseNotesProvider.notifier).update((state) => null);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final treatmentPlanList = ref.watch(
       treatmentPlanListProvider(ref.watch(offlineStatusProvider).value!),
@@ -58,6 +65,11 @@ class _CaseCreationDialogState extends ConsumerState<CaseCreationDialog> {
                       setState(() {
                         treatmentPlanActivated = !treatmentPlanActivated;
                       });
+                      if (!treatmentPlanActivated) {
+                        ref
+                            .read(caseFormTreatmentPlanProvider.notifier)
+                            .update((state) => null);
+                      }
                     },
                   ),
                   Text(treatmentPlanActivated
@@ -117,18 +129,11 @@ class _CaseCreationDialogState extends ConsumerState<CaseCreationDialog> {
                         ref.read(caseFormTreatmentProposalProvider)!,
                         ref.read(caseFormDiagnosticProvider)!,
                         ref.read(caseFormCaseNotesProvider),
+                        ref.read(caseFormTreatmentPlanProvider) == null
+                            ? null
+                            : ref.read(caseFormTreatmentPlanProvider)!.id,
                         ref.read(offlineStatusProvider).value!);
-                    if (treatmentPlanActivated) {
-                      ref
-                          .read(patientsRepositoryProvider)
-                          .addPatientTreatmentPlan(
-                            ref,
-                            ref.read(caseFormTreatmentPlanProvider)!.id,
-                            widget.patientData.id,
-                            DateTime.now(),
-                            ref.read(offlineStatusProvider).value!,
-                          );
-                    }
+
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         backgroundColor: Colors.green,

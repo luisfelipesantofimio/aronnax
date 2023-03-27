@@ -1,3 +1,4 @@
+import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/patient_case_providers.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:aronnax/src/presentation/case_creation_view/case_creation_dialog.dart';
@@ -17,6 +18,7 @@ class PatientCasesListView extends ConsumerWidget {
     final casesList = ref.watch(
       patientCaseListProvider(patientData.id),
     );
+    final isOffline = ref.watch(offlineStatusProvider);
     return casesList.when(
       data: (data) => data.isEmpty
           ? Column(
@@ -51,10 +53,11 @@ class PatientCasesListView extends ConsumerWidget {
                   caseData: data[index],
                   elementIndex: index,
                   patientId: patientData.id,
+                  isOffline: isOffline.value!,
                 ),
               ),
             ),
-      error: (error, stackTrace) => const Text('Something went wrong'),
+      error: (error, stackTrace) => Text('Something went wrong: $error'),
       loading: () => const CircularProgressIndicator(),
     );
   }

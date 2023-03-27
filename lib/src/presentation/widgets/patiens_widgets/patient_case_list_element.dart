@@ -1,6 +1,7 @@
-
 import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
+import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/patient_case_providers.dart';
+import 'package:aronnax/src/data/providers/treatment_plan_providers.dart';
 import 'package:aronnax/src/domain/entities/patient_case.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,14 +12,19 @@ class PatientCaseListElement extends ConsumerWidget {
     required this.caseData,
     required this.elementIndex,
     required this.patientId,
+    required this.isOffline,
   }) : super(key: key);
 
   final PatientCase caseData;
   final int elementIndex;
   final int patientId;
+  final bool isOffline;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final treatmentPlansList = ref.watch(
+      treatmentPlanListProvider(isOffline),
+    );
     return LayoutBuilder(
       builder: (p0, constrains) {
         return Container(
@@ -70,7 +76,12 @@ class PatientCaseListElement extends ConsumerWidget {
                           ),
                           IconButton(
                             tooltip: 'Delete case',
-                            onPressed: () {},
+                            onPressed: () {
+                              ref
+                                  .read(patientsRepositoryProvider)
+                                  .deletePatientCase(ref, caseData.id);
+                              ref.invalidate(patientCaseListProvider);
+                            },
                             icon: const Icon(Icons.delete),
                           ),
                         ],
@@ -102,6 +113,24 @@ class PatientCaseListElement extends ConsumerWidget {
                       ],
                     ),
                   ),
+                  treatmentPlansList.when(
+                    data: (data) => caseData.treatmentPlanId != null
+                        ? Row(
+                            children: [
+                              const Text('Treatment plan: '),
+                              Text(data
+                                  .elementAt(
+                                    data.indexWhere((element) =>
+                                        element.id == caseData.treatmentPlanId),
+                                  )
+                                  .title)
+                            ],
+                          )
+                        : const SizedBox(),
+                    error: (error, stackTrace) =>
+                        const Text('Something went wrong'),
+                    loading: () => const CircularProgressIndicator(),
+                  )
                 ],
               ),
             ),

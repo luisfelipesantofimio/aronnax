@@ -67,13 +67,17 @@ class SessionFormView extends ConsumerWidget {
                           ),
                         ),
                       ),
-                      GenericIconButton(
-                        icon: FontAwesomeIcons.handHoldingMedical,
-                        title: 'Iniciar plan de tratamiento',
-                        onTap: () => ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            backgroundColor: Colors.green,
-                            content: Text('Muy pronto!'),
+                      Visibility(
+                        visible: patientCaseData.treatmentPlanId != null,
+                        child: GenericIconButton(
+                          icon: FontAwesomeIcons.handHoldingMedical,
+                          title: 'Iniciar plan de tratamiento',
+                          onTap: () =>
+                              ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              backgroundColor: Colors.green,
+                              content: Text('Muy pronto!'),
+                            ),
                           ),
                         ),
                       ),
