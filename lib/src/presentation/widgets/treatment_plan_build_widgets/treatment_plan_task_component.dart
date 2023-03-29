@@ -6,10 +6,12 @@ class TreatmentPlanTaskComponent extends StatefulWidget {
     required this.title,
     required this.description,
     required this.isRequired,
+    required this.isMessurable,
   }) : super(key: key);
   final String title;
   final String description;
   final bool isRequired;
+  final bool isMessurable;
 
   @override
   State<TreatmentPlanTaskComponent> createState() =>

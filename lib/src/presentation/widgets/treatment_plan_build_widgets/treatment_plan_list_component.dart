@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 
 class TreatmentPlanListComponent extends StatelessWidget {
-  const TreatmentPlanListComponent(
-      {Key? key,
-      required this.component,
-      required this.onEdit,
-      required this.onDelete,
-      required this.onDuplicate})
-      : super(key: key);
+  const TreatmentPlanListComponent({
+    Key? key,
+    required this.component,
+    required this.onEdit,
+    required this.onDelete,
+    required this.onDuplicate,
+    required this.editionComponent,
+  }) : super(key: key);
   final Widget component;
   final VoidCallback onDuplicate;
   final VoidCallback onEdit;
   final VoidCallback onDelete;
+  final bool editionComponent;
 
   @override
   Widget build(BuildContext context) {
@@ -35,25 +37,28 @@ class TreatmentPlanListComponent extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                  tooltip: 'Duplicate',
-                  onPressed: onDuplicate,
-                  icon: const Icon(Icons.copy),
-                ),
-                IconButton(
-                  tooltip: 'Edit',
-                  onPressed: onEdit,
-                  icon: const Icon(Icons.edit),
-                ),
-                IconButton(
-                  tooltip: 'Delete',
-                  onPressed: onDelete,
-                  icon: const Icon(Icons.delete),
-                ),
-              ],
+            Visibility(
+              visible: editionComponent,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    tooltip: 'Duplicate',
+                    onPressed: onDuplicate,
+                    icon: const Icon(Icons.copy),
+                  ),
+                  IconButton(
+                    tooltip: 'Edit',
+                    onPressed: onEdit,
+                    icon: const Icon(Icons.edit),
+                  ),
+                  IconButton(
+                    tooltip: 'Delete',
+                    onPressed: onDelete,
+                    icon: const Icon(Icons.delete),
+                  ),
+                ],
+              ),
             ),
             component,
           ],

@@ -8,11 +8,13 @@ class TreatmentPlanSelectionComponent extends StatefulWidget {
     this.description,
     required this.valuesList,
     required this.isRequired,
+    required this.isMessurable,
   }) : super(key: key);
   final String title;
   final String? description;
   final List<TreatmentPlanOption> valuesList;
   final bool isRequired;
+  final bool isMessurable;
   @override
   State<TreatmentPlanSelectionComponent> createState() =>
       _TreatmentPlanSelectionComponentState();
