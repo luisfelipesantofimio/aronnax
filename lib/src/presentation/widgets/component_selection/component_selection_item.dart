@@ -37,6 +37,7 @@ class _ComponentSelectionItemState extends State<ComponentSelectionItem> {
   List<OptionType> optionTypeList = [];
   ComponentType? selectedComponent;
   bool isRequired = true;
+  bool isMessurable = false;
   String? componentTitle;
   String? componentDescription;
 
@@ -142,6 +143,24 @@ class _ComponentSelectionItemState extends State<ComponentSelectionItem> {
                       ),
                       Visibility(
                         visible: selectedComponent != null &&
+                            selectedComponent?.componentType != 'textField',
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Switch(
+                              value: isMessurable,
+                              onChanged: (value) => setState(() {
+                                isMessurable = !isMessurable;
+                              }),
+                            ),
+                            Text(isMessurable
+                                ? 'Cuantificable'
+                                : 'No cuantificable')
+                          ],
+                        ),
+                      ),
+                      Visibility(
+                        visible: selectedComponent != null &&
                                 selectedComponent!.componentType == 'scale' ||
                             selectedComponent?.componentType == 'selection',
                         child: Column(
@@ -203,6 +222,7 @@ class _ComponentSelectionItemState extends State<ComponentSelectionItem> {
                             TreatmentPlanComponent(
                               componentType: selectedComponent!.componentType,
                               componentTitle: componentTitle!,
+                              messurable: isMessurable,
                               componentDescription: componentDescription!,
                               isRequired: isRequired,
                               optionsList: optionTypeList

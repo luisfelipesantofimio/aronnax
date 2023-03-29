@@ -1,5 +1,10 @@
+import 'package:aronnax/src/data/interfaces/treatment_plans_repository_interface.dart';
+import 'package:aronnax/src/data/providers/connection_state_provider.dart';
+import 'package:aronnax/src/data/providers/treatment_plan_providers.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:aronnax/src/domain/entities/patient_case.dart';
+import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan.dart';
+import 'package:aronnax/src/presentation/treatment_plans/treatment_plan_application/treatment_plan_application_view.dart';
 import 'package:aronnax/src/presentation/widgets/note_creation_dialog.dart';
 import 'package:aronnax/src/presentation/session_creation_view/session_form.dart';
 import 'package:aronnax/src/presentation/core/controllers.dart';
@@ -23,6 +28,8 @@ class SessionFormView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final treatmentPlan = ref.watch(
+        treatmentPlanListProvider(ref.read(offlineStatusProvider).value!));
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 166, 211, 227),
       body: Padding(
@@ -67,19 +74,29 @@ class SessionFormView extends ConsumerWidget {
                           ),
                         ),
                       ),
-                      Visibility(
-                        visible: patientCaseData.treatmentPlanId != null,
-                        child: GenericIconButton(
-                          icon: FontAwesomeIcons.handHoldingMedical,
-                          title: 'Iniciar plan de tratamiento',
-                          onTap: () =>
-                              ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              backgroundColor: Colors.green,
-                              content: Text('Muy pronto!'),
+                      treatmentPlan.when(
+                        data: (data) => Visibility(
+                          visible: patientCaseData.treatmentPlanId != null,
+                          child: GenericIconButton(
+                            icon: FontAwesomeIcons.handHoldingMedical,
+                            title: 'Iniciar plan de tratamiento',
+                            onTap: () => showDialog(
+                              context: context,
+                              builder: (context) =>
+                                  TreatmentPlanApplicationView(
+                                caseData: patientCaseData,
+                                treatmentPlanData: data.elementAt(
+                                  data.indexWhere((element) =>
+                                      element.id ==
+                                      patientCaseData.treatmentPlanId),
+                                ),
+                              ),
                             ),
                           ),
                         ),
+                        error: (error, stackTrace) =>
+                            Text('Something went wrong'),
+                        loading: () => CircularProgressIndicator(),
                       ),
                     ],
                   ),
