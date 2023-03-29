@@ -42,6 +42,7 @@ class _TreatmentPlanComponentUpdateDialogState
   List<OptionType> optionTypeList = [];
   ComponentType? selectedComponent;
   bool isRequired = true;
+  bool isMessurable = false;
   String? componentTitle;
   String? componentDescription;
   final formKey = GlobalKey<FormState>();
@@ -165,6 +166,19 @@ class _TreatmentPlanComponentUpdateDialogState
                         Text(isRequired ? 'Requerido' : 'Opcional')
                       ],
                     ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Switch(
+                          value: isMessurable,
+                          onChanged: (value) => setState(() {
+                            isMessurable = !isMessurable;
+                          }),
+                        ),
+                        Text(
+                            isMessurable ? 'Cuantificable' : 'No cuantificable')
+                      ],
+                    ),
                     Visibility(
                       visible: selectedComponent!.componentType == 'scale' ||
                           selectedComponent!.componentType == 'selection',
@@ -226,6 +240,7 @@ class _TreatmentPlanComponentUpdateDialogState
                             componentTitle: componentTitle!,
                             componentDescription: componentDescription!,
                             isRequired: isRequired,
+                            messurable: isMessurable,
                             optionsList: optionTypeList
                                 .map(
                                   (e) => TreatmentPlanOption(

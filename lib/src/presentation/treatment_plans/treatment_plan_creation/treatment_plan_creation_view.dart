@@ -1,3 +1,4 @@
+import 'dart:developer';
 
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/interfaces/treatment_plans_repository_interface.dart';
@@ -91,9 +92,10 @@ class _TreatmentPlanCreationViewState
                                     right: 10,
                                   ),
                                   child: SizedBox(
-                                    height: 150,
-                                    width: 150,
                                     child: SectionListElement(
+                                      selectedItem:
+                                          selectedSectionIndex == index,
+                                      editionComponent: true,
                                       onDelete: () {
                                         if (sectionList.length > 1) {
                                           sectionList.removeAt(index);
@@ -183,6 +185,7 @@ class _TreatmentPlanCreationViewState
                                 itemCount: decodedComponents.length,
                                 itemBuilder: (context, index) =>
                                     TreatmentPlanListComponent(
+                                  editionComponent: true,
                                   component: decodedComponents[index],
                                   onEdit: () {
                                     showDialog(
@@ -278,9 +281,14 @@ class _TreatmentPlanCreationViewState
                           ),
                           ComponentSelectionItem(
                             onComponentSelected: (component) {
+                              final newComponent = component.copyWith(
+                                  id: sectionList[selectedSectionIndex]
+                                      .components
+                                      .length);
+                              log('Componente guardado con id: ${newComponent.id}');
                               sectionList[selectedSectionIndex]
                                   .components
-                                  .add(component);
+                                  .add(newComponent);
                               setState(() {});
                             },
                           ),
