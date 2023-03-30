@@ -12,6 +12,7 @@ class TreatmentPlanResult {
   final int patientId;
   final int professionalId;
   final int treatmentPlanId;
+  final int phaseNumber;
   final List<TreatmentPlanResultValue> results;
   TreatmentPlanResult({
     this.id,
@@ -20,6 +21,7 @@ class TreatmentPlanResult {
     required this.patientId,
     required this.professionalId,
     required this.treatmentPlanId,
+    required this.phaseNumber,
     required this.results,
   });
 
@@ -30,6 +32,7 @@ class TreatmentPlanResult {
     int? patientId,
     int? professionalId,
     int? treatmentPlanId,
+    int? phaseNumber,
     List<TreatmentPlanResultValue>? results,
   }) {
     return TreatmentPlanResult(
@@ -39,6 +42,7 @@ class TreatmentPlanResult {
       patientId: patientId ?? this.patientId,
       professionalId: professionalId ?? this.professionalId,
       treatmentPlanId: treatmentPlanId ?? this.treatmentPlanId,
+      phaseNumber: phaseNumber ?? this.phaseNumber,
       results: results ?? this.results,
     );
   }
@@ -51,6 +55,7 @@ class TreatmentPlanResult {
       'patientId': patientId,
       'professionalId': professionalId,
       'treatmentPlanId': treatmentPlanId,
+      'phaseNumber': phaseNumber,
       'results': results.map((x) => x.toMap()).toList(),
     };
   }
@@ -64,6 +69,7 @@ class TreatmentPlanResult {
       patientId: map['patientId'] as int,
       professionalId: map['professionalId'] as int,
       treatmentPlanId: map['treatmentPlanId'] as int,
+      phaseNumber: map['phaseNumber'] as int,
       results: List<TreatmentPlanResultValue>.from(
         (map['results'] as List<int>).map<TreatmentPlanResultValue>(
           (x) => TreatmentPlanResultValue.fromMap(x as Map<String, dynamic>),
@@ -79,7 +85,7 @@ class TreatmentPlanResult {
 
   @override
   String toString() {
-    return 'TreatmentPlanResult(id: $id, applicationDate: $applicationDate, sessionNumber: $sessionNumber, patientId: $patientId, professionalId: $professionalId, treatmentPlanId: $treatmentPlanId, results: $results)';
+    return 'TreatmentPlanResult(id: $id, applicationDate: $applicationDate, sessionNumber: $sessionNumber, patientId: $patientId, professionalId: $professionalId, treatmentPlanId: $treatmentPlanId, phaseNumber: $phaseNumber, results: $results)';
   }
 
   @override
@@ -92,6 +98,7 @@ class TreatmentPlanResult {
         other.patientId == patientId &&
         other.professionalId == professionalId &&
         other.treatmentPlanId == treatmentPlanId &&
+        other.phaseNumber == phaseNumber &&
         listEquals(other.results, results);
   }
 
@@ -103,6 +110,7 @@ class TreatmentPlanResult {
         patientId.hashCode ^
         professionalId.hashCode ^
         treatmentPlanId.hashCode ^
+        phaseNumber.hashCode ^
         results.hashCode;
   }
 }

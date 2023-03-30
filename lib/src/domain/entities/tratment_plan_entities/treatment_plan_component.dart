@@ -12,6 +12,7 @@ class TreatmentPlanComponent {
   final String componentDescription;
   final bool isRequired;
   final bool messurable;
+  final int treatmentPlanPhase;
   final List<TreatmentPlanOption>? optionsList;
   TreatmentPlanComponent({
     this.id,
@@ -20,6 +21,7 @@ class TreatmentPlanComponent {
     required this.componentDescription,
     required this.isRequired,
     required this.messurable,
+    required this.treatmentPlanPhase,
     this.optionsList,
   });
 
@@ -31,6 +33,7 @@ class TreatmentPlanComponent {
       'componentDescription': componentDescription,
       'isRequired': isRequired,
       'messurable': messurable,
+      'treatmentPlanPhase': treatmentPlanPhase,
       'optionsList': optionsList
           ?.map(
             (e) => e.toMap(),
@@ -49,6 +52,8 @@ class TreatmentPlanComponent {
     final isRequired = map['isRequired'] as bool;
     final messurable = map['messurable'] as bool;
 
+    final treatmentPlanPhase = map['treatmentPlanPhase'];
+
     return TreatmentPlanComponent(
       id: id,
       messurable: messurable,
@@ -56,6 +61,7 @@ class TreatmentPlanComponent {
       componentTitle: componentTitle,
       componentDescription: componentDescription,
       isRequired: isRequired,
+      treatmentPlanPhase: treatmentPlanPhase,
       optionsList: optionsList
           ?.map(
             (e) => TreatmentPlanOption.fromMap(e),
@@ -77,17 +83,18 @@ class TreatmentPlanComponent {
     String? componentDescription,
     bool? isRequired,
     bool? messurable,
+    int? treatmentPlanPhase,
     List<TreatmentPlanOption>? optionsList,
   }) {
     return TreatmentPlanComponent(
-      id: id ?? this.id,
-      componentType: componentType ?? this.componentType,
-      componentTitle: componentTitle ?? this.componentTitle,
-      componentDescription: componentDescription ?? this.componentDescription,
-      isRequired: isRequired ?? this.isRequired,
-      messurable: messurable ?? this.messurable,
-      optionsList: optionsList ?? this.optionsList,
-    );
+        id: id ?? this.id,
+        componentType: componentType ?? this.componentType,
+        componentTitle: componentTitle ?? this.componentTitle,
+        componentDescription: componentDescription ?? this.componentDescription,
+        isRequired: isRequired ?? this.isRequired,
+        messurable: messurable ?? this.messurable,
+        optionsList: optionsList ?? this.optionsList,
+        treatmentPlanPhase: treatmentPlanPhase ?? this.treatmentPlanPhase);
   }
 
   @override
@@ -105,6 +112,7 @@ class TreatmentPlanComponent {
         other.componentDescription == componentDescription &&
         other.isRequired == isRequired &&
         other.messurable == messurable &&
+        other.treatmentPlanPhase == treatmentPlanPhase &&
         listEquals(other.optionsList, optionsList);
   }
 
