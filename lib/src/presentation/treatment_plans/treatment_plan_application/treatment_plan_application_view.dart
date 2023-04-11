@@ -5,7 +5,9 @@ import 'package:aronnax/src/data/providers/treatment_plan_providers.dart';
 import 'package:aronnax/src/domain/entities/patient_case.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/section.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan.dart';
+import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_component.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_result.dart';
+import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_result_value.dart';
 import 'package:aronnax/src/presentation/core/controllers.dart';
 import 'package:aronnax/src/presentation/widgets/treatment_plan_build_widgets/section_list_element.dart';
 import 'package:aronnax/src/presentation/widgets/treatment_plan_build_widgets/treatment_plan_list_component.dart';
@@ -34,20 +36,44 @@ class _TreatmentPlanApplicationViewState
   @override
   void initState() {
     treatmentPlanApplicationFormKey.currentState?.initState();
-    Future(
-      () {
-        ref.read(currentTreatmentPlanResponseProvider.notifier).update(
-              (state) => TreatmentPlanResult(
-                applicationDate: DateTime.now(),
-                sessionNumber: 0,
-                patientId: widget.caseData.patientId,
-                professionalId: widget.caseData.professionalId,
-                treatmentPlanId: widget.treatmentPlanData.id,
-                results: [],
+    Future(() {
+      ref
+          .read(currentTreatmentPlanResponseProvider.notifier)
+          .update((state) => null);
+      ref.read(currentTreatmentPlanResponseListProvider).clear();
+      ref.read(currentTreatmentPlanResponseProvider.notifier).update(
+            (state) => TreatmentPlanResult(
+              phaseNumber: widget.treatmentPlanData.sectionsList.indexOf(
+                widget.treatmentPlanData.sectionsList
+                    .firstWhere((element) => element.isComplete == false),
               ),
-            );
-      },
-    );
+              applicationDate: DateTime.now(),
+              sessionNumber: 0,
+              patientId: widget.caseData.patientId,
+              professionalId: widget.caseData.professionalId,
+              treatmentPlanId: widget.treatmentPlanData.id,
+              results: [],
+            ),
+          );
+    });
+    List<TreatmentPlanComponent> componentsList = widget
+        .treatmentPlanData.sectionsList
+        .firstWhere((element) => element.isComplete == false)
+        .components;
+
+    for (var element in componentsList) {
+      ref.read(currentTreatmentPlanResponseListProvider.notifier).state.add(
+            TreatmentPlanResultValue(
+                componentId: element.id!,
+                treatmentPhase: widget.treatmentPlanData.sectionsList.indexOf(
+                  widget.treatmentPlanData.sectionsList
+                      .firstWhere((element) => element.isComplete == false),
+                ),
+                messurable: element.messurable,
+                value: null),
+          );
+    }
+    log(ref.read(currentTreatmentPlanResponseListProvider).toString());
     setState(() {
       sectionList = widget.treatmentPlanData.sectionsList;
     });
@@ -57,13 +83,6 @@ class _TreatmentPlanApplicationViewState
   @override
   void dispose() {
     treatmentPlanApplicationFormKey.currentState?.dispose();
-
-    ref
-        .read(currentTreatmentPlanResponseProvider.notifier)
-        .update((state) => null);
-    ref
-        .read(currentTreatmentPlanResponseListProvider.notifier)
-        .update((state) => []);
 
     super.dispose();
   }
@@ -93,35 +112,6 @@ class _TreatmentPlanApplicationViewState
                   width: constrains.maxWidth * 0.6,
                   child: Column(
                     children: [
-                      SizedBox(
-                        width: constrains.maxWidth * 0.8,
-                        height: 150,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: sectionList.length,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) => SizedBox(
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: SectionListElement(
-                                selectedItem: selectedSectionIndex == index,
-                                editionComponent: false,
-                                onEdit: () {},
-                                onDelete: () {},
-                                onTap: () {
-                                  setState(() {
-                                    selectedSectionIndex = index;
-                                  });
-                                },
-                                sectionTitle: sectionList[index].name,
-                                sectionDescription:
-                                    sectionList[index].description ??
-                                        'No description',
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
                       SizedBox(
                         height: constrains.maxHeight * 0.8,
                         child: Form(

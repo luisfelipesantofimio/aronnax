@@ -41,6 +41,7 @@ class _TreatmentPlanCreationViewState
       Section(
         name: 'Phase 1',
         components: [],
+        isComplete: false,
       ),
     );
     if (widget.treatmentPlanData != null) {
@@ -155,6 +156,7 @@ class _TreatmentPlanCreationViewState
                                         name: title,
                                         description: description,
                                         components: [],
+                                        isComplete: false,
                                       ),
                                     );
                                     setState(() {});
@@ -193,6 +195,7 @@ class _TreatmentPlanCreationViewState
                                       builder: (context) => Dialog(
                                         child:
                                             TreatmentPlanComponentUpdateDialog(
+                                          sectionIndex: selectedSectionIndex,
                                           onComponentUpdated: (component) {
                                             setState(() {
                                               sectionList[selectedSectionIndex]
@@ -235,6 +238,7 @@ class _TreatmentPlanCreationViewState
                                         .add(
                                           sectionList[selectedSectionIndex]
                                               .components[index],
+                                          //TODO: fix error when adding components
                                         );
                                     setState(() {});
                                   },
@@ -280,6 +284,7 @@ class _TreatmentPlanCreationViewState
                             ),
                           ),
                           ComponentSelectionItem(
+                            sectionIndex: selectedSectionIndex,
                             onComponentSelected: (component) {
                               final newComponent = component.copyWith(
                                   id: sectionList[selectedSectionIndex]

@@ -11,9 +11,11 @@ class TreatmentPlanComponentUpdateDialog extends StatefulWidget {
     Key? key,
     required this.onComponentUpdated,
     this.dataToUpdate,
+    required this.sectionIndex,
   }) : super(key: key);
   final Function(TreatmentPlanComponent component) onComponentUpdated;
   final TreatmentPlanComponent? dataToUpdate;
+  final int sectionIndex;
   @override
   State<TreatmentPlanComponentUpdateDialog> createState() =>
       _TreatmentPlanComponentUpdateDialogState();
@@ -236,6 +238,7 @@ class _TreatmentPlanComponentUpdateDialogState
                       onTap: () {
                         widget.onComponentUpdated(
                           TreatmentPlanComponent(
+                            treatmentPlanPhase: widget.sectionIndex,
                             componentType: selectedComponent!.componentType,
                             componentTitle: componentTitle!,
                             componentDescription: componentDescription!,
