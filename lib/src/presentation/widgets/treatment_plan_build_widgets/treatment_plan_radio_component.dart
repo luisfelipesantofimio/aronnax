@@ -1,30 +1,31 @@
+import 'dart:developer';
+
+import 'package:aronnax/src/data/providers/treatment_plan_providers.dart';
+import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_component.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_option.dart';
+import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_result_value.dart';
 import 'package:aronnax/src/presentation/core/controllers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class TreatmentPlanScaleComponent extends StatefulWidget {
+class TreatmentPlanScaleComponent extends ConsumerStatefulWidget {
   const TreatmentPlanScaleComponent({
     Key? key,
+    required this.componentData,
     required this.valuesList,
-    required this.title,
-    this.description,
-    required this.isRequired,
-    required this.isMessurable,
   }) : super(key: key);
-  final String title;
-  final String? description;
+
   final List<TreatmentPlanOption> valuesList;
-  final bool isRequired;
-  final bool isMessurable;
+  final TreatmentPlanComponent componentData;
 
   @override
-  State<TreatmentPlanScaleComponent> createState() =>
+  ConsumerState<TreatmentPlanScaleComponent> createState() =>
       _TreatmentPlanScaleComponentState();
 }
 
 class _TreatmentPlanScaleComponentState
-    extends State<TreatmentPlanScaleComponent> {
-  dynamic selectedValue;
+    extends ConsumerState<TreatmentPlanScaleComponent> {
+  TreatmentPlanOption<dynamic>? selectedValue;
   String? errorMessage;
   bool isErrorVisible = false;
 
@@ -35,12 +36,12 @@ class _TreatmentPlanScaleComponentState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            widget.title,
+            widget.componentData.componentTitle,
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           Visibility(
-            visible: widget.description != null,
-            child: Text(widget.description ?? ''),
+            visible: widget.componentData.componentDescription.isNotEmpty,
+            child: Text(widget.componentData.componentTitle),
           ),
           SizedBox(
             height: 80,
@@ -55,11 +56,40 @@ class _TreatmentPlanScaleComponentState
                   title: Text(widget.valuesList[index].optionName),
                   value: widget.valuesList[index],
                   groupValue: selectedValue,
-                  onChanged: (value) {
+                  onChanged: (TreatmentPlanOption? option) {
                     setState(() {
-                      selectedValue = value;
-                      treatmentPlanApplicationFormKey.currentState?.validate();
+                      selectedValue = option;
                     });
+                    final updatedResultsList =
+                        ref.read(currentTreatmentPlanResponseListProvider);
+
+                    final itemIndex = updatedResultsList.indexWhere((element) =>
+                        element.componentId == widget.componentData.id);
+
+                    if (itemIndex != -1) {
+                      final updatedData = TreatmentPlanResultValue(
+                          treatmentPhase:
+                              widget.componentData.treatmentPlanPhase,
+                          componentId: widget.componentData.id!,
+                          messurable: widget.componentData.messurable,
+                          value: selectedValue!.value);
+
+                      updatedResultsList[itemIndex] = updatedData;
+                    } else {
+                      final newData = TreatmentPlanResultValue(
+                          treatmentPhase:
+                              widget.componentData.treatmentPlanPhase,
+                          componentId: widget.componentData.id!,
+                          messurable: widget.componentData.messurable,
+                          value: selectedValue!.value);
+                      updatedResultsList.add(newData);
+                    }
+
+                    ref
+                        .read(currentTreatmentPlanResponseListProvider.notifier)
+                        .update((state) => state = updatedResultsList);
+                    log(updatedResultsList.toString());
+                    treatmentPlanApplicationFormKey.currentState?.validate();
                   },
                 ),
               ),
@@ -77,7 +107,7 @@ class _TreatmentPlanScaleComponentState
           ),
         ],
       ),
-      validator: widget.isRequired
+      validator: widget.componentData.isRequired
           ? (value) {
               if (selectedValue == null) {
                 setState(() {

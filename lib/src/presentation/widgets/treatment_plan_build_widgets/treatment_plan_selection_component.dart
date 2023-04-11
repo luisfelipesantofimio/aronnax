@@ -1,27 +1,29 @@
-import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_option.dart';
-import 'package:flutter/material.dart';
+import 'dart:developer';
 
-class TreatmentPlanSelectionComponent extends StatefulWidget {
+import 'package:aronnax/src/data/providers/treatment_plan_providers.dart';
+import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_component.dart';
+import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_option.dart';
+import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_result_value.dart';
+import 'package:aronnax/src/presentation/core/controllers.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+class TreatmentPlanSelectionComponent extends ConsumerStatefulWidget {
   const TreatmentPlanSelectionComponent({
     Key? key,
-    required this.title,
-    this.description,
+    required this.componentData,
     required this.valuesList,
-    required this.isRequired,
-    required this.isMessurable,
   }) : super(key: key);
-  final String title;
-  final String? description;
+  final TreatmentPlanComponent componentData;
   final List<TreatmentPlanOption> valuesList;
-  final bool isRequired;
-  final bool isMessurable;
+
   @override
-  State<TreatmentPlanSelectionComponent> createState() =>
+  ConsumerState<TreatmentPlanSelectionComponent> createState() =>
       _TreatmentPlanSelectionComponentState();
 }
 
 class _TreatmentPlanSelectionComponentState
-    extends State<TreatmentPlanSelectionComponent> {
+    extends ConsumerState<TreatmentPlanSelectionComponent> {
   List<TreatmentPlanOption> selectedItems = [];
 
   @override
@@ -30,13 +32,10 @@ class _TreatmentPlanSelectionComponentState
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          widget.title,
+          widget.componentData.componentTitle,
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        Visibility(
-          visible: widget.description != null,
-          child: Text(widget.description ?? ''),
-        ),
+        Text(widget.componentData.componentDescription),
         SizedBox(
           height: 80,
           width: MediaQuery.of(context).size.width * 0.5,
@@ -65,6 +64,38 @@ class _TreatmentPlanSelectionComponentState
                       );
                     });
                   }
+                  final updatedResultsList =
+                      ref.read(currentTreatmentPlanResponseListProvider);
+
+                  final itemIndex = updatedResultsList.indexWhere((element) =>
+                      element.componentId == widget.componentData.id);
+
+                  if (itemIndex != -1) {
+                    final updatedData = TreatmentPlanResultValue(
+                      treatmentPhase: widget.componentData.treatmentPlanPhase,
+                      componentId: widget.componentData.id!,
+                      messurable: widget.componentData.messurable,
+                      value:
+                          selectedItems.map((e) => e.value).toList().join(','),
+                    );
+
+                    updatedResultsList[itemIndex] = updatedData;
+                  } else {
+                    final newData = TreatmentPlanResultValue(
+                      treatmentPhase: widget.componentData.treatmentPlanPhase,
+                      componentId: widget.componentData.id!,
+                      messurable: widget.componentData.messurable,
+                      value:
+                          selectedItems.map((e) => e.value).toList().join(','),
+                    );
+                    updatedResultsList.add(newData);
+                  }
+
+                  ref
+                      .read(currentTreatmentPlanResponseListProvider.notifier)
+                      .update((state) => state = updatedResultsList);
+                  log(updatedResultsList.toString());
+                  treatmentPlanApplicationFormKey.currentState?.validate();
                 },
               ),
             ),
