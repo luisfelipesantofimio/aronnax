@@ -41,11 +41,8 @@ class TreatmentPlanRepository implements TreatmentPlanRepositoryInterface {
         List<TreatmentPlanOption> optionsList = component.optionsList ?? [];
         decodedWidgets.add(
           TreatmentPlanScaleComponent(
-            isMessurable: component.messurable,
-            isRequired: component.isRequired,
-            description: component.componentDescription,
+            componentData: component,
             valuesList: optionsList,
-            title: component.componentTitle,
           ),
         );
       }
@@ -53,21 +50,15 @@ class TreatmentPlanRepository implements TreatmentPlanRepositoryInterface {
         List<TreatmentPlanOption> optionsList = component.optionsList ?? [];
         decodedWidgets.add(
           TreatmentPlanSelectionComponent(
-            isMessurable: component.messurable,
-            isRequired: component.isRequired,
-            description: component.componentDescription,
+            componentData: component,
             valuesList: optionsList,
-            title: component.componentTitle,
           ),
         );
       }
       if (component.componentType == 'task') {
         decodedWidgets.add(
           TreatmentPlanTaskComponent(
-            isMessurable: component.messurable,
-            isRequired: component.isRequired,
-            description: component.componentDescription,
-            title: component.componentTitle,
+            componentData: component,
           ),
         );
       }
