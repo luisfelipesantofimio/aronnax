@@ -7,9 +7,13 @@ import 'package:aronnax/src/presentation/widgets/generic_minimal_button.dart';
 import 'package:flutter/material.dart';
 
 class ComponentSelectionItem extends StatefulWidget {
-  const ComponentSelectionItem({Key? key, required this.onComponentSelected})
-      : super(key: key);
+  const ComponentSelectionItem({
+    Key? key,
+    required this.onComponentSelected,
+    required this.sectionIndex,
+  }) : super(key: key);
   final Function(TreatmentPlanComponent component) onComponentSelected;
+  final int sectionIndex;
 
   @override
   State<ComponentSelectionItem> createState() => _ComponentSelectionItemState();
@@ -220,6 +224,7 @@ class _ComponentSelectionItemState extends State<ComponentSelectionItem> {
                         onTap: () {
                           widget.onComponentSelected(
                             TreatmentPlanComponent(
+                              treatmentPlanPhase: widget.sectionIndex,
                               componentType: selectedComponent!.componentType,
                               componentTitle: componentTitle!,
                               messurable: isMessurable,
