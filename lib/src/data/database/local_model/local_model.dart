@@ -258,6 +258,18 @@ class LocalDatabase extends _$LocalDatabase {
     );
   }
 
+  Future updatePatientCasePhase(int caseId, int newPhase) {
+    return (update(localPatientCase)
+          ..where(
+            (tbl) => tbl.id.equals(caseId),
+          ))
+        .write(
+      LocalPatientCaseCompanion(
+        localTreatmentPlanPhase: Value(newPhase),
+      ),
+    );
+  }
+
   Future disactivatePatientCases(int caseId) {
     return (update(localPatientCase)
           ..where(

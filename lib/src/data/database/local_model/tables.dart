@@ -57,6 +57,8 @@ class LocalPatientCase extends Table {
       integer().references(LocalTreatmentPlans, #id).nullable()();
   IntColumn get localTreatmentPlanResults =>
       integer().references(LocaltreatmentResults, #id).nullable()();
+
+  IntColumn get localTreatmentPlanPhase => integer().nullable()();
 }
 
 class LocalSessions extends Table {

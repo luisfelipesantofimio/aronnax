@@ -2640,6 +2640,12 @@ class $LocalPatientCaseTable extends LocalPatientCase
           requiredDuringInsert: false,
           defaultConstraints: GeneratedColumn.constraintIsAlways(
               'REFERENCES localtreatment_results (id)'));
+  static const VerificationMeta _localTreatmentPlanPhaseMeta =
+      const VerificationMeta('localTreatmentPlanPhase');
+  @override
+  late final GeneratedColumn<int> localTreatmentPlanPhase =
+      GeneratedColumn<int>('local_treatment_plan_phase', aliasedName, true,
+          type: DriftSqlType.int, requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns => [
         id,
@@ -2654,7 +2660,8 @@ class $LocalPatientCaseTable extends LocalPatientCase
         patientCaseClosed,
         treatmentPlanOutcome,
         treatmentPlanId,
-        localTreatmentPlanResults
+        localTreatmentPlanResults,
+        localTreatmentPlanPhase
       ];
   @override
   String get aliasedName => _alias ?? 'local_patient_case';
@@ -2752,6 +2759,13 @@ class $LocalPatientCaseTable extends LocalPatientCase
               data['local_treatment_plan_results']!,
               _localTreatmentPlanResultsMeta));
     }
+    if (data.containsKey('local_treatment_plan_phase')) {
+      context.handle(
+          _localTreatmentPlanPhaseMeta,
+          localTreatmentPlanPhase.isAcceptableOrUnknown(
+              data['local_treatment_plan_phase']!,
+              _localTreatmentPlanPhaseMeta));
+    }
     return context;
   }
 
@@ -2789,6 +2803,9 @@ class $LocalPatientCaseTable extends LocalPatientCase
       localTreatmentPlanResults: attachedDatabase.typeMapping.read(
           DriftSqlType.int,
           data['${effectivePrefix}local_treatment_plan_results']),
+      localTreatmentPlanPhase: attachedDatabase.typeMapping.read(
+          DriftSqlType.int,
+          data['${effectivePrefix}local_treatment_plan_phase']),
     );
   }
 
@@ -2815,6 +2832,7 @@ class LocalPatientCaseData extends DataClass
   final String? treatmentPlanOutcome;
   final int? treatmentPlanId;
   final int? localTreatmentPlanResults;
+  final int? localTreatmentPlanPhase;
   const LocalPatientCaseData(
       {required this.id,
       required this.creationDate,
@@ -2828,7 +2846,8 @@ class LocalPatientCaseData extends DataClass
       required this.patientCaseClosed,
       this.treatmentPlanOutcome,
       this.treatmentPlanId,
-      this.localTreatmentPlanResults});
+      this.localTreatmentPlanResults,
+      this.localTreatmentPlanPhase});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -2853,6 +2872,10 @@ class LocalPatientCaseData extends DataClass
     if (!nullToAbsent || localTreatmentPlanResults != null) {
       map['local_treatment_plan_results'] =
           Variable<int>(localTreatmentPlanResults);
+    }
+    if (!nullToAbsent || localTreatmentPlanPhase != null) {
+      map['local_treatment_plan_phase'] =
+          Variable<int>(localTreatmentPlanPhase);
     }
     return map;
   }
@@ -2881,6 +2904,9 @@ class LocalPatientCaseData extends DataClass
           localTreatmentPlanResults == null && nullToAbsent
               ? const Value.absent()
               : Value(localTreatmentPlanResults),
+      localTreatmentPlanPhase: localTreatmentPlanPhase == null && nullToAbsent
+          ? const Value.absent()
+          : Value(localTreatmentPlanPhase),
     );
   }
 
@@ -2904,6 +2930,8 @@ class LocalPatientCaseData extends DataClass
       treatmentPlanId: serializer.fromJson<int?>(json['treatmentPlanId']),
       localTreatmentPlanResults:
           serializer.fromJson<int?>(json['localTreatmentPlanResults']),
+      localTreatmentPlanPhase:
+          serializer.fromJson<int?>(json['localTreatmentPlanPhase']),
     );
   }
   @override
@@ -2924,6 +2952,8 @@ class LocalPatientCaseData extends DataClass
       'treatmentPlanId': serializer.toJson<int?>(treatmentPlanId),
       'localTreatmentPlanResults':
           serializer.toJson<int?>(localTreatmentPlanResults),
+      'localTreatmentPlanPhase':
+          serializer.toJson<int?>(localTreatmentPlanPhase),
     };
   }
 
@@ -2940,7 +2970,8 @@ class LocalPatientCaseData extends DataClass
           bool? patientCaseClosed,
           Value<String?> treatmentPlanOutcome = const Value.absent(),
           Value<int?> treatmentPlanId = const Value.absent(),
-          Value<int?> localTreatmentPlanResults = const Value.absent()}) =>
+          Value<int?> localTreatmentPlanResults = const Value.absent(),
+          Value<int?> localTreatmentPlanPhase = const Value.absent()}) =>
       LocalPatientCaseData(
         id: id ?? this.id,
         creationDate: creationDate ?? this.creationDate,
@@ -2961,6 +2992,9 @@ class LocalPatientCaseData extends DataClass
         localTreatmentPlanResults: localTreatmentPlanResults.present
             ? localTreatmentPlanResults.value
             : this.localTreatmentPlanResults,
+        localTreatmentPlanPhase: localTreatmentPlanPhase.present
+            ? localTreatmentPlanPhase.value
+            : this.localTreatmentPlanPhase,
       );
   @override
   String toString() {
@@ -2977,7 +3011,8 @@ class LocalPatientCaseData extends DataClass
           ..write('patientCaseClosed: $patientCaseClosed, ')
           ..write('treatmentPlanOutcome: $treatmentPlanOutcome, ')
           ..write('treatmentPlanId: $treatmentPlanId, ')
-          ..write('localTreatmentPlanResults: $localTreatmentPlanResults')
+          ..write('localTreatmentPlanResults: $localTreatmentPlanResults, ')
+          ..write('localTreatmentPlanPhase: $localTreatmentPlanPhase')
           ..write(')'))
         .toString();
   }
@@ -2996,7 +3031,8 @@ class LocalPatientCaseData extends DataClass
       patientCaseClosed,
       treatmentPlanOutcome,
       treatmentPlanId,
-      localTreatmentPlanResults);
+      localTreatmentPlanResults,
+      localTreatmentPlanPhase);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -3013,7 +3049,8 @@ class LocalPatientCaseData extends DataClass
           other.patientCaseClosed == this.patientCaseClosed &&
           other.treatmentPlanOutcome == this.treatmentPlanOutcome &&
           other.treatmentPlanId == this.treatmentPlanId &&
-          other.localTreatmentPlanResults == this.localTreatmentPlanResults);
+          other.localTreatmentPlanResults == this.localTreatmentPlanResults &&
+          other.localTreatmentPlanPhase == this.localTreatmentPlanPhase);
 }
 
 class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
@@ -3030,6 +3067,7 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
   final Value<String?> treatmentPlanOutcome;
   final Value<int?> treatmentPlanId;
   final Value<int?> localTreatmentPlanResults;
+  final Value<int?> localTreatmentPlanPhase;
   const LocalPatientCaseCompanion({
     this.id = const Value.absent(),
     this.creationDate = const Value.absent(),
@@ -3044,6 +3082,7 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
     this.treatmentPlanOutcome = const Value.absent(),
     this.treatmentPlanId = const Value.absent(),
     this.localTreatmentPlanResults = const Value.absent(),
+    this.localTreatmentPlanPhase = const Value.absent(),
   });
   LocalPatientCaseCompanion.insert({
     this.id = const Value.absent(),
@@ -3059,6 +3098,7 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
     this.treatmentPlanOutcome = const Value.absent(),
     this.treatmentPlanId = const Value.absent(),
     this.localTreatmentPlanResults = const Value.absent(),
+    this.localTreatmentPlanPhase = const Value.absent(),
   })  : creationDate = Value(creationDate),
         patientId = Value(patientId),
         professionalId = Value(professionalId),
@@ -3081,6 +3121,7 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
     Expression<String>? treatmentPlanOutcome,
     Expression<int>? treatmentPlanId,
     Expression<int>? localTreatmentPlanResults,
+    Expression<int>? localTreatmentPlanPhase,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -3098,6 +3139,8 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
       if (treatmentPlanId != null) 'treatment_plan_id': treatmentPlanId,
       if (localTreatmentPlanResults != null)
         'local_treatment_plan_results': localTreatmentPlanResults,
+      if (localTreatmentPlanPhase != null)
+        'local_treatment_plan_phase': localTreatmentPlanPhase,
     });
   }
 
@@ -3114,7 +3157,8 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
       Value<bool>? patientCaseClosed,
       Value<String?>? treatmentPlanOutcome,
       Value<int?>? treatmentPlanId,
-      Value<int?>? localTreatmentPlanResults}) {
+      Value<int?>? localTreatmentPlanResults,
+      Value<int?>? localTreatmentPlanPhase}) {
     return LocalPatientCaseCompanion(
       id: id ?? this.id,
       creationDate: creationDate ?? this.creationDate,
@@ -3130,6 +3174,8 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
       treatmentPlanId: treatmentPlanId ?? this.treatmentPlanId,
       localTreatmentPlanResults:
           localTreatmentPlanResults ?? this.localTreatmentPlanResults,
+      localTreatmentPlanPhase:
+          localTreatmentPlanPhase ?? this.localTreatmentPlanPhase,
     );
   }
 
@@ -3177,6 +3223,10 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
       map['local_treatment_plan_results'] =
           Variable<int>(localTreatmentPlanResults.value);
     }
+    if (localTreatmentPlanPhase.present) {
+      map['local_treatment_plan_phase'] =
+          Variable<int>(localTreatmentPlanPhase.value);
+    }
     return map;
   }
 
@@ -3195,7 +3245,8 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
           ..write('patientCaseClosed: $patientCaseClosed, ')
           ..write('treatmentPlanOutcome: $treatmentPlanOutcome, ')
           ..write('treatmentPlanId: $treatmentPlanId, ')
-          ..write('localTreatmentPlanResults: $localTreatmentPlanResults')
+          ..write('localTreatmentPlanResults: $localTreatmentPlanResults, ')
+          ..write('localTreatmentPlanPhase: $localTreatmentPlanPhase')
           ..write(')'))
         .toString();
   }
