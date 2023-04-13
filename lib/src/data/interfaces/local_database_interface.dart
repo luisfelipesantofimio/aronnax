@@ -153,6 +153,7 @@ abstract class LocalDatabaseInteface {
     String diagnostic,
     String? caseNotes,
     int? treatmentPlanId,
+    int? treatmentPlanPhase,
   );
 
   Future<LocalPatient> getSinglePatient(int idNumber);
@@ -164,6 +165,8 @@ abstract class LocalDatabaseInteface {
   void disactivatePatientCases(int caseId);
   void activatePatientCase(int caseId);
   void deleteLocalPatientCase(int caseId);
+
+  void updatePatientCaseCurrentPhase(int caseId, int newPhase);
 }
 
 final localDatabaseRepositoryProvider = Provider<LocalDatabaseInteface>(

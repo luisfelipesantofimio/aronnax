@@ -371,6 +371,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
     String diagnostic,
     String? caseNotes,
     int? treatmentPlanId,
+    int? treatmentPlanPhase,
   ) {
     final data = LocalPatientCaseCompanion(
       creationDate: Value(creationDate),
@@ -383,6 +384,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
       isActive: const Value(false),
       patientCaseClosed: const Value(false),
       treatmentPlanId: Value(treatmentPlanId),
+      localTreatmentPlanPhase: Value(treatmentPlanPhase),
     );
     localDB.insertPatientCase(data);
   }
@@ -435,5 +437,10 @@ class DatabaseRepository implements LocalDatabaseInteface {
   @override
   void deleteLocalPatientCase(int caseId) {
     localDB.deleteLocalPatientCase(caseId);
+  }
+
+  @override
+  void updatePatientCaseCurrentPhase(int caseId, int newPhase) {
+    localDB.updatePatientCasePhase(caseId, newPhase);
   }
 }

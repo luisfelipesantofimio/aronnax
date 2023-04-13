@@ -37,6 +37,7 @@ abstract class PatientsRepositoryInterface {
       String diagnostic,
       String? caseNotes,
       int? treatmentPlanId,
+      int? treatmentPlanPhase,
       bool isOffline);
 
   void updateLocalPatientActiveState(
@@ -45,6 +46,8 @@ abstract class PatientsRepositoryInterface {
     bool newState,
     bool isOffline,
   );
+
+  void updatePatientCaseCurrentPhase(WidgetRef ref, int caseId, int newPhase);
 
   Future<List<Patient>> getPatient(WidgetRef ref, int idNumber);
 
