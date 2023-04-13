@@ -1,4 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
+
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/section.dart';
 
@@ -72,4 +74,27 @@ class TreatmentPlan {
 
   factory TreatmentPlan.fromJson(String source) =>
       TreatmentPlan.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  TreatmentPlan copyWith({
+    int? id,
+    String? title,
+    String? description,
+    DateTime? creationDate,
+    int? creatorId,
+    List<Section>? sectionsList,
+  }) {
+    return TreatmentPlan(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      creationDate: creationDate ?? this.creationDate,
+      creatorId: creatorId ?? this.creatorId,
+      sectionsList: sectionsList ?? this.sectionsList,
+    );
+  }
+
+  @override
+  String toString() {
+    return 'TreatmentPlan(id: $id, title: $title, description: $description, creationDate: $creationDate, creatorId: $creatorId, sectionsList: $sectionsList)';
+  }
 }

@@ -6,7 +6,6 @@ class Section {
   final String name;
   final String? description;
   final List<TreatmentPlanComponent> components;
-  final bool isComplete;
 
   ///Value used to define a ´negative´, ´neutral´ or ´positive´ result for a defined section
   final String? outcome;
@@ -15,7 +14,6 @@ class Section {
     this.description,
     this.outcome,
     required this.components,
-    required this.isComplete,
   });
 
   Map<String, dynamic> toMap() {
@@ -28,7 +26,6 @@ class Section {
             (e) => e.toMap(),
           )
           .toList(),
-      'isComplete': isComplete,
     };
   }
 
@@ -45,7 +42,6 @@ class Section {
       description:
           map['description'] != null ? map['description'] as String : null,
       components: componentsList,
-      isComplete: map['isComplete'] as bool,
     );
   }
 
@@ -59,7 +55,6 @@ class Section {
       name: name ?? this.name,
       description: description ?? this.description,
       outcome: outcome ?? this.outcome,
-      isComplete: isComplete ?? this.isComplete,
       components: components ?? this.components,
     );
   }
@@ -68,4 +63,9 @@ class Section {
 
   factory Section.fromJson(String source) =>
       Section.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'Section(name: $name, description: $description, components: $components, outcome: $outcome)';
+  }
 }

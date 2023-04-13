@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
@@ -17,6 +16,7 @@ class PatientCase {
   final String? treatmentPlanOutcome;
   final int? treatmentPlanId;
   final int? treatmentPlanResultsId;
+  final int? currentTreatmentPlanPhase;
   PatientCase({
     required this.id,
     required this.creationDate,
@@ -31,6 +31,7 @@ class PatientCase {
     this.treatmentPlanOutcome,
     this.treatmentPlanId,
     this.treatmentPlanResultsId,
+    this.currentTreatmentPlanPhase,
   });
 
   Map<String, dynamic> toMap() {
@@ -48,6 +49,7 @@ class PatientCase {
       'treatmentPlanOutcome': treatmentPlanOutcome,
       'treatmentPlanId': treatmentPlanId,
       'treatmentPlanResultsId': treatmentPlanResultsId,
+      'currentTreatmentPlanPhase': currentTreatmentPlanPhase,
     };
   }
 
@@ -72,6 +74,9 @@ class PatientCase {
       treatmentPlanResultsId: map['treatmentPlanResultsId'] != null
           ? map['treatmentPlanResultsId'] as int
           : null,
+      currentTreatmentPlanPhase: map['currentTreatmentPlanPhase'] != null
+          ? map['currentTreatmentPlanPhase'] as int
+          : null,
     );
   }
 
@@ -90,6 +95,7 @@ class PatientCase {
       treatmentPlanId: data.treatmentPlanId,
       treatmentPlanOutcome: data.treatmentPlanOutcome,
       treatmentPlanResultsId: data.localTreatmentPlanResults,
+      currentTreatmentPlanPhase: data.localTreatmentPlanPhase,
     );
   }
 
@@ -112,6 +118,7 @@ class PatientCase {
     String? treatmentPlanOutcome,
     int? treatmentPlanId,
     int? treatmentPlanResultsId,
+    int? currentTreatmentPlanPhase,
   }) {
     return PatientCase(
       id: id ?? this.id,
@@ -128,12 +135,14 @@ class PatientCase {
       treatmentPlanId: treatmentPlanId ?? this.treatmentPlanId,
       treatmentPlanResultsId:
           treatmentPlanResultsId ?? this.treatmentPlanResultsId,
+      currentTreatmentPlanPhase:
+          currentTreatmentPlanPhase ?? this.currentTreatmentPlanPhase,
     );
   }
 
   @override
   String toString() {
-    return 'PatientCase(id: $id, creationDate: $creationDate, patientId: $patientId, professionalId: $professionalId, consultationReason: $consultationReason, diagnostic: $diagnostic, treatmentProposal: $treatmentProposal, caseNotes: $caseNotes, isActive: $isActive, patientCaseClosed: $patientCaseClosed, treatmentPlanOutcome: $treatmentPlanOutcome, treatmentPlanId: $treatmentPlanId, treatmentPlanResultsId: $treatmentPlanResultsId)';
+    return 'PatientCase(id: $id, creationDate: $creationDate, patientId: $patientId, professionalId: $professionalId, consultationReason: $consultationReason, diagnostic: $diagnostic, treatmentProposal: $treatmentProposal, caseNotes: $caseNotes, isActive: $isActive, patientCaseClosed: $patientCaseClosed, treatmentPlanOutcome: $treatmentPlanOutcome, treatmentPlanId: $treatmentPlanId, treatmentPlanResultsId: $treatmentPlanResultsId, currentTreatmentPlanPhase: $currentTreatmentPlanPhase)';
   }
 
   @override
@@ -152,7 +161,8 @@ class PatientCase {
         other.patientCaseClosed == patientCaseClosed &&
         other.treatmentPlanOutcome == treatmentPlanOutcome &&
         other.treatmentPlanId == treatmentPlanId &&
-        other.treatmentPlanResultsId == treatmentPlanResultsId;
+        other.treatmentPlanResultsId == treatmentPlanResultsId &&
+        other.currentTreatmentPlanPhase == currentTreatmentPlanPhase;
   }
 
   @override
@@ -169,6 +179,7 @@ class PatientCase {
         patientCaseClosed.hashCode ^
         treatmentPlanOutcome.hashCode ^
         treatmentPlanId.hashCode ^
-        treatmentPlanResultsId.hashCode;
+        treatmentPlanResultsId.hashCode ^
+        currentTreatmentPlanPhase.hashCode;
   }
 }
