@@ -132,6 +132,15 @@ class _CaseCreationDialogState extends ConsumerState<CaseCreationDialog> {
                         ref.read(caseFormTreatmentPlanProvider) == null
                             ? null
                             : ref.read(caseFormTreatmentPlanProvider)!.id,
+                        ref.read(caseFormTreatmentPlanProvider) == null
+                            ? null
+                            : ref
+                                .read(caseFormTreatmentPlanProvider)!
+                                .sectionsList
+                                .indexOf(ref
+                                    .read(caseFormTreatmentPlanProvider)!
+                                    .sectionsList
+                                    .first),
                         ref.read(offlineStatusProvider).value!);
 
                     ScaffoldMessenger.of(context).showSnackBar(
