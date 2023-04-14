@@ -1,9 +1,8 @@
 import 'package:aronnax/src/Pages/ClinicHistory/clinic_history_search.dart';
 import 'package:aronnax/src/Pages/Formulary/widgets/consultant_selection_dialog.dart';
 import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
-import 'package:aronnax/src/data/providers/patient_case_providers.dart';
 import 'package:aronnax/src/domain/entities/patient_case.dart';
-import 'package:aronnax/src/presentation/case_creation_view/case_creation_dialog.dart';
+import 'package:aronnax/src/domain/entities/session.dart';
 import 'package:aronnax/src/presentation/main_menu/menu_settings_option_container.dart';
 import 'package:aronnax/src/presentation/register_view/register_view.dart';
 import 'package:aronnax/src/presentation/session_creation_view/session_form_view.dart';
@@ -98,6 +97,9 @@ class _MenuOptionsBarState extends ConsumerState<MenuOptionsBar> {
                           PatientCase? caseData = await ref
                               .read(patientsRepositoryProvider)
                               .getPatientActiveCase(ref, patient.id);
+                          List<Session> sessionsList = await ref
+                              .read(patientsRepositoryProvider)
+                              .getPatientSessionsList(ref, patient.id);
                           if (caseData == null) {
                             Future(() {
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -115,8 +117,10 @@ class _MenuOptionsBarState extends ConsumerState<MenuOptionsBar> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => SessionFormView(
-                                      patientData: patient,
-                                      patientCaseData: caseData),
+                                    patientData: patient,
+                                    patientCaseData: caseData,
+                                    patientSessionAmount: sessionsList.length,
+                                  ),
                                 ),
                               ),
                             );
