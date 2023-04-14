@@ -8,6 +8,7 @@ import 'package:aronnax/src/presentation/core/controllers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// TODO: improve components and find things to fix
 class TreatmentPlanScaleComponent extends ConsumerStatefulWidget {
   const TreatmentPlanScaleComponent({
     Key? key,
@@ -99,7 +100,7 @@ class _TreatmentPlanScaleComponentState
             visible: isErrorVisible,
             child: Text(
               errorMessage ?? '',
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.red,
                 fontSize: 12,
               ),
@@ -120,6 +121,7 @@ class _TreatmentPlanScaleComponentState
                   isErrorVisible = false;
                 });
               }
+              return null;
             }
           : null,
     );
