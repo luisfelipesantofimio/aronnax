@@ -1,5 +1,4 @@
 import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
-import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/patient_case_providers.dart';
 import 'package:aronnax/src/data/providers/treatment_plan_providers.dart';
 import 'package:aronnax/src/domain/entities/patient_case.dart';
