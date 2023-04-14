@@ -1,4 +1,5 @@
 import 'package:aronnax/src/data/repositories/treatment_plans_repository.dart';
+import 'package:aronnax/src/domain/entities/patient_case.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/section.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_component.dart';
@@ -29,6 +30,9 @@ abstract class TreatmentPlanRepositoryInterface {
 
   String encodeTreatmentPlanResults(TreatmentPlanResult resultData);
   TreatmentPlanResult decodeTreatmentPlanResults(String encodedResultData);
+
+  void saveTreatmentPlanResults(
+      WidgetRef ref, TreatmentPlanResult results, PatientCase caseData);
 }
 
 final treatmentPlanRepositoryProvider =

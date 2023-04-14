@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/interfaces/treatment_plans_repository_interface.dart';
+import 'package:aronnax/src/data/providers/connection_state_provider.dart';
+import 'package:aronnax/src/domain/entities/patient_case.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/section.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_component.dart';
@@ -120,5 +122,23 @@ class TreatmentPlanRepository implements TreatmentPlanRepositoryInterface {
   @override
   String encodeTreatmentPlanResults(TreatmentPlanResult resultData) {
     return json.encode(resultData.toJson());
+  }
+
+  @override
+  void saveTreatmentPlanResults(
+      WidgetRef ref, TreatmentPlanResult results, PatientCase caseData) {
+    if (ref.read(offlineStatusProvider).value!) {
+      ref.read(localDatabaseRepositoryProvider).insertLocalTreatmentPlanResult(
+            sessionNumber: results.sessionNumber,
+            applicationDate: results.applicationDate,
+            treatmentPlanID: results.treatmentPlanId,
+            patientID: results.patientId,
+            professionalID: results.professionalId,
+            patientCaseID: caseData.id,
+            treatmentResultData:
+                results.results.map((e) => e.toJson()).toList().toString(),
+          );
+    }
+    //TODO manage session number
   }
 }
