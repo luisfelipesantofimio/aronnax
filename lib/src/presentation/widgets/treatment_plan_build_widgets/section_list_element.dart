@@ -25,12 +25,12 @@ class SectionListElement extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(
+          borderRadius: const BorderRadius.all(
             Radius.circular(10),
           ),
           color:
-              selectedItem ? Colors.white : Color.fromARGB(255, 226, 226, 226),
-          boxShadow: [
+              selectedItem ? Colors.white : const Color.fromARGB(255, 226, 226, 226),
+          boxShadow: const [
             BoxShadow(
               offset: Offset(0, 3),
               color: Color.fromARGB(255, 212, 212, 212),
