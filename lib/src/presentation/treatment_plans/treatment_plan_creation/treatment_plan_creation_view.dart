@@ -41,7 +41,6 @@ class _TreatmentPlanCreationViewState
       Section(
         name: 'Phase 1',
         components: [],
-        isComplete: false,
       ),
     );
     if (widget.treatmentPlanData != null) {
@@ -156,7 +155,6 @@ class _TreatmentPlanCreationViewState
                                         name: title,
                                         description: description,
                                         components: [],
-                                        isComplete: false,
                                       ),
                                     );
                                     setState(() {});
