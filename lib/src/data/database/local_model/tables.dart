@@ -55,8 +55,9 @@ class LocalPatientCase extends Table {
 
   IntColumn get treatmentPlanId =>
       integer().references(LocalTreatmentPlans, #id).nullable()();
-  IntColumn get localTreatmentPlanResults =>
-      integer().references(LocaltreatmentResults, #id).nullable()();
+
+  // /// String value used to store the related results ids, used to be transformed into a list of integers
+  // TextColumn get localTreatmentPlanResults => text().nullable()();
 
   IntColumn get localTreatmentPlanPhase => integer().nullable()();
 }
@@ -73,8 +74,7 @@ class LocalSessions extends Table {
   IntColumn get idNumber => integer().references(LocalPatients, #id)();
   IntColumn get professionalID =>
       integer().references(LocalProfessional, #id)();
-  IntColumn get caseId =>
-      integer().nullable().references(LocalPatientCase, #id)();
+  IntColumn get caseId => integer().references(LocalPatientCase, #id)();
 }
 
 class LocalProfessional extends Table {
@@ -138,8 +138,9 @@ class LocaltreatmentResults extends Table {
   IntColumn get patientID => integer().references(LocalPatients, #id)();
   IntColumn get professionalID =>
       integer().references(LocalProfessional, #id)();
-  TextColumn get treatmentPlanID =>
-      text().references(LocalTreatmentPlans, #id)();
+  IntColumn get treatmentPlanID =>
+      integer().references(LocalTreatmentPlans, #id)();
+  IntColumn get patientCaseId => integer().references(LocalPatientCase, #id)();
   TextColumn get treatmentResultsData => text()();
 }
 

@@ -89,9 +89,10 @@ abstract class LocalDatabaseInteface {
   void insertLocalTreatmentPlanResult({
     required int sessionNumber,
     required DateTime applicationDate,
-    required String treatmentPlanID,
+    required int treatmentPlanID,
     required int patientID,
     required int professionalID,
+    required int patientCaseID,
     required String treatmentResultData,
   });
 
@@ -167,6 +168,8 @@ abstract class LocalDatabaseInteface {
   void deleteLocalPatientCase(int caseId);
 
   void updatePatientCaseCurrentPhase(int caseId, int newPhase);
+
+  Future<List<LocalSession>> getPatientSessionsList(int patientId);
 }
 
 final localDatabaseRepositoryProvider = Provider<LocalDatabaseInteface>(

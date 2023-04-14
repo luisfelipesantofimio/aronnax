@@ -312,12 +312,14 @@ class DatabaseRepository implements LocalDatabaseInteface {
   void insertLocalTreatmentPlanResult({
     required int sessionNumber,
     required DateTime applicationDate,
-    required String treatmentPlanID,
+    required int treatmentPlanID,
     required int patientID,
     required int professionalID,
+    required int patientCaseID,
     required String treatmentResultData,
   }) async {
     final data = LocaltreatmentResultsCompanion(
+      patientCaseId: Value(patientCaseID),
       applicationDate: Value(applicationDate),
       patientID: Value(patientID),
       professionalID: Value(professionalID),
@@ -442,5 +444,10 @@ class DatabaseRepository implements LocalDatabaseInteface {
   @override
   void updatePatientCaseCurrentPhase(int caseId, int newPhase) {
     localDB.updatePatientCasePhase(caseId, newPhase);
+  }
+
+  @override
+  Future<List<LocalSession>> getPatientSessionsList(int patientId) {
+    return localDB.getPatientSessionsList(patientId);
   }
 }
