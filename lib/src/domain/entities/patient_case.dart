@@ -15,7 +15,6 @@ class PatientCase {
   final bool patientCaseClosed;
   final String? treatmentPlanOutcome;
   final int? treatmentPlanId;
-  final int? treatmentPlanResultsId;
   final int? currentTreatmentPlanPhase;
   PatientCase({
     required this.id,
@@ -30,7 +29,6 @@ class PatientCase {
     required this.patientCaseClosed,
     this.treatmentPlanOutcome,
     this.treatmentPlanId,
-    this.treatmentPlanResultsId,
     this.currentTreatmentPlanPhase,
   });
 
@@ -48,7 +46,6 @@ class PatientCase {
       'patientCaseClosed': patientCaseClosed,
       'treatmentPlanOutcome': treatmentPlanOutcome,
       'treatmentPlanId': treatmentPlanId,
-      'treatmentPlanResultsId': treatmentPlanResultsId,
       'currentTreatmentPlanPhase': currentTreatmentPlanPhase,
     };
   }
@@ -71,9 +68,6 @@ class PatientCase {
           : null,
       treatmentPlanId:
           map['treatmentPlanId'] != null ? map['treatmentPlanId'] as int : null,
-      treatmentPlanResultsId: map['treatmentPlanResultsId'] != null
-          ? map['treatmentPlanResultsId'] as int
-          : null,
       currentTreatmentPlanPhase: map['currentTreatmentPlanPhase'] != null
           ? map['currentTreatmentPlanPhase'] as int
           : null,
@@ -94,7 +88,6 @@ class PatientCase {
       patientCaseClosed: data.patientCaseClosed,
       treatmentPlanId: data.treatmentPlanId,
       treatmentPlanOutcome: data.treatmentPlanOutcome,
-      treatmentPlanResultsId: data.localTreatmentPlanResults,
       currentTreatmentPlanPhase: data.localTreatmentPlanPhase,
     );
   }
@@ -117,7 +110,6 @@ class PatientCase {
     bool? patientCaseClosed,
     String? treatmentPlanOutcome,
     int? treatmentPlanId,
-    int? treatmentPlanResultsId,
     int? currentTreatmentPlanPhase,
   }) {
     return PatientCase(
@@ -133,8 +125,6 @@ class PatientCase {
       patientCaseClosed: patientCaseClosed ?? this.patientCaseClosed,
       treatmentPlanOutcome: treatmentPlanOutcome ?? this.treatmentPlanOutcome,
       treatmentPlanId: treatmentPlanId ?? this.treatmentPlanId,
-      treatmentPlanResultsId:
-          treatmentPlanResultsId ?? this.treatmentPlanResultsId,
       currentTreatmentPlanPhase:
           currentTreatmentPlanPhase ?? this.currentTreatmentPlanPhase,
     );
@@ -142,7 +132,7 @@ class PatientCase {
 
   @override
   String toString() {
-    return 'PatientCase(id: $id, creationDate: $creationDate, patientId: $patientId, professionalId: $professionalId, consultationReason: $consultationReason, diagnostic: $diagnostic, treatmentProposal: $treatmentProposal, caseNotes: $caseNotes, isActive: $isActive, patientCaseClosed: $patientCaseClosed, treatmentPlanOutcome: $treatmentPlanOutcome, treatmentPlanId: $treatmentPlanId, treatmentPlanResultsId: $treatmentPlanResultsId, currentTreatmentPlanPhase: $currentTreatmentPlanPhase)';
+    return 'PatientCase(id: $id, creationDate: $creationDate, patientId: $patientId, professionalId: $professionalId, consultationReason: $consultationReason, diagnostic: $diagnostic, treatmentProposal: $treatmentProposal, caseNotes: $caseNotes, isActive: $isActive, patientCaseClosed: $patientCaseClosed, treatmentPlanOutcome: $treatmentPlanOutcome, treatmentPlanId: $treatmentPlanId, currentTreatmentPlanPhase: $currentTreatmentPlanPhase)';
   }
 
   @override
@@ -161,7 +151,6 @@ class PatientCase {
         other.patientCaseClosed == patientCaseClosed &&
         other.treatmentPlanOutcome == treatmentPlanOutcome &&
         other.treatmentPlanId == treatmentPlanId &&
-        other.treatmentPlanResultsId == treatmentPlanResultsId &&
         other.currentTreatmentPlanPhase == currentTreatmentPlanPhase;
   }
 
@@ -179,7 +168,6 @@ class PatientCase {
         patientCaseClosed.hashCode ^
         treatmentPlanOutcome.hashCode ^
         treatmentPlanId.hashCode ^
-        treatmentPlanResultsId.hashCode ^
         currentTreatmentPlanPhase.hashCode;
   }
 }
