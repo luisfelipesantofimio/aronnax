@@ -1,9 +1,7 @@
-import 'package:aronnax/src/data/interfaces/treatment_plans_repository_interface.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/treatment_plan_providers.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:aronnax/src/domain/entities/patient_case.dart';
-import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan.dart';
 import 'package:aronnax/src/presentation/treatment_plans/treatment_plan_application/treatment_plan_application_view.dart';
 import 'package:aronnax/src/presentation/widgets/note_creation_dialog.dart';
 import 'package:aronnax/src/presentation/session_creation_view/session_form.dart';
@@ -17,17 +15,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class SessionFormView extends ConsumerWidget {
+class SessionFormView extends ConsumerStatefulWidget {
   const SessionFormView({
     Key? key,
     required this.patientData,
     required this.patientCaseData,
+    required this.patientSessionAmount,
   }) : super(key: key);
   final Patient patientData;
   final PatientCase patientCaseData;
+  final int patientSessionAmount;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<SessionFormView> createState() => _SessionFormViewState();
+}
+
+class _SessionFormViewState extends ConsumerState<SessionFormView> {
+  bool treatmentPlanResultsSaved = false;
+
+  @override
+  Widget build(BuildContext context) {
     final treatmentPlan = ref.watch(
         treatmentPlanListProvider(ref.read(offlineStatusProvider).value!));
     return Scaffold(
@@ -41,7 +48,8 @@ class SessionFormView extends ConsumerWidget {
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.2,
-                  child: SessionInformationView(patientData: patientData),
+                  child:
+                      SessionInformationView(patientData: widget.patientData),
                 ),
                 SizedBox(
                   height: 120,
@@ -76,27 +84,44 @@ class SessionFormView extends ConsumerWidget {
                       ),
                       treatmentPlan.when(
                         data: (data) => Visibility(
-                          visible: patientCaseData.treatmentPlanId != null,
+                          visible:
+                              widget.patientCaseData.treatmentPlanId != null,
                           child: GenericIconButton(
                             icon: FontAwesomeIcons.handHoldingMedical,
                             title: 'Iniciar plan de tratamiento',
-                            onTap: () => showDialog(
-                              context: context,
-                              builder: (context) =>
-                                  TreatmentPlanApplicationView(
-                                caseData: patientCaseData,
-                                treatmentPlanData: data.elementAt(
-                                  data.indexWhere((element) =>
-                                      element.id ==
-                                      patientCaseData.treatmentPlanId),
-                                ),
-                              ),
-                            ),
+                            onTap: () => treatmentPlanResultsSaved
+                                ? ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      backgroundColor: Colors.red,
+                                      content: Text(
+                                          'Treatment plan results already saved.'),
+                                    ),
+                                  )
+                                : showDialog(
+                                    context: context,
+                                    builder: (context) =>
+                                        TreatmentPlanApplicationView(
+                                      patientSessionAmount:
+                                          widget.patientSessionAmount,
+                                      caseData: widget.patientCaseData,
+                                      treatmentPlanData: data.elementAt(
+                                        data.indexWhere((element) =>
+                                            element.id ==
+                                            widget.patientCaseData
+                                                .treatmentPlanId),
+                                      ),
+                                      onResultsSaving: (resultsSaved) {
+                                        setState(() {
+                                          treatmentPlanResultsSaved = true;
+                                        });
+                                      },
+                                    ),
+                                  ),
                           ),
                         ),
                         error: (error, stackTrace) =>
-                            Text('Something went wrong'),
-                        loading: () => CircularProgressIndicator(),
+                            const Text('Something went wrong'),
+                        loading: () => const CircularProgressIndicator(),
                       ),
                     ],
                   ),
@@ -136,7 +161,7 @@ class SessionFormView extends ConsumerWidget {
                                 top: 20,
                               ),
                               child: SessionsForm(
-                                patientData: patientData,
+                                patientData: widget.patientData,
                               ),
                             ),
                           ),
@@ -161,7 +186,7 @@ class SessionFormView extends ConsumerWidget {
                                       context: context,
                                       builder: (context) =>
                                           SessionPerformanceDialog(
-                                              patientData: patientData),
+                                              patientData: widget.patientData),
                                     );
                                   }
                                 },
