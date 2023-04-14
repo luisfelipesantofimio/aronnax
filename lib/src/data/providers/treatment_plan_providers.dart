@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:aronnax/src/data/interfaces/treatment_plans_repository_interface.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_result.dart';
