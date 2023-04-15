@@ -3,80 +3,6 @@ import 'local_model.dart';
 
 LocalDatabase localDB = LocalDatabase();
 
-addLocalPatient({
-  required String names,
-  required String lastNames,
-  required DateTime birthDate,
-  required int idNumber,
-  required String gender,
-  required int contactNumber,
-  required String mail,
-  required String city,
-  required String state,
-  required String adress,
-  required String insurance,
-  required String education,
-  required String ocupation,
-  required String emergencyContactName,
-  required int emergencyContactNumber,
-  required DateTime creationDate,
-  required int professionalID,
-}) {
-  final entity = LocalPatientsCompanion(
-      names: Value(names),
-      lastNames: Value(lastNames),
-      birthDate: Value(birthDate),
-      idNumber: Value(idNumber),
-      gender: Value(gender),
-      contactNumber: Value(contactNumber),
-      mail: Value(mail),
-      city: Value(city),
-      state: Value(state),
-      adress: Value(adress),
-      insurance: Value(insurance),
-      education: Value(education),
-      ocupation: Value(ocupation),
-      emergencyContactName: Value(emergencyContactName),
-      emergencyContactNumber: Value(emergencyContactNumber),
-      isActive: const Value(true),
-      creationDate: Value(creationDate),
-      professionalID: Value(professionalID));
-
-  localDB.insertPatient(entity);
-}
-
-Future<void> addLocalClinicHistory(
-  String registerCode,
-  DateTime dateTime,
-  String consultationReason,
-  String mentalExamn,
-  String treatment,
-  String medAntecedents,
-  String psiAntecedents,
-  String familyHistory,
-  String personalHistory,
-  String diagnostic,
-  int idNumber,
-  int professionalID,
-) async {
-  final entity = LocalClinicHistoryCompanion(
-    registerNumber: Value(registerCode),
-    currentDate: Value(dateTime),
-    consultationReason: Value(consultationReason),
-    mentalExamination: Value(mentalExamn),
-    medAntecedents: Value(medAntecedents),
-    psiAntecedents: Value(psiAntecedents),
-    familyHistory: Value(familyHistory),
-    personalHistory: Value(personalHistory),
-    diagnostic: Value(diagnostic),
-    treatment: Value(treatment),
-    idNumber: Value(idNumber),
-    professionalID: Value(professionalID),
-  );
-
-  await localDB.insertClinicHistory(entity);
-}
-
 Future<void> addLocalSession(
   String sessionSummary,
   String sessionObjectives,
@@ -127,8 +53,10 @@ Future<List<LocalPatient>> searchPatient(String user) {
   return localDB.userConsultation(user);
 }
 
-Future<List<LocalProfessionalData>> loginExistingProfessional(int userID) {
-  return localDB.loginProfessional(userID);
+Future<List<LocalProfessionalData>> loginExistingProfessional(
+  String userName,
+) {
+  return localDB.loginProfessional(userName);
 }
 
 Stream<List<LocalProfessionalData>> fetchInitialRegisterUsers() {

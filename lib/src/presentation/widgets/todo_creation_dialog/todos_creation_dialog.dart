@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/providers/todos_provider.dart';

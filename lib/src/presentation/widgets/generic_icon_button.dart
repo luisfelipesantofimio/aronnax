@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
-class GenericIconButon extends StatelessWidget {
-  const GenericIconButon({
+class GenericIconButton extends StatelessWidget {
+  const GenericIconButton({
     Key? key,
     required this.icon,
     required this.title,

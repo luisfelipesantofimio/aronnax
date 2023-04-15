@@ -20,12 +20,12 @@ class MainHelpView extends ConsumerWidget {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image(
+                    const Image(
                       height: 300,
                       image: true
-                          ? const AssetImage(
+                          ? AssetImage(
                               "assets/img/aronnax-icon-light.png")
-                          : const AssetImage(
+                          : AssetImage(
                               "assets/img/aronnax-icon-dark.png"),
                     ),
                     Text(

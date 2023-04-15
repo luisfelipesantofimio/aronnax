@@ -3,6 +3,7 @@ import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/domain/entities/remote_model/remote_patient.dart';
 
 class Patient {
+  final int id;
   final String names;
   final String lastNames;
   final int idNumber;
@@ -21,6 +22,7 @@ class Patient {
   final DateTime creationDate;
   final bool isActive;
   Patient({
+    required this.id,
     required this.names,
     required this.lastNames,
     required this.idNumber,
@@ -42,6 +44,7 @@ class Patient {
 
   factory Patient.fromLocalModel(LocalPatient data) {
     return Patient(
+      id: data.id,
       names: data.names,
       lastNames: data.lastNames,
       idNumber: data.idNumber,
@@ -63,6 +66,7 @@ class Patient {
   }
   factory Patient.fromRemoteModel(RemotePatient data) {
     return Patient(
+      id: 0,
       names: data.names,
       lastNames: data.lastNames,
       idNumber: data.idNumber,

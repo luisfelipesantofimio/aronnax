@@ -1,5 +1,3 @@
-import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
-import 'package:aronnax/src/data/interfaces/settings_repository_interface.dart';
 import 'package:aronnax/src/data/providers/settings_provider.dart';
 import 'package:aronnax/src/presentation/core/methods.dart';
 import 'package:flutter/material.dart';

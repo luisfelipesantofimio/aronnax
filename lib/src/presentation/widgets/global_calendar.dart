@@ -1,11 +1,9 @@
-import 'dart:developer';
 
 import 'package:aronnax/src/data/interfaces/calendar_repository_interface.dart';
 import 'package:aronnax/src/data/providers/appointments_provider.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/domain/entities/calendar_event.dart';
 import 'package:aronnax/src/presentation/widgets/appointment_creation_dialog.dart';
-import 'package:aronnax/src/presentation/widgets/generic_minimal_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';

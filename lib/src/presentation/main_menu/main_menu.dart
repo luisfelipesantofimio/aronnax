@@ -7,7 +7,10 @@ import 'package:aronnax/src/domain/entities/calendar_event.dart';
 import 'package:aronnax/src/presentation/core/methods.dart';
 import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:aronnax/src/presentation/main_menu/menu_options_bar.dart';
+import 'package:aronnax/src/presentation/patiens_view/patients_view.dart';
+import 'package:aronnax/src/presentation/treatment_plans/treatment_plans_view/treatment_plans_view.dart';
 import 'package:aronnax/src/presentation/widgets/calendar_components/events_list_view.dart';
+import 'package:aronnax/src/presentation/widgets/generic_icon_button.dart';
 import 'package:aronnax/src/presentation/widgets/global_calendar.dart';
 import 'package:aronnax/src/presentation/widgets/todo_creation_dialog/todos_creation_dialog.dart';
 import 'package:aronnax/src/presentation/widgets/todos_list_view/todos_list_view.dart';
@@ -154,6 +157,40 @@ class MainMenuState extends ConsumerState<MainMenu> {
                                 width: MediaQuery.of(context).size.width * 0.25,
                                 child: const GlobalCalendar(),
                               ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            GenericIconButton(
+                              icon: FontAwesomeIcons.book,
+                              title: 'Treatment plans',
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const TreatmentPlansView(),
+                                  ),
+                                );
+                              },
+                            ),
+                            GenericIconButton(
+                              icon: FontAwesomeIcons.microscope,
+                              title: 'Tests',
+                              onTap: () {},
+                            ),
+                            GenericIconButton(
+                              icon: FontAwesomeIcons.userGroup,
+                              title: 'Patiens list',
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const PatientsView(),
+                                  ),
+                                );
+                              },
                             ),
                           ],
                         ),

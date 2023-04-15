@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 class GenericMinimalButton extends StatefulWidget {
@@ -40,7 +39,7 @@ class _GenericMinimalButtonState extends State<GenericMinimalButton> {
             ),
           ),
           child: Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Center(
               child: Text(
                 widget.title,

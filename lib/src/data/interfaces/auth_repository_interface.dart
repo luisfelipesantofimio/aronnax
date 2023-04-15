@@ -11,7 +11,8 @@ abstract class AuthRepositoryInterface {
     required int personalID,
   });
 
-  Future<bool> loginLocalUser({required WidgetRef ref, required int userID});
+  Future<bool> loginLocalUser(
+      {required WidgetRef ref, required String userName});
 }
 
 final authenticationProvider = Provider<AuthRepositoryInterface>(

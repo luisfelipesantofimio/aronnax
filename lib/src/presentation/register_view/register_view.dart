@@ -1,6 +1,8 @@
+import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/forms_providers/register_form_provider.dart';
-import 'package:aronnax/src/data/database/local_model/local_queries.dart';
+import 'package:aronnax/src/domain/entities/patient.dart';
+import 'package:aronnax/src/presentation/clinic_history_form_screen/clinic_history_register_view.dart';
 import 'package:aronnax/src/presentation/core/controllers.dart';
 import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:aronnax/src/presentation/register_view/register_form.dart';
@@ -15,7 +17,7 @@ class MainViewRegister extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     bool isOfflineEnabled = ref.watch(globalOfflineStatusProvider);
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 166, 211, 227),
+      backgroundColor: const Color.fromARGB(255, 166, 211, 227),
       body: Padding(
         padding: const EdgeInsets.only(left: 40, right: 40),
         child: Center(
@@ -85,47 +87,52 @@ class MainViewRegister extends ConsumerWidget {
                                     height: 40,
                                     width: 200,
                                     title: "Guardar registro",
-                                    onPressed: () {
+                                    onPressed: () async {
                                       if (basicKey.currentState!.validate()) {
                                         basicKey.currentState!.save();
 
                                         // isOfflineEnabled
                                         //     ?
-                                        addLocalPatient(
-                                          names:
-                                              ref.read(registerNamesProvider),
-                                          lastNames: ref
-                                              .read(registerLastNamesProvider),
-                                          adress:
-                                              ref.read(registerAdressProvider),
-                                          birthDate: ref
-                                              .read(registerBirthDateProvider),
-                                          gender:
-                                              ref.read(registerGenderProvider),
-                                          city: ref.read(registerCityProvider),
-                                          state:
-                                              ref.read(registerStateProvider),
-                                          insurance: ref
-                                              .read(registerInsuranceProvider),
-                                          education: ref
-                                              .read(registerEducationProvider),
-                                          mail: ref.read(registerMailProvider),
-                                          idNumber: ref
-                                              .read(registerIdNumberProvider),
-                                          ocupation: ref
-                                              .read(registerOcupationProvider),
-                                          creationDate: DateTime.now(),
-                                          contactNumber: ref.read(
-                                              registerConctatNumberProvider),
-                                          emergencyContactName: ref.read(
-                                              registerEmergencyContactNameProvider),
-                                          emergencyContactNumber: ref.read(
-                                              registerEmergencyContactNumberProvider),
-                                          professionalID: ref
-                                              .read(
-                                                  globalUserInformationProvider)!
-                                              .professionalID,
-                                        );
+                                        Patient? patientData = await ref
+                                            .read(patientsRepositoryProvider)
+                                            .addPatient(
+                                              ref: ref,
+                                              names: ref
+                                                  .read(registerNamesProvider),
+                                              lastNames: ref.read(
+                                                  registerLastNamesProvider),
+                                              adress: ref
+                                                  .read(registerAdressProvider),
+                                              birthDate: ref.read(
+                                                  registerBirthDateProvider),
+                                              gender: ref
+                                                  .read(registerGenderProvider),
+                                              city: ref
+                                                  .read(registerCityProvider),
+                                              state: ref
+                                                  .read(registerStateProvider),
+                                              insurance: ref.read(
+                                                  registerInsuranceProvider),
+                                              education: ref.read(
+                                                  registerEducationProvider),
+                                              mail: ref
+                                                  .read(registerMailProvider),
+                                              idNumber: ref.read(
+                                                  registerIdNumberProvider),
+                                              ocupation: ref.read(
+                                                  registerOcupationProvider),
+                                              creationDate: DateTime.now(),
+                                              contactNumber: ref.read(
+                                                  registerConctatNumberProvider),
+                                              emergencyContactName: ref.read(
+                                                  registerEmergencyContactNameProvider),
+                                              emergencyContactNumber: ref.read(
+                                                  registerEmergencyContactNumberProvider),
+                                              professionalID: ref
+                                                  .read(
+                                                      globalUserInformationProvider)!
+                                                  .professionalID,
+                                            );
                                         // : insertPatientData(
                                         //     names,
                                         //     lastNames,
@@ -141,15 +148,37 @@ class MainViewRegister extends ConsumerWidget {
                                         //     ocupation,
                                         //     emergencyContactName,
                                         //     emergencyContactNumber);
-
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                            content:
-                                                Text("Información guardada"),
-                                          ),
-                                        );
-                                        Navigator.pop(context);
+                                        if (patientData != null) {
+                                          Future(() {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              const SnackBar(
+                                                backgroundColor: Colors.green,
+                                                content: Text(
+                                                    "Paciente registrado guardada"),
+                                              ),
+                                            );
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ClinicHistoryRegisterView(
+                                                        patientData:
+                                                            patientData),
+                                              ),
+                                            );
+                                          });
+                                        } else {
+                                          Future(() {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              const SnackBar(
+                                                backgroundColor: Colors.red,
+                                                content: Text("Algo salió mal"),
+                                              ),
+                                            );
+                                          });
+                                        }
                                       }
                                     },
                                   )

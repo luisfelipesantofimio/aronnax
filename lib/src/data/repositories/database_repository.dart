@@ -1,9 +1,9 @@
-import 'dart:developer';
-
+import 'dart:convert';
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/remote_database/server_api.dart';
 import 'package:aronnax/src/domain/entities/calendar_event.dart';
+import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan.dart';
 import 'package:aronnax/src/presentation/core/methods.dart';
 import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +16,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
     required String names,
     required String lastNames,
     required DateTime birthDate,
+    required String gender,
     required int idNumber,
     required int contactNumber,
     required String mail,
@@ -34,6 +35,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
         names: Value(names),
         lastNames: Value(lastNames),
         birthDate: Value(birthDate),
+        gender: Value(gender),
         idNumber: Value(idNumber),
         contactNumber: Value(contactNumber),
         mail: Value(mail),
@@ -56,29 +58,23 @@ class DatabaseRepository implements LocalDatabaseInteface {
   Future<void> addLocalClinicHistory(
     String registerCode,
     DateTime dateTime,
-    String consultationReason,
     String mentalExamn,
-    String treatment,
     String medAntecedents,
     String psiAntecedents,
     String familyHistory,
     String personalHistory,
-    String diagnostic,
     int idNumber,
     int professionalID,
   ) async {
     final entity = LocalClinicHistoryCompanion(
       registerNumber: Value(registerCode),
       currentDate: Value(dateTime),
-      consultationReason: Value(consultationReason),
       mentalExamination: Value(mentalExamn),
       medAntecedents: Value(medAntecedents),
-      psiAntecedents: Value(psiAntecedents),
+      psyAntecedents: Value(psiAntecedents),
       familyHistory: Value(familyHistory),
       personalHistory: Value(personalHistory),
-      diagnostic: Value(diagnostic),
-      treatment: Value(treatment),
-      idNumber: Value(idNumber),
+      patientId: Value(idNumber),
       professionalID: Value(professionalID),
     );
 
@@ -93,6 +89,10 @@ class DatabaseRepository implements LocalDatabaseInteface {
     int idNumber,
     int professionalID,
     DateTime sessionDate,
+    String sessionNotes,
+    String sessionPerformance,
+    String sessionPerformanceExplanation,
+    int caseId,
   ) async {
     final entity = LocalSessionsCompanion(
       idNumber: Value(idNumber),
@@ -101,6 +101,10 @@ class DatabaseRepository implements LocalDatabaseInteface {
       sessionObjectives: Value(sessionObjectives),
       sessionSummary: Value(sessionSummary),
       therapeuticArchievements: Value(therapeuticArchievements),
+      sessionNotes: Value(sessionNotes),
+      sessionPerformance: Value(sessionPerformance),
+      sessionPerformanceExplanation: Value(sessionPerformanceExplanation),
+      caseId: Value(caseId),
     );
     await localDB.insertSession(entity);
   }
@@ -126,8 +130,10 @@ class DatabaseRepository implements LocalDatabaseInteface {
   }
 
   @override
-  Future<List<LocalProfessionalData>> loginExistingProfessional(int userID) {
-    return localDB.loginProfessional(userID);
+  Future<List<LocalProfessionalData>> loginExistingProfessional(
+    String userName,
+  ) {
+    return localDB.loginProfessional(userName);
   }
 
   @override
@@ -281,5 +287,167 @@ class DatabaseRepository implements LocalDatabaseInteface {
   @override
   Future updateTodoState(int todoId, bool newState) async {
     await localDB.updateTodoState(todoId, newState);
+  }
+
+  @override
+  void insertLocalTreatmentPlan({
+    required DateTime date,
+    required String treatmentTitle,
+    required String treatmentDescription,
+    required int professionalID,
+    required String treatmentData,
+  }) async {
+    final data = LocalTreatmentPlansCompanion(
+      creationDate: Value(date),
+      professionalID: Value(professionalID),
+      treatmentTitle: Value(treatmentTitle),
+      treatmentDescription: Value(treatmentDescription),
+      treatmentData: Value(treatmentData),
+    );
+
+    await localDB.insertTreatmentPlan(data);
+  }
+
+  @override
+  void insertLocalTreatmentPlanResult({
+    required int sessionNumber,
+    required DateTime applicationDate,
+    required int treatmentPlanID,
+    required int patientID,
+    required int professionalID,
+    required int patientCaseID,
+    required String treatmentResultData,
+  }) async {
+    final data = LocaltreatmentResultsCompanion(
+      patientCaseId: Value(patientCaseID),
+      applicationDate: Value(applicationDate),
+      patientID: Value(patientID),
+      professionalID: Value(professionalID),
+      treatmentPlanID: Value(treatmentPlanID),
+      sessionNumber: Value(sessionNumber),
+      treatmentResultsData: Value(treatmentResultData),
+    );
+    localDB.insertTreatmentPlanResult(data);
+  }
+
+  @override
+  void deleteLocalTreatmentPlan(int treatmentId) {
+    localDB.deleteLocalTreatmentPlan(treatmentId);
+  }
+
+  @override
+  Future<List<LocalTreatmentPlan>> getLocalTreatmentPlans() async {
+    return localDB.getLocalTreatmentPlans();
+  }
+
+  @override
+  void updateLocalTreatmentPlan(TreatmentPlan newTreatmentPlanData) {
+    localDB.updateTreatmentPlan(
+      LocalTreatmentPlan(
+          id: newTreatmentPlanData.id,
+          creationDate: newTreatmentPlanData.creationDate,
+          treatmentTitle: newTreatmentPlanData.title,
+          treatmentDescription: newTreatmentPlanData.description,
+          treatmentData: json.encode(newTreatmentPlanData.sectionsList
+              .map((e) => e.toJson())
+              .toList()),
+          professionalID: newTreatmentPlanData.creatorId),
+    );
+  }
+
+  @override
+  void updateLocalPatientActiveState(int patientId, bool newState) {
+    localDB.updatePatientActiveState(
+      patientId,
+      newState,
+    );
+  }
+
+  @override
+  void insertPatientCase(
+    DateTime creationDate,
+    int patientId,
+    int professionalId,
+    String consultationReason,
+    String treatmentProposal,
+    String diagnostic,
+    String? caseNotes,
+    int? treatmentPlanId,
+    int? treatmentPlanPhase,
+  ) {
+    final data = LocalPatientCaseCompanion(
+      creationDate: Value(creationDate),
+      patientId: Value(patientId),
+      professionalId: Value(professionalId),
+      consultationReason: Value(consultationReason),
+      diagnostic: Value(diagnostic),
+      treatmentProposal: Value(treatmentProposal),
+      caseNotes: Value(caseNotes),
+      isActive: const Value(false),
+      patientCaseClosed: const Value(false),
+      treatmentPlanId: Value(treatmentPlanId),
+      localTreatmentPlanPhase: Value(treatmentPlanPhase),
+    );
+    localDB.insertPatientCase(data);
+  }
+
+  @override
+  Future<LocalPatient> getSinglePatient(int idNumber) async {
+    return localDB.getSinglePatient(idNumber);
+  }
+
+  @override
+  Future<List<LocalPatient>> getPatientsListById(int idNumber) {
+    return localDB.getPatientsListById(idNumber);
+  }
+
+  @override
+  void deleteLocalClinicHistory(int id) {
+    localDB.deleteLocalClinicHisoty(id);
+  }
+
+  @override
+  Future<List<LocalClinicHistoryData>> getClinicHistoryListById(int patientId) {
+    return localDB.clinicHistoryConsultation(patientId);
+  }
+
+  @override
+  Future<LocalClinicHistoryData> getSingleClinicHistoryById(int patientId) {
+    return localDB.getSingleClinicHistory(patientId);
+  }
+
+  @override
+  Future<LocalPatientCaseData?> getSinglePatientCase(int patientId) {
+    return localDB.getSinglePatientCase(patientId);
+  }
+
+  @override
+  Future<List<LocalPatientCaseData>> getPatientCasesList(int patientId) {
+    return localDB.getPatientCases(patientId);
+  }
+
+  @override
+  void disactivatePatientCases(int caseId) {
+    localDB.disactivatePatientCases(caseId);
+  }
+
+  @override
+  void activatePatientCase(int caseId) {
+    localDB.activatePatientCases(caseId);
+  }
+
+  @override
+  void deleteLocalPatientCase(int caseId) {
+    localDB.deleteLocalPatientCase(caseId);
+  }
+
+  @override
+  void updatePatientCaseCurrentPhase(int caseId, int newPhase) {
+    localDB.updatePatientCasePhase(caseId, newPhase);
+  }
+
+  @override
+  Future<List<LocalSession>> getPatientSessionsList(int patientId) {
+    return localDB.getPatientSessionsList(patientId);
   }
 }

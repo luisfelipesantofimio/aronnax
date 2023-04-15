@@ -8,10 +8,9 @@ import 'package:aronnax/src/presentation/settings/configOptions/theme_select.dar
 import 'package:aronnax/src/presentation/settings/setting_options_view_profile.dart';
 import 'package:crypt/crypt.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AppMethods {
   bool isPasswordValid(String serverPassword, String inputPassword) {
@@ -143,6 +142,45 @@ class AppMethods {
       default:
         return Colors.grey;
     }
+  }
+
+  int ageCalculator(DateTime birthday) {
+    DateTime birthdate = birthday;
+    DateTime now = DateTime.now();
+
+    int age = now.year - birthdate.year;
+    if (now.month < birthdate.month ||
+        (now.month == birthdate.month && now.day < birthdate.day)) {
+      age--;
+    }
+    return age;
+  }
+
+  IconData getUserGenderIcon(String gender) {
+    switch (gender) {
+      case 'masculine':
+        return FontAwesomeIcons.mars;
+      case 'femenine':
+        return FontAwesomeIcons.venus;
+
+      default:
+        return FontAwesomeIcons.genderless;
+    }
+  }
+
+  /// Just returns a random color for any purpose
+  Color randomColorGenerator() {
+    List<Color> colorsList = [
+      const Color.fromARGB(255, 138, 193, 238),
+      const Color.fromARGB(255, 152, 241, 169),
+      const Color.fromARGB(255, 238, 183, 147),
+      const Color.fromARGB(255, 241, 152, 177),
+      const Color.fromARGB(255, 217, 152, 241),
+      const Color.fromARGB(255, 237, 241, 152),
+    ];
+
+    Random random = Random();
+    return colorsList[random.nextInt(colorsList.length)];
   }
 
   Color setEventStatusColor(CalendarEventStates state) {

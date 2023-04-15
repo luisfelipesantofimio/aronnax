@@ -135,7 +135,7 @@ class LocalSessionsState extends StateNotifier<List<LocalSession>> {
   List<LocalSession> currentSearchedSessions = [];
 
   Future<void> searchLocalSessions(int idNumber) async {
-    state = await localDB.sessionsConsultation(idNumber);
+    //  state = await localDB.sessionsConsultation(idNumber);
   }
 
   cleanCurrentSessionData() {

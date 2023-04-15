@@ -1,6 +1,7 @@
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/repositories/database_repository.dart';
 import 'package:aronnax/src/domain/entities/calendar_event.dart';
+import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,6 +10,7 @@ abstract class LocalDatabaseInteface {
     required String names,
     required String lastNames,
     required DateTime birthDate,
+    required String gender,
     required int idNumber,
     required int contactNumber,
     required String mail,
@@ -27,14 +29,11 @@ abstract class LocalDatabaseInteface {
   Future<void> addLocalClinicHistory(
     String registerCode,
     DateTime dateTime,
-    String consultationReason,
     String mentalExamn,
-    String treatment,
     String medAntecedents,
     String psiAntecedents,
     String familyHistory,
     String personalHistory,
-    String diagnostic,
     int idNumber,
     int professionalID,
   );
@@ -46,6 +45,10 @@ abstract class LocalDatabaseInteface {
     int idNumber,
     int professionalID,
     DateTime sessionDate,
+    String sessionNotes,
+    String sessionPerformance,
+    String sessionPerformanceExplanation,
+    int caseId,
   );
 
   void addLocalProfessional(int personalID, String names, String lastNames,
@@ -53,7 +56,9 @@ abstract class LocalDatabaseInteface {
 
   Future<List<LocalPatient>> searchPatient(String user);
 
-  Future<List<LocalProfessionalData>> loginExistingProfessional(int userID);
+  Future<List<LocalProfessionalData>> loginExistingProfessional(
+    String userName,
+  );
 
   Stream<List<LocalProfessionalData>> fetchInitialRegisterUsers();
 
@@ -71,6 +76,24 @@ abstract class LocalDatabaseInteface {
     required int port,
     required String username,
     required String databasePassword,
+  });
+
+  void insertLocalTreatmentPlan({
+    required DateTime date,
+    required String treatmentTitle,
+    required String treatmentDescription,
+    required int professionalID,
+    required String treatmentData,
+  });
+
+  void insertLocalTreatmentPlanResult({
+    required int sessionNumber,
+    required DateTime applicationDate,
+    required int treatmentPlanID,
+    required int patientID,
+    required int professionalID,
+    required int patientCaseID,
+    required String treatmentResultData,
   });
 
   Future<void> addLocalTodo({
@@ -113,6 +136,40 @@ abstract class LocalDatabaseInteface {
   void deleteAppointments(int eventId);
 
   void deleteTodo(int todoId);
+
+  Future<List<LocalTreatmentPlan>> getLocalTreatmentPlans();
+  void deleteLocalTreatmentPlan(int treatmentId);
+  void updateLocalTreatmentPlan(TreatmentPlan newTreatmentPlanData);
+  void updateLocalPatientActiveState(int patientId, bool newState);
+
+  Future<List<LocalPatientCaseData>> getPatientCasesList(int patientId);
+  Future<LocalPatientCaseData?> getSinglePatientCase(int patientId);
+
+  void insertPatientCase(
+    DateTime creationDate,
+    int patientId,
+    int professionalId,
+    String consultationReason,
+    String treatmentProposal,
+    String diagnostic,
+    String? caseNotes,
+    int? treatmentPlanId,
+    int? treatmentPlanPhase,
+  );
+
+  Future<LocalPatient> getSinglePatient(int idNumber);
+  Future<List<LocalPatient>> getPatientsListById(int idNumber);
+  void deleteLocalClinicHistory(int id);
+
+  Future<List<LocalClinicHistoryData>> getClinicHistoryListById(int patientId);
+  Future<LocalClinicHistoryData> getSingleClinicHistoryById(int patientId);
+  void disactivatePatientCases(int caseId);
+  void activatePatientCase(int caseId);
+  void deleteLocalPatientCase(int caseId);
+
+  void updatePatientCaseCurrentPhase(int caseId, int newPhase);
+
+  Future<List<LocalSession>> getPatientSessionsList(int patientId);
 }
 
 final localDatabaseRepositoryProvider = Provider<LocalDatabaseInteface>(

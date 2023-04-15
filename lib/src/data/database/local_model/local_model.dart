@@ -10,11 +10,14 @@ part 'local_model.g.dart';
 @DriftDatabase(tables: [
   LocalPatients,
   LocalClinicHistory,
+  LocalPatientCase,
   LocalSessions,
   LocalProfessional,
   LocalTests,
   LocalTodos,
   LocalAppointments,
+  LocalTreatmentPlans,
+  LocaltreatmentResults,
   Settings,
   ServerDatabase
 ])
@@ -58,6 +61,18 @@ class LocalDatabase extends _$LocalDatabase {
     return into(localAppointments).insert(data);
   }
 
+  Future<void> insertTreatmentPlan(LocalTreatmentPlansCompanion data) {
+    return into(localTreatmentPlans).insert(data);
+  }
+
+  Future<void> insertTreatmentPlanResult(LocaltreatmentResultsCompanion data) {
+    return into(localtreatmentResults).insert(data);
+  }
+
+  Future<void> insertPatientCase(LocalPatientCaseCompanion data) {
+    return into(localPatientCase).insert(data);
+  }
+
   // Data update
 
   Future updateThemeMode(bool currentThemeMode) async {
@@ -98,14 +113,58 @@ class LocalDatabase extends _$LocalDatabase {
     return (select(localPatients)).get();
   }
 
+  Future<List<LocalPatient>> getPatientsListById(int idNumber) {
+    return (select(localPatients)
+          ..where(
+            (tbl) => tbl.idNumber.equals(idNumber),
+          ))
+        .get();
+  }
+
+  Future<LocalPatient> getSinglePatient(int idNumber) {
+    return (select(localPatients)
+          ..where(
+            (tbl) => tbl.idNumber.equals(idNumber),
+          ))
+        .getSingle();
+  }
+
+  Future<List<LocalPatientCaseData>> getPatientCases(int patientId) {
+    return (select(localPatientCase)
+          ..where(
+            (tbl) => tbl.patientId.equals(patientId),
+          ))
+        .get();
+  }
+
+  Future<List<LocalPatientCaseData>> getFilteredPatientCases(int patientId) {
+    return (select(localPatientCase)
+          ..where(
+            (tbl) =>
+                tbl.patientId.equals(patientId) & tbl.isActive.equals(true),
+          ))
+        .get();
+  }
+
+  Future<LocalPatientCaseData?> getSinglePatientCase(int patientId) {
+    return (select(localPatientCase)
+          ..where(
+            (tbl) =>
+                tbl.patientId.equals(patientId) & tbl.isActive.equals(true),
+          ))
+        .getSingleOrNull();
+  }
+
   Future<List<LocalProfessionalData>> getProfessionalsList() {
     return (select(localProfessional)).get();
   }
 
-  Future<List<LocalProfessionalData>> loginProfessional(int userID) {
+  Future<List<LocalProfessionalData>> loginProfessional(
+    String userName,
+  ) {
     return (select(localProfessional)
           ..where(
-            (tbl) => tbl.personalID.equals(userID),
+            (tbl) => tbl.userName.equals(userName),
           ))
         .get();
   }
@@ -118,15 +177,24 @@ class LocalDatabase extends _$LocalDatabase {
     return (select(settings)..where((tbl) => tbl.id.equals(0))).watchSingle();
   }
 
-  Future<List<LocalClinicHistoryData>> clinicHistoryConsultation(int idNumber) {
+  Future<List<LocalClinicHistoryData>> clinicHistoryConsultation(
+      int patientId) {
     return (select(localClinicHistory)
-          ..where((tbl) => tbl.idNumber.equals(idNumber)))
+          ..where((tbl) => tbl.id.equals(patientId)))
         .get();
   }
 
-  Future<List<LocalSession>> sessionsConsultation(int idNumber) {
+  Future<LocalClinicHistoryData> getSingleClinicHistory(int patientId) {
+    return (select(localClinicHistory)
+          ..where((tbl) => tbl.id.equals(patientId)))
+        .getSingle();
+  }
+
+  Future<List<LocalSession>> getPatientSessionsList(int patientId) {
     return (select(localSessions)
-          ..where((tbl) => tbl.idNumber.equals(idNumber)))
+          ..where(
+            (tbl) => tbl.id.equals(patientId),
+          ))
         .get();
   }
 
@@ -151,6 +219,10 @@ class LocalDatabase extends _$LocalDatabase {
     return (select(localTodos)).get();
   }
 
+  Future<List<LocalTreatmentPlan>> getLocalTreatmentPlans() {
+    return (select(localTreatmentPlans)).get();
+  }
+
   //Update
 
   Future updateConfigurationState(bool isConfigured) {
@@ -169,6 +241,62 @@ class LocalDatabase extends _$LocalDatabase {
     );
   }
 
+  Future updateTreatmentPlan(LocalTreatmentPlan newData) {
+    return (update(localTreatmentPlans)
+          ..where(
+            (tbl) => tbl.id.equals(newData.id),
+          ))
+        .write(newData);
+  }
+
+  Future updatePatientActiveState(int patientId, bool newState) {
+    return (update(localPatients)
+          ..where(
+            (tbl) => tbl.id.equals(patientId),
+          ))
+        .write(
+      LocalPatientsCompanion(
+        isActive: Value(newState),
+      ),
+    );
+  }
+
+  Future updatePatientCasePhase(int caseId, int newPhase) {
+    return (update(localPatientCase)
+          ..where(
+            (tbl) => tbl.id.equals(caseId),
+          ))
+        .write(
+      LocalPatientCaseCompanion(
+        localTreatmentPlanPhase: Value(newPhase),
+      ),
+    );
+  }
+
+  Future disactivatePatientCases(int caseId) {
+    return (update(localPatientCase)
+          ..where(
+            (tbl) => tbl.id.equals(caseId),
+          ))
+        .write(
+      const LocalPatientCaseCompanion(
+        isActive: Value(false),
+      ),
+    );
+  }
+
+  Future activatePatientCases(int caseId) {
+    return (update(localPatientCase)
+          ..where(
+            (tbl) => tbl.id.equals(caseId),
+          ))
+        .write(
+      const LocalPatientCaseCompanion(
+        isActive: Value(true),
+      ),
+    );
+  }
+
   //Delete
 
   Future deleteLocalEvent(int eventId) {
@@ -183,6 +311,30 @@ class LocalDatabase extends _$LocalDatabase {
     return (delete(localTodos)
           ..where(
             (tbl) => tbl.id.equals(todoId),
+          ))
+        .go();
+  }
+
+  Future deleteLocalTreatmentPlan(int treatmentId) {
+    return (delete(localTreatmentPlans)
+          ..where(
+            (tbl) => tbl.id.equals(treatmentId),
+          ))
+        .go();
+  }
+
+  Future deleteLocalClinicHisoty(int id) {
+    return (delete(localClinicHistory)
+          ..where(
+            (tbl) => tbl.id.equals(id),
+          ))
+        .go();
+  }
+
+  Future deleteLocalPatientCase(int id) {
+    return (delete(localPatientCase)
+          ..where(
+            (tbl) => tbl.id.equals(id),
           ))
         .go();
   }
