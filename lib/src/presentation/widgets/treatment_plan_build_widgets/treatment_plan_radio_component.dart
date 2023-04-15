@@ -8,7 +8,6 @@ import 'package:aronnax/src/presentation/core/controllers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// TODO: improve components and find things to fix
 class TreatmentPlanScaleComponent extends ConsumerStatefulWidget {
   const TreatmentPlanScaleComponent({
     Key? key,
@@ -30,6 +29,7 @@ class _TreatmentPlanScaleComponentState
   String? errorMessage;
   bool isErrorVisible = false;
 
+  final ScrollController controller = ScrollController();
   @override
   Widget build(BuildContext context) {
     return FormField(
@@ -45,53 +45,59 @@ class _TreatmentPlanScaleComponentState
             child: Text(widget.componentData.componentTitle),
           ),
           SizedBox(
-            height: 80,
-            width: MediaQuery.of(context).size.width * 0.5,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: widget.valuesList.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) => SizedBox(
-                width: 100,
-                child: RadioListTile(
-                  title: Text(widget.valuesList[index].optionName),
-                  value: widget.valuesList[index],
-                  groupValue: selectedValue,
-                  onChanged: (TreatmentPlanOption? option) {
-                    setState(() {
-                      selectedValue = option;
-                    });
-                    final updatedResultsList =
-                        ref.read(currentTreatmentPlanResponseListProvider);
+            height: 50,
+            child: Scrollbar(
+              controller: controller,
+              child: ListView.builder(
+                padding: const EdgeInsets.all(0),
+                controller: controller,
+                scrollDirection: Axis.horizontal,
+                itemCount: widget.valuesList.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) => IntrinsicWidth(
+                  stepWidth: 10,
+                  child: RadioListTile(
+                    title: Text(widget.valuesList[index].optionName),
+                    value: widget.valuesList[index],
+                    groupValue: selectedValue,
+                    onChanged: (TreatmentPlanOption? option) {
+                      setState(() {
+                        selectedValue = option;
+                      });
+                      final updatedResultsList =
+                          ref.read(currentTreatmentPlanResponseListProvider);
 
-                    final itemIndex = updatedResultsList.indexWhere((element) =>
-                        element.componentId == widget.componentData.id);
+                      final itemIndex = updatedResultsList.indexWhere(
+                          (element) =>
+                              element.componentId == widget.componentData.id);
 
-                    if (itemIndex != -1) {
-                      final updatedData = TreatmentPlanResultValue(
-                          treatmentPhase:
-                              widget.componentData.treatmentPlanPhase,
-                          componentId: widget.componentData.id!,
-                          messurable: widget.componentData.messurable,
-                          value: selectedValue!.value);
+                      if (itemIndex != -1) {
+                        final updatedData = TreatmentPlanResultValue(
+                            treatmentPhase:
+                                widget.componentData.treatmentPlanPhase,
+                            componentId: widget.componentData.id!,
+                            messurable: widget.componentData.messurable,
+                            value: selectedValue!.value);
 
-                      updatedResultsList[itemIndex] = updatedData;
-                    } else {
-                      final newData = TreatmentPlanResultValue(
-                          treatmentPhase:
-                              widget.componentData.treatmentPlanPhase,
-                          componentId: widget.componentData.id!,
-                          messurable: widget.componentData.messurable,
-                          value: selectedValue!.value);
-                      updatedResultsList.add(newData);
-                    }
+                        updatedResultsList[itemIndex] = updatedData;
+                      } else {
+                        final newData = TreatmentPlanResultValue(
+                            treatmentPhase:
+                                widget.componentData.treatmentPlanPhase,
+                            componentId: widget.componentData.id!,
+                            messurable: widget.componentData.messurable,
+                            value: selectedValue!.value);
+                        updatedResultsList.add(newData);
+                      }
 
-                    ref
-                        .read(currentTreatmentPlanResponseListProvider.notifier)
-                        .update((state) => state = updatedResultsList);
-                    log(updatedResultsList.toString());
-                    treatmentPlanApplicationFormKey.currentState?.validate();
-                  },
+                      ref
+                          .read(
+                              currentTreatmentPlanResponseListProvider.notifier)
+                          .update((state) => state = updatedResultsList);
+                      log(updatedResultsList.toString());
+                      treatmentPlanApplicationFormKey.currentState?.validate();
+                    },
+                  ),
                 ),
               ),
             ),
