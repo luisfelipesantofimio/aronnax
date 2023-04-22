@@ -39,6 +39,8 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   icons_launcher: ^2.1.0
+  dio: ^5.1.1
+ 
   
 
 dev_dependencies:
