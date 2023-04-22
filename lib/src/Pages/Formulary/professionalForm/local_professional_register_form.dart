@@ -1,7 +1,7 @@
-
 import 'package:aronnax/src/data/database/local_model/local_queries.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/providers/location_data_provider.dart';
+import 'package:aronnax/src/presentation/icd_view/icd_view.dart';
 
 import 'package:aronnax/src/presentation/welcome_screens/finish.dart';
 import 'package:country_state_city/country_state_city.dart';
@@ -243,7 +243,7 @@ class LocalProfessionalRegisterState
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const FinishConfig(),
+                          builder: (context) => const IcdView(),
                         ));
                   }
                 },
