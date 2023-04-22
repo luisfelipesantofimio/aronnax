@@ -1,6 +1,7 @@
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/repositories/database_repository.dart';
 import 'package:aronnax/src/domain/entities/calendar_event.dart';
+import 'package:aronnax/src/domain/entities/icd_data.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -170,6 +171,9 @@ abstract class LocalDatabaseInteface {
   void updatePatientCaseCurrentPhase(int caseId, int newPhase);
 
   Future<List<LocalSession>> getPatientSessionsList(int patientId);
+
+  void insertIcdData(IcdDataParser data);
+  Future<List<SavedIcdDiagnosticDataData>> getDiagnosticData();
 }
 
 final localDatabaseRepositoryProvider = Provider<LocalDatabaseInteface>(

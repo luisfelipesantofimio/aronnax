@@ -3,6 +3,7 @@ import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/remote_database/server_api.dart';
 import 'package:aronnax/src/domain/entities/calendar_event.dart';
+import 'package:aronnax/src/domain/entities/icd_data.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan.dart';
 import 'package:aronnax/src/presentation/core/methods.dart';
 import 'package:drift/drift.dart';
@@ -449,5 +450,23 @@ class DatabaseRepository implements LocalDatabaseInteface {
   @override
   Future<List<LocalSession>> getPatientSessionsList(int patientId) {
     return localDB.getPatientSessionsList(patientId);
+  }
+
+  @override
+  void insertIcdData(IcdDataParser data) async {
+    final dataToSave = SavedIcdDiagnosticDataCompanion(
+      title: Value(data.title),
+      definition: Value(data.definition),
+      icdRelease: Value(data.icdRelease),
+      categoryData: Value(
+        data.child.map((e) => e.toJson()).toList().toString(),
+      ),
+    );
+    await localDB.insertIcdDiagnosticData(dataToSave);
+  }
+
+  @override
+  Future<List<SavedIcdDiagnosticDataData>> getDiagnosticData() async {
+    return await localDB.getIcdCategories();
   }
 }
