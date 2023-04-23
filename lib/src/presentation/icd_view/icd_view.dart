@@ -5,7 +5,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class IcdView extends ConsumerWidget {
-  const IcdView({Key? key}) : super(key: key);
+  const IcdView({
+    Key? key,
+    required this.isConfigured,
+  }) : super(key: key);
+  final bool isConfigured;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -46,12 +50,14 @@ class IcdView extends ConsumerWidget {
                   padding: EdgeInsets.all(20),
                 ),
                 TextButton(
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const FinishConfig(),
-                    ),
-                  ),
+                  onPressed: () => isConfigured
+                      ? Navigator.pop(context)
+                      : Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const FinishConfig(),
+                          ),
+                        ),
                   child: const Text(
                     'Continuar',
                     style: TextStyle(
