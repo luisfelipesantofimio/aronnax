@@ -55,7 +55,11 @@ class _CaseCreationFormState extends ConsumerState<CaseCreationForm> {
                         return CaseDiagnosticDialog(
                           onSelectedCategory: (data) {
                             selectedIcdCategory = data;
-
+                            ref
+                                .read(caseFormDiagnosticCodeProvider.notifier)
+                                .update(
+                                  (state) => data.code,
+                                );
                             setState(() {});
                           },
                         );

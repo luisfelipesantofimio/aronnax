@@ -119,14 +119,18 @@ final icdDataProvider = FutureProvider.family<List<IcdDataParser>, String>(
         child: [],
       );
 
-      for (var element in element.child ?? []) {
+      for (var element1 in element.child ?? []) {
+        IcdDataCategory newElement = IcdDataCategory.fromJson(
+          await Api().getIcdEntity(
+            token,
+            'es',
+            element1.toString().replaceAll('http', 'https'),
+          ),
+        );
+
         newGroupData.child.add(
-          IcdDataCategory.fromJson(
-            await Api().getIcdEntity(
-              token,
-              'es',
-              element.toString().replaceAll('http', 'https'),
-            ),
+          newElement.copyWith(
+            groupName: element.title,
           ),
         );
       }

@@ -49,9 +49,9 @@ class _CaseDiagnosticDialogState extends ConsumerState<CaseDiagnosticDialog> {
                           });
                         },
                         decoration:
-                            InputDecoration(hintText: 'Search any term'),
+                            const InputDecoration(hintText: 'Search any term'),
                       ),
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.all(10),
                       ),
                       SizedBox(
@@ -72,7 +72,7 @@ class _CaseDiagnosticDialogState extends ConsumerState<CaseDiagnosticDialog> {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Container(
-                                margin: EdgeInsets.only(bottom: 10),
+                                margin: const EdgeInsets.only(bottom: 10),
                                 decoration: const BoxDecoration(
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(10),
@@ -104,7 +104,15 @@ class _CaseDiagnosticDialogState extends ConsumerState<CaseDiagnosticDialog> {
                                             width: constrains.maxWidth * 0.3,
                                             child: Text(
                                               filteredList[index].title,
-                                              style: TextStyle(
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: constrains.maxWidth * 0.3,
+                                            child: Text(
+                                              filteredList[index].groupName,
+                                              style: const TextStyle(
                                                   fontWeight: FontWeight.bold),
                                             ),
                                           ),
