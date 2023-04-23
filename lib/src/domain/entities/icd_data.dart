@@ -20,25 +20,7 @@ class IcdDataParser {
     };
   }
 
-  // factory IcdDataParser.fromMap(Map<String, dynamic> map) {
-  //   return IcdDataParser(
-  //     title: map['title'] as String,
-  //     definition:
-  //         map['definition'] != null ? map['definition'] as String : null,
-  //     child: map['child'] != null
-  //         ? List<IcdDataCategory>.from(
-  //             (map['child'] as List<int>).map<IcdDataCategory?>(
-  //               (x) => IcdDataCategory.fromMap(x as Map<String, dynamic>),
-  //             ),
-  //           )
-  //         : null,
-  //   );
-  //}
-
   String toJson() => json.encode(toMap());
-
-  // factory IcdDataParser.fromJson(String source) =>
-  //     IcdDataParser.fromMap(json.decode(source) as Map<String, dynamic>);
 }
 
 class IcdDataChild {
@@ -70,10 +52,12 @@ class IcdDataChild {
 class IcdDataCategory {
   final String title;
   final String code;
+  final String groupName;
   final String? definition;
   IcdDataCategory({
     required this.title,
     required this.code,
+    required this.groupName,
     required this.definition,
   });
 
@@ -84,6 +68,7 @@ class IcdDataCategory {
     return IcdDataCategory(
       title: title['@value'],
       code: code,
+      groupName: '',
       definition: definition == null ? null : definition['@value'],
     );
   }
@@ -91,10 +76,12 @@ class IcdDataCategory {
   factory IcdDataCategory.fromLocalModel(Map<String, dynamic> map) {
     final code = map['code'] as String;
     final title = map['title'] as String;
+    final groupName = map['groupName'] as String;
     final definition = map['definition'] as String?;
     return IcdDataCategory(
       title: title,
       code: code,
+      groupName: groupName,
       definition: definition,
     );
   }
@@ -106,9 +93,24 @@ class IcdDataCategory {
     return <String, dynamic>{
       'title': title,
       'code': code,
+      'groupName': groupName,
       'definition': definition,
     };
   }
 
   String toJson() => json.encode(toMap());
+
+  IcdDataCategory copyWith({
+    String? title,
+    String? code,
+    String? groupName,
+    String? definition,
+  }) {
+    return IcdDataCategory(
+      title: title ?? this.title,
+      code: code ?? this.code,
+      groupName: groupName ?? this.groupName,
+      definition: definition ?? this.definition,
+    );
+  }
 }
