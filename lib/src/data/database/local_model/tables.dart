@@ -45,6 +45,7 @@ class LocalPatientCase extends Table {
       integer().references(LocalProfessional, #id)();
   TextColumn get consultationReason => text()();
   TextColumn get diagnostic => text()();
+  TextColumn get icdDiagnosticCode => text().nullable()();
   TextColumn get treatmentProposal => text()();
   TextColumn get caseNotes => text().nullable()();
   BoolColumn get isActive => boolean()();

@@ -2184,6 +2184,12 @@ class $LocalPatientCaseTable extends LocalPatientCase
   late final GeneratedColumn<String> diagnostic = GeneratedColumn<String>(
       'diagnostic', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _icdDiagnosticCodeMeta =
+      const VerificationMeta('icdDiagnosticCode');
+  @override
+  late final GeneratedColumn<String> icdDiagnosticCode =
+      GeneratedColumn<String>('icd_diagnostic_code', aliasedName, true,
+          type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _treatmentProposalMeta =
       const VerificationMeta('treatmentProposal');
   @override
@@ -2249,6 +2255,7 @@ class $LocalPatientCaseTable extends LocalPatientCase
         professionalId,
         consultationReason,
         diagnostic,
+        icdDiagnosticCode,
         treatmentProposal,
         caseNotes,
         isActive,
@@ -2307,6 +2314,12 @@ class $LocalPatientCaseTable extends LocalPatientCase
               data['diagnostic']!, _diagnosticMeta));
     } else if (isInserting) {
       context.missing(_diagnosticMeta);
+    }
+    if (data.containsKey('icd_diagnostic_code')) {
+      context.handle(
+          _icdDiagnosticCodeMeta,
+          icdDiagnosticCode.isAcceptableOrUnknown(
+              data['icd_diagnostic_code']!, _icdDiagnosticCodeMeta));
     }
     if (data.containsKey('treatment_proposal')) {
       context.handle(
@@ -2374,6 +2387,8 @@ class $LocalPatientCaseTable extends LocalPatientCase
           DriftSqlType.string, data['${effectivePrefix}consultation_reason'])!,
       diagnostic: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}diagnostic'])!,
+      icdDiagnosticCode: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}icd_diagnostic_code']),
       treatmentProposal: attachedDatabase.typeMapping.read(
           DriftSqlType.string, data['${effectivePrefix}treatment_proposal'])!,
       caseNotes: attachedDatabase.typeMapping
@@ -2407,6 +2422,7 @@ class LocalPatientCaseData extends DataClass
   final int professionalId;
   final String consultationReason;
   final String diagnostic;
+  final String? icdDiagnosticCode;
   final String treatmentProposal;
   final String? caseNotes;
   final bool isActive;
@@ -2423,6 +2439,7 @@ class LocalPatientCaseData extends DataClass
       required this.professionalId,
       required this.consultationReason,
       required this.diagnostic,
+      this.icdDiagnosticCode,
       required this.treatmentProposal,
       this.caseNotes,
       required this.isActive,
@@ -2439,6 +2456,9 @@ class LocalPatientCaseData extends DataClass
     map['professional_id'] = Variable<int>(professionalId);
     map['consultation_reason'] = Variable<String>(consultationReason);
     map['diagnostic'] = Variable<String>(diagnostic);
+    if (!nullToAbsent || icdDiagnosticCode != null) {
+      map['icd_diagnostic_code'] = Variable<String>(icdDiagnosticCode);
+    }
     map['treatment_proposal'] = Variable<String>(treatmentProposal);
     if (!nullToAbsent || caseNotes != null) {
       map['case_notes'] = Variable<String>(caseNotes);
@@ -2466,6 +2486,9 @@ class LocalPatientCaseData extends DataClass
       professionalId: Value(professionalId),
       consultationReason: Value(consultationReason),
       diagnostic: Value(diagnostic),
+      icdDiagnosticCode: icdDiagnosticCode == null && nullToAbsent
+          ? const Value.absent()
+          : Value(icdDiagnosticCode),
       treatmentProposal: Value(treatmentProposal),
       caseNotes: caseNotes == null && nullToAbsent
           ? const Value.absent()
@@ -2495,6 +2518,8 @@ class LocalPatientCaseData extends DataClass
       consultationReason:
           serializer.fromJson<String>(json['consultationReason']),
       diagnostic: serializer.fromJson<String>(json['diagnostic']),
+      icdDiagnosticCode:
+          serializer.fromJson<String?>(json['icdDiagnosticCode']),
       treatmentProposal: serializer.fromJson<String>(json['treatmentProposal']),
       caseNotes: serializer.fromJson<String?>(json['caseNotes']),
       isActive: serializer.fromJson<bool>(json['isActive']),
@@ -2516,6 +2541,7 @@ class LocalPatientCaseData extends DataClass
       'professionalId': serializer.toJson<int>(professionalId),
       'consultationReason': serializer.toJson<String>(consultationReason),
       'diagnostic': serializer.toJson<String>(diagnostic),
+      'icdDiagnosticCode': serializer.toJson<String?>(icdDiagnosticCode),
       'treatmentProposal': serializer.toJson<String>(treatmentProposal),
       'caseNotes': serializer.toJson<String?>(caseNotes),
       'isActive': serializer.toJson<bool>(isActive),
@@ -2534,6 +2560,7 @@ class LocalPatientCaseData extends DataClass
           int? professionalId,
           String? consultationReason,
           String? diagnostic,
+          Value<String?> icdDiagnosticCode = const Value.absent(),
           String? treatmentProposal,
           Value<String?> caseNotes = const Value.absent(),
           bool? isActive,
@@ -2548,6 +2575,9 @@ class LocalPatientCaseData extends DataClass
         professionalId: professionalId ?? this.professionalId,
         consultationReason: consultationReason ?? this.consultationReason,
         diagnostic: diagnostic ?? this.diagnostic,
+        icdDiagnosticCode: icdDiagnosticCode.present
+            ? icdDiagnosticCode.value
+            : this.icdDiagnosticCode,
         treatmentProposal: treatmentProposal ?? this.treatmentProposal,
         caseNotes: caseNotes.present ? caseNotes.value : this.caseNotes,
         isActive: isActive ?? this.isActive,
@@ -2571,6 +2601,7 @@ class LocalPatientCaseData extends DataClass
           ..write('professionalId: $professionalId, ')
           ..write('consultationReason: $consultationReason, ')
           ..write('diagnostic: $diagnostic, ')
+          ..write('icdDiagnosticCode: $icdDiagnosticCode, ')
           ..write('treatmentProposal: $treatmentProposal, ')
           ..write('caseNotes: $caseNotes, ')
           ..write('isActive: $isActive, ')
@@ -2590,6 +2621,7 @@ class LocalPatientCaseData extends DataClass
       professionalId,
       consultationReason,
       diagnostic,
+      icdDiagnosticCode,
       treatmentProposal,
       caseNotes,
       isActive,
@@ -2607,6 +2639,7 @@ class LocalPatientCaseData extends DataClass
           other.professionalId == this.professionalId &&
           other.consultationReason == this.consultationReason &&
           other.diagnostic == this.diagnostic &&
+          other.icdDiagnosticCode == this.icdDiagnosticCode &&
           other.treatmentProposal == this.treatmentProposal &&
           other.caseNotes == this.caseNotes &&
           other.isActive == this.isActive &&
@@ -2623,6 +2656,7 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
   final Value<int> professionalId;
   final Value<String> consultationReason;
   final Value<String> diagnostic;
+  final Value<String?> icdDiagnosticCode;
   final Value<String> treatmentProposal;
   final Value<String?> caseNotes;
   final Value<bool> isActive;
@@ -2637,6 +2671,7 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
     this.professionalId = const Value.absent(),
     this.consultationReason = const Value.absent(),
     this.diagnostic = const Value.absent(),
+    this.icdDiagnosticCode = const Value.absent(),
     this.treatmentProposal = const Value.absent(),
     this.caseNotes = const Value.absent(),
     this.isActive = const Value.absent(),
@@ -2652,6 +2687,7 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
     required int professionalId,
     required String consultationReason,
     required String diagnostic,
+    this.icdDiagnosticCode = const Value.absent(),
     required String treatmentProposal,
     this.caseNotes = const Value.absent(),
     required bool isActive,
@@ -2674,6 +2710,7 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
     Expression<int>? professionalId,
     Expression<String>? consultationReason,
     Expression<String>? diagnostic,
+    Expression<String>? icdDiagnosticCode,
     Expression<String>? treatmentProposal,
     Expression<String>? caseNotes,
     Expression<bool>? isActive,
@@ -2689,6 +2726,7 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
       if (professionalId != null) 'professional_id': professionalId,
       if (consultationReason != null) 'consultation_reason': consultationReason,
       if (diagnostic != null) 'diagnostic': diagnostic,
+      if (icdDiagnosticCode != null) 'icd_diagnostic_code': icdDiagnosticCode,
       if (treatmentProposal != null) 'treatment_proposal': treatmentProposal,
       if (caseNotes != null) 'case_notes': caseNotes,
       if (isActive != null) 'is_active': isActive,
@@ -2708,6 +2746,7 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
       Value<int>? professionalId,
       Value<String>? consultationReason,
       Value<String>? diagnostic,
+      Value<String?>? icdDiagnosticCode,
       Value<String>? treatmentProposal,
       Value<String?>? caseNotes,
       Value<bool>? isActive,
@@ -2722,6 +2761,7 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
       professionalId: professionalId ?? this.professionalId,
       consultationReason: consultationReason ?? this.consultationReason,
       diagnostic: diagnostic ?? this.diagnostic,
+      icdDiagnosticCode: icdDiagnosticCode ?? this.icdDiagnosticCode,
       treatmentProposal: treatmentProposal ?? this.treatmentProposal,
       caseNotes: caseNotes ?? this.caseNotes,
       isActive: isActive ?? this.isActive,
@@ -2753,6 +2793,9 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
     }
     if (diagnostic.present) {
       map['diagnostic'] = Variable<String>(diagnostic.value);
+    }
+    if (icdDiagnosticCode.present) {
+      map['icd_diagnostic_code'] = Variable<String>(icdDiagnosticCode.value);
     }
     if (treatmentProposal.present) {
       map['treatment_proposal'] = Variable<String>(treatmentProposal.value);
@@ -2789,6 +2832,7 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
           ..write('professionalId: $professionalId, ')
           ..write('consultationReason: $consultationReason, ')
           ..write('diagnostic: $diagnostic, ')
+          ..write('icdDiagnosticCode: $icdDiagnosticCode, ')
           ..write('treatmentProposal: $treatmentProposal, ')
           ..write('caseNotes: $caseNotes, ')
           ..write('isActive: $isActive, ')
