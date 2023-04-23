@@ -153,6 +153,7 @@ abstract class LocalDatabaseInteface {
     String consultationReason,
     String treatmentProposal,
     String diagnostic,
+    String? icdDiagnosticCode,
     String? caseNotes,
     int? treatmentPlanId,
     int? treatmentPlanPhase,
