@@ -49,6 +49,7 @@ class IcdDataChild {
       IcdDataChild.fromMap(json.decode(source) as Map<String, dynamic>);
 }
 
+///Base data class used to store all required data for diagnostic information obtained from the ICD.
 class IcdDataCategory {
   final String title;
   final String code;
