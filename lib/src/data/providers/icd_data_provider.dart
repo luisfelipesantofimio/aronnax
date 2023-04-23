@@ -1,113 +1,21 @@
 import 'dart:convert';
+import 'package:aronnax/src/data/interfaces/icd_repository_interface.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/domain/entities/icd_data.dart';
 import 'package:aronnax/src/presentation/core/constants.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:dio/dio.dart';
-
-String scope = 'icdapi_access';
-
-String grantType = 'client_credentials';
-
-class Api {
-  Dio dio = Dio();
-
-  Future<String> getIcdAuthToken({
-    required String clientId,
-    required String clientSecret,
-    required String scope,
-    required String grantType,
-  }) async {
-    const endpoint = "https://icdaccessmanagement.who.int/connect/token";
-
-    Map<String, String> body = {
-      'client_id': clientId,
-      'client_secret': clientSecret,
-      'scope': scope,
-      'grant_type': grantType
-    };
-
-    FormData bodyAsFormData = FormData.fromMap(body);
-
-    final request = await dio.post(
-      endpoint,
-      data: bodyAsFormData,
-    );
-
-    if (request.statusCode == 200) {
-      final body = request.data;
-      return body["access_token"];
-    } else {
-      final response = request.data;
-      return "error ${response['error']}";
-    }
-  }
-
-  Future<String> getIcdEntity(
-    String token,
-    String language,
-    String entity,
-  ) async {
-    Map<String, String> headers = {
-      'Authorization': 'Bearer $token',
-      'Accept': 'application/json',
-      'Accept-Language': language,
-      'API-Version': 'v2'
-    };
-
-    final request = await dio.get(
-      entity,
-      options: Options(headers: headers),
-    );
-
-    if (request.statusCode == 200) {
-      final encodedData = jsonEncode(request.data);
-
-      return encodedData;
-    } else {
-      return "Error: ${request.data}";
-    }
-  }
-
-  Future<IcdDataCategory> parseIcdEntity(String entity, String token) async {
-    final data = await getIcdEntity(token, "es", entity);
-
-    return IcdDataCategory.fromJson(data);
-  }
-}
-
-Future<List<IcdDataChild>> getIcdGroups(
-    String token, String language, String entity) async {
-  List<IcdDataChild> children = [];
-
-  IcdDataChild data =
-      IcdDataChild.fromJson(await Api().getIcdEntity(token, language, entity));
-
-  for (var element in data.child!) {
-    children.add(
-      IcdDataChild.fromJson(
-        await Api().getIcdEntity(
-          token,
-          language,
-          element.toString().replaceAll('http', 'https'),
-        ),
-      ),
-    );
-  }
-  return children;
-}
 
 final icdDataProvider = FutureProvider.family<List<IcdDataParser>, String>(
   (ref, entity) async {
     List<IcdDataParser> entitiesList = [];
-    String token = await Api().getIcdAuthToken(
-        clientId: AppConstants.clientId,
-        clientSecret: AppConstants.clientSecret,
-        scope: scope,
-        grantType: grantType);
-    final parent = await getIcdGroups(token, 'es', entity);
+    String token = await ref.read(IcdRepositoryProvider).getIcdAuthToken(
+          clientId: AppConstants.clientId,
+          clientSecret: AppConstants.clientSecret,
+        );
+    final parent =
+        await ref.read(IcdRepositoryProvider).getIcdGroups(token, 'es', entity);
     final icdReleaseData = jsonDecode(
-      await Api().getIcdEntity(
+      await ref.read(IcdRepositoryProvider).getIcdEntity(
           token, 'es', 'https://id.who.int/icd/release/11/2023-01/mms'),
     );
 
@@ -121,11 +29,11 @@ final icdDataProvider = FutureProvider.family<List<IcdDataParser>, String>(
 
       for (var element1 in element.child ?? []) {
         IcdDataCategory newElement = IcdDataCategory.fromJson(
-          await Api().getIcdEntity(
-            token,
-            'es',
-            element1.toString().replaceAll('http', 'https'),
-          ),
+          await ref.read(IcdRepositoryProvider).getIcdEntity(
+                token,
+                'es',
+                element1.toString().replaceAll('http', 'https'),
+              ),
         );
 
         newGroupData.child.add(
