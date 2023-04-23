@@ -243,7 +243,8 @@ class LocalProfessionalRegisterState
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const IcdView(),
+                          builder: (context) =>
+                              const IcdView(isConfigured: false),
                         ));
                   }
                 },
