@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:aronnax/src/data/interfaces/icd_repository_interface.dart';
+import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/domain/entities/icd_data.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class IcdRepository implements IcdRepositoryInteface {
   @override
@@ -48,7 +50,10 @@ class IcdRepository implements IcdRepositoryInteface {
 
     final request = await Dio().get(
       entity,
-      options: Options(headers: headers),
+      options: Options(
+        receiveTimeout: const Duration(minutes: 2),
+        headers: headers,
+      ),
     );
 
     if (request.statusCode == 200) {
@@ -68,16 +73,18 @@ class IcdRepository implements IcdRepositoryInteface {
     IcdDataChild data =
         IcdDataChild.fromJson(await getIcdEntity(token, language, entity));
 
-    for (var element in data.child!) {
-      children.add(
-        IcdDataChild.fromJson(
-          await getIcdEntity(
-            token,
-            language,
-            element.toString().replaceAll('http', 'https'),
+    if (data.child != null) {
+      for (var element in data.child!) {
+        children.add(
+          IcdDataChild.fromJson(
+            await getIcdEntity(
+              token,
+              language,
+              element.toString().replaceAll('http', 'https'),
+            ),
           ),
-        ),
-      );
+        );
+      }
     }
     return children;
   }
@@ -87,5 +94,108 @@ class IcdRepository implements IcdRepositoryInteface {
     final data = await getIcdEntity(token, "es", entity);
 
     return IcdDataCategory.fromJson(data);
+  }
+
+  @override
+  Future<List<IcdDataParser>> getIcdDataParser(
+    Ref ref,
+    String entity,
+    String clientId,
+    String clientSecret,
+  ) async {
+    List<IcdDataParser> entitiesList = [];
+    String token =
+        await getIcdAuthToken(clientId: clientId, clientSecret: clientSecret);
+
+    final icdGroupsList = await getIcdGroups(token, 'es', entity);
+    final icdReleaseData = jsonDecode(
+      await ref.read(IcdRepositoryProvider).getIcdEntity(
+          token, 'es', 'https://id.who.int/icd/release/11/2023-01/mms'),
+    );
+
+    for (var groupElement in icdGroupsList) {
+      IcdDataParser newGroupData = IcdDataParser(
+        title: groupElement.title,
+        icdRelease: icdReleaseData['releaseId'],
+        definition: groupElement.definition,
+        child: [],
+      );
+
+      for (var subGroupElement in groupElement.child ?? []) {
+        IcdDataCategory newElement = IcdDataCategory.fromJson(
+          await ref.read(IcdRepositoryProvider).getIcdEntity(
+                token,
+                'es',
+                subGroupElement.toString().replaceAll('http', 'https'),
+              ),
+        );
+
+        newGroupData.child.add(
+          newElement.copyWith(
+            groupName: groupElement.title,
+          ),
+        );
+        final nestedParent = await getIcdGroups(
+          token,
+          'es',
+          subGroupElement.toString().replaceAll('http', 'https'),
+        );
+        for (var element1 in nestedParent) {
+          if (element1.child != null) {
+            final results = await Future.wait(element1.child!.map((e) async {
+              IcdDataCategory newElement = IcdDataCategory.fromJson(
+                await ref.read(IcdRepositoryProvider).getIcdEntity(
+                      token,
+                      'es',
+                      e.toString().replaceAll('http', 'https'),
+                    ),
+              );
+              return newElement;
+            }));
+            newGroupData.child.addAll(results);
+          }
+
+          for (var element2 in element1.child ?? []) {
+            IcdDataCategory newElement = IcdDataCategory.fromJson(
+              await ref.read(IcdRepositoryProvider).getIcdEntity(
+                    token,
+                    'es',
+                    element2.toString().replaceAll('http', 'https'),
+                  ),
+            );
+
+            newGroupData.child.add(
+              newElement.copyWith(
+                groupName: groupElement.title,
+              ),
+            );
+            final nestedParent = await getIcdGroups(
+              token,
+              'es',
+              element2.toString().replaceAll('http', 'https'),
+            );
+
+            for (var element in nestedParent) {
+              if (element.child != null) {
+                final results = await Future.wait(element.child!.map((e) async {
+                  IcdDataCategory newElement = IcdDataCategory.fromJson(
+                    await ref.read(IcdRepositoryProvider).getIcdEntity(
+                          token,
+                          'es',
+                          e.toString().replaceAll('http', 'https'),
+                        ),
+                  );
+                  return newElement;
+                }));
+                newGroupData.child.addAll(results);
+              }
+            }
+          }
+        }
+      }
+      ref.read(localDatabaseRepositoryProvider).insertIcdData(newGroupData);
+    }
+
+    return entitiesList;
   }
 }

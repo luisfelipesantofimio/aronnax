@@ -22,6 +22,14 @@ abstract class IcdRepositoryInteface {
 
   ///Transforms the raw json and parse it as [IcdDataCategory]
   Future<IcdDataCategory> parseIcdEntity(String entity, String token);
+
+  ///Returns the required parsed data type for local ICD data management
+  Future<List<IcdDataParser>> getIcdDataParser(
+    Ref ref,
+    String entity,
+    String clientId,
+    String clientSecret,
+  );
 }
 
 final IcdRepositoryProvider = Provider<IcdRepositoryInteface>(
