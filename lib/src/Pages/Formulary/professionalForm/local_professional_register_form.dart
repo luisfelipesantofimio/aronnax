@@ -3,7 +3,6 @@ import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/providers/location_data_provider.dart';
 import 'package:aronnax/src/presentation/icd_view/icd_view.dart';
 
-import 'package:aronnax/src/presentation/welcome_screens/finish.dart';
 import 'package:country_state_city/country_state_city.dart';
 import 'package:crypt/crypt.dart';
 import 'package:flutter/material.dart';

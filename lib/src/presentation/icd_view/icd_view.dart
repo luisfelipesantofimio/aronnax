@@ -36,18 +36,18 @@ class IcdView extends ConsumerWidget {
                       fontWeight: FontWeight.bold,
                       color: Colors.black),
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.all(10),
                 ),
                 const Icon(
                   FontAwesomeIcons.laptopMedical,
                   size: 50,
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.all(10),
                 ),
                 const Text('Ya tienes una copia del CIE-11 a tu disposición.'),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.all(20),
                 ),
                 TextButton(

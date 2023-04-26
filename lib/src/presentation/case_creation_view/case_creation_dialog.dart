@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
