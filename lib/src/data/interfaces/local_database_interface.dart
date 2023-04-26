@@ -175,6 +175,7 @@ abstract class LocalDatabaseInteface {
 
   void insertIcdData(IcdDataParser data);
   Future<List<SavedIcdDiagnosticDataData>> getDiagnosticData();
+  void deleteSavedIcdData();
 }
 
 final localDatabaseRepositoryProvider = Provider<LocalDatabaseInteface>(

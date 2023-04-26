@@ -347,6 +347,10 @@ class LocalDatabase extends _$LocalDatabase {
           ))
         .go();
   }
+
+  Future deleteSavedIcdData() {
+    return (delete(savedIcdDiagnosticData)).go();
+  }
 }
 
 LazyDatabase _openConnection() {
