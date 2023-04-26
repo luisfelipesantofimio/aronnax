@@ -1,3 +1,4 @@
+import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/providers/icd_data_provider.dart';
 import 'package:aronnax/src/presentation/welcome_screens/finish.dart';
 import 'package:flutter/material.dart';
@@ -73,7 +74,12 @@ class IcdView extends ConsumerWidget {
                 Text('Error $error'),
                 Text(stackTrace.toString()),
                 TextButton(
-                  onPressed: () => ref.invalidate(icdDataProvider),
+                  onPressed: () => {
+                    ref
+                        .read(localDatabaseRepositoryProvider)
+                        .deleteSavedIcdData(),
+                    ref.invalidate(icdDataProvider),
+                  },
                   child: const Text("Try again"),
                 ),
               ],
