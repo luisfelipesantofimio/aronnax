@@ -47,6 +47,10 @@ class IcdDataChild {
 
   factory IcdDataChild.fromJson(String source) =>
       IcdDataChild.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() =>
+      'IcdDataChild(title: $title, definition: $definition, child: $child)';
 }
 
 ///Base data class used to store all required data for diagnostic information obtained from the ICD.
@@ -113,5 +117,10 @@ class IcdDataCategory {
       groupName: groupName ?? this.groupName,
       definition: definition ?? this.definition,
     );
+  }
+
+  @override
+  String toString() {
+    return 'IcdDataCategory(title: $title, code: $code, groupName: $groupName, definition: $definition)';
   }
 }
