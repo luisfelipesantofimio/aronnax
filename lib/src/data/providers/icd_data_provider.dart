@@ -7,45 +7,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final icdDataProvider = FutureProvider.family<List<IcdDataParser>, String>(
   (ref, entity) async {
-    List<IcdDataParser> entitiesList = [];
-    String token = await ref.read(IcdRepositoryProvider).getIcdAuthToken(
-          clientId: AppConstants.clientId,
-          clientSecret: AppConstants.clientSecret,
+    return ref.read(IcdRepositoryProvider).getIcdDataParser(
+          ref,
+          entity,
+          AppConstants.clientId,
+          AppConstants.clientSecret,
         );
-    final parent =
-        await ref.read(IcdRepositoryProvider).getIcdGroups(token, 'es', entity);
-    final icdReleaseData = jsonDecode(
-      await ref.read(IcdRepositoryProvider).getIcdEntity(
-          token, 'es', 'https://id.who.int/icd/release/11/2023-01/mms'),
-    );
-
-    for (var element in parent) {
-      IcdDataParser newGroupData = IcdDataParser(
-        title: element.title,
-        icdRelease: icdReleaseData['releaseId'],
-        definition: element.definition,
-        child: [],
-      );
-
-      for (var element1 in element.child ?? []) {
-        IcdDataCategory newElement = IcdDataCategory.fromJson(
-          await ref.read(IcdRepositoryProvider).getIcdEntity(
-                token,
-                'es',
-                element1.toString().replaceAll('http', 'https'),
-              ),
-        );
-
-        newGroupData.child.add(
-          newElement.copyWith(
-            groupName: element.title,
-          ),
-        );
-      }
-      ref.read(localDatabaseRepositoryProvider).insertIcdData(newGroupData);
-    }
-
-    return entitiesList;
   },
 );
 
