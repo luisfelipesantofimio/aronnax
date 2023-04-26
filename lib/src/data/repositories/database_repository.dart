@@ -471,4 +471,9 @@ class DatabaseRepository implements LocalDatabaseInteface {
   Future<List<SavedIcdDiagnosticDataData>> getDiagnosticData() async {
     return await localDB.getIcdCategories();
   }
+
+  @override
+  void deleteSavedIcdData() {
+    localDB.deleteSavedIcdData();
+  }
 }
