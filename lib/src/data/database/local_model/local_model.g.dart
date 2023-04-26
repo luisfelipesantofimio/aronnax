@@ -2184,6 +2184,12 @@ class $LocalPatientCaseTable extends LocalPatientCase
   late final GeneratedColumn<String> diagnostic = GeneratedColumn<String>(
       'diagnostic', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _icdDiagnosticCodeMeta =
+      const VerificationMeta('icdDiagnosticCode');
+  @override
+  late final GeneratedColumn<String> icdDiagnosticCode =
+      GeneratedColumn<String>('icd_diagnostic_code', aliasedName, true,
+          type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _treatmentProposalMeta =
       const VerificationMeta('treatmentProposal');
   @override
@@ -2249,6 +2255,7 @@ class $LocalPatientCaseTable extends LocalPatientCase
         professionalId,
         consultationReason,
         diagnostic,
+        icdDiagnosticCode,
         treatmentProposal,
         caseNotes,
         isActive,
@@ -2307,6 +2314,12 @@ class $LocalPatientCaseTable extends LocalPatientCase
               data['diagnostic']!, _diagnosticMeta));
     } else if (isInserting) {
       context.missing(_diagnosticMeta);
+    }
+    if (data.containsKey('icd_diagnostic_code')) {
+      context.handle(
+          _icdDiagnosticCodeMeta,
+          icdDiagnosticCode.isAcceptableOrUnknown(
+              data['icd_diagnostic_code']!, _icdDiagnosticCodeMeta));
     }
     if (data.containsKey('treatment_proposal')) {
       context.handle(
@@ -2374,6 +2387,8 @@ class $LocalPatientCaseTable extends LocalPatientCase
           DriftSqlType.string, data['${effectivePrefix}consultation_reason'])!,
       diagnostic: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}diagnostic'])!,
+      icdDiagnosticCode: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}icd_diagnostic_code']),
       treatmentProposal: attachedDatabase.typeMapping.read(
           DriftSqlType.string, data['${effectivePrefix}treatment_proposal'])!,
       caseNotes: attachedDatabase.typeMapping
@@ -2407,6 +2422,7 @@ class LocalPatientCaseData extends DataClass
   final int professionalId;
   final String consultationReason;
   final String diagnostic;
+  final String? icdDiagnosticCode;
   final String treatmentProposal;
   final String? caseNotes;
   final bool isActive;
@@ -2423,6 +2439,7 @@ class LocalPatientCaseData extends DataClass
       required this.professionalId,
       required this.consultationReason,
       required this.diagnostic,
+      this.icdDiagnosticCode,
       required this.treatmentProposal,
       this.caseNotes,
       required this.isActive,
@@ -2439,6 +2456,9 @@ class LocalPatientCaseData extends DataClass
     map['professional_id'] = Variable<int>(professionalId);
     map['consultation_reason'] = Variable<String>(consultationReason);
     map['diagnostic'] = Variable<String>(diagnostic);
+    if (!nullToAbsent || icdDiagnosticCode != null) {
+      map['icd_diagnostic_code'] = Variable<String>(icdDiagnosticCode);
+    }
     map['treatment_proposal'] = Variable<String>(treatmentProposal);
     if (!nullToAbsent || caseNotes != null) {
       map['case_notes'] = Variable<String>(caseNotes);
@@ -2466,6 +2486,9 @@ class LocalPatientCaseData extends DataClass
       professionalId: Value(professionalId),
       consultationReason: Value(consultationReason),
       diagnostic: Value(diagnostic),
+      icdDiagnosticCode: icdDiagnosticCode == null && nullToAbsent
+          ? const Value.absent()
+          : Value(icdDiagnosticCode),
       treatmentProposal: Value(treatmentProposal),
       caseNotes: caseNotes == null && nullToAbsent
           ? const Value.absent()
@@ -2495,6 +2518,8 @@ class LocalPatientCaseData extends DataClass
       consultationReason:
           serializer.fromJson<String>(json['consultationReason']),
       diagnostic: serializer.fromJson<String>(json['diagnostic']),
+      icdDiagnosticCode:
+          serializer.fromJson<String?>(json['icdDiagnosticCode']),
       treatmentProposal: serializer.fromJson<String>(json['treatmentProposal']),
       caseNotes: serializer.fromJson<String?>(json['caseNotes']),
       isActive: serializer.fromJson<bool>(json['isActive']),
@@ -2516,6 +2541,7 @@ class LocalPatientCaseData extends DataClass
       'professionalId': serializer.toJson<int>(professionalId),
       'consultationReason': serializer.toJson<String>(consultationReason),
       'diagnostic': serializer.toJson<String>(diagnostic),
+      'icdDiagnosticCode': serializer.toJson<String?>(icdDiagnosticCode),
       'treatmentProposal': serializer.toJson<String>(treatmentProposal),
       'caseNotes': serializer.toJson<String?>(caseNotes),
       'isActive': serializer.toJson<bool>(isActive),
@@ -2534,6 +2560,7 @@ class LocalPatientCaseData extends DataClass
           int? professionalId,
           String? consultationReason,
           String? diagnostic,
+          Value<String?> icdDiagnosticCode = const Value.absent(),
           String? treatmentProposal,
           Value<String?> caseNotes = const Value.absent(),
           bool? isActive,
@@ -2548,6 +2575,9 @@ class LocalPatientCaseData extends DataClass
         professionalId: professionalId ?? this.professionalId,
         consultationReason: consultationReason ?? this.consultationReason,
         diagnostic: diagnostic ?? this.diagnostic,
+        icdDiagnosticCode: icdDiagnosticCode.present
+            ? icdDiagnosticCode.value
+            : this.icdDiagnosticCode,
         treatmentProposal: treatmentProposal ?? this.treatmentProposal,
         caseNotes: caseNotes.present ? caseNotes.value : this.caseNotes,
         isActive: isActive ?? this.isActive,
@@ -2571,6 +2601,7 @@ class LocalPatientCaseData extends DataClass
           ..write('professionalId: $professionalId, ')
           ..write('consultationReason: $consultationReason, ')
           ..write('diagnostic: $diagnostic, ')
+          ..write('icdDiagnosticCode: $icdDiagnosticCode, ')
           ..write('treatmentProposal: $treatmentProposal, ')
           ..write('caseNotes: $caseNotes, ')
           ..write('isActive: $isActive, ')
@@ -2590,6 +2621,7 @@ class LocalPatientCaseData extends DataClass
       professionalId,
       consultationReason,
       diagnostic,
+      icdDiagnosticCode,
       treatmentProposal,
       caseNotes,
       isActive,
@@ -2607,6 +2639,7 @@ class LocalPatientCaseData extends DataClass
           other.professionalId == this.professionalId &&
           other.consultationReason == this.consultationReason &&
           other.diagnostic == this.diagnostic &&
+          other.icdDiagnosticCode == this.icdDiagnosticCode &&
           other.treatmentProposal == this.treatmentProposal &&
           other.caseNotes == this.caseNotes &&
           other.isActive == this.isActive &&
@@ -2623,6 +2656,7 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
   final Value<int> professionalId;
   final Value<String> consultationReason;
   final Value<String> diagnostic;
+  final Value<String?> icdDiagnosticCode;
   final Value<String> treatmentProposal;
   final Value<String?> caseNotes;
   final Value<bool> isActive;
@@ -2637,6 +2671,7 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
     this.professionalId = const Value.absent(),
     this.consultationReason = const Value.absent(),
     this.diagnostic = const Value.absent(),
+    this.icdDiagnosticCode = const Value.absent(),
     this.treatmentProposal = const Value.absent(),
     this.caseNotes = const Value.absent(),
     this.isActive = const Value.absent(),
@@ -2652,6 +2687,7 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
     required int professionalId,
     required String consultationReason,
     required String diagnostic,
+    this.icdDiagnosticCode = const Value.absent(),
     required String treatmentProposal,
     this.caseNotes = const Value.absent(),
     required bool isActive,
@@ -2674,6 +2710,7 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
     Expression<int>? professionalId,
     Expression<String>? consultationReason,
     Expression<String>? diagnostic,
+    Expression<String>? icdDiagnosticCode,
     Expression<String>? treatmentProposal,
     Expression<String>? caseNotes,
     Expression<bool>? isActive,
@@ -2689,6 +2726,7 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
       if (professionalId != null) 'professional_id': professionalId,
       if (consultationReason != null) 'consultation_reason': consultationReason,
       if (diagnostic != null) 'diagnostic': diagnostic,
+      if (icdDiagnosticCode != null) 'icd_diagnostic_code': icdDiagnosticCode,
       if (treatmentProposal != null) 'treatment_proposal': treatmentProposal,
       if (caseNotes != null) 'case_notes': caseNotes,
       if (isActive != null) 'is_active': isActive,
@@ -2708,6 +2746,7 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
       Value<int>? professionalId,
       Value<String>? consultationReason,
       Value<String>? diagnostic,
+      Value<String?>? icdDiagnosticCode,
       Value<String>? treatmentProposal,
       Value<String?>? caseNotes,
       Value<bool>? isActive,
@@ -2722,6 +2761,7 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
       professionalId: professionalId ?? this.professionalId,
       consultationReason: consultationReason ?? this.consultationReason,
       diagnostic: diagnostic ?? this.diagnostic,
+      icdDiagnosticCode: icdDiagnosticCode ?? this.icdDiagnosticCode,
       treatmentProposal: treatmentProposal ?? this.treatmentProposal,
       caseNotes: caseNotes ?? this.caseNotes,
       isActive: isActive ?? this.isActive,
@@ -2753,6 +2793,9 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
     }
     if (diagnostic.present) {
       map['diagnostic'] = Variable<String>(diagnostic.value);
+    }
+    if (icdDiagnosticCode.present) {
+      map['icd_diagnostic_code'] = Variable<String>(icdDiagnosticCode.value);
     }
     if (treatmentProposal.present) {
       map['treatment_proposal'] = Variable<String>(treatmentProposal.value);
@@ -2789,6 +2832,7 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
           ..write('professionalId: $professionalId, ')
           ..write('consultationReason: $consultationReason, ')
           ..write('diagnostic: $diagnostic, ')
+          ..write('icdDiagnosticCode: $icdDiagnosticCode, ')
           ..write('treatmentProposal: $treatmentProposal, ')
           ..write('caseNotes: $caseNotes, ')
           ..write('isActive: $isActive, ')
@@ -5589,6 +5633,305 @@ class ServerDatabaseCompanion extends UpdateCompanion<ServerDatabaseData> {
   }
 }
 
+class $SavedIcdDiagnosticDataTable extends SavedIcdDiagnosticData
+    with TableInfo<$SavedIcdDiagnosticDataTable, SavedIcdDiagnosticDataData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SavedIcdDiagnosticDataTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+      'title', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _icdReleaseMeta =
+      const VerificationMeta('icdRelease');
+  @override
+  late final GeneratedColumn<String> icdRelease = GeneratedColumn<String>(
+      'icd_release', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _definitionMeta =
+      const VerificationMeta('definition');
+  @override
+  late final GeneratedColumn<String> definition = GeneratedColumn<String>(
+      'definition', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _categoryDataMeta =
+      const VerificationMeta('categoryData');
+  @override
+  late final GeneratedColumn<String> categoryData = GeneratedColumn<String>(
+      'category_data', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, title, icdRelease, definition, categoryData];
+  @override
+  String get aliasedName => _alias ?? 'saved_icd_diagnostic_data';
+  @override
+  String get actualTableName => 'saved_icd_diagnostic_data';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<SavedIcdDiagnosticDataData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+          _titleMeta, title.isAcceptableOrUnknown(data['title']!, _titleMeta));
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
+    if (data.containsKey('icd_release')) {
+      context.handle(
+          _icdReleaseMeta,
+          icdRelease.isAcceptableOrUnknown(
+              data['icd_release']!, _icdReleaseMeta));
+    } else if (isInserting) {
+      context.missing(_icdReleaseMeta);
+    }
+    if (data.containsKey('definition')) {
+      context.handle(
+          _definitionMeta,
+          definition.isAcceptableOrUnknown(
+              data['definition']!, _definitionMeta));
+    }
+    if (data.containsKey('category_data')) {
+      context.handle(
+          _categoryDataMeta,
+          categoryData.isAcceptableOrUnknown(
+              data['category_data']!, _categoryDataMeta));
+    } else if (isInserting) {
+      context.missing(_categoryDataMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  SavedIcdDiagnosticDataData map(Map<String, dynamic> data,
+      {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SavedIcdDiagnosticDataData(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      title: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}title'])!,
+      icdRelease: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}icd_release'])!,
+      definition: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}definition']),
+      categoryData: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}category_data'])!,
+    );
+  }
+
+  @override
+  $SavedIcdDiagnosticDataTable createAlias(String alias) {
+    return $SavedIcdDiagnosticDataTable(attachedDatabase, alias);
+  }
+}
+
+class SavedIcdDiagnosticDataData extends DataClass
+    implements Insertable<SavedIcdDiagnosticDataData> {
+  final int id;
+  final String title;
+  final String icdRelease;
+  final String? definition;
+  final String categoryData;
+  const SavedIcdDiagnosticDataData(
+      {required this.id,
+      required this.title,
+      required this.icdRelease,
+      this.definition,
+      required this.categoryData});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['title'] = Variable<String>(title);
+    map['icd_release'] = Variable<String>(icdRelease);
+    if (!nullToAbsent || definition != null) {
+      map['definition'] = Variable<String>(definition);
+    }
+    map['category_data'] = Variable<String>(categoryData);
+    return map;
+  }
+
+  SavedIcdDiagnosticDataCompanion toCompanion(bool nullToAbsent) {
+    return SavedIcdDiagnosticDataCompanion(
+      id: Value(id),
+      title: Value(title),
+      icdRelease: Value(icdRelease),
+      definition: definition == null && nullToAbsent
+          ? const Value.absent()
+          : Value(definition),
+      categoryData: Value(categoryData),
+    );
+  }
+
+  factory SavedIcdDiagnosticDataData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SavedIcdDiagnosticDataData(
+      id: serializer.fromJson<int>(json['id']),
+      title: serializer.fromJson<String>(json['title']),
+      icdRelease: serializer.fromJson<String>(json['icdRelease']),
+      definition: serializer.fromJson<String?>(json['definition']),
+      categoryData: serializer.fromJson<String>(json['categoryData']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'title': serializer.toJson<String>(title),
+      'icdRelease': serializer.toJson<String>(icdRelease),
+      'definition': serializer.toJson<String?>(definition),
+      'categoryData': serializer.toJson<String>(categoryData),
+    };
+  }
+
+  SavedIcdDiagnosticDataData copyWith(
+          {int? id,
+          String? title,
+          String? icdRelease,
+          Value<String?> definition = const Value.absent(),
+          String? categoryData}) =>
+      SavedIcdDiagnosticDataData(
+        id: id ?? this.id,
+        title: title ?? this.title,
+        icdRelease: icdRelease ?? this.icdRelease,
+        definition: definition.present ? definition.value : this.definition,
+        categoryData: categoryData ?? this.categoryData,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('SavedIcdDiagnosticDataData(')
+          ..write('id: $id, ')
+          ..write('title: $title, ')
+          ..write('icdRelease: $icdRelease, ')
+          ..write('definition: $definition, ')
+          ..write('categoryData: $categoryData')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, title, icdRelease, definition, categoryData);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SavedIcdDiagnosticDataData &&
+          other.id == this.id &&
+          other.title == this.title &&
+          other.icdRelease == this.icdRelease &&
+          other.definition == this.definition &&
+          other.categoryData == this.categoryData);
+}
+
+class SavedIcdDiagnosticDataCompanion
+    extends UpdateCompanion<SavedIcdDiagnosticDataData> {
+  final Value<int> id;
+  final Value<String> title;
+  final Value<String> icdRelease;
+  final Value<String?> definition;
+  final Value<String> categoryData;
+  const SavedIcdDiagnosticDataCompanion({
+    this.id = const Value.absent(),
+    this.title = const Value.absent(),
+    this.icdRelease = const Value.absent(),
+    this.definition = const Value.absent(),
+    this.categoryData = const Value.absent(),
+  });
+  SavedIcdDiagnosticDataCompanion.insert({
+    this.id = const Value.absent(),
+    required String title,
+    required String icdRelease,
+    this.definition = const Value.absent(),
+    required String categoryData,
+  })  : title = Value(title),
+        icdRelease = Value(icdRelease),
+        categoryData = Value(categoryData);
+  static Insertable<SavedIcdDiagnosticDataData> custom({
+    Expression<int>? id,
+    Expression<String>? title,
+    Expression<String>? icdRelease,
+    Expression<String>? definition,
+    Expression<String>? categoryData,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (title != null) 'title': title,
+      if (icdRelease != null) 'icd_release': icdRelease,
+      if (definition != null) 'definition': definition,
+      if (categoryData != null) 'category_data': categoryData,
+    });
+  }
+
+  SavedIcdDiagnosticDataCompanion copyWith(
+      {Value<int>? id,
+      Value<String>? title,
+      Value<String>? icdRelease,
+      Value<String?>? definition,
+      Value<String>? categoryData}) {
+    return SavedIcdDiagnosticDataCompanion(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      icdRelease: icdRelease ?? this.icdRelease,
+      definition: definition ?? this.definition,
+      categoryData: categoryData ?? this.categoryData,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (icdRelease.present) {
+      map['icd_release'] = Variable<String>(icdRelease.value);
+    }
+    if (definition.present) {
+      map['definition'] = Variable<String>(definition.value);
+    }
+    if (categoryData.present) {
+      map['category_data'] = Variable<String>(categoryData.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SavedIcdDiagnosticDataCompanion(')
+          ..write('id: $id, ')
+          ..write('title: $title, ')
+          ..write('icdRelease: $icdRelease, ')
+          ..write('definition: $definition, ')
+          ..write('categoryData: $categoryData')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$LocalDatabase extends GeneratedDatabase {
   _$LocalDatabase(QueryExecutor e) : super(e);
   late final $LocalProfessionalTable localProfessional =
@@ -5609,6 +5952,8 @@ abstract class _$LocalDatabase extends GeneratedDatabase {
       $LocaltreatmentResultsTable(this);
   late final $SettingsTable settings = $SettingsTable(this);
   late final $ServerDatabaseTable serverDatabase = $ServerDatabaseTable(this);
+  late final $SavedIcdDiagnosticDataTable savedIcdDiagnosticData =
+      $SavedIcdDiagnosticDataTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -5625,6 +5970,7 @@ abstract class _$LocalDatabase extends GeneratedDatabase {
         localAppointments,
         localtreatmentResults,
         settings,
-        serverDatabase
+        serverDatabase,
+        savedIcdDiagnosticData
       ];
 }

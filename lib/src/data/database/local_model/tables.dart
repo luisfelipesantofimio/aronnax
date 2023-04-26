@@ -45,6 +45,7 @@ class LocalPatientCase extends Table {
       integer().references(LocalProfessional, #id)();
   TextColumn get consultationReason => text()();
   TextColumn get diagnostic => text()();
+  TextColumn get icdDiagnosticCode => text().nullable()();
   TextColumn get treatmentProposal => text()();
   TextColumn get caseNotes => text().nullable()();
   BoolColumn get isActive => boolean()();
@@ -55,9 +56,6 @@ class LocalPatientCase extends Table {
 
   IntColumn get treatmentPlanId =>
       integer().references(LocalTreatmentPlans, #id).nullable()();
-
-  // /// String value used to store the related results ids, used to be transformed into a list of integers
-  // TextColumn get localTreatmentPlanResults => text().nullable()();
 
   IntColumn get localTreatmentPlanPhase => integer().nullable()();
 }
@@ -142,6 +140,14 @@ class LocaltreatmentResults extends Table {
       integer().references(LocalTreatmentPlans, #id)();
   IntColumn get patientCaseId => integer().references(LocalPatientCase, #id)();
   TextColumn get treatmentResultsData => text()();
+}
+
+class SavedIcdDiagnosticData extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get title => text()();
+  TextColumn get icdRelease => text()();
+  TextColumn get definition => text().nullable()();
+  TextColumn get categoryData => text()();
 }
 
 class Settings extends Table {

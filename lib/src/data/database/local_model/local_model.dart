@@ -19,7 +19,8 @@ part 'local_model.g.dart';
   LocalTreatmentPlans,
   LocaltreatmentResults,
   Settings,
-  ServerDatabase
+  ServerDatabase,
+  SavedIcdDiagnosticData,
 ])
 class LocalDatabase extends _$LocalDatabase {
   LocalDatabase() : super(_openConnection());
@@ -71,6 +72,10 @@ class LocalDatabase extends _$LocalDatabase {
 
   Future<void> insertPatientCase(LocalPatientCaseCompanion data) {
     return into(localPatientCase).insert(data);
+  }
+
+  Future<void> insertIcdDiagnosticData(SavedIcdDiagnosticDataCompanion data) {
+    return into(savedIcdDiagnosticData).insert(data);
   }
 
   // Data update
@@ -223,6 +228,10 @@ class LocalDatabase extends _$LocalDatabase {
     return (select(localTreatmentPlans)).get();
   }
 
+  Future<List<SavedIcdDiagnosticDataData>> getIcdCategories() {
+    return (select(savedIcdDiagnosticData)).get();
+  }
+
   //Update
 
   Future updateConfigurationState(bool isConfigured) {
@@ -337,6 +346,10 @@ class LocalDatabase extends _$LocalDatabase {
             (tbl) => tbl.id.equals(id),
           ))
         .go();
+  }
+
+  Future deleteSavedIcdData() {
+    return (delete(savedIcdDiagnosticData)).go();
   }
 }
 

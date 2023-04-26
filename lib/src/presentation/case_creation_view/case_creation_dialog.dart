@@ -1,3 +1,4 @@
+
 import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/patients_provider.dart';
@@ -128,6 +129,7 @@ class _CaseCreationDialogState extends ConsumerState<CaseCreationDialog> {
                         ref.read(caseFormConsultationReasonProvider)!,
                         ref.read(caseFormTreatmentProposalProvider)!,
                         ref.read(caseFormDiagnosticProvider)!,
+                        ref.read(caseFormDiagnosticCodeProvider),
                         ref.read(caseFormCaseNotesProvider),
                         ref.read(caseFormTreatmentPlanProvider) == null
                             ? null

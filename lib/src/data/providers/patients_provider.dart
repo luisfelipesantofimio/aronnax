@@ -20,3 +20,4 @@ final caseFormTreatmentProposalProvider = StateProvider<String?>((ref) => null);
 final caseFormCaseNotesProvider = StateProvider<String?>((ref) => null);
 final caseFormTreatmentPlanProvider =
     StateProvider<TreatmentPlan?>((ref) => null);
+final caseFormDiagnosticCodeProvider = StateProvider<String?>((ref) => null);

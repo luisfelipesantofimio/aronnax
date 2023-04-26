@@ -9,6 +9,9 @@
 .history
 .svn/
 
+#vscode config files
+.vscode/*
+
 # IntelliJ related
 *.iml
 *.ipr
