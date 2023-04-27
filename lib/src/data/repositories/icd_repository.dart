@@ -5,6 +5,7 @@ import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/domain/entities/icd_data.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class IcdRepository implements IcdRepositoryInteface {
   @override
@@ -47,8 +48,19 @@ class IcdRepository implements IcdRepositoryInteface {
       'Accept-Language': language,
       'API-Version': 'v2'
     };
+    Dio dio = Dio();
+    dio.interceptors.add(PrettyDioLogger());
+// customization
+    dio.interceptors.add(PrettyDioLogger(
+        requestHeader: true,
+        requestBody: true,
+        responseBody: true,
+        responseHeader: false,
+        error: true,
+        compact: true,
+        maxWidth: 90));
 
-    final request = await Dio().get(
+    final request = await dio.get(
       entity,
       options: Options(
         receiveTimeout: const Duration(minutes: 2),
@@ -177,17 +189,16 @@ class IcdRepository implements IcdRepositoryInteface {
 
             for (var element in nestedParent) {
               if (element.child != null) {
-                final results = await Future.wait(element.child!.map((e) async {
+                for (var element3 in element.child!) {
                   IcdDataCategory newElement = IcdDataCategory.fromJson(
                     await ref.read(IcdRepositoryProvider).getIcdEntity(
                           token,
                           'es',
-                          e.toString().replaceAll('http', 'https'),
+                          element3.toString().replaceAll('http', 'https'),
                         ),
                   );
-                  return newElement;
-                }));
-                newGroupData.child.addAll(results);
+                  newGroupData.child.add(newElement);
+                }
               }
             }
           }
