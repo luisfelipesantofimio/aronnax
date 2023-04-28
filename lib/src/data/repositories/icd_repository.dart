@@ -177,17 +177,16 @@ class IcdRepository implements IcdRepositoryInteface {
 
             for (var element in nestedParent) {
               if (element.child != null) {
-                final results = await Future.wait(element.child!.map((e) async {
+                for (var element3 in element.child!) {
                   IcdDataCategory newElement = IcdDataCategory.fromJson(
                     await ref.read(IcdRepositoryProvider).getIcdEntity(
                           token,
                           'es',
-                          e.toString().replaceAll('http', 'https'),
+                          element3.toString().replaceAll('http', 'https'),
                         ),
                   );
-                  return newElement;
-                }));
-                newGroupData.child.addAll(results);
+                  newGroupData.child.add(newElement);
+                }
               }
             }
           }
