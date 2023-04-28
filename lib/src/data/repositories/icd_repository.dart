@@ -5,7 +5,6 @@ import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/domain/entities/icd_data.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class IcdRepository implements IcdRepositoryInteface {
   @override
@@ -48,19 +47,8 @@ class IcdRepository implements IcdRepositoryInteface {
       'Accept-Language': language,
       'API-Version': 'v2'
     };
-    Dio dio = Dio();
-    dio.interceptors.add(PrettyDioLogger());
-// customization
-    dio.interceptors.add(PrettyDioLogger(
-        requestHeader: true,
-        requestBody: true,
-        responseBody: true,
-        responseHeader: false,
-        error: true,
-        compact: true,
-        maxWidth: 90));
 
-    final request = await dio.get(
+    final request = await Dio().get(
       entity,
       options: Options(
         receiveTimeout: const Duration(minutes: 2),
