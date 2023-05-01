@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 
 class Session {
@@ -8,7 +7,7 @@ class Session {
   final String sessionObjectives;
   final String therapeuticArchievements;
   final String? sessionNotes;
-  final String sessionPerformance;
+  final int sessionPerformance;
   final String? sessionPerformanceExplanation;
   final int patientId;
   final int professionalId;
@@ -49,7 +48,7 @@ class Session {
     String? sessionObjectives,
     String? therapeuticArchievements,
     String? sessionNotes,
-    String? sessionPerformance,
+    int? sessionPerformance,
     String? sessionPerformanceExplanation,
     int? patientId,
     int? professionalId,
