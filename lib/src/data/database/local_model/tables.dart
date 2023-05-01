@@ -67,7 +67,7 @@ class LocalSessions extends Table {
   TextColumn get sessionObjectives => text()();
   TextColumn get therapeuticArchievements => text()();
   TextColumn get sessionNotes => text().nullable()();
-  TextColumn get sessionPerformance => text()();
+  IntColumn get sessionPerformance => integer()();
   TextColumn get sessionPerformanceExplanation => text().nullable()();
   IntColumn get idNumber => integer().references(LocalPatients, #id)();
   IntColumn get professionalID =>

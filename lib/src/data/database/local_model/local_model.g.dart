@@ -2893,9 +2893,9 @@ class $LocalSessionsTable extends LocalSessions
   static const VerificationMeta _sessionPerformanceMeta =
       const VerificationMeta('sessionPerformance');
   @override
-  late final GeneratedColumn<String> sessionPerformance =
-      GeneratedColumn<String>('session_performance', aliasedName, false,
-          type: DriftSqlType.string, requiredDuringInsert: true);
+  late final GeneratedColumn<int> sessionPerformance = GeneratedColumn<int>(
+      'session_performance', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
   static const VerificationMeta _sessionPerformanceExplanationMeta =
       const VerificationMeta('sessionPerformanceExplanation');
   @override
@@ -3052,7 +3052,7 @@ class $LocalSessionsTable extends LocalSessions
       sessionNotes: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}session_notes']),
       sessionPerformance: attachedDatabase.typeMapping.read(
-          DriftSqlType.string, data['${effectivePrefix}session_performance'])!,
+          DriftSqlType.int, data['${effectivePrefix}session_performance'])!,
       sessionPerformanceExplanation: attachedDatabase.typeMapping.read(
           DriftSqlType.string,
           data['${effectivePrefix}session_performance_explanation']),
@@ -3078,7 +3078,7 @@ class LocalSession extends DataClass implements Insertable<LocalSession> {
   final String sessionObjectives;
   final String therapeuticArchievements;
   final String? sessionNotes;
-  final String sessionPerformance;
+  final int sessionPerformance;
   final String? sessionPerformanceExplanation;
   final int idNumber;
   final int professionalID;
@@ -3107,7 +3107,7 @@ class LocalSession extends DataClass implements Insertable<LocalSession> {
     if (!nullToAbsent || sessionNotes != null) {
       map['session_notes'] = Variable<String>(sessionNotes);
     }
-    map['session_performance'] = Variable<String>(sessionPerformance);
+    map['session_performance'] = Variable<int>(sessionPerformance);
     if (!nullToAbsent || sessionPerformanceExplanation != null) {
       map['session_performance_explanation'] =
           Variable<String>(sessionPerformanceExplanation);
@@ -3150,8 +3150,7 @@ class LocalSession extends DataClass implements Insertable<LocalSession> {
       therapeuticArchievements:
           serializer.fromJson<String>(json['therapeuticArchievements']),
       sessionNotes: serializer.fromJson<String?>(json['sessionNotes']),
-      sessionPerformance:
-          serializer.fromJson<String>(json['sessionPerformance']),
+      sessionPerformance: serializer.fromJson<int>(json['sessionPerformance']),
       sessionPerformanceExplanation:
           serializer.fromJson<String?>(json['sessionPerformanceExplanation']),
       idNumber: serializer.fromJson<int>(json['idNumber']),
@@ -3170,7 +3169,7 @@ class LocalSession extends DataClass implements Insertable<LocalSession> {
       'therapeuticArchievements':
           serializer.toJson<String>(therapeuticArchievements),
       'sessionNotes': serializer.toJson<String?>(sessionNotes),
-      'sessionPerformance': serializer.toJson<String>(sessionPerformance),
+      'sessionPerformance': serializer.toJson<int>(sessionPerformance),
       'sessionPerformanceExplanation':
           serializer.toJson<String?>(sessionPerformanceExplanation),
       'idNumber': serializer.toJson<int>(idNumber),
@@ -3186,7 +3185,7 @@ class LocalSession extends DataClass implements Insertable<LocalSession> {
           String? sessionObjectives,
           String? therapeuticArchievements,
           Value<String?> sessionNotes = const Value.absent(),
-          String? sessionPerformance,
+          int? sessionPerformance,
           Value<String?> sessionPerformanceExplanation = const Value.absent(),
           int? idNumber,
           int? professionalID,
@@ -3265,7 +3264,7 @@ class LocalSessionsCompanion extends UpdateCompanion<LocalSession> {
   final Value<String> sessionObjectives;
   final Value<String> therapeuticArchievements;
   final Value<String?> sessionNotes;
-  final Value<String> sessionPerformance;
+  final Value<int> sessionPerformance;
   final Value<String?> sessionPerformanceExplanation;
   final Value<int> idNumber;
   final Value<int> professionalID;
@@ -3290,7 +3289,7 @@ class LocalSessionsCompanion extends UpdateCompanion<LocalSession> {
     required String sessionObjectives,
     required String therapeuticArchievements,
     this.sessionNotes = const Value.absent(),
-    required String sessionPerformance,
+    required int sessionPerformance,
     this.sessionPerformanceExplanation = const Value.absent(),
     required int idNumber,
     required int professionalID,
@@ -3310,7 +3309,7 @@ class LocalSessionsCompanion extends UpdateCompanion<LocalSession> {
     Expression<String>? sessionObjectives,
     Expression<String>? therapeuticArchievements,
     Expression<String>? sessionNotes,
-    Expression<String>? sessionPerformance,
+    Expression<int>? sessionPerformance,
     Expression<String>? sessionPerformanceExplanation,
     Expression<int>? idNumber,
     Expression<int>? professionalID,
@@ -3340,7 +3339,7 @@ class LocalSessionsCompanion extends UpdateCompanion<LocalSession> {
       Value<String>? sessionObjectives,
       Value<String>? therapeuticArchievements,
       Value<String?>? sessionNotes,
-      Value<String>? sessionPerformance,
+      Value<int>? sessionPerformance,
       Value<String?>? sessionPerformanceExplanation,
       Value<int>? idNumber,
       Value<int>? professionalID,
@@ -3385,7 +3384,7 @@ class LocalSessionsCompanion extends UpdateCompanion<LocalSession> {
       map['session_notes'] = Variable<String>(sessionNotes.value);
     }
     if (sessionPerformance.present) {
-      map['session_performance'] = Variable<String>(sessionPerformance.value);
+      map['session_performance'] = Variable<int>(sessionPerformance.value);
     }
     if (sessionPerformanceExplanation.present) {
       map['session_performance_explanation'] =
