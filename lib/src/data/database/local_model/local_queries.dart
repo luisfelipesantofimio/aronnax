@@ -3,15 +3,23 @@ import 'local_model.dart';
 
 LocalDatabase localDB = LocalDatabase();
 
-Future<void> addLocalSession(
-  String sessionSummary,
-  String sessionObjectives,
-  String therapeuticArchievements,
-  int idNumber,
-  int professionalID,
-  DateTime sessionDate,
-) async {
+Future<void> addLocalSession({
+  required String sessionSummary,
+  required String sessionObjectives,
+  required String therapeuticArchievements,
+  required int idNumber,
+  required int professionalID,
+  required DateTime sessionDate,
+  required int caseId,
+  required String? sessionNotes,
+  required int sessionPerformance,
+  required String? sessionPerformanceExplanation,
+}) async {
   final entity = LocalSessionsCompanion(
+    caseId: Value(caseId),
+    sessionNotes: Value(sessionNotes),
+    sessionPerformance: Value(sessionPerformance),
+    sessionPerformanceExplanation: Value(sessionPerformanceExplanation),
     idNumber: Value(idNumber),
     professionalID: Value(professionalID),
     sessionDate: Value(sessionDate),

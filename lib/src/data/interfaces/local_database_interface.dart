@@ -47,7 +47,7 @@ abstract class LocalDatabaseInteface {
     int professionalID,
     DateTime sessionDate,
     String sessionNotes,
-    String sessionPerformance,
+    int sessionPerformance,
     String sessionPerformanceExplanation,
     int caseId,
   );
