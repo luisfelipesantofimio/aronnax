@@ -226,4 +226,14 @@ class PatientsRepository implements PatientsRepositoryInterface {
     return sessionsList.map((e) => Session.fromLocalModel(e)).toList();
     //   }
   }
+
+  @override
+  Future<List<Session>> fetchPatientSessionsList(Ref ref, int patientId) async {
+    //  if (ref.read(offlineStatusProvider).value!) {
+    List<LocalSession> sessionsList = await ref
+        .read(localDatabaseRepositoryProvider)
+        .getPatientSessionsList(patientId);
+    return sessionsList.map((e) => Session.fromLocalModel(e)).toList();
+    //   }
+  }
 }

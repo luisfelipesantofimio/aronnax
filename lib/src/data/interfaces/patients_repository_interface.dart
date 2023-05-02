@@ -60,6 +60,7 @@ abstract class PatientsRepositoryInterface {
 
   void deletePatientCase(WidgetRef ref, int caseId);
   Future<List<Session>> getPatientSessionsList(WidgetRef ref, int patientId);
+  Future<List<Session>> fetchPatientSessionsList(Ref ref, int patientId);
 }
 
 final patientsRepositoryProvider = Provider<PatientsRepositoryInterface>(
