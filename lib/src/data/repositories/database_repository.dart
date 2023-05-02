@@ -319,7 +319,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
     required int patientCaseID,
     required String treatmentResultData,
   }) async {
-    final data = LocaltreatmentResultsCompanion(
+    final data = LocalTreatmentResultsCompanion(
       patientCaseId: Value(patientCaseID),
       applicationDate: Value(applicationDate),
       patientID: Value(patientID),
@@ -475,5 +475,10 @@ class DatabaseRepository implements LocalDatabaseInteface {
   @override
   void deleteSavedIcdData() {
     localDB.deleteSavedIcdData();
+  }
+
+  @override
+  Future<List<LocalTreatmentResult>> getTreatmentPlanResults(int patientId) {
+    return localDB.getTreatmentPlanResults(patientId);
   }
 }
