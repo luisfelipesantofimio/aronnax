@@ -2,6 +2,7 @@ import 'package:aronnax/src/data/repositories/patients_repository.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:aronnax/src/domain/entities/patient_case.dart';
 import 'package:aronnax/src/domain/entities/session.dart';
+import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_result.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class PatientsRepositoryInterface {
@@ -61,6 +62,9 @@ abstract class PatientsRepositoryInterface {
   void deletePatientCase(WidgetRef ref, int caseId);
   Future<List<Session>> getPatientSessionsList(WidgetRef ref, int patientId);
   Future<List<Session>> fetchPatientSessionsList(Ref ref, int patientId);
+
+  Future<List<TreatmentPlanResult>> getTreatmentPlanResults(
+      Ref ref, int patientId);
 }
 
 final patientsRepositoryProvider = Provider<PatientsRepositoryInterface>(

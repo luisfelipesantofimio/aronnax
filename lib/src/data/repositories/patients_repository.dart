@@ -5,6 +5,7 @@ import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:aronnax/src/domain/entities/patient_case.dart';
 import 'package:aronnax/src/domain/entities/session.dart';
+import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_result.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PatientsRepository implements PatientsRepositoryInterface {
@@ -234,6 +235,19 @@ class PatientsRepository implements PatientsRepositoryInterface {
         .read(localDatabaseRepositoryProvider)
         .getPatientSessionsList(patientId);
     return sessionsList.map((e) => Session.fromLocalModel(e)).toList();
+
     //   }
+  }
+
+  @override
+  Future<List<TreatmentPlanResult>> getTreatmentPlanResults(
+      Ref ref, int patientId) async {
+    bool isOffline = ref.read(offlineStatusProvider).value!;
+    // if (isOffline) {
+    List<LocalTreatmentResult> localData = await ref
+        .read(localDatabaseRepositoryProvider)
+        .getTreatmentPlanResults(patientId);
+    return localData.map((e) => TreatmentPlanResult.fromLocalModel(e)).toList();
+    // }
   }
 }
