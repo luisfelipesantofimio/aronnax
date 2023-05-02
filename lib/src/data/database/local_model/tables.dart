@@ -129,13 +129,14 @@ class LocalTreatmentPlans extends Table {
       integer().references(LocalProfessional, #id)();
 }
 
-class LocaltreatmentResults extends Table {
+class LocalTreatmentResults extends Table {
   IntColumn get id => integer().autoIncrement()();
   IntColumn get sessionNumber => integer()();
   DateTimeColumn get applicationDate => dateTime()();
   IntColumn get patientID => integer().references(LocalPatients, #id)();
   IntColumn get professionalID =>
       integer().references(LocalProfessional, #id)();
+  IntColumn get phaseNumber => integer()();
   IntColumn get treatmentPlanID =>
       integer().references(LocalTreatmentPlans, #id)();
   IntColumn get patientCaseId => integer().references(LocalPatientCase, #id)();
