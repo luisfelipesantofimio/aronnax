@@ -1,7 +1,9 @@
 import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
 import 'package:aronnax/src/data/providers/patient_case_providers.dart';
+import 'package:aronnax/src/data/providers/patients_provider.dart';
 import 'package:aronnax/src/data/providers/treatment_plan_providers.dart';
 import 'package:aronnax/src/domain/entities/patient_case.dart';
+import 'package:aronnax/src/presentation/patient_case_view/patient_sessions_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -55,6 +57,23 @@ class PatientCaseListElement extends ConsumerWidget {
                         children: [
                           Row(
                             children: [
+                              TextButton(
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => PatientSessionsList(
+                                      caseId: caseData.id,
+                                      patientId: patientId,
+                                    ),
+                                  );
+                                },
+                                child: const Text(
+                                  'See sessions',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
+                                ),
+                              ),
                               Text(caseData.isActive
                                   ? 'Active case'
                                   : 'Inactive case'),
