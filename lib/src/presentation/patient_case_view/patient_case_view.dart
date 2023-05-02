@@ -1,6 +1,7 @@
 import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:aronnax/src/presentation/patient_case_view/clinic_history_detail_view.dart';
 import 'package:aronnax/src/presentation/patient_case_view/patient_cases_list.dart';
+import 'package:aronnax/src/presentation/patient_case_view/patient_treatmentplan_results.dart';
 import 'package:flutter/material.dart';
 
 class PatientCaseView extends StatelessWidget {
@@ -47,12 +48,23 @@ class PatientCaseView extends StatelessWidget {
           const Padding(
             padding: EdgeInsets.all(20),
           ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.45,
-            width: MediaQuery.of(context).size.width * 0.4,
-            child: PatientCasesListView(
-              patientData: patiendData,
-            ),
+          Column(
+            children: [
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.45,
+                width: MediaQuery.of(context).size.width * 0.4,
+                child: PatientCasesListView(
+                  patientData: patiendData,
+                ),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.45,
+                width: MediaQuery.of(context).size.width * 0.4,
+                child: PatientTreatmentPlanResultsView(
+                  patientId: patiendData.id,
+                ),
+              ),
+            ],
           ),
         ],
       ),
