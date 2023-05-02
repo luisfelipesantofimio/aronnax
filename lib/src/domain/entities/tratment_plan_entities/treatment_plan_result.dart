@@ -1,6 +1,6 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_result_value.dart';
@@ -112,5 +112,19 @@ class TreatmentPlanResult {
         treatmentPlanId.hashCode ^
         phaseNumber.hashCode ^
         results.hashCode;
+  }
+
+  factory TreatmentPlanResult.fromLocalModel(LocalTreatmentResult data) {
+    final decodedData = jsonDecode(data.treatmentResultsData) as List;
+    List<TreatmentPlanResultValue> resultsList =
+        decodedData.map((e) => TreatmentPlanResultValue.fromMap(e)).toList();
+    return TreatmentPlanResult(
+        applicationDate: data.applicationDate,
+        sessionNumber: data.sessionNumber,
+        patientId: data.patientID,
+        professionalId: data.professionalID,
+        treatmentPlanId: data.treatmentPlanID,
+        phaseNumber: data.phaseNumber,
+        results: resultsList);
   }
 }
