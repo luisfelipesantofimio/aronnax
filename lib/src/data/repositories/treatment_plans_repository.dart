@@ -130,6 +130,7 @@ class TreatmentPlanRepository implements TreatmentPlanRepositoryInterface {
     if (ref.read(offlineStatusProvider).value!) {
       ref.read(localDatabaseRepositoryProvider).insertLocalTreatmentPlanResult(
             sessionNumber: results.sessionNumber,
+            phaseNumber: results.phaseNumber,
             applicationDate: results.applicationDate,
             treatmentPlanID: results.treatmentPlanId,
             patientID: results.patientId,
@@ -139,6 +140,5 @@ class TreatmentPlanRepository implements TreatmentPlanRepositoryInterface {
                 results.results.map((e) => e.toJson()).toList().toString(),
           );
     }
-    //TODO manage session number
   }
 }
