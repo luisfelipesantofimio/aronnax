@@ -94,6 +94,7 @@ abstract class LocalDatabaseInteface {
     required int patientID,
     required int professionalID,
     required int patientCaseID,
+    required int phaseNumber,
     required String treatmentResultData,
   });
 

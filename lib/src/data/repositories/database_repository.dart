@@ -317,6 +317,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
     required int patientID,
     required int professionalID,
     required int patientCaseID,
+    required int phaseNumber,
     required String treatmentResultData,
   }) async {
     final data = LocalTreatmentResultsCompanion(
@@ -326,6 +327,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
       professionalID: Value(professionalID),
       treatmentPlanID: Value(treatmentPlanID),
       sessionNumber: Value(sessionNumber),
+      phaseNumber: Value(phaseNumber),
       treatmentResultsData: Value(treatmentResultData),
     );
     localDB.insertTreatmentPlanResult(data);

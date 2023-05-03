@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
@@ -247,6 +249,7 @@ class PatientsRepository implements PatientsRepositoryInterface {
     List<LocalTreatmentResult> localData = await ref
         .read(localDatabaseRepositoryProvider)
         .getTreatmentPlanResults(patientId);
+    log(localData.toString());
     return localData.map((e) => TreatmentPlanResult.fromLocalModel(e)).toList();
     // }
   }
