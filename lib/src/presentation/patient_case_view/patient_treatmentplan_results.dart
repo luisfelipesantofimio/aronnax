@@ -28,7 +28,7 @@ class _PatientTreatmentPlanResultsViewState
       data: (data) {
         //TODO: Implement first charts
         return data.isEmpty
-            ? Text('There is not data.')
+            ? const Text('There is not data.')
             : ListView.builder(
                 itemCount: data.length,
                 shrinkWrap: true,

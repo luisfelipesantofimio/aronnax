@@ -1,5 +1,4 @@
 import 'package:aronnax/src/data/providers/patients_provider.dart';
-import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:aronnax/src/domain/entities/session.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

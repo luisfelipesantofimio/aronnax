@@ -1,8 +1,6 @@
-import 'package:aronnax/src/Pages/Formulary/widgets/consultant_selection_dialog.dart';
 import 'package:aronnax/src/data/database/local_model/local_queries.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/forms_providers/session_form_provider.dart';
-import 'package:aronnax/src/data/remote_database/server_api.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:aronnax/src/domain/entities/patient_case.dart';
 import 'package:aronnax/src/presentation/core/user_global_values.dart';
