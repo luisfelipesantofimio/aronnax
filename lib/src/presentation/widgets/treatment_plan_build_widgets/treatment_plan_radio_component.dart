@@ -73,6 +73,7 @@ class _TreatmentPlanScaleComponentState
 
                       if (itemIndex != -1) {
                         final updatedData = TreatmentPlanResultValue(
+                            componentType: 'radio',
                             treatmentPhase:
                                 widget.componentData.treatmentPlanPhase,
                             componentId: widget.componentData.id!,
@@ -82,6 +83,7 @@ class _TreatmentPlanScaleComponentState
                         updatedResultsList[itemIndex] = updatedData;
                       } else {
                         final newData = TreatmentPlanResultValue(
+                            componentType: 'radio',
                             treatmentPhase:
                                 widget.componentData.treatmentPlanPhase,
                             componentId: widget.componentData.id!,

@@ -53,6 +53,7 @@ class _TreatmentPlanTextFieldState
 
               if (itemIndex != -1) {
                 final updatedData = TreatmentPlanResultValue(
+                    componentType: 'text',
                     treatmentPhase: widget.componentData.treatmentPlanPhase,
                     componentId: widget.componentData.id!,
                     messurable: widget.componentData.messurable,
@@ -61,6 +62,7 @@ class _TreatmentPlanTextFieldState
                 updatedResultsList[itemIndex] = updatedData;
               } else {
                 final newData = TreatmentPlanResultValue(
+                    componentType: 'text',
                     treatmentPhase: widget.componentData.treatmentPlanPhase,
                     componentId: widget.componentData.id!,
                     messurable: widget.componentData.messurable,
