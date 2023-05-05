@@ -1,7 +1,5 @@
-import 'dart:developer';
-
 import 'package:aronnax/src/data/providers/patients_provider.dart';
-import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_result_value.dart';
+import 'package:aronnax/src/presentation/widgets/results_visualization/results_visualization_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -26,24 +24,14 @@ class _PatientTreatmentPlanResultsViewState
     );
     return resultsData.when(
       data: (data) {
-        //TODO: Implement first charts
         return data.isEmpty
             ? const Text('There is not data.')
             : ListView.builder(
                 itemCount: data.length,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  List<TreatmentPlanResultValue> resultsList =
-                      data[index].results;
-                  log(resultsList.toString());
-                  return Column(
-                    children: [
-                      Text(
-                        data[index].applicationDate.toIso8601String(),
-                      ),
-                      Text(data[index].phaseNumber.toString()),
-                      Text(data[index].results.toString()),
-                    ],
+                  return ResultsVisualizationItem(
+                    resultsData: data[index],
                   );
                 },
               );
