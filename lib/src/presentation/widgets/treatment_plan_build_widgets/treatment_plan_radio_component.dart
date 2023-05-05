@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:aronnax/src/data/providers/treatment_plan_providers.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_component.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_option.dart';
@@ -73,22 +72,32 @@ class _TreatmentPlanScaleComponentState
 
                       if (itemIndex != -1) {
                         final updatedData = TreatmentPlanResultValue(
-                            componentType: 'radio',
-                            treatmentPhase:
-                                widget.componentData.treatmentPlanPhase,
-                            componentId: widget.componentData.id!,
-                            messurable: widget.componentData.messurable,
-                            value: selectedValue!.value);
+                          componentTitle: widget.componentData.componentTitle,
+                          componentType: 'radio',
+                          treatmentPhase:
+                              widget.componentData.treatmentPlanPhase,
+                          componentId: widget.componentData.id!,
+                          messurable: widget.componentData.messurable,
+                          optionsSize: widget.valuesList.length,
+                          alias: selectedValue!.value.toString(),
+                          value: widget.valuesList.indexWhere((element) =>
+                              element.value == selectedValue!.value),
+                        );
 
                         updatedResultsList[itemIndex] = updatedData;
                       } else {
                         final newData = TreatmentPlanResultValue(
-                            componentType: 'radio',
-                            treatmentPhase:
-                                widget.componentData.treatmentPlanPhase,
-                            componentId: widget.componentData.id!,
-                            messurable: widget.componentData.messurable,
-                            value: selectedValue!.value);
+                          componentTitle: widget.componentData.componentTitle,
+                          componentType: 'radio',
+                          treatmentPhase:
+                              widget.componentData.treatmentPlanPhase,
+                          componentId: widget.componentData.id!,
+                          messurable: widget.componentData.messurable,
+                          alias: selectedValue!.value.toString(),
+                          optionsSize: widget.valuesList.length,
+                          value: widget.valuesList.indexWhere((element) =>
+                              element.value == selectedValue!.value),
+                        );
                         updatedResultsList.add(newData);
                       }
 

@@ -5,27 +5,39 @@ class TreatmentPlanResultValue {
   final int treatmentPhase;
   final bool messurable;
   final String componentType;
+  final String componentTitle;
+  final int? optionsSize;
+  final String? alias;
   final dynamic value;
   TreatmentPlanResultValue({
     required this.componentId,
     required this.treatmentPhase,
+    required this.componentTitle,
     required this.messurable,
     required this.componentType,
+    this.optionsSize,
+    this.alias,
     required this.value,
   });
 
   TreatmentPlanResultValue copyWith({
     int? componentId,
     int? treatmentPhase,
-    String? componentType,
     bool? messurable,
+    String? componentType,
+    String? componentTitle,
+    int? optionsSize,
+    String? alias,
     dynamic? value,
   }) {
     return TreatmentPlanResultValue(
-      componentType: componentType ?? this.componentType,
       componentId: componentId ?? this.componentId,
       treatmentPhase: treatmentPhase ?? this.treatmentPhase,
       messurable: messurable ?? this.messurable,
+      componentType: componentType ?? this.componentType,
+      componentTitle: componentTitle ?? this.componentTitle,
+      optionsSize: optionsSize ?? this.optionsSize,
+      alias: alias ?? this.alias,
       value: value ?? this.value,
     );
   }
@@ -34,8 +46,11 @@ class TreatmentPlanResultValue {
     return <String, dynamic>{
       'componentId': componentId,
       'treatmentPhase': treatmentPhase,
+      'componentTitle': componentTitle,
       'messurable': messurable,
       'componentType': componentType,
+      'optionsSize': optionsSize,
+      'alias': alias,
       'value': value,
     };
   }
@@ -45,7 +60,10 @@ class TreatmentPlanResultValue {
       componentId: map['componentId'] as int,
       treatmentPhase: map['treatmentPhase'] as int,
       messurable: map['messurable'] as bool,
+      componentTitle: map['componentTitle'],
       componentType: map['componentType'],
+      optionsSize: map['optionsSize'],
+      alias: map['alias'],
       value: map['value'] as dynamic,
     );
   }
@@ -58,7 +76,7 @@ class TreatmentPlanResultValue {
 
   @override
   String toString() {
-    return 'TreatmentPlanResultValue(componentId: $componentId, treatmentPhase: $treatmentPhase, messurable: $messurable, componentType: $componentType, value: $value)';
+    return 'TreatmentPlanResultValue(componentId: $componentId, treatmentPhase: $treatmentPhase, messurable: $messurable, componentType: $componentType, componentTitle: $componentTitle, optionsSize: $optionsSize, alias: $alias, value: $value)';
   }
 
   @override
@@ -68,6 +86,9 @@ class TreatmentPlanResultValue {
     return other.componentId == componentId &&
         other.treatmentPhase == treatmentPhase &&
         other.messurable == messurable &&
+        other.componentType == componentType &&
+        other.optionsSize == optionsSize &&
+        other.alias == alias &&
         other.value == value;
   }
 
@@ -76,6 +97,9 @@ class TreatmentPlanResultValue {
     return componentId.hashCode ^
         treatmentPhase.hashCode ^
         messurable.hashCode ^
+        componentType.hashCode ^
+        optionsSize.hashCode ^
+        alias.hashCode ^
         value.hashCode;
   }
 }

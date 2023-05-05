@@ -77,6 +77,7 @@ class _TreatmentPlanSelectionComponentState
 
                     if (itemIndex != -1) {
                       final updatedData = TreatmentPlanResultValue(
+                        componentTitle: widget.componentData.componentTitle,
                         componentType: 'selection',
                         treatmentPhase: widget.componentData.treatmentPlanPhase,
                         componentId: widget.componentData.id!,
@@ -90,6 +91,7 @@ class _TreatmentPlanSelectionComponentState
                       updatedResultsList[itemIndex] = updatedData;
                     } else {
                       final newData = TreatmentPlanResultValue(
+                        componentTitle: widget.componentData.componentTitle,
                         componentType: 'selection',
                         treatmentPhase: widget.componentData.treatmentPlanPhase,
                         componentId: widget.componentData.id!,

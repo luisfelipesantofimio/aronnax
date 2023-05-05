@@ -70,6 +70,7 @@ class _TreatmentPlanApplicationViewState
     for (var element in componentsList) {
       ref.read(currentTreatmentPlanResponseListProvider.notifier).state.add(
             TreatmentPlanResultValue(
+                componentTitle: element.componentTitle,
                 componentType: element.componentType,
                 componentId: element.id!,
                 treatmentPhase: widget.caseData.currentTreatmentPlanPhase!,
