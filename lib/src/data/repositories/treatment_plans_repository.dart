@@ -10,6 +10,11 @@ import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_pla
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_component.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_option.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_result.dart';
+import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_result_value.dart';
+import 'package:aronnax/src/presentation/widgets/results_visualization/result_scale_widget.dart';
+import 'package:aronnax/src/presentation/widgets/results_visualization/result_selection_widget.dart';
+import 'package:aronnax/src/presentation/widgets/results_visualization/result_task_widget.dart';
+import 'package:aronnax/src/presentation/widgets/results_visualization/result_text_widget.dart';
 import 'package:aronnax/src/presentation/widgets/treatment_plan_build_widgets/treatment_plan_radio_component.dart';
 import 'package:aronnax/src/presentation/widgets/treatment_plan_build_widgets/treatment_plan_selection_component.dart';
 import 'package:aronnax/src/presentation/widgets/treatment_plan_build_widgets/treatment_plan_task_component.dart';
@@ -140,5 +145,39 @@ class TreatmentPlanRepository implements TreatmentPlanRepositoryInterface {
                 results.results.map((e) => e.toJson()).toList().toString(),
           );
     }
+  }
+
+  @override
+  List<Widget> parserTreatmentPlanResults(List<TreatmentPlanResultValue> data) {
+    List<Widget> componentsList = [];
+    for (var element in data) {
+      switch (element.componentType) {
+        case 'radio':
+          componentsList.add(Expanded(
+            child: ResultScaleItem(
+              resultData: element,
+            ),
+          ));
+          break;
+        case 'selection':
+          componentsList.add(ResultSelectionItem(
+            resultData: element,
+          ));
+          break;
+        case 'task':
+          componentsList.add(ResultTaskItem(
+            resultData: element,
+          ));
+          break;
+        case 'text':
+          componentsList.add(ResultTextItem(
+            resultData: element,
+          ));
+          break;
+        default:
+          Container();
+      }
+    }
+    return componentsList;
   }
 }
