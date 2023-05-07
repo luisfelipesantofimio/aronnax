@@ -54,6 +54,7 @@ class _TreatmentPlanApplicationViewState
               patientId: widget.caseData.patientId,
               professionalId: widget.caseData.professionalId,
               treatmentPlanId: widget.treatmentPlanData.id,
+              caseId: widget.caseData.id,
               results: [],
             ),
           );
