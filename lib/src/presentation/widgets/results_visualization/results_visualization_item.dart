@@ -41,6 +41,7 @@ class ResultsVisualizationItem extends ConsumerWidget {
               padding: EdgeInsets.all(20),
             ),
             ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: componentsList.length,
               itemBuilder: (context, index) {
