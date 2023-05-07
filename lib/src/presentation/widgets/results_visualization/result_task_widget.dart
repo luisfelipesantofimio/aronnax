@@ -14,9 +14,12 @@ class ResultTaskItem extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          resultData.componentTitle,
-          style: const TextStyle(fontWeight: FontWeight.bold),
+        SizedBox(
+          width: MediaQuery.of(context).size.width * 0.19,
+          child: Text(
+            resultData.componentTitle,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
         ),
         const Padding(
           padding: EdgeInsets.all(10),

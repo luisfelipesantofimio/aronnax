@@ -15,9 +15,12 @@ class ResultSelectionItem extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          resultData.componentTitle,
-          style: const TextStyle(fontWeight: FontWeight.bold),
+        SizedBox(
+          width: MediaQuery.of(context).size.width * 0.3,
+          child: Text(
+            resultData.componentTitle,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
         ),
         Text(resultData.value),
       ],
