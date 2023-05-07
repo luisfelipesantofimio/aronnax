@@ -1,4 +1,6 @@
 import 'package:aronnax/src/data/providers/patients_provider.dart';
+import 'package:aronnax/src/domain/entities/patient_case.dart';
+import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_result.dart';
 import 'package:aronnax/src/presentation/widgets/results_visualization/results_visualization_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,8 +9,10 @@ class PatientTreatmentPlanResultsView extends ConsumerStatefulWidget {
   const PatientTreatmentPlanResultsView({
     Key? key,
     required this.patientId,
+    required this.caseData,
   }) : super(key: key);
   final int patientId;
+  final PatientCase caseData;
 
   @override
   ConsumerState<PatientTreatmentPlanResultsView> createState() =>
@@ -24,14 +28,20 @@ class _PatientTreatmentPlanResultsViewState
     );
     return resultsData.when(
       data: (data) {
-        return data.isEmpty
+        List<TreatmentPlanResult> filteredList = data
+            .where((element) => element.caseId == widget.caseData.id)
+            .toList();
+        return filteredList.isEmpty
             ? const Text('There is not data.')
             : ListView.builder(
-                itemCount: data.length,
+                itemCount: filteredList.length,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  return ResultsVisualizationItem(
-                    resultsData: data[index],
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ResultsVisualizationItem(
+                      resultsData: filteredList[index],
+                    ),
                   );
                 },
               );
