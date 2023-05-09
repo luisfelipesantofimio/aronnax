@@ -54,6 +54,7 @@ class _TreatmentPlanApplicationViewState
               patientId: widget.caseData.patientId,
               professionalId: widget.caseData.professionalId,
               treatmentPlanId: widget.treatmentPlanData.id,
+              caseId: widget.caseData.id,
               results: [],
             ),
           );
@@ -70,6 +71,8 @@ class _TreatmentPlanApplicationViewState
     for (var element in componentsList) {
       ref.read(currentTreatmentPlanResponseListProvider.notifier).state.add(
             TreatmentPlanResultValue(
+                componentTitle: element.componentTitle,
+                componentType: element.componentType,
                 componentId: element.id!,
                 treatmentPhase: widget.caseData.currentTreatmentPlanPhase!,
                 messurable: element.messurable,
@@ -164,22 +167,24 @@ class _TreatmentPlanApplicationViewState
                                 if (treatmentPlanApplicationFormKey
                                     .currentState!
                                     .validate()) {
-                                  ref
+                                  List<TreatmentPlanResultValue> resultsList =
+                                      ref.read(
+                                          currentTreatmentPlanResponseListProvider);
+                                  TreatmentPlanResult result = ref
                                       .read(
                                           currentTreatmentPlanResponseProvider)!
                                       .copyWith(
-                                        results: ref.read(
-                                            currentTreatmentPlanResponseListProvider),
+                                        results: resultsList,
                                       );
 
                                   ref
                                       .read(treatmentPlanRepositoryProvider)
                                       .saveTreatmentPlanResults(
                                         ref,
-                                        ref.read(
-                                            currentTreatmentPlanResponseProvider)!,
+                                        result,
                                         widget.caseData,
                                       );
+
                                   widget.onResultsSaving(true);
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(

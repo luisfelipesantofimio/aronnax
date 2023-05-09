@@ -186,6 +186,8 @@ class _SessionFormViewState extends ConsumerState<SessionFormView> {
                                       context: context,
                                       builder: (context) =>
                                           SessionPerformanceDialog(
+                                              patientCaseData:
+                                                  widget.patientCaseData,
                                               patientData: widget.patientData),
                                     );
                                   }

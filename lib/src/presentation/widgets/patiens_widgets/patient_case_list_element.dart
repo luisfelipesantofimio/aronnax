@@ -2,6 +2,8 @@ import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
 import 'package:aronnax/src/data/providers/patient_case_providers.dart';
 import 'package:aronnax/src/data/providers/treatment_plan_providers.dart';
 import 'package:aronnax/src/domain/entities/patient_case.dart';
+import 'package:aronnax/src/presentation/patient_case_view/patient_sessions_list.dart';
+import 'package:aronnax/src/presentation/widgets/results_visualization/results_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -52,38 +54,7 @@ class PatientCaseListElement extends ConsumerWidget {
                     children: [
                       Text('Case #${elementIndex + 1}'),
                       Row(
-                        children: [
-                          Row(
-                            children: [
-                              Text(caseData.isActive
-                                  ? 'Active case'
-                                  : 'Inactive case'),
-                              Switch(
-                                value: caseData.isActive,
-                                onChanged: (value) {
-                                  ref
-                                      .read(patientsRepositoryProvider)
-                                      .updatePatientCaseActiveState(
-                                          ref,
-                                          patientId,
-                                          caseData.id,
-                                          caseData.isActive);
-                                  ref.invalidate(patientCaseListProvider);
-                                },
-                              )
-                            ],
-                          ),
-                          IconButton(
-                            tooltip: 'Delete case',
-                            onPressed: () {
-                              ref
-                                  .read(patientsRepositoryProvider)
-                                  .deletePatientCase(ref, caseData.id);
-                              ref.invalidate(patientCaseListProvider);
-                            },
-                            icon: const Icon(Icons.delete),
-                          ),
-                        ],
+                        children: [],
                       ),
                     ],
                   ),
@@ -129,6 +100,73 @@ class PatientCaseListElement extends ConsumerWidget {
                     error: (error, stackTrace) =>
                         const Text('Something went wrong'),
                     loading: () => const CircularProgressIndicator(),
+                  ),
+                  Row(
+                    children: [
+                      Row(
+                        children: [
+                          Visibility(
+                            visible: caseData.treatmentPlanId != null,
+                            child: TextButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => ResultsDialog(
+                                          patientId: patientId,
+                                          caseData: caseData,
+                                        ));
+                              },
+                              child: const Text(
+                                'See results list',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => PatientSessionsList(
+                                  caseId: caseData.id,
+                                  patientId: patientId,
+                                ),
+                              );
+                            },
+                            child: const Text(
+                              'See sessions',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                            ),
+                          ),
+                          Text(caseData.isActive
+                              ? 'Active case'
+                              : 'Inactive case'),
+                          Switch(
+                            value: caseData.isActive,
+                            onChanged: (value) {
+                              ref
+                                  .read(patientsRepositoryProvider)
+                                  .updatePatientCaseActiveState(ref, patientId,
+                                      caseData.id, caseData.isActive);
+                              ref.invalidate(patientCaseListProvider);
+                            },
+                          )
+                        ],
+                      ),
+                      IconButton(
+                        tooltip: 'Delete case',
+                        onPressed: () {
+                          ref
+                              .read(patientsRepositoryProvider)
+                              .deletePatientCase(ref, caseData.id);
+                          ref.invalidate(patientCaseListProvider);
+                        },
+                        icon: const Icon(Icons.delete),
+                      ),
+                    ],
                   )
                 ],
               ),

@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 
+import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_result_value.dart';
 
 class TreatmentPlanResult {
@@ -12,6 +13,7 @@ class TreatmentPlanResult {
   final int patientId;
   final int professionalId;
   final int treatmentPlanId;
+  final int caseId;
   final int phaseNumber;
   final List<TreatmentPlanResultValue> results;
   TreatmentPlanResult({
@@ -21,6 +23,7 @@ class TreatmentPlanResult {
     required this.patientId,
     required this.professionalId,
     required this.treatmentPlanId,
+    required this.caseId,
     required this.phaseNumber,
     required this.results,
   });
@@ -32,6 +35,7 @@ class TreatmentPlanResult {
     int? patientId,
     int? professionalId,
     int? treatmentPlanId,
+    int? caseId,
     int? phaseNumber,
     List<TreatmentPlanResultValue>? results,
   }) {
@@ -42,6 +46,7 @@ class TreatmentPlanResult {
       patientId: patientId ?? this.patientId,
       professionalId: professionalId ?? this.professionalId,
       treatmentPlanId: treatmentPlanId ?? this.treatmentPlanId,
+      caseId: caseId ?? this.caseId,
       phaseNumber: phaseNumber ?? this.phaseNumber,
       results: results ?? this.results,
     );
@@ -55,6 +60,7 @@ class TreatmentPlanResult {
       'patientId': patientId,
       'professionalId': professionalId,
       'treatmentPlanId': treatmentPlanId,
+      'caseId': caseId,
       'phaseNumber': phaseNumber,
       'results': results.map((x) => x.toMap()).toList(),
     };
@@ -69,6 +75,7 @@ class TreatmentPlanResult {
       patientId: map['patientId'] as int,
       professionalId: map['professionalId'] as int,
       treatmentPlanId: map['treatmentPlanId'] as int,
+      caseId: map['caseId'] as int,
       phaseNumber: map['phaseNumber'] as int,
       results: List<TreatmentPlanResultValue>.from(
         (map['results'] as List<int>).map<TreatmentPlanResultValue>(
@@ -85,7 +92,7 @@ class TreatmentPlanResult {
 
   @override
   String toString() {
-    return 'TreatmentPlanResult(id: $id, applicationDate: $applicationDate, sessionNumber: $sessionNumber, patientId: $patientId, professionalId: $professionalId, treatmentPlanId: $treatmentPlanId, phaseNumber: $phaseNumber, results: $results)';
+    return 'TreatmentPlanResult(id: $id, applicationDate: $applicationDate, sessionNumber: $sessionNumber, patientId: $patientId, professionalId: $professionalId, treatmentPlanId: $treatmentPlanId, caseId: $caseId, phaseNumber: $phaseNumber, results: $results)';
   }
 
   @override
@@ -98,6 +105,7 @@ class TreatmentPlanResult {
         other.patientId == patientId &&
         other.professionalId == professionalId &&
         other.treatmentPlanId == treatmentPlanId &&
+        other.caseId == caseId &&
         other.phaseNumber == phaseNumber &&
         listEquals(other.results, results);
   }
@@ -110,7 +118,23 @@ class TreatmentPlanResult {
         patientId.hashCode ^
         professionalId.hashCode ^
         treatmentPlanId.hashCode ^
+        caseId.hashCode ^
         phaseNumber.hashCode ^
         results.hashCode;
+  }
+
+  factory TreatmentPlanResult.fromLocalModel(LocalTreatmentResult data) {
+    final decodedData = jsonDecode(data.treatmentResultsData) as List;
+    List<TreatmentPlanResultValue> resultsList =
+        decodedData.map((e) => TreatmentPlanResultValue.fromMap(e)).toList();
+    return TreatmentPlanResult(
+        applicationDate: data.applicationDate,
+        sessionNumber: data.sessionNumber,
+        patientId: data.patientID,
+        professionalId: data.professionalID,
+        treatmentPlanId: data.treatmentPlanID,
+        caseId: data.patientCaseId,
+        phaseNumber: data.phaseNumber,
+        results: resultsList);
   }
 }

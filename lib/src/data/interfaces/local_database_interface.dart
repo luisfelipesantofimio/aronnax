@@ -47,7 +47,7 @@ abstract class LocalDatabaseInteface {
     int professionalID,
     DateTime sessionDate,
     String sessionNotes,
-    String sessionPerformance,
+    int sessionPerformance,
     String sessionPerformanceExplanation,
     int caseId,
   );
@@ -94,6 +94,7 @@ abstract class LocalDatabaseInteface {
     required int patientID,
     required int professionalID,
     required int patientCaseID,
+    required int phaseNumber,
     required String treatmentResultData,
   });
 
@@ -176,6 +177,8 @@ abstract class LocalDatabaseInteface {
   void insertIcdData(IcdDataParser data);
   Future<List<SavedIcdDiagnosticDataData>> getDiagnosticData();
   void deleteSavedIcdData();
+
+  Future<List<LocalTreatmentResult>> getTreatmentPlanResults(int patientId);
 }
 
 final localDatabaseRepositoryProvider = Provider<LocalDatabaseInteface>(

@@ -4,6 +4,7 @@ import 'package:aronnax/src/domain/entities/tratment_plan_entities/section.dart'
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_component.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_result.dart';
+import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_result_value.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -33,6 +34,8 @@ abstract class TreatmentPlanRepositoryInterface {
 
   void saveTreatmentPlanResults(
       WidgetRef ref, TreatmentPlanResult results, PatientCase caseData);
+
+  List<Widget> parserTreatmentPlanResults(List<TreatmentPlanResultValue> data);
 }
 
 final treatmentPlanRepositoryProvider =

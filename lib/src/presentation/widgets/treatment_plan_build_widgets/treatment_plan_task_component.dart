@@ -50,6 +50,8 @@ class _TreatmentPlanTaskComponentState
 
                 if (itemIndex != -1) {
                   final updatedData = TreatmentPlanResultValue(
+                      componentTitle: widget.componentData.componentTitle,
+                      componentType: 'task',
                       treatmentPhase: widget.componentData.treatmentPlanPhase,
                       componentId: widget.componentData.id!,
                       messurable: widget.componentData.messurable,
@@ -58,6 +60,8 @@ class _TreatmentPlanTaskComponentState
                   updatedResultsList[itemIndex] = updatedData;
                 } else {
                   final newData = TreatmentPlanResultValue(
+                      componentTitle: widget.componentData.componentTitle,
+                      componentType: 'task',
                       treatmentPhase: widget.componentData.treatmentPlanPhase,
                       componentId: widget.componentData.id!,
                       messurable: widget.componentData.messurable,

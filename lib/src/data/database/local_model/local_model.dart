@@ -17,7 +17,7 @@ part 'local_model.g.dart';
   LocalTodos,
   LocalAppointments,
   LocalTreatmentPlans,
-  LocaltreatmentResults,
+  LocalTreatmentResults,
   Settings,
   ServerDatabase,
   SavedIcdDiagnosticData,
@@ -66,8 +66,8 @@ class LocalDatabase extends _$LocalDatabase {
     return into(localTreatmentPlans).insert(data);
   }
 
-  Future<void> insertTreatmentPlanResult(LocaltreatmentResultsCompanion data) {
-    return into(localtreatmentResults).insert(data);
+  Future<void> insertTreatmentPlanResult(LocalTreatmentResultsCompanion data) {
+    return into(localTreatmentResults).insert(data);
   }
 
   Future<void> insertPatientCase(LocalPatientCaseCompanion data) {
@@ -230,6 +230,12 @@ class LocalDatabase extends _$LocalDatabase {
 
   Future<List<SavedIcdDiagnosticDataData>> getIcdCategories() {
     return (select(savedIcdDiagnosticData)).get();
+  }
+
+  Future<List<LocalTreatmentResult>> getTreatmentPlanResults(int patientId) {
+    return (select(localTreatmentResults)
+          ..where((tbl) => tbl.patientID.equals(patientId)))
+        .get();
   }
 
   //Update

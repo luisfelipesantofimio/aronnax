@@ -1,7 +1,9 @@
 import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
+import 'package:aronnax/src/domain/entities/session.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan.dart';
+import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_result.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final patientsListProvider =
@@ -10,6 +12,21 @@ final patientsListProvider =
         ref,
         ref.read(offlineStatusProvider).value!,
       );
+});
+
+final patientsSessionsProvider = FutureProvider.autoDispose
+    .family<List<Session>, int>((ref, patientId) async {
+  return ref.read(patientsRepositoryProvider).fetchPatientSessionsList(
+        ref,
+        patientId,
+      );
+});
+
+final patientsTreatmentPlanResultsProvider = FutureProvider.autoDispose
+    .family<List<TreatmentPlanResult>, int>((ref, patientId) async {
+  return await ref
+      .read(patientsRepositoryProvider)
+      .getTreatmentPlanResults(ref, patientId);
 });
 
 // Patient case provider
