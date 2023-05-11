@@ -368,9 +368,9 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                                             ),
                                           ],
                                         ),
-                                        child: Center(
+                                        child: const Center(
                                           child: Padding(
-                                            padding: const EdgeInsets.only(
+                                            padding: EdgeInsets.only(
                                               left: 8,
                                               right: 8,
                                               top: 3,
@@ -379,7 +379,7 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                                             child: Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.spaceAround,
-                                              children: const [
+                                              children: [
                                                 Text("Ver sesiones"),
                                                 Icon(
                                                   Icons.arrow_upward,
@@ -450,9 +450,9 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                                             ),
                                           ],
                                         ),
-                                        child: Center(
+                                        child: const Center(
                                           child: Padding(
-                                            padding: const EdgeInsets.only(
+                                            padding: EdgeInsets.only(
                                               left: 8,
                                               right: 8,
                                               top: 3,
@@ -461,7 +461,7 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
                                             child: Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.spaceAround,
-                                              children: const [
+                                              children: [
                                                 Text("Ver sesiones"),
                                                 Icon(
                                                   Icons.arrow_upward,

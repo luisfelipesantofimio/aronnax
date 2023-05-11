@@ -113,10 +113,10 @@ class SecondWelcome extends StatelessWidget {
                   ),
                 );
               },
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: const [
+                children: [
                   Text(
                     "Almacenaré la información en mi computadora.",
                     style: TextStyle(

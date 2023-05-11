@@ -162,8 +162,8 @@ class _TreatmentPlanCreationViewState
                                 ),
                               );
                             },
-                            child: Row(
-                              children: const [
+                            child: const Row(
+                              children: [
                                 Text('Add section'),
                                 Icon(
                                   Icons.add,

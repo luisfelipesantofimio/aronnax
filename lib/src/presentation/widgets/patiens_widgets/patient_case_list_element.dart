@@ -53,7 +53,7 @@ class PatientCaseListElement extends ConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('Case #${elementIndex + 1}'),
-                      Row(
+                      const Row(
                         children: [],
                       ),
                     ],

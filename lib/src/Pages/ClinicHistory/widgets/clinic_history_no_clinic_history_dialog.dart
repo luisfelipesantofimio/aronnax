@@ -9,12 +9,12 @@ class NoClinicHistoryDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: const Color.fromARGB(255, 186, 230, 230),
-      content: SizedBox(
+      content: const SizedBox(
         height: 300,
         width: 500,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
+          children: [
             Text(
               "Espera",
               style: TextStyle(
