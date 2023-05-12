@@ -1,4 +1,4 @@
-import 'package:aronnax/src/Pages/Formulary/professionalForm/local_professional_register_view.dart';
+import 'package:aronnax/src/presentation/professional_register/local_professional_register_view.dart';
 import 'package:aronnax/src/presentation/welcome_screens/create_server.dart';
 import 'package:aronnax/src/presentation/welcome_screens/server_config.dart';
 import 'package:flutter/material.dart';
