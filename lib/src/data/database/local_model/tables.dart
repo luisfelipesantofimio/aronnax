@@ -80,9 +80,13 @@ class LocalProfessional extends Table {
   IntColumn get personalID => integer()();
   TextColumn get names => text()();
   TextColumn get lastNames => text()();
+  TextColumn get email => text()();
+  TextColumn get adress => text()();
   TextColumn get countryCode => text()();
   IntColumn get professionalID => integer()();
   TextColumn get userName => text()();
+  TextColumn get securityQuestion => text()();
+  TextColumn get securityAnswers => text()();
   TextColumn get password => text()();
 }
 
