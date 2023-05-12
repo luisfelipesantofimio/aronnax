@@ -111,14 +111,30 @@ class DatabaseRepository implements LocalDatabaseInteface {
   }
 
   @override
-  addLocalProfessional(int personalID, String names, String lastNames,
-      int professionalID, String userName, String password) {
+  addLocalProfessional({
+    required String names,
+    required String lastNames,
+    required String userName,
+    required int personalId,
+    required int professionalId,
+    required String email,
+    required String adress,
+    required String countryCode,
+    required String securityQuestion,
+    required String securityAnswer,
+    required String password,
+  }) {
     final entity = LocalProfessionalCompanion(
       userName: Value(userName),
       names: Value(names),
       lastNames: Value(lastNames),
-      personalID: Value(personalID),
-      professionalID: Value(professionalID),
+      personalID: Value(personalId),
+      professionalID: Value(professionalId),
+      adress: Value(adress),
+      email: Value(email),
+      countryCode: Value(countryCode),
+      securityQuestion: Value(securityQuestion),
+      securityAnswers: Value(securityAnswer),
       password: Value(password),
     );
 
