@@ -41,7 +41,6 @@ dependencies:
   icons_launcher: ^2.1.0
   dio: ^5.1.1
   fl_chart: ^0.62.0
-  crypto: ^3.0.3
  
   
 
