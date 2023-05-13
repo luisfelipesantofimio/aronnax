@@ -196,7 +196,7 @@ class LocalProfessionalRegisterState
                   child: countriesList.when(
                     data: (data) => DropdownButtonFormField(
                       decoration:
-                          InputDecoration(hintText: 'Select your country'),
+                          const InputDecoration(hintText: 'Select your country'),
                       items: data
                           .map(
                             (e) => DropdownMenuItem(
@@ -224,6 +224,7 @@ class LocalProfessionalRegisterState
                         if (selectedCountryCode == null) {
                           return 'You must select a value';
                         }
+                        return null;
                       },
                     ),
                     error: (error, stackTrace) => Row(

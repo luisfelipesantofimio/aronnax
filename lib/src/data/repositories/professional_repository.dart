@@ -1,8 +1,6 @@
-import 'dart:convert';
 
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/interfaces/professional_repository_interface.dart';
-import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:crypt/crypt.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
