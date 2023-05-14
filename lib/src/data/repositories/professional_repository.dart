@@ -1,4 +1,3 @@
-
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/interfaces/professional_repository_interface.dart';
 import 'package:crypt/crypt.dart';
@@ -34,9 +33,9 @@ class ProfessionalRepository implements ProfessionalRepositoryInterface {
           adress: adress,
           email: email,
           countryCode: countryCode,
-          password: hashedPassword.hash,
+          password: hashedPassword.toString(),
           securityQuestion: securityQuestion,
-          securityAnswer: hashedSecurityAnswer.hash,
+          securityAnswer: hashedSecurityAnswer.toString(),
         );
 
     //Sets the app as configured so you will be take to the login screen
