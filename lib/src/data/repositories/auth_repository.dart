@@ -43,7 +43,6 @@ class AuthRepository implements AuthRepositoryInterface {
     List<LocalProfessionalData> professionalData = await ref
         .read(localDatabaseRepositoryProvider)
         .loginExistingProfessional(userName);
-    log(professionalData.toString());
     if (professionalData.isNotEmpty) {
       ref.read(globalUserInformationProvider.notifier).update(
             (state) => Professional.fromLocalModel(

@@ -52,8 +52,19 @@ abstract class LocalDatabaseInteface {
     int caseId,
   );
 
-  void addLocalProfessional(int personalID, String names, String lastNames,
-      int professionalID, String userName, String password);
+  void addLocalProfessional({
+    required String names,
+    required String lastNames,
+    required String userName,
+    required int personalId,
+    required int professionalId,
+    required String email,
+    required String adress,
+    required String countryCode,
+    required String securityQuestion,
+    required String securityAnswer,
+    required String password,
+  });
 
   Future<List<LocalPatient>> searchPatient(String user);
 

@@ -1,4 +1,4 @@
-import 'package:aronnax/src/presentation/welcome_screens/second.dart';
+import 'package:aronnax/src/presentation/professional_register/local_professional_register_view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -31,8 +31,10 @@ class FirstWelcome extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const SecondWelcome(),
-                  ),
+                      builder: (context) =>
+                          const LocalProfessionalRegisterView()
+                      // const SecondWelcome(),
+                      ),
                 );
               },
               child: Text(

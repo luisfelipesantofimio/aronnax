@@ -28,7 +28,7 @@ class TreatmentPlanResultValue {
     String? componentTitle,
     int? optionsSize,
     String? alias,
-    dynamic? value,
+    dynamic value,
   }) {
     return TreatmentPlanResultValue(
       componentId: componentId ?? this.componentId,

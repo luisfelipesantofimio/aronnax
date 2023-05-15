@@ -65,8 +65,8 @@ class _MenuSettingsOptionContainerState
                   ),
                 ],
               )
-            : Row(
-                children: const [
+            : const Row(
+                children: [
                   Icon(
                     FontAwesomeIcons.gear,
                     color: Colors.white,

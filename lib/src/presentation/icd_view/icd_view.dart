@@ -86,8 +86,8 @@ class IcdView extends ConsumerWidget {
             ),
             loading: () => SizedBox(
               width: MediaQuery.of(context).size.width * 0.5,
-              child: Column(
-                children: const [
+              child: const Column(
+                children: [
                   Text(
                     '¡Sé paciente!',
                     style: TextStyle(

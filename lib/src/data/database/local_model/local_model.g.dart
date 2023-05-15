@@ -35,6 +35,16 @@ class $LocalProfessionalTable extends LocalProfessional
   late final GeneratedColumn<String> lastNames = GeneratedColumn<String>(
       'last_names', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _emailMeta = const VerificationMeta('email');
+  @override
+  late final GeneratedColumn<String> email = GeneratedColumn<String>(
+      'email', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _adressMeta = const VerificationMeta('adress');
+  @override
+  late final GeneratedColumn<String> adress = GeneratedColumn<String>(
+      'adress', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _countryCodeMeta =
       const VerificationMeta('countryCode');
   @override
@@ -53,6 +63,18 @@ class $LocalProfessionalTable extends LocalProfessional
   late final GeneratedColumn<String> userName = GeneratedColumn<String>(
       'user_name', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _securityQuestionMeta =
+      const VerificationMeta('securityQuestion');
+  @override
+  late final GeneratedColumn<String> securityQuestion = GeneratedColumn<String>(
+      'security_question', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _securityAnswersMeta =
+      const VerificationMeta('securityAnswers');
+  @override
+  late final GeneratedColumn<String> securityAnswers = GeneratedColumn<String>(
+      'security_answers', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _passwordMeta =
       const VerificationMeta('password');
   @override
@@ -65,9 +87,13 @@ class $LocalProfessionalTable extends LocalProfessional
         personalID,
         names,
         lastNames,
+        email,
+        adress,
         countryCode,
         professionalID,
         userName,
+        securityQuestion,
+        securityAnswers,
         password
       ];
   @override
@@ -103,6 +129,18 @@ class $LocalProfessionalTable extends LocalProfessional
     } else if (isInserting) {
       context.missing(_lastNamesMeta);
     }
+    if (data.containsKey('email')) {
+      context.handle(
+          _emailMeta, email.isAcceptableOrUnknown(data['email']!, _emailMeta));
+    } else if (isInserting) {
+      context.missing(_emailMeta);
+    }
+    if (data.containsKey('adress')) {
+      context.handle(_adressMeta,
+          adress.isAcceptableOrUnknown(data['adress']!, _adressMeta));
+    } else if (isInserting) {
+      context.missing(_adressMeta);
+    }
     if (data.containsKey('country_code')) {
       context.handle(
           _countryCodeMeta,
@@ -124,6 +162,22 @@ class $LocalProfessionalTable extends LocalProfessional
           userName.isAcceptableOrUnknown(data['user_name']!, _userNameMeta));
     } else if (isInserting) {
       context.missing(_userNameMeta);
+    }
+    if (data.containsKey('security_question')) {
+      context.handle(
+          _securityQuestionMeta,
+          securityQuestion.isAcceptableOrUnknown(
+              data['security_question']!, _securityQuestionMeta));
+    } else if (isInserting) {
+      context.missing(_securityQuestionMeta);
+    }
+    if (data.containsKey('security_answers')) {
+      context.handle(
+          _securityAnswersMeta,
+          securityAnswers.isAcceptableOrUnknown(
+              data['security_answers']!, _securityAnswersMeta));
+    } else if (isInserting) {
+      context.missing(_securityAnswersMeta);
     }
     if (data.containsKey('password')) {
       context.handle(_passwordMeta,
@@ -148,12 +202,20 @@ class $LocalProfessionalTable extends LocalProfessional
           .read(DriftSqlType.string, data['${effectivePrefix}names'])!,
       lastNames: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}last_names'])!,
+      email: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}email'])!,
+      adress: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}adress'])!,
       countryCode: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}country_code'])!,
       professionalID: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}professional_i_d'])!,
       userName: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}user_name'])!,
+      securityQuestion: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}security_question'])!,
+      securityAnswers: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}security_answers'])!,
       password: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}password'])!,
     );
@@ -171,18 +233,26 @@ class LocalProfessionalData extends DataClass
   final int personalID;
   final String names;
   final String lastNames;
+  final String email;
+  final String adress;
   final String countryCode;
   final int professionalID;
   final String userName;
+  final String securityQuestion;
+  final String securityAnswers;
   final String password;
   const LocalProfessionalData(
       {required this.id,
       required this.personalID,
       required this.names,
       required this.lastNames,
+      required this.email,
+      required this.adress,
       required this.countryCode,
       required this.professionalID,
       required this.userName,
+      required this.securityQuestion,
+      required this.securityAnswers,
       required this.password});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -191,9 +261,13 @@ class LocalProfessionalData extends DataClass
     map['personal_i_d'] = Variable<int>(personalID);
     map['names'] = Variable<String>(names);
     map['last_names'] = Variable<String>(lastNames);
+    map['email'] = Variable<String>(email);
+    map['adress'] = Variable<String>(adress);
     map['country_code'] = Variable<String>(countryCode);
     map['professional_i_d'] = Variable<int>(professionalID);
     map['user_name'] = Variable<String>(userName);
+    map['security_question'] = Variable<String>(securityQuestion);
+    map['security_answers'] = Variable<String>(securityAnswers);
     map['password'] = Variable<String>(password);
     return map;
   }
@@ -204,9 +278,13 @@ class LocalProfessionalData extends DataClass
       personalID: Value(personalID),
       names: Value(names),
       lastNames: Value(lastNames),
+      email: Value(email),
+      adress: Value(adress),
       countryCode: Value(countryCode),
       professionalID: Value(professionalID),
       userName: Value(userName),
+      securityQuestion: Value(securityQuestion),
+      securityAnswers: Value(securityAnswers),
       password: Value(password),
     );
   }
@@ -219,9 +297,13 @@ class LocalProfessionalData extends DataClass
       personalID: serializer.fromJson<int>(json['personalID']),
       names: serializer.fromJson<String>(json['names']),
       lastNames: serializer.fromJson<String>(json['lastNames']),
+      email: serializer.fromJson<String>(json['email']),
+      adress: serializer.fromJson<String>(json['adress']),
       countryCode: serializer.fromJson<String>(json['countryCode']),
       professionalID: serializer.fromJson<int>(json['professionalID']),
       userName: serializer.fromJson<String>(json['userName']),
+      securityQuestion: serializer.fromJson<String>(json['securityQuestion']),
+      securityAnswers: serializer.fromJson<String>(json['securityAnswers']),
       password: serializer.fromJson<String>(json['password']),
     );
   }
@@ -233,9 +315,13 @@ class LocalProfessionalData extends DataClass
       'personalID': serializer.toJson<int>(personalID),
       'names': serializer.toJson<String>(names),
       'lastNames': serializer.toJson<String>(lastNames),
+      'email': serializer.toJson<String>(email),
+      'adress': serializer.toJson<String>(adress),
       'countryCode': serializer.toJson<String>(countryCode),
       'professionalID': serializer.toJson<int>(professionalID),
       'userName': serializer.toJson<String>(userName),
+      'securityQuestion': serializer.toJson<String>(securityQuestion),
+      'securityAnswers': serializer.toJson<String>(securityAnswers),
       'password': serializer.toJson<String>(password),
     };
   }
@@ -245,18 +331,26 @@ class LocalProfessionalData extends DataClass
           int? personalID,
           String? names,
           String? lastNames,
+          String? email,
+          String? adress,
           String? countryCode,
           int? professionalID,
           String? userName,
+          String? securityQuestion,
+          String? securityAnswers,
           String? password}) =>
       LocalProfessionalData(
         id: id ?? this.id,
         personalID: personalID ?? this.personalID,
         names: names ?? this.names,
         lastNames: lastNames ?? this.lastNames,
+        email: email ?? this.email,
+        adress: adress ?? this.adress,
         countryCode: countryCode ?? this.countryCode,
         professionalID: professionalID ?? this.professionalID,
         userName: userName ?? this.userName,
+        securityQuestion: securityQuestion ?? this.securityQuestion,
+        securityAnswers: securityAnswers ?? this.securityAnswers,
         password: password ?? this.password,
       );
   @override
@@ -266,17 +360,32 @@ class LocalProfessionalData extends DataClass
           ..write('personalID: $personalID, ')
           ..write('names: $names, ')
           ..write('lastNames: $lastNames, ')
+          ..write('email: $email, ')
+          ..write('adress: $adress, ')
           ..write('countryCode: $countryCode, ')
           ..write('professionalID: $professionalID, ')
           ..write('userName: $userName, ')
+          ..write('securityQuestion: $securityQuestion, ')
+          ..write('securityAnswers: $securityAnswers, ')
           ..write('password: $password')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, personalID, names, lastNames, countryCode,
-      professionalID, userName, password);
+  int get hashCode => Object.hash(
+      id,
+      personalID,
+      names,
+      lastNames,
+      email,
+      adress,
+      countryCode,
+      professionalID,
+      userName,
+      securityQuestion,
+      securityAnswers,
+      password);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -285,9 +394,13 @@ class LocalProfessionalData extends DataClass
           other.personalID == this.personalID &&
           other.names == this.names &&
           other.lastNames == this.lastNames &&
+          other.email == this.email &&
+          other.adress == this.adress &&
           other.countryCode == this.countryCode &&
           other.professionalID == this.professionalID &&
           other.userName == this.userName &&
+          other.securityQuestion == this.securityQuestion &&
+          other.securityAnswers == this.securityAnswers &&
           other.password == this.password);
 }
 
@@ -297,18 +410,26 @@ class LocalProfessionalCompanion
   final Value<int> personalID;
   final Value<String> names;
   final Value<String> lastNames;
+  final Value<String> email;
+  final Value<String> adress;
   final Value<String> countryCode;
   final Value<int> professionalID;
   final Value<String> userName;
+  final Value<String> securityQuestion;
+  final Value<String> securityAnswers;
   final Value<String> password;
   const LocalProfessionalCompanion({
     this.id = const Value.absent(),
     this.personalID = const Value.absent(),
     this.names = const Value.absent(),
     this.lastNames = const Value.absent(),
+    this.email = const Value.absent(),
+    this.adress = const Value.absent(),
     this.countryCode = const Value.absent(),
     this.professionalID = const Value.absent(),
     this.userName = const Value.absent(),
+    this.securityQuestion = const Value.absent(),
+    this.securityAnswers = const Value.absent(),
     this.password = const Value.absent(),
   });
   LocalProfessionalCompanion.insert({
@@ -316,25 +437,37 @@ class LocalProfessionalCompanion
     required int personalID,
     required String names,
     required String lastNames,
+    required String email,
+    required String adress,
     required String countryCode,
     required int professionalID,
     required String userName,
+    required String securityQuestion,
+    required String securityAnswers,
     required String password,
   })  : personalID = Value(personalID),
         names = Value(names),
         lastNames = Value(lastNames),
+        email = Value(email),
+        adress = Value(adress),
         countryCode = Value(countryCode),
         professionalID = Value(professionalID),
         userName = Value(userName),
+        securityQuestion = Value(securityQuestion),
+        securityAnswers = Value(securityAnswers),
         password = Value(password);
   static Insertable<LocalProfessionalData> custom({
     Expression<int>? id,
     Expression<int>? personalID,
     Expression<String>? names,
     Expression<String>? lastNames,
+    Expression<String>? email,
+    Expression<String>? adress,
     Expression<String>? countryCode,
     Expression<int>? professionalID,
     Expression<String>? userName,
+    Expression<String>? securityQuestion,
+    Expression<String>? securityAnswers,
     Expression<String>? password,
   }) {
     return RawValuesInsertable({
@@ -342,9 +475,13 @@ class LocalProfessionalCompanion
       if (personalID != null) 'personal_i_d': personalID,
       if (names != null) 'names': names,
       if (lastNames != null) 'last_names': lastNames,
+      if (email != null) 'email': email,
+      if (adress != null) 'adress': adress,
       if (countryCode != null) 'country_code': countryCode,
       if (professionalID != null) 'professional_i_d': professionalID,
       if (userName != null) 'user_name': userName,
+      if (securityQuestion != null) 'security_question': securityQuestion,
+      if (securityAnswers != null) 'security_answers': securityAnswers,
       if (password != null) 'password': password,
     });
   }
@@ -354,18 +491,26 @@ class LocalProfessionalCompanion
       Value<int>? personalID,
       Value<String>? names,
       Value<String>? lastNames,
+      Value<String>? email,
+      Value<String>? adress,
       Value<String>? countryCode,
       Value<int>? professionalID,
       Value<String>? userName,
+      Value<String>? securityQuestion,
+      Value<String>? securityAnswers,
       Value<String>? password}) {
     return LocalProfessionalCompanion(
       id: id ?? this.id,
       personalID: personalID ?? this.personalID,
       names: names ?? this.names,
       lastNames: lastNames ?? this.lastNames,
+      email: email ?? this.email,
+      adress: adress ?? this.adress,
       countryCode: countryCode ?? this.countryCode,
       professionalID: professionalID ?? this.professionalID,
       userName: userName ?? this.userName,
+      securityQuestion: securityQuestion ?? this.securityQuestion,
+      securityAnswers: securityAnswers ?? this.securityAnswers,
       password: password ?? this.password,
     );
   }
@@ -385,6 +530,12 @@ class LocalProfessionalCompanion
     if (lastNames.present) {
       map['last_names'] = Variable<String>(lastNames.value);
     }
+    if (email.present) {
+      map['email'] = Variable<String>(email.value);
+    }
+    if (adress.present) {
+      map['adress'] = Variable<String>(adress.value);
+    }
     if (countryCode.present) {
       map['country_code'] = Variable<String>(countryCode.value);
     }
@@ -393,6 +544,12 @@ class LocalProfessionalCompanion
     }
     if (userName.present) {
       map['user_name'] = Variable<String>(userName.value);
+    }
+    if (securityQuestion.present) {
+      map['security_question'] = Variable<String>(securityQuestion.value);
+    }
+    if (securityAnswers.present) {
+      map['security_answers'] = Variable<String>(securityAnswers.value);
     }
     if (password.present) {
       map['password'] = Variable<String>(password.value);
@@ -407,9 +564,13 @@ class LocalProfessionalCompanion
           ..write('personalID: $personalID, ')
           ..write('names: $names, ')
           ..write('lastNames: $lastNames, ')
+          ..write('email: $email, ')
+          ..write('adress: $adress, ')
           ..write('countryCode: $countryCode, ')
           ..write('professionalID: $professionalID, ')
           ..write('userName: $userName, ')
+          ..write('securityQuestion: $securityQuestion, ')
+          ..write('securityAnswers: $securityAnswers, ')
           ..write('password: $password')
           ..write(')'))
         .toString();

@@ -1,4 +1,4 @@
-import 'package:aronnax/src/Pages/Formulary/professionalForm/local_professional_register_form.dart';
+import 'package:aronnax/src/presentation/professional_register/local_professional_register_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -63,7 +63,7 @@ class LocalProfessionalRegisterView extends ConsumerWidget {
             ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 90 / 100,
+            height: MediaQuery.of(context).size.height * 0.9,
             width: MediaQuery.of(context).size.width * 70 / 100,
             child: const LocalProfessionalRegister(),
           )
