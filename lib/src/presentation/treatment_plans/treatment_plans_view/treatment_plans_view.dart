@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:aronnax/src/data/interfaces/io_repository_interface.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
