@@ -365,7 +365,7 @@ class _TreatmentPlanCreationViewState
                                         treatmentPlanDescription ?? 'No data',
                                     professionalID: ref
                                         .read(globalUserInformationProvider)!
-                                        .personalID,
+                                        .professionalID,
                                     treatmentData: ref
                                         .read(treatmentPlanRepositoryProvider)
                                         .encodeTreatmentPlanData(sectionList),
