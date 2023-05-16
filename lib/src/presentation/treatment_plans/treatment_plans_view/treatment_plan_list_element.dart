@@ -1,9 +1,13 @@
+import 'dart:io';
+
+import 'package:aronnax/src/data/interfaces/io_repository_interface.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/providers/treatment_plan_providers.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan.dart';
 import 'package:aronnax/src/presentation/treatment_plans/treatment_plan_creation/treatment_plan_creation_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TreatmentPlanListElement extends ConsumerWidget {
   const TreatmentPlanListElement({Key? key, required this.treatmentPlanData})
@@ -51,6 +55,30 @@ class TreatmentPlanListElement extends ConsumerWidget {
                     'Número de fases: ${treatmentPlanData.sectionsList.length}'),
                 Row(
                   children: [
+                    IconButton(
+                      onPressed: () async {
+                        File result = await ref
+                            .read(ioRepositoryProvider)
+                            .exportToTextFile(
+                              fileName: treatmentPlanData.title,
+                              contents: treatmentPlanData.toJson(),
+                            );
+
+                        final Uri path = result.uri;
+                        await launchUrl(path);
+                        Future(() {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              backgroundColor: Colors.green,
+                              showCloseIcon: true,
+                              content:
+                                  Text('File exported to path: ${result.path}'),
+                            ),
+                          );
+                        });
+                      },
+                      icon: const Icon(Icons.file_download),
+                    ),
                     IconButton(
                       onPressed: () {
                         Navigator.push(

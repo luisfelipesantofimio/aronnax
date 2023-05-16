@@ -1,5 +1,11 @@
+import 'dart:developer';
+
+import 'package:aronnax/src/data/interfaces/io_repository_interface.dart';
+import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
+import 'package:aronnax/src/data/interfaces/treatment_plans_repository_interface.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/treatment_plan_providers.dart';
+import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan.dart';
 import 'package:aronnax/src/presentation/treatment_plans/treatment_plan_creation/treatment_plan_creation_view.dart';
 import 'package:aronnax/src/presentation/treatment_plans/treatment_plans_view/information_container.dart';
 import 'package:aronnax/src/presentation/treatment_plans/treatment_plans_view/treatment_plan_list_element.dart';
@@ -39,7 +45,31 @@ class TreatmentPlansView extends ConsumerWidget {
               GenericIconButton(
                 icon: FontAwesomeIcons.fileImport,
                 title: 'Import treatment plan',
-                onTap: () {},
+                onTap: () async {
+                  TreatmentPlan data = TreatmentPlan.fromJson(
+                    await ref.read(ioRepositoryProvider).readFromTextFile(''),
+                  );
+                  ref
+                      .read(localDatabaseRepositoryProvider)
+                      .insertLocalTreatmentPlan(
+                        date: data.creationDate,
+                        treatmentTitle: data.title,
+                        treatmentDescription: data.description,
+                        professionalID: data.creatorId,
+                        treatmentData: ref
+                            .read(treatmentPlanRepositoryProvider)
+                            .encodeTreatmentPlanData(data.sectionsList),
+                      );
+                  Future(() {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: Colors.green,
+                        content: Text('Imported treatment plan: ${data.title}'),
+                      ),
+                    );
+                  });
+                  ref.invalidate(treatmentPlanListProvider);
+                },
               ),
             ],
           ),
