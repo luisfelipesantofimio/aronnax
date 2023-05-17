@@ -15,7 +15,7 @@ class IoRepository implements IoRepositoryInterface {
       await path.create();
     }
     final File file = File(
-      p.join(documentsPath.path, 'aronnax_exports/$fileName.json.arnx'),
+      p.join(documentsPath.path, 'aronnax_exports/$fileName.arnx'),
     );
     return file.writeAsString(contents);
   }
@@ -25,7 +25,7 @@ class IoRepository implements IoRepositoryInterface {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       allowMultiple: false,
       type: FileType.custom,
-      allowedExtensions: ['json.arnx'],
+      allowedExtensions: ['arnx'],
     );
     File file = File(result!.files.single.path!);
     return await file.readAsString();
