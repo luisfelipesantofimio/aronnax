@@ -55,6 +55,12 @@ class TreatmentPlan {
   }
 
   factory TreatmentPlan.fromMap(Map<String, dynamic> map) {
+    final sectionData = map['sectionsList'] as List;
+    List<Section> parsedSectionList = sectionData
+        .map(
+          (e) => Section.fromMap(e),
+        )
+        .toList();
     return TreatmentPlan(
       id: map['id'] as int,
       title: map['title'] as String,
@@ -62,11 +68,12 @@ class TreatmentPlan {
       creationDate:
           DateTime.fromMillisecondsSinceEpoch(map['creationDate'] as int),
       creatorId: map['creatorId'] as int,
-      sectionsList: List<Section>.from(
-        (map['sectionsList'] as List<int>).map<Section>(
-          (x) => Section.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
+      sectionsList: parsedSectionList,
+      // List<Section>.from(
+      //   (map['sectionsList'] as List<int>).map<Section>(
+      //     (x) => Section.fromMap(x as Map<String, dynamic>),
+      //   ),
+      // ),
     );
   }
 
