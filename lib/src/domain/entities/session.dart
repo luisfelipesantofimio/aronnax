@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 
 class Session {
@@ -107,4 +109,46 @@ class Session {
         professionalId.hashCode ^
         caseId.hashCode;
   }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'sessionDate': sessionDate.millisecondsSinceEpoch,
+      'sessionSummary': sessionSummary,
+      'sessionObjectives': sessionObjectives,
+      'therapeuticArchievements': therapeuticArchievements,
+      'sessionNotes': sessionNotes,
+      'sessionPerformance': sessionPerformance,
+      'sessionPerformanceExplanation': sessionPerformanceExplanation,
+      'patientId': patientId,
+      'professionalId': professionalId,
+      'caseId': caseId,
+    };
+  }
+
+  factory Session.fromMap(Map<String, dynamic> map) {
+    return Session(
+      id: map['id'] as int,
+      sessionDate:
+          DateTime.fromMillisecondsSinceEpoch(map['sessionDate'] as int),
+      sessionSummary: map['sessionSummary'] as String,
+      sessionObjectives: map['sessionObjectives'] as String,
+      therapeuticArchievements: map['therapeuticArchievements'] as String,
+      sessionNotes:
+          map['sessionNotes'] != null ? map['sessionNotes'] as String : null,
+      sessionPerformance: map['sessionPerformance'] as int,
+      sessionPerformanceExplanation:
+          map['sessionPerformanceExplanation'] != null
+              ? map['sessionPerformanceExplanation'] as String
+              : null,
+      patientId: map['patientId'] as int,
+      professionalId: map['professionalId'] as int,
+      caseId: map['caseId'] as int,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Session.fromJson(String source) =>
+      Session.fromMap(json.decode(source) as Map<String, dynamic>);
 }

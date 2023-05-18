@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 
 class ClinicHistory {
@@ -64,4 +66,40 @@ class ClinicHistory {
       professionalId: professionalId ?? this.professionalId,
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'registerNumber': registerNumber,
+      'creationDate': creationDate.millisecondsSinceEpoch,
+      'mentalExamination': mentalExamination,
+      'medAntecedents': medAntecedents,
+      'psyAntecedents': psyAntecedents,
+      'familyHistory': familyHistory,
+      'personalHistory': personalHistory,
+      'idNumber': idNumber,
+      'professionalId': professionalId,
+    };
+  }
+
+  factory ClinicHistory.fromMap(Map<String, dynamic> map) {
+    return ClinicHistory(
+      id: map['id'] as int,
+      registerNumber: map['registerNumber'] as String,
+      creationDate:
+          DateTime.fromMillisecondsSinceEpoch(map['creationDate'] as int),
+      mentalExamination: map['mentalExamination'] as String,
+      medAntecedents: map['medAntecedents'] as String,
+      psyAntecedents: map['psyAntecedents'] as String,
+      familyHistory: map['familyHistory'] as String,
+      personalHistory: map['personalHistory'] as String,
+      idNumber: map['idNumber'] as int,
+      professionalId: map['professionalId'] as int,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory ClinicHistory.fromJson(String source) =>
+      ClinicHistory.fromMap(json.decode(source) as Map<String, dynamic>);
 }
