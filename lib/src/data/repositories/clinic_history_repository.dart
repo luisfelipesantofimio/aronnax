@@ -65,4 +65,14 @@ class ClinicHistoryRepository implements ClinicHistoryRepositoryInterface {
           .getSingleClinicHistoryById(patientId),
     );
   }
+
+  @override
+  Future<ClinicHistory> getPatientClinicHistoryFromConsumer(
+      WidgetRef ref, int patientId) async {
+    return ClinicHistory.fromLocalModel(
+      await ref
+          .read(localDatabaseRepositoryProvider)
+          .getSingleClinicHistoryById(patientId),
+    );
+  }
 }

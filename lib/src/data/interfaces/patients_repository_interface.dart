@@ -1,4 +1,5 @@
 import 'package:aronnax/src/data/repositories/patients_repository.dart';
+import 'package:aronnax/src/domain/entities/clinic_history.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:aronnax/src/domain/entities/patient_case.dart';
 import 'package:aronnax/src/domain/entities/session.dart';
@@ -55,6 +56,10 @@ abstract class PatientsRepositoryInterface {
   Future<List<Patient>> getPatient(WidgetRef ref, int idNumber);
 
   Future<List<PatientCase>> getPatientCaseList(Ref ref, int patientId);
+
+  ///Intended to be used as an alternative to [getPatientCaseList] from a [ConsumerWidget] instead of a [Provider].
+  Future<List<PatientCase>> getPatientCaseListFromConsumer(
+      WidgetRef ref, int patientId);
   Future<PatientCase?> getPatientActiveCase(WidgetRef ref, int patientId);
   void updatePatientCaseActiveState(
       WidgetRef ref, int patientId, int caseId, bool currentCaseState);
@@ -65,6 +70,13 @@ abstract class PatientsRepositoryInterface {
 
   Future<List<TreatmentPlanResult>> getTreatmentPlanResults(
       Ref ref, int patientId);
+
+  ///Method for receiving patient related data sources and returning their json variants
+  String encodePatientData(
+      {required Patient patientData,
+      required ClinicHistory clinicHistory,
+      required List<Session> sessionData,
+      required List<PatientCase> caseData});
 }
 
 final patientsRepositoryProvider = Provider<PatientsRepositoryInterface>(

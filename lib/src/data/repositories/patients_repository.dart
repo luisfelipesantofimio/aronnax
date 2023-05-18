@@ -4,8 +4,10 @@ import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
+import 'package:aronnax/src/domain/entities/clinic_history.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:aronnax/src/domain/entities/patient_case.dart';
+import 'package:aronnax/src/domain/entities/patient_global_data.dart';
 import 'package:aronnax/src/domain/entities/session.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_result.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -182,6 +184,19 @@ class PatientsRepository implements PatientsRepositoryInterface {
   }
 
   @override
+  Future<List<PatientCase>> getPatientCaseListFromConsumer(
+      WidgetRef ref, int patientId) async {
+    if (ref.read(offlineStatusProvider).value!) {
+      List<LocalPatientCaseData> localCasesList = await ref
+          .read(localDatabaseRepositoryProvider)
+          .getPatientCasesList(patientId);
+      return localCasesList.map((e) => PatientCase.fromLocalModel(e)).toList();
+    } else {
+      return [];
+    }
+  }
+
+  @override
   void updatePatientCaseActiveState(
       WidgetRef ref, int patientId, int caseId, bool currentCaseState) async {
     if (ref.read(offlineStatusProvider).value!) {
@@ -252,5 +267,19 @@ class PatientsRepository implements PatientsRepositoryInterface {
     log(localData.toString());
     return localData.map((e) => TreatmentPlanResult.fromLocalModel(e)).toList();
     // }
+  }
+
+  @override
+  String encodePatientData(
+      {required Patient patientData,
+      required ClinicHistory clinicHistory,
+      required List<Session> sessionData,
+      required List<PatientCase> caseData}) {
+    return PatientGlobalData(
+            patient: patientData,
+            clinicHistory: clinicHistory,
+            caseData: caseData,
+            sessionData: sessionData)
+        .toJson();
   }
 }
