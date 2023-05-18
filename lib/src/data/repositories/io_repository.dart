@@ -51,7 +51,7 @@ class IoRepository implements IoRepositoryInterface {
   }
 
   @override
-  void encryptFile({required File input, required String encryptionKey}) {
+  void encryptFile({required File input, required String encryptionKey}) async {
     final encryptedFile = File('${input.path}.encrypted');
 
     final key = Key.fromUtf8(encryptionKey);
@@ -63,5 +63,6 @@ class IoRepository implements IoRepositoryInterface {
         encrypter.encryptBytes(input.readAsBytesSync(), iv: iv).bytes;
 
     encryptedFile.writeAsBytesSync(encryptedBytes);
+    await input.delete();
   }
 }
