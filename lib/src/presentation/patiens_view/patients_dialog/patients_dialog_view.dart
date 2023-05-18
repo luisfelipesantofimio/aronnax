@@ -1,12 +1,19 @@
+import 'dart:developer';
+import 'dart:io';
+
+import 'package:aronnax/src/data/interfaces/clinic_history_repository_interface.dart';
+import 'package:aronnax/src/data/interfaces/io_repository_interface.dart';
 import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
 import 'package:aronnax/src/data/providers/clinic_history_data_provider.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/patient_case_providers.dart';
 import 'package:aronnax/src/data/providers/patients_provider.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
+import 'package:aronnax/src/domain/entities/patient_case.dart';
 import 'package:aronnax/src/presentation/case_creation_view/case_creation_dialog.dart';
 import 'package:aronnax/src/presentation/clinic_history_form_screen/clinic_history_register_view.dart';
 import 'package:aronnax/src/presentation/core/methods.dart';
+import 'package:aronnax/src/presentation/patiens_view/patients_dialog/export_password_dialog.dart';
 import 'package:aronnax/src/presentation/patient_case_view/patient_case_view.dart';
 import 'package:aronnax/src/presentation/widgets/patient_dialog_text_body.dart';
 import 'package:flutter/material.dart';
@@ -128,27 +135,101 @@ class _PatientsDialogViewState extends ConsumerState<PatientsDialogView> {
                         ),
                         Row(
                           children: [
-                            Text(
-                              widget.patientData.isActive
-                                  ? 'Active user'
-                                  : 'Inactive user',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
+                            Row(
+                              children: [
+                                Text(
+                                  widget.patientData.isActive
+                                      ? 'Active user'
+                                      : 'Inactive user',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Switch(
+                                  value: widget.patientData.isActive,
+                                  onChanged: (value) {
+                                    ref
+                                        .read(patientsRepositoryProvider)
+                                        .updateLocalPatientActiveState(
+                                            ref,
+                                            widget.patientData.id,
+                                            !widget.patientData.isActive,
+                                            ref
+                                                .read(offlineStatusProvider)
+                                                .value!);
+                                    ref.invalidate(patientsListProvider);
+                                  },
+                                )
+                              ],
                             ),
-                            Switch(
-                              value: widget.patientData.isActive,
-                              onChanged: (value) {
-                                ref
+                            const Padding(
+                              padding: EdgeInsets.all(20),
+                            ),
+                            IconButton(
+                              tooltip: 'Export patient data',
+                              onPressed: () async {
+                                final sessionData = await ref
                                     .read(patientsRepositoryProvider)
-                                    .updateLocalPatientActiveState(
-                                        ref,
-                                        widget.patientData.id,
-                                        !widget.patientData.isActive,
-                                        ref.read(offlineStatusProvider).value!);
-                                ref.invalidate(patientsListProvider);
+                                    .getPatientSessionsList(
+                                        ref, widget.patientData.id);
+                                final clinicHistoryData = await ref
+                                    .read(clinicHistoryRepositoryProvider)
+                                    .getPatientClinicHistoryFromConsumer(
+                                        ref, widget.patientData.id);
+
+                                final caseData = await ref
+                                    .read(patientsRepositoryProvider)
+                                    .getPatientCaseListFromConsumer(
+                                        ref, widget.patientData.id);
+                                String result = ref
+                                    .read(patientsRepositoryProvider)
+                                    .encodePatientData(
+                                      patientData: widget.patientData,
+                                      sessionData: sessionData,
+                                      clinicHistory: clinicHistoryData,
+                                      caseData: caseData,
+                                    );
+                                File contentsToFile = await ref
+                                    .read(ioRepositoryProvider)
+                                    .exportToTextFile(
+                                      fileName:
+                                          '${widget.patientData.names}-${widget.patientData.lastNames}-data',
+                                      contents: result,
+                                    );
+                                String fileKey =
+                                    AppMethods().codeGeneration(32);
+                                ref.read(ioRepositoryProvider).encryptFile(
+                                      input: contentsToFile,
+                                      encryptionKey: fileKey,
+                                    );
+                                Future(() {
+                                  String fileName =
+                                      contentsToFile.path.split('/').last;
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => ExportPasswordDialog(
+                                      fileName: fileName,
+                                      password: fileKey,
+                                    ),
+                                  );
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      showCloseIcon: true,
+                                      duration: Duration(minutes: 2),
+                                      backgroundColor: Colors.green,
+                                      content: Text(
+                                          'Data exported to ${contentsToFile.path.replaceFirst(fileName, '')}'),
+                                    ),
+                                  );
+                                });
                               },
-                            )
+                              icon: const Icon(Icons.download),
+                            ),
+                            IconButton(
+                              tooltip: 'Delete patient',
+                              onPressed: () {},
+                              icon: const Icon(Icons.delete),
+                            ),
                           ],
                         ),
                       ],
