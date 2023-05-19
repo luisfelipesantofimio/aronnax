@@ -1,9 +1,12 @@
 import 'dart:developer';
 
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
+import 'package:aronnax/src/data/database/local_model/local_queries.dart';
+import 'package:aronnax/src/data/interfaces/clinic_history_repository_interface.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
+import 'package:aronnax/src/data/providers/patients_provider.dart';
 import 'package:aronnax/src/domain/entities/clinic_history.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:aronnax/src/domain/entities/patient_case.dart';
@@ -281,5 +284,82 @@ class PatientsRepository implements PatientsRepositoryInterface {
             caseData: caseData,
             sessionData: sessionData)
         .toJson();
+  }
+
+  @override
+  void importPatientData({
+    required WidgetRef ref,
+    required String decryptedPatientData,
+    required int professionalId,
+  }) {
+    bool isOffline = ref.read(offlineStatusProvider).value!;
+    PatientGlobalData patientData =
+        PatientGlobalData.fromJson(decryptedPatientData);
+
+    addPatient(
+        ref: ref,
+        names: patientData.patient.names,
+        lastNames: patientData.patient.lastNames,
+        birthDate: patientData.patient.birthDate,
+        gender: patientData.patient.gender,
+        idNumber: patientData.patient.idNumber,
+        contactNumber: patientData.patient.contactNumber,
+        mail: patientData.patient.mail,
+        city: patientData.patient.city,
+        state: patientData.patient.state,
+        adress: patientData.patient.adress,
+        insurance: patientData.patient.insurance,
+        education: patientData.patient.education,
+        ocupation: patientData.patient.ocupation,
+        emergencyContactName: patientData.patient.emergencyContactName,
+        emergencyContactNumber: patientData.patient.emergencyContactNumber,
+        creationDate: patientData.patient.creationDate,
+        professionalID: professionalId);
+    ref.read(clinicHistoryRepositoryProvider).addClinicHistory(
+          ref,
+          patientData.clinicHistory.registerNumber,
+          patientData.clinicHistory.creationDate,
+          patientData.clinicHistory.mentalExamination,
+          patientData.clinicHistory.medAntecedents,
+          patientData.clinicHistory.psyAntecedents,
+          patientData.clinicHistory.familyHistory,
+          patientData.clinicHistory.personalHistory,
+          patientData.clinicHistory.idNumber,
+          patientData.clinicHistory.professionalId,
+        );
+    if (patientData.caseData.isNotEmpty) {
+      for (var element in patientData.caseData) {
+        addPatientCase(
+            ref,
+            element.creationDate,
+            element.patientId,
+            professionalId,
+            element.consultationReason,
+            element.treatmentProposal,
+            element.diagnostic,
+            element.icdDiagnosticCode,
+            element.caseNotes,
+            null,
+            null,
+            isOffline);
+      }
+    }
+    if (patientData.sessionData.isNotEmpty) {
+      for (var element in patientData.sessionData) {
+        addLocalSession(
+            sessionSummary: element.sessionSummary,
+            sessionObjectives: element.sessionObjectives,
+            therapeuticArchievements: element.therapeuticArchievements,
+            idNumber: element.patientId,
+            professionalID: element.professionalId,
+            sessionDate: element.sessionDate,
+            caseId: element.caseId,
+            sessionNotes: element.sessionNotes,
+            sessionPerformance: element.sessionPerformance,
+            sessionPerformanceExplanation:
+                element.sessionPerformanceExplanation);
+      }
+    }
+    ref.invalidate(patientsListProvider);
   }
 }

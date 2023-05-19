@@ -18,6 +18,15 @@ class PatientsView extends StatelessWidget {
               children: [
                 const Text('Consultantes registrados'),
                 IconButton(
+                  tooltip: 'Import patient data',
+                  onPressed: () {
+                    //TODO: implement import logic and deletion
+                  },
+                  icon: Icon(
+                    Icons.input,
+                  ),
+                ),
+                IconButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
