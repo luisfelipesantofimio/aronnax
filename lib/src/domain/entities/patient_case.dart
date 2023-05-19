@@ -9,6 +9,7 @@ class PatientCase {
   final int professionalId;
   final String consultationReason;
   final String diagnostic;
+  final String? icdDiagnosticCode;
   final String treatmentProposal;
   final String? caseNotes;
   final bool isActive;
@@ -23,6 +24,7 @@ class PatientCase {
     required this.professionalId,
     required this.consultationReason,
     required this.diagnostic,
+    this.icdDiagnosticCode,
     required this.treatmentProposal,
     this.caseNotes,
     required this.isActive,
@@ -40,6 +42,7 @@ class PatientCase {
       'professionalId': professionalId,
       'consultationReason': consultationReason,
       'diagnostic': diagnostic,
+      'icdDiagnosticCode': icdDiagnosticCode,
       'treatmentProposal': treatmentProposal,
       'caseNotes': caseNotes,
       'isActive': isActive,
@@ -59,6 +62,9 @@ class PatientCase {
       professionalId: map['professionalId'] as int,
       consultationReason: map['consultationReason'] as String,
       diagnostic: map['diagnostic'] as String,
+      icdDiagnosticCode: map['icdDiagnosticCode'] != null
+          ? map['icdDiagnosticCode'] as String
+          : null,
       treatmentProposal: map['treatmentProposal'] as String,
       caseNotes: map['caseNotes'] != null ? map['caseNotes'] as String : null,
       isActive: map['isActive'] as bool,
@@ -89,6 +95,7 @@ class PatientCase {
       treatmentPlanId: data.treatmentPlanId,
       treatmentPlanOutcome: data.treatmentPlanOutcome,
       currentTreatmentPlanPhase: data.localTreatmentPlanPhase,
+      icdDiagnosticCode: data.icdDiagnosticCode,
     );
   }
 
@@ -104,6 +111,7 @@ class PatientCase {
     int? professionalId,
     String? consultationReason,
     String? diagnostic,
+    String? icdDiagnosticCode,
     String? treatmentProposal,
     String? caseNotes,
     bool? isActive,
@@ -119,6 +127,7 @@ class PatientCase {
       professionalId: professionalId ?? this.professionalId,
       consultationReason: consultationReason ?? this.consultationReason,
       diagnostic: diagnostic ?? this.diagnostic,
+      icdDiagnosticCode: icdDiagnosticCode ?? this.icdDiagnosticCode,
       treatmentProposal: treatmentProposal ?? this.treatmentProposal,
       caseNotes: caseNotes ?? this.caseNotes,
       isActive: isActive ?? this.isActive,
@@ -132,7 +141,7 @@ class PatientCase {
 
   @override
   String toString() {
-    return 'PatientCase(id: $id, creationDate: $creationDate, patientId: $patientId, professionalId: $professionalId, consultationReason: $consultationReason, diagnostic: $diagnostic, treatmentProposal: $treatmentProposal, caseNotes: $caseNotes, isActive: $isActive, patientCaseClosed: $patientCaseClosed, treatmentPlanOutcome: $treatmentPlanOutcome, treatmentPlanId: $treatmentPlanId, currentTreatmentPlanPhase: $currentTreatmentPlanPhase)';
+    return 'PatientCase(id: $id, creationDate: $creationDate, patientId: $patientId, professionalId: $professionalId, consultationReason: $consultationReason, diagnostic: $diagnostic, icdDiagnosticCode: $icdDiagnosticCode, treatmentProposal: $treatmentProposal, caseNotes: $caseNotes, isActive: $isActive, patientCaseClosed: $patientCaseClosed, treatmentPlanOutcome: $treatmentPlanOutcome, treatmentPlanId: $treatmentPlanId, currentTreatmentPlanPhase: $currentTreatmentPlanPhase)';
   }
 
   @override
@@ -145,6 +154,7 @@ class PatientCase {
         other.professionalId == professionalId &&
         other.consultationReason == consultationReason &&
         other.diagnostic == diagnostic &&
+        other.icdDiagnosticCode == icdDiagnosticCode &&
         other.treatmentProposal == treatmentProposal &&
         other.caseNotes == caseNotes &&
         other.isActive == isActive &&
@@ -162,6 +172,7 @@ class PatientCase {
         professionalId.hashCode ^
         consultationReason.hashCode ^
         diagnostic.hashCode ^
+        icdDiagnosticCode.hashCode ^
         treatmentProposal.hashCode ^
         caseNotes.hashCode ^
         isActive.hashCode ^
