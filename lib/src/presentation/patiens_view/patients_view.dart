@@ -1,11 +1,20 @@
-import 'package:aronnax/src/presentation/patiens_view/patients_list.dart';
-import 'package:flutter/material.dart';
+import 'dart:developer';
+import 'dart:io';
 
-class PatientsView extends StatelessWidget {
+import 'package:aronnax/src/data/interfaces/io_repository_interface.dart';
+import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
+import 'package:aronnax/src/presentation/core/user_global_values.dart';
+import 'package:aronnax/src/presentation/patiens_view/patients_dialog/import_patient_dialog.dart';
+import 'package:aronnax/src/presentation/patiens_view/patients_list.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+class PatientsView extends ConsumerWidget {
   const PatientsView({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -19,8 +28,11 @@ class PatientsView extends StatelessWidget {
                 const Text('Consultantes registrados'),
                 IconButton(
                   tooltip: 'Import patient data',
-                  onPressed: () {
-                    //TODO: implement import logic and deletion
+                  onPressed: () async {
+                    showDialog(
+                      context: context,
+                      builder: (context) => ImportPatientDataDialog(),
+                    );
                   },
                   icon: Icon(
                     Icons.input,
