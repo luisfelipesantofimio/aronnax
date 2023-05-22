@@ -26,21 +26,7 @@ class _ImportPatientDataDialogState
   @override
   Widget build(BuildContext context) {
     final patientsList = ref.read(patientsListProvider);
-    //
-    //define password and file location:
-    // String passwordToDecrypt = '';
-    //             FilePickerResult? result =
-    //                 await FilePicker.platform.pickFiles(
-    //
-    //             );
 
-//Implement decryption and data saving
-
-    //             log(passwordToDecrypt);
-
-    //           }
-
-    //TODO: implement UI and functionality on data import
     return Dialog(
       child: Container(
         decoration: const BoxDecoration(
