@@ -22,8 +22,11 @@ class IoRepository implements IoRepositoryInterface {
 
   @override
   Future<String> readFromTextFile(String pathToFile) async {
+    String result = '';
     File file = File(pathToFile);
-    return await file.readAsString();
+    result = await file.readAsString();
+    file.delete();
+    return result;
   }
 
   @override
@@ -37,8 +40,7 @@ class IoRepository implements IoRepositoryInterface {
     final decryptedContents = encrypter
         .decryptBytes(Encrypted(encryptedFile.readAsBytesSync()), iv: iv);
 
-    final decryptedFile =
-        File(encryptedFilePath.replaceAll('.encrypted', 'test'));
+    final decryptedFile = File(encryptedFilePath.replaceAll('.encrypted', ''));
     await decryptedFile.writeAsBytes(decryptedContents);
 
     return decryptedFile;
