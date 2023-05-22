@@ -23,12 +23,7 @@ class IoRepository implements IoRepositoryInterface {
 
   @override
   Future<String> readFromTextFile(String pathToFile) async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      allowMultiple: false,
-      type: FileType.custom,
-      allowedExtensions: ['arnx'],
-    );
-    File file = File(result!.files.single.path!);
+    File file = File(pathToFile);
     return await file.readAsString();
   }
 
