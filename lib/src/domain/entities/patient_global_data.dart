@@ -45,21 +45,31 @@ class PatientGlobalData {
   }
 
   factory PatientGlobalData.fromMap(Map<String, dynamic> map) {
+    final caseData = map['caseData'] as List;
+    List<PatientCase> caseList =
+        caseData.map((e) => PatientCase.fromMap(e)).toList();
+
+    final sessionData = map['sessionData'] as List;
+    List<Session> sessionList =
+        sessionData.map((e) => Session.fromMap(e)).toList();
+
     return PatientGlobalData(
-      patient: Patient.fromMap(map['patient'] as Map<String, dynamic>),
-      clinicHistory:
-          ClinicHistory.fromMap(map['clinicHistory'] as Map<String, dynamic>),
-      caseData: List<PatientCase>.from(
-        (map['caseData'] as List<int>).map<PatientCase>(
-          (x) => PatientCase.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
-      sessionData: List<Session>.from(
-        (map['sessionData'] as List<int>).map<Session>(
-          (x) => Session.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
-    );
+        patient: Patient.fromMap(map['patient'] as Map<String, dynamic>),
+        clinicHistory:
+            ClinicHistory.fromMap(map['clinicHistory'] as Map<String, dynamic>),
+        caseData: caseList,
+        //  List<PatientCase>.from(
+        //   (map['caseData'] as List<int>).map<PatientCase>(
+        //     (x) => PatientCase.fromMap(x as Map<String, dynamic>),
+        //   ),
+        // ),
+        sessionData: sessionList
+        //  List<Session>.from(
+        //   (map['sessionData'] as List<int>).map<Session>(
+        //     (x) => Session.fromMap(x as Map<String, dynamic>),
+        //   ),
+        // ),
+        );
   }
 
   String toJson() => json.encode(toMap());
