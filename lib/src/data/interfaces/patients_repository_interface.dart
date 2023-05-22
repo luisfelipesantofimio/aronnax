@@ -79,7 +79,7 @@ abstract class PatientsRepositoryInterface {
       required List<Session> sessionData,
       required List<PatientCase> caseData});
 
-  void importPatientData({
+  Future<void> importPatientData({
     required WidgetRef ref,
     required String decryptedPatientData,
     required int professionalId,

@@ -287,15 +287,27 @@ class PatientsRepository implements PatientsRepositoryInterface {
   }
 
   @override
-  void importPatientData({
+  Future<void> importPatientData({
     required WidgetRef ref,
     required String decryptedPatientData,
     required int professionalId,
-  }) {
+  }) async {
+    List<Patient> patientsList = [];
     bool isOffline = ref.read(offlineStatusProvider).value!;
     PatientGlobalData patientData =
         PatientGlobalData.fromJson(decryptedPatientData);
 
+    if (isOffline) {
+      List localPatientsList = await ref
+          .read(localDatabaseRepositoryProvider)
+          .getLocalPatientsList();
+      patientsList =
+          localPatientsList.map((e) => Patient.fromLocalModel(e)).toList();
+    }
+    if (patientsList
+        .any((element) => element.idNumber == patientData.patient.idNumber)) {
+      throw Exception('The user is already registered!');
+    }
     addPatient(
         ref: ref,
         names: patientData.patient.names,
