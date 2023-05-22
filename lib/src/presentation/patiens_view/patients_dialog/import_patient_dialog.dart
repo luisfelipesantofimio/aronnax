@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:aronnax/src/data/interfaces/io_repository_interface.dart';
@@ -44,7 +43,7 @@ class _ImportPatientDataDialogState
     //TODO: implement UI and functionality on data import
     return Dialog(
       child: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(
             Radius.circular(30),
           ),
@@ -56,10 +55,10 @@ class _ImportPatientDataDialogState
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Import encrypted data'),
+                const Text('Import encrypted data'),
                 Row(
                   children: [
-                    Text('Select your file: '),
+                    const Text('Select your file: '),
                     TextButton(
                       onPressed: () async {
                         FilePickerResult? result =
@@ -78,7 +77,7 @@ class _ImportPatientDataDialogState
                         selectedFile == null
                             ? 'No file selected'
                             : selectedFile!.path.split('/').last,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontWeight: FontWeight.bold, color: Colors.black),
                       ),
                     ),
@@ -88,13 +87,13 @@ class _ImportPatientDataDialogState
                           selectedFile = null;
                         });
                       },
-                      icon: Icon(Icons.restart_alt),
+                      icon: const Icon(Icons.restart_alt),
                     ),
                   ],
                 ),
-                Text('Please, insert the password for file below'),
+                const Text('Please, insert the password for file below'),
                 TextField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       hintText: 'Your generated decryption password'),
                   onChanged: (value) {
                     setState(() {
@@ -160,8 +159,8 @@ class _ImportPatientDataDialogState
               ],
             );
           },
-          error: (error, stackTrace) => Text('Something went wrong.'),
-          loading: () => CircularProgressIndicator(),
+          error: (error, stackTrace) => const Text('Something went wrong.'),
+          loading: () => const CircularProgressIndicator(),
         ),
       ),
     );

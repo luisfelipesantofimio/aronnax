@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:aronnax/src/data/interfaces/clinic_history_repository_interface.dart';
@@ -9,7 +8,6 @@ import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/patient_case_providers.dart';
 import 'package:aronnax/src/data/providers/patients_provider.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
-import 'package:aronnax/src/domain/entities/patient_case.dart';
 import 'package:aronnax/src/presentation/case_creation_view/case_creation_dialog.dart';
 import 'package:aronnax/src/presentation/clinic_history_form_screen/clinic_history_register_view.dart';
 import 'package:aronnax/src/presentation/core/methods.dart';
@@ -215,7 +213,7 @@ class _PatientsDialogViewState extends ConsumerState<PatientsDialogView> {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       showCloseIcon: true,
-                                      duration: Duration(minutes: 2),
+                                      duration: const Duration(minutes: 2),
                                       backgroundColor: Colors.green,
                                       content: Text(
                                           'Data exported to ${contentsToFile.path.replaceFirst(fileName, '')}'),

@@ -14,10 +14,10 @@ class ExportPasswordDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       child: Container(
-          margin: EdgeInsets.all(20),
+          margin: const EdgeInsets.all(20),
           height: MediaQuery.of(context).size.height * 0.2,
           width: MediaQuery.of(context).size.width * 0.4,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(
               Radius.circular(10),
             ),
@@ -30,18 +30,18 @@ class ExportPasswordDialog extends StatelessWidget {
                 children: [
                   Text(
                     'Your key for the file $fileName.encrypted',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
                     ),
                   ),
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.all(10),
                   ),
                   Container(
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 242, 239, 239),
+                    padding: const EdgeInsets.all(10),
+                    decoration: const BoxDecoration(
+                      color: Color.fromARGB(255, 242, 239, 239),
                       borderRadius: BorderRadius.all(
                         Radius.circular(10),
                       ),
@@ -59,7 +59,7 @@ class ExportPasswordDialog extends StatelessWidget {
                               ClipboardData(text: password),
                             );
                           },
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.copy,
                             size: 30,
                           ),

@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:aronnax/src/data/interfaces/io_repository_interface.dart';
 import 'package:encrypt/encrypt.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 

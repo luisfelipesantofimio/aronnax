@@ -1,12 +1,6 @@
-import 'dart:developer';
-import 'dart:io';
 
-import 'package:aronnax/src/data/interfaces/io_repository_interface.dart';
-import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
-import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:aronnax/src/presentation/patiens_view/patients_dialog/import_patient_dialog.dart';
 import 'package:aronnax/src/presentation/patiens_view/patients_list.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -31,10 +25,10 @@ class PatientsView extends ConsumerWidget {
                   onPressed: () async {
                     showDialog(
                       context: context,
-                      builder: (context) => ImportPatientDataDialog(),
+                      builder: (context) => const ImportPatientDataDialog(),
                     );
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.input,
                   ),
                 ),
