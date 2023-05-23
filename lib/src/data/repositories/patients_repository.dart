@@ -308,7 +308,7 @@ class PatientsRepository implements PatientsRepositoryInterface {
         .any((element) => element.idNumber == patientData.patient.idNumber)) {
       throw Exception('The user is already registered!');
     }
-    addPatient(
+    Patient? newPatientData = await addPatient(
         ref: ref,
         names: patientData.patient.names,
         lastNames: patientData.patient.lastNames,
@@ -327,52 +327,57 @@ class PatientsRepository implements PatientsRepositoryInterface {
         emergencyContactNumber: patientData.patient.emergencyContactNumber,
         creationDate: patientData.patient.creationDate,
         professionalID: professionalId);
-    ref.read(clinicHistoryRepositoryProvider).addClinicHistory(
-          ref,
-          patientData.clinicHistory.registerNumber,
-          patientData.clinicHistory.creationDate,
-          patientData.clinicHistory.mentalExamination,
-          patientData.clinicHistory.medAntecedents,
-          patientData.clinicHistory.psyAntecedents,
-          patientData.clinicHistory.familyHistory,
-          patientData.clinicHistory.personalHistory,
-          patientData.clinicHistory.idNumber,
-          patientData.clinicHistory.professionalId,
-        );
-    if (patientData.caseData.isNotEmpty) {
-      for (var element in patientData.caseData) {
-        addPatientCase(
+
+    if (newPatientData != null) {
+      ref.read(clinicHistoryRepositoryProvider).addClinicHistory(
             ref,
-            element.creationDate,
-            element.patientId,
-            professionalId,
-            element.consultationReason,
-            element.treatmentProposal,
-            element.diagnostic,
-            element.icdDiagnosticCode,
-            element.caseNotes,
-            null,
-            null,
-            isOffline);
+            patientData.clinicHistory.registerNumber,
+            patientData.clinicHistory.creationDate,
+            patientData.clinicHistory.mentalExamination,
+            patientData.clinicHistory.medAntecedents,
+            patientData.clinicHistory.psyAntecedents,
+            patientData.clinicHistory.familyHistory,
+            patientData.clinicHistory.personalHistory,
+            newPatientData.id,
+            patientData.clinicHistory.professionalId,
+          );
+      if (patientData.caseData.isNotEmpty) {
+        for (var element in patientData.caseData) {
+          addPatientCase(
+              ref,
+              element.creationDate,
+              newPatientData.id,
+              professionalId,
+              element.consultationReason,
+              element.treatmentProposal,
+              element.diagnostic,
+              element.icdDiagnosticCode,
+              element.caseNotes,
+              null,
+              null,
+              isOffline);
+        }
       }
-    }
-    if (patientData.sessionData.isNotEmpty) {
-      for (var element in patientData.sessionData) {
-        addLocalSession(
-            sessionSummary: element.sessionSummary,
-            sessionObjectives: element.sessionObjectives,
-            therapeuticArchievements: element.therapeuticArchievements,
-            idNumber: element.patientId,
-            professionalID: element.professionalId,
-            sessionDate: element.sessionDate,
-            caseId: element.caseId,
-            sessionNotes: element.sessionNotes,
-            sessionPerformance: element.sessionPerformance,
-            sessionPerformanceExplanation:
-                element.sessionPerformanceExplanation);
+      if (patientData.sessionData.isNotEmpty) {
+        for (var element in patientData.sessionData) {
+          await addLocalSession(
+              sessionSummary: element.sessionSummary,
+              sessionObjectives: element.sessionObjectives,
+              therapeuticArchievements: element.therapeuticArchievements,
+              idNumber: newPatientData.id,
+              professionalID: element.professionalId,
+              sessionDate: element.sessionDate,
+              caseId: element.caseId,
+              sessionNotes: element.sessionNotes,
+              sessionPerformance: element.sessionPerformance,
+              sessionPerformanceExplanation:
+                  element.sessionPerformanceExplanation);
+        }
       }
+      ref.invalidate(patientsListProvider);
+    } else {
+      throw Exception('Something went wrong while adding new patient data.');
     }
-    ref.invalidate(patientsListProvider);
   }
 
   @override

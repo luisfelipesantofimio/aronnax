@@ -58,18 +58,7 @@ class PatientGlobalData {
         clinicHistory:
             ClinicHistory.fromMap(map['clinicHistory'] as Map<String, dynamic>),
         caseData: caseList,
-        //  List<PatientCase>.from(
-        //   (map['caseData'] as List<int>).map<PatientCase>(
-        //     (x) => PatientCase.fromMap(x as Map<String, dynamic>),
-        //   ),
-        // ),
-        sessionData: sessionList
-        //  List<Session>.from(
-        //   (map['sessionData'] as List<int>).map<Session>(
-        //     (x) => Session.fromMap(x as Map<String, dynamic>),
-        //   ),
-        // ),
-        );
+        sessionData: sessionList);
   }
 
   String toJson() => json.encode(toMap());
