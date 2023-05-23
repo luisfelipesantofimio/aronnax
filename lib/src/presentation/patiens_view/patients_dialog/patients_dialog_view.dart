@@ -225,7 +225,13 @@ class _PatientsDialogViewState extends ConsumerState<PatientsDialogView> {
                             ),
                             IconButton(
                               tooltip: 'Delete patient',
-                              onPressed: () {},
+                              onPressed: () {
+                                ref
+                                    .read(patientsRepositoryProvider)
+                                    .deletePatientData(
+                                        ref, widget.patientData.id);
+                                Navigator.pop(context);
+                              },
                               icon: const Icon(Icons.delete),
                             ),
                           ],
