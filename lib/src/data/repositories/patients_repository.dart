@@ -262,7 +262,7 @@ class PatientsRepository implements PatientsRepositoryInterface {
   @override
   Future<List<TreatmentPlanResult>> getTreatmentPlanResults(
       Ref ref, int patientId) async {
-    bool isOffline = ref.read(offlineStatusProvider).value!;
+    //  bool isOffline = ref.read(offlineStatusProvider).value!;
     // if (isOffline) {
     List<LocalTreatmentResult> localData = await ref
         .read(localDatabaseRepositoryProvider)
