@@ -374,4 +374,36 @@ class PatientsRepository implements PatientsRepositoryInterface {
     }
     ref.invalidate(patientsListProvider);
   }
+
+  @override
+  void deletePatientData(WidgetRef ref, int patientId) async {
+    //Offline logic only
+    //bool isOffline = ref.read(offlineStatusProvider).value!;
+    List localPatientCase = await ref
+        .read(localDatabaseRepositoryProvider)
+        .getPatientCasesList(patientId);
+    List<PatientCase> patientCaseList =
+        localPatientCase.map((e) => PatientCase.fromLocalModel(e)).toList();
+    List localPatientSessionsList = await ref
+        .read(localDatabaseRepositoryProvider)
+        .getPatientSessionsList(patientId);
+    List<Session> sessionsList =
+        localPatientSessionsList.map((e) => Session.fromLocalModel(e)).toList();
+    ref.read(localDatabaseRepositoryProvider).deleteLocalPatient(patientId);
+    ref
+        .read(localDatabaseRepositoryProvider)
+        .deleteLocalClinicHistory(patientId);
+
+    for (var element in patientCaseList) {
+      ref
+          .read(localDatabaseRepositoryProvider)
+          .deleteLocalPatientCase(element.id);
+    }
+
+    for (var element in sessionsList) {
+      ref.read(localDatabaseRepositoryProvider).deleteLocalSession(element.id);
+    }
+
+    ref.invalidate(patientsListProvider);
+  }
 }

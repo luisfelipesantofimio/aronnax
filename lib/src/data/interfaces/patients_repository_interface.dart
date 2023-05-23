@@ -83,6 +83,8 @@ abstract class PatientsRepositoryInterface {
     required String decryptedPatientData,
     required int professionalId,
   });
+
+  void deletePatientData(WidgetRef ref, int patientId);
 }
 
 final patientsRepositoryProvider = Provider<PatientsRepositoryInterface>(
