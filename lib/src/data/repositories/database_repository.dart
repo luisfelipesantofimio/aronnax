@@ -499,4 +499,14 @@ class DatabaseRepository implements LocalDatabaseInteface {
   Future<List<LocalTreatmentResult>> getTreatmentPlanResults(int patientId) {
     return localDB.getTreatmentPlanResults(patientId);
   }
+
+  @override
+  void deleteLocalPatient(int patientId) {
+    localDB.deleteLocalPatient(patientId);
+  }
+
+  @override
+  void deleteLocalSession(int sessionId) {
+    localDB.deleteLocalSession(sessionId);
+  }
 }
