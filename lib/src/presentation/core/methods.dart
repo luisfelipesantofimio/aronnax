@@ -25,7 +25,7 @@ class AppMethods {
   String codeGeneration(int len) {
     final random = Random();
     const charList =
-        'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+        'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890-_/&#!*+';
     String result = List.generate(
       len,
       (index) => charList[random.nextInt(charList.length)],

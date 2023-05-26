@@ -5,6 +5,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 abstract class ClinicHistoryRepositoryInterface {
   Future<List<ClinicHistory>> getClinicHistoryListById(Ref ref, int patientId);
   Future<ClinicHistory> getPatientClinicHistory(Ref ref, int patientId);
+
+  ///Intended to be used as an alternative to [getPatientClinicHistory] from a [ConsumerWidget] instead of a [Provider].
+  Future<ClinicHistory> getPatientClinicHistoryFromConsumer(
+      WidgetRef ref, int patientId);
   void addClinicHistory(
     WidgetRef ref,
     String registerCode,

@@ -1,4 +1,3 @@
-
 import 'package:aronnax/src/data/interfaces/io_repository_interface.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/interfaces/treatment_plans_repository_interface.dart';
@@ -9,6 +8,7 @@ import 'package:aronnax/src/presentation/treatment_plans/treatment_plan_creation
 import 'package:aronnax/src/presentation/treatment_plans/treatment_plans_view/information_container.dart';
 import 'package:aronnax/src/presentation/treatment_plans/treatment_plans_view/treatment_plan_list_element.dart';
 import 'package:aronnax/src/presentation/widgets/generic_icon_button.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -45,29 +45,40 @@ class TreatmentPlansView extends ConsumerWidget {
                 icon: FontAwesomeIcons.fileImport,
                 title: 'Import treatment plan',
                 onTap: () async {
-                  TreatmentPlan data = TreatmentPlan.fromJson(
-                    await ref.read(ioRepositoryProvider).readFromTextFile(''),
+                  FilePickerResult? result =
+                      await FilePicker.platform.pickFiles(
+                    allowMultiple: false,
+                    type: FileType.custom,
+                    allowedExtensions: ['arnx'],
                   );
-                  ref
-                      .read(localDatabaseRepositoryProvider)
-                      .insertLocalTreatmentPlan(
-                        date: data.creationDate,
-                        treatmentTitle: data.title,
-                        treatmentDescription: data.description,
-                        professionalID: data.creatorId,
-                        treatmentData: ref
-                            .read(treatmentPlanRepositoryProvider)
-                            .encodeTreatmentPlanData(data.sectionsList),
-                      );
-                  Future(() {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        backgroundColor: Colors.green,
-                        content: Text('Imported treatment plan: ${data.title}'),
-                      ),
+                  if (result != null) {
+                    TreatmentPlan data = TreatmentPlan.fromJson(
+                      await ref
+                          .read(ioRepositoryProvider)
+                          .readFromTextFile(result.files.first.path!),
                     );
-                  });
-                  ref.invalidate(treatmentPlanListProvider);
+                    ref
+                        .read(localDatabaseRepositoryProvider)
+                        .insertLocalTreatmentPlan(
+                          date: data.creationDate,
+                          treatmentTitle: data.title,
+                          treatmentDescription: data.description,
+                          professionalID: data.creatorId,
+                          treatmentData: ref
+                              .read(treatmentPlanRepositoryProvider)
+                              .encodeTreatmentPlanData(data.sectionsList),
+                        );
+                    Future(() {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: Colors.green,
+                          content:
+                              Text('Imported treatment plan: ${data.title}'),
+                        ),
+                      );
+                    });
+                    ref.invalidate(treatmentPlanListProvider);
+                  }
                 },
               ),
             ],

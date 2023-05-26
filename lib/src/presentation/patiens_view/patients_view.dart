@@ -1,11 +1,14 @@
+
+import 'package:aronnax/src/presentation/patiens_view/patients_dialog/import_patient_dialog.dart';
 import 'package:aronnax/src/presentation/patiens_view/patients_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class PatientsView extends StatelessWidget {
+class PatientsView extends ConsumerWidget {
   const PatientsView({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -17,6 +20,18 @@ class PatientsView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text('Consultantes registrados'),
+                IconButton(
+                  tooltip: 'Import patient data',
+                  onPressed: () async {
+                    showDialog(
+                      context: context,
+                      builder: (context) => const ImportPatientDataDialog(),
+                    );
+                  },
+                  icon: const Icon(
+                    Icons.input,
+                  ),
+                ),
                 IconButton(
                   onPressed: () {
                     Navigator.pop(context);

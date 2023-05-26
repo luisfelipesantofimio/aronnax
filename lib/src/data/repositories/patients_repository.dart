@@ -1,11 +1,16 @@
 import 'dart:developer';
 
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
+import 'package:aronnax/src/data/database/local_model/local_queries.dart';
+import 'package:aronnax/src/data/interfaces/clinic_history_repository_interface.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
+import 'package:aronnax/src/data/providers/patients_provider.dart';
+import 'package:aronnax/src/domain/entities/clinic_history.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:aronnax/src/domain/entities/patient_case.dart';
+import 'package:aronnax/src/domain/entities/patient_global_data.dart';
 import 'package:aronnax/src/domain/entities/session.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_result.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -182,6 +187,19 @@ class PatientsRepository implements PatientsRepositoryInterface {
   }
 
   @override
+  Future<List<PatientCase>> getPatientCaseListFromConsumer(
+      WidgetRef ref, int patientId) async {
+    if (ref.read(offlineStatusProvider).value!) {
+      List<LocalPatientCaseData> localCasesList = await ref
+          .read(localDatabaseRepositoryProvider)
+          .getPatientCasesList(patientId);
+      return localCasesList.map((e) => PatientCase.fromLocalModel(e)).toList();
+    } else {
+      return [];
+    }
+  }
+
+  @override
   void updatePatientCaseActiveState(
       WidgetRef ref, int patientId, int caseId, bool currentCaseState) async {
     if (ref.read(offlineStatusProvider).value!) {
@@ -244,7 +262,7 @@ class PatientsRepository implements PatientsRepositoryInterface {
   @override
   Future<List<TreatmentPlanResult>> getTreatmentPlanResults(
       Ref ref, int patientId) async {
-    bool isOffline = ref.read(offlineStatusProvider).value!;
+    //  bool isOffline = ref.read(offlineStatusProvider).value!;
     // if (isOffline) {
     List<LocalTreatmentResult> localData = await ref
         .read(localDatabaseRepositoryProvider)
@@ -252,5 +270,145 @@ class PatientsRepository implements PatientsRepositoryInterface {
     log(localData.toString());
     return localData.map((e) => TreatmentPlanResult.fromLocalModel(e)).toList();
     // }
+  }
+
+  @override
+  String encodePatientData(
+      {required Patient patientData,
+      required ClinicHistory clinicHistory,
+      required List<Session> sessionData,
+      required List<PatientCase> caseData}) {
+    return PatientGlobalData(
+            patient: patientData,
+            clinicHistory: clinicHistory,
+            caseData: caseData,
+            sessionData: sessionData)
+        .toJson();
+  }
+
+  @override
+  Future<void> importPatientData({
+    required WidgetRef ref,
+    required String decryptedPatientData,
+    required int professionalId,
+  }) async {
+    List<Patient> patientsList = [];
+    bool isOffline = ref.read(offlineStatusProvider).value!;
+    PatientGlobalData patientData =
+        PatientGlobalData.fromJson(decryptedPatientData);
+
+    if (isOffline) {
+      List localPatientsList = await ref
+          .read(localDatabaseRepositoryProvider)
+          .getLocalPatientsList();
+      patientsList =
+          localPatientsList.map((e) => Patient.fromLocalModel(e)).toList();
+    }
+    if (patientsList
+        .any((element) => element.idNumber == patientData.patient.idNumber)) {
+      throw Exception('The user is already registered!');
+    }
+    Patient? newPatientData = await addPatient(
+        ref: ref,
+        names: patientData.patient.names,
+        lastNames: patientData.patient.lastNames,
+        birthDate: patientData.patient.birthDate,
+        gender: patientData.patient.gender,
+        idNumber: patientData.patient.idNumber,
+        contactNumber: patientData.patient.contactNumber,
+        mail: patientData.patient.mail,
+        city: patientData.patient.city,
+        state: patientData.patient.state,
+        adress: patientData.patient.adress,
+        insurance: patientData.patient.insurance,
+        education: patientData.patient.education,
+        ocupation: patientData.patient.ocupation,
+        emergencyContactName: patientData.patient.emergencyContactName,
+        emergencyContactNumber: patientData.patient.emergencyContactNumber,
+        creationDate: patientData.patient.creationDate,
+        professionalID: professionalId);
+
+    if (newPatientData != null) {
+      ref.read(clinicHistoryRepositoryProvider).addClinicHistory(
+            ref,
+            patientData.clinicHistory.registerNumber,
+            patientData.clinicHistory.creationDate,
+            patientData.clinicHistory.mentalExamination,
+            patientData.clinicHistory.medAntecedents,
+            patientData.clinicHistory.psyAntecedents,
+            patientData.clinicHistory.familyHistory,
+            patientData.clinicHistory.personalHistory,
+            newPatientData.id,
+            patientData.clinicHistory.professionalId,
+          );
+      if (patientData.caseData.isNotEmpty) {
+        for (var element in patientData.caseData) {
+          addPatientCase(
+              ref,
+              element.creationDate,
+              newPatientData.id,
+              professionalId,
+              element.consultationReason,
+              element.treatmentProposal,
+              element.diagnostic,
+              element.icdDiagnosticCode,
+              element.caseNotes,
+              null,
+              null,
+              isOffline);
+        }
+      }
+      if (patientData.sessionData.isNotEmpty) {
+        for (var element in patientData.sessionData) {
+          await addLocalSession(
+              sessionSummary: element.sessionSummary,
+              sessionObjectives: element.sessionObjectives,
+              therapeuticArchievements: element.therapeuticArchievements,
+              idNumber: newPatientData.id,
+              professionalID: element.professionalId,
+              sessionDate: element.sessionDate,
+              caseId: element.caseId,
+              sessionNotes: element.sessionNotes,
+              sessionPerformance: element.sessionPerformance,
+              sessionPerformanceExplanation:
+                  element.sessionPerformanceExplanation);
+        }
+      }
+      ref.invalidate(patientsListProvider);
+    } else {
+      throw Exception('Something went wrong while adding new patient data.');
+    }
+  }
+
+  @override
+  void deletePatientData(WidgetRef ref, int patientId) async {
+    //Offline logic only
+    //bool isOffline = ref.read(offlineStatusProvider).value!;
+    List localPatientCase = await ref
+        .read(localDatabaseRepositoryProvider)
+        .getPatientCasesList(patientId);
+    List<PatientCase> patientCaseList =
+        localPatientCase.map((e) => PatientCase.fromLocalModel(e)).toList();
+    List localPatientSessionsList = await ref
+        .read(localDatabaseRepositoryProvider)
+        .getPatientSessionsList(patientId);
+    List<Session> sessionsList =
+        localPatientSessionsList.map((e) => Session.fromLocalModel(e)).toList();
+    ref.read(localDatabaseRepositoryProvider).deleteLocalPatient(patientId);
+    ref
+        .read(localDatabaseRepositoryProvider)
+        .deleteLocalClinicHistory(patientId);
+
+    for (var element in patientCaseList) {
+      ref
+          .read(localDatabaseRepositoryProvider)
+          .deleteLocalPatientCase(element.id);
+    }
+
+    for (var element in sessionsList) {
+      ref.read(localDatabaseRepositoryProvider).deleteLocalSession(element.id);
+    }
+
+    ref.invalidate(patientsListProvider);
   }
 }

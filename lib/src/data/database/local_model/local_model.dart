@@ -338,10 +338,10 @@ class LocalDatabase extends _$LocalDatabase {
         .go();
   }
 
-  Future deleteLocalClinicHisoty(int id) {
+  Future deleteLocalClinicHisoty(int patientId) {
     return (delete(localClinicHistory)
           ..where(
-            (tbl) => tbl.id.equals(id),
+            (tbl) => tbl.patientId.equals(patientId),
           ))
         .go();
   }
@@ -356,6 +356,22 @@ class LocalDatabase extends _$LocalDatabase {
 
   Future deleteSavedIcdData() {
     return (delete(savedIcdDiagnosticData)).go();
+  }
+
+  Future deleteLocalSession(int sessionId) {
+    return (delete(localSessions)
+          ..where(
+            (tbl) => tbl.id.equals(sessionId),
+          ))
+        .go();
+  }
+
+  Future deleteLocalPatient(int patientId) {
+    return (delete(localPatients)
+          ..where(
+            (tbl) => tbl.id.equals(patientId),
+          ))
+        .go();
   }
 }
 

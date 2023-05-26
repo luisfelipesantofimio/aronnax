@@ -188,6 +188,8 @@ abstract class LocalDatabaseInteface {
   void insertIcdData(IcdDataParser data);
   Future<List<SavedIcdDiagnosticDataData>> getDiagnosticData();
   void deleteSavedIcdData();
+  void deleteLocalPatient(int patientId);
+  void deleteLocalSession(int sessionId);
 
   Future<List<LocalTreatmentResult>> getTreatmentPlanResults(int patientId);
 }
