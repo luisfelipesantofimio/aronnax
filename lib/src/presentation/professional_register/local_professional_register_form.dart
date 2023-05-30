@@ -195,8 +195,8 @@ class LocalProfessionalRegisterState
                   margin: const EdgeInsets.all(8),
                   child: countriesList.when(
                     data: (data) => DropdownButtonFormField(
-                      decoration:
-                          const InputDecoration(hintText: 'Select your country'),
+                      decoration: const InputDecoration(
+                          hintText: 'Select your country'),
                       items: data
                           .map(
                             (e) => DropdownMenuItem(
@@ -388,7 +388,7 @@ class LocalProfessionalRegisterState
                                 countryCode: selectedCountryCode!,
                                 password: password!,
                                 securityQuestion: securityQuestion!,
-                                securityAnswer: securityAnswer!);
+                                securityAnswer: securityAnswer!.toLowerCase());
 
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
