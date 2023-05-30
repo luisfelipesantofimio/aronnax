@@ -87,6 +87,7 @@ class LocalProfessional extends Table {
   TextColumn get userName => text()();
   TextColumn get securityQuestion => text()();
   TextColumn get securityAnswers => text()();
+  TextColumn get encodedRecoverPin => text()();
   TextColumn get password => text()();
 }
 
