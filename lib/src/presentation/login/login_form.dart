@@ -147,7 +147,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
                         showDialog(
                           barrierColor: Colors.transparent,
                           context: context,
-                          builder: (context) => PasswordRecoverDialog(),
+                          builder: (context) => const PasswordRecoverDialog(),
                         );
                       },
                       child: const Text(
