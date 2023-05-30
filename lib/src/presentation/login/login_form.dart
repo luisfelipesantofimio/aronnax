@@ -7,6 +7,7 @@ import 'package:aronnax/src/domain/entities/professional.dart';
 import 'package:aronnax/src/presentation/core/constants.dart';
 import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:aronnax/src/presentation/main_menu/main_menu.dart';
+import 'package:aronnax/src/presentation/password_recover/password_recover_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -40,16 +41,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
   @override
   Widget build(BuildContext context) {
     final conectionMode = ref.watch(offlineStatusProvider);
-    final professionalData = ref.watch(globalUserInformationProvider) ??
-        Professional(
-            id: 0,
-            personalID: 0,
-            names: '',
-            lastNames: '',
-            countryCode: '',
-            professionalID: 0,
-            userName: '',
-            password: '');
+    Professional? professionalData = ref.watch(globalUserInformationProvider);
     return conectionMode.when(
       data: (offlineEnabled) {
         return Form(
@@ -113,9 +105,9 @@ class LoginFormState extends ConsumerState<LoginForm> {
                       if (value!.isEmpty) {
                         return "Ingresa tu contraseña";
                       }
-                      if (!ref
-                          .read(authenticationProvider)
-                          .validatePassword(professionalData.password, value)) {
+                      if (professionalData != null &&
+                          !ref.read(authenticationProvider).validatePassword(
+                              professionalData.password, value)) {
                         return "Contraseña incorrecta";
                       } else {
                         Future(
@@ -134,7 +126,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
                       contentPadding: const EdgeInsets.all(0),
                       labelText: "Contraseña",
                       hintText:
-                          "Contraseña para ${professionalData.names} ${professionalData.lastNames}",
+                          "Contraseña para ${professionalData != null ? professionalData.names : ''} ${professionalData != null ? professionalData.lastNames : ''}",
                       labelStyle: Theme.of(context).textTheme.bodyMedium,
                       hintStyle: Theme.of(context).textTheme.bodyMedium,
                       prefixIcon: const Icon(
@@ -148,8 +140,24 @@ class LoginFormState extends ConsumerState<LoginForm> {
                   ),
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    TextButton(
+                      onPressed: () {
+                        showDialog(
+                          barrierColor: Colors.transparent,
+                          context: context,
+                          builder: (context) => PasswordRecoverDialog(),
+                        );
+                      },
+                      child: const Text(
+                        'Forgot your password?',
+                        style: TextStyle(
+                          fontWeight: FontWeight.normal,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
                     IconButton(
                       onPressed: () {
                         setState(() {
