@@ -63,6 +63,7 @@ abstract class LocalDatabaseInteface {
     required String countryCode,
     required String securityQuestion,
     required String securityAnswer,
+    required String securityPin,
     required String password,
   });
 
