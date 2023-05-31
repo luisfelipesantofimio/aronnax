@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:aronnax/src/data/interfaces/professional_repository_interface.dart';
 import 'package:aronnax/src/data/providers/location_data_provider.dart';
 import 'package:aronnax/src/presentation/core/methods.dart';
@@ -31,6 +33,9 @@ class LocalProfessionalRegisterState
   String? email;
   String? securityQuestion;
   String? securityAnswer;
+
+  int securityPin = int.parse(
+      List.generate(6, (index) => Random().nextInt(9)).toList().join());
 
   @override
   Widget build(BuildContext context) {
@@ -366,6 +371,11 @@ class LocalProfessionalRegisterState
                     },
                   ),
                 ),
+                //TODO: implement visibility and update for pin
+                Text(
+                  securityPin.toString(),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.3,
                   child: GenericMinimalButton(
@@ -377,6 +387,7 @@ class LocalProfessionalRegisterState
                         ref
                             .read(professionalRepositoryProvider)
                             .createProfessionalProfile(
+                                securityPin: securityPin,
                                 ref: ref,
                                 names: names!,
                                 lastNames: lastNames!,
