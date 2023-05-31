@@ -18,9 +18,11 @@ class ProfessionalRepository implements ProfessionalRepositoryInterface {
     required String password,
     required String securityQuestion,
     required String securityAnswer,
+    required int securityPin,
   }) {
     final hashedPassword = Crypt.sha256(password);
     final hashedSecurityAnswer = Crypt.sha256(securityAnswer);
+    final hashSecurityPin = Crypt.sha256(securityPin.toString());
 
     //  bool isOffline = ref.read(offlineStatusProvider).value!;
     //   if (isOffline) {
@@ -35,6 +37,7 @@ class ProfessionalRepository implements ProfessionalRepositoryInterface {
           countryCode: countryCode,
           password: hashedPassword.toString(),
           securityQuestion: securityQuestion,
+          securityPin: hashSecurityPin.toString(),
           securityAnswer: hashedSecurityAnswer.toString(),
         );
 

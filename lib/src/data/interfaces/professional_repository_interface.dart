@@ -15,6 +15,7 @@ abstract class ProfessionalRepositoryInterface {
     required String password,
     required String securityQuestion,
     required String securityAnswer,
+    required int securityPin,
   });
 }
 
