@@ -65,6 +65,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
                                 ref: ref,
                                 userName: value,
                               );
+                      loginKey.currentState!.validate();
                     } else {
                       //TODO: implement remote login
                     }
