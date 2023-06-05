@@ -53,10 +53,6 @@ class AuthRepository implements AuthRepositoryInterface {
     return professionalData.isNotEmpty;
   }
 
-  //TODO: Implement a separate function for security answer validation
-  //Also, try to provide a security recover pin to the user at register
-  //Add encoded pin to professional data model
-
   @override
   bool verifyAccountOwner({
     required Professional professionalData,
