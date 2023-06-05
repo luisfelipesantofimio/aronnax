@@ -372,9 +372,56 @@ class LocalProfessionalRegisterState
                   ),
                 ),
                 //TODO: implement visibility and update for pin
-                Text(
-                  securityPin.toString(),
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                                'Your pin (Single use generated number for recovering your account)'),
+                            Row(
+                              children: [
+                                Text(
+                                  securityPin.toString(),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                IconButton(
+                                  tooltip: 'Regenerate pin',
+                                  onPressed: () {
+                                    setState(() {
+                                      securityPin = int.parse(List.generate(
+                                              6, (index) => Random().nextInt(9))
+                                          .join());
+                                    });
+                                  },
+                                  icon: const Icon(Icons.refresh),
+                                ),
+                                IconButton(
+                                  tooltip: 'Copy pin',
+                                  onPressed: () {
+                                    Clipboard.setData(
+                                      ClipboardData(
+                                        text: securityPin.toString(),
+                                      ),
+                                    );
+                                  },
+                                  icon: const Icon(
+                                    Icons.copy,
+                                    size: 30,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.3,
