@@ -1,4 +1,5 @@
 import 'package:aronnax/src/data/interfaces/auth_repository_interface.dart';
+import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:aronnax/src/presentation/password_recover/password_recover_view.dart';
 import 'package:aronnax/src/presentation/widgets/generic_minimal_button.dart';
 import 'package:flutter/material.dart';
@@ -72,7 +73,9 @@ class _PasswordRecoverDialogState extends ConsumerState<PasswordRecoverDialog> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const PasswordRecoverView(),
+                              builder: (context) => PasswordRecoverView(
+                                  professionalData:
+                                      ref.read(globalUserInformationProvider)!),
                             ),
                           );
                         },
