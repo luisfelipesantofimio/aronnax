@@ -20,6 +20,13 @@ abstract class AuthRepositoryInterface {
     required String answerProvider,
   });
 
+  bool validateAccountData({
+    required int inputPersonalId,
+    required String inputAdress,
+    required String inputEmail,
+    required Professional professionalData,
+  });
+
   bool validateRecoverPin(
       {required String userInput, required String encodedPin});
 }

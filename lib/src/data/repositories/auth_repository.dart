@@ -67,4 +67,16 @@ class AuthRepository implements AuthRepositoryInterface {
       {required String userInput, required String encodedPin}) {
     return Crypt(encodedPin).match(userInput);
   }
+
+  @override
+  bool validateAccountData({
+    required int inputPersonalId,
+    required String inputAdress,
+    required String inputEmail,
+    required Professional professionalData,
+  }) {
+    return professionalData.personalID == inputPersonalId &&
+        professionalData.adress == inputAdress &&
+        professionalData.email == inputEmail;
+  }
 }
