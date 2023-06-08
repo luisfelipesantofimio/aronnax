@@ -64,14 +64,14 @@ class _PasswordRecoverFormState extends ConsumerState<PasswordRecoverForm> {
     return Form(
       child: Column(
         children: [
-          Text(
+          const Text(
             'Responde las siguientes preguntas para confirmar tu identidad',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.all(10),
           ),
-          Text('Select your personal Id'),
+          const Text('Select your personal Id'),
           SizedBox(
             height: 80,
             child: ListView.builder(
@@ -98,7 +98,7 @@ class _PasswordRecoverFormState extends ConsumerState<PasswordRecoverForm> {
               },
             ),
           ),
-          Text('Select your home adress'),
+          const Text('Select your home adress'),
           SizedBox(
             height: 80,
             child: ListView.builder(
@@ -125,7 +125,7 @@ class _PasswordRecoverFormState extends ConsumerState<PasswordRecoverForm> {
               },
             ),
           ),
-          Text('Select your email adress'),
+          const Text('Select your email adress'),
           SizedBox(
             height: 80,
             child: ListView.builder(

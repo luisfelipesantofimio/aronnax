@@ -48,11 +48,11 @@ class _PasswordQuestionaryState extends ConsumerState<PasswordQuestionary> {
                 'Personal data questionary',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
-              Padding(
+              const Padding(
                 padding: EdgeInsets.all(10),
               ),
               Text(widget.professionalData.securityQuestion),
-              Padding(
+              const Padding(
                 padding: EdgeInsets.all(10),
               ),
               TextFormField(
@@ -76,9 +76,10 @@ class _PasswordQuestionaryState extends ConsumerState<PasswordQuestionary> {
                       userValidated = false;
                     });
                   }
+                  return null;
                 },
               ),
-              Padding(
+              const Padding(
                 padding: EdgeInsets.all(20),
               ),
               Visibility(
