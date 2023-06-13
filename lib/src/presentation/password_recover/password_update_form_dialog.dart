@@ -117,8 +117,11 @@ class _PasswordUpdateFormDialogState
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
-                                  'Your pin (Single use generated number for recovering your account)'),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.height * 0.4,
+                                child: const Text(
+                                    'Your pin (Single use generated number for recovering your account)'),
+                              ),
                               Row(
                                 children: [
                                   Text(
@@ -168,6 +171,8 @@ class _PasswordUpdateFormDialogState
                         newPasswordConfirm,
                         newPin!,
                       );
+                      Navigator.pop(context);
+                      Navigator.pop(context);
                       Navigator.pop(context);
                     }
                   },
