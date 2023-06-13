@@ -57,6 +57,11 @@ void updateLocalUserPassword(int userID, String newEncodedValue) {
   localDB.updateLocalUserPassword(userID, newEncodedValue);
 }
 
+void updateLocalUserPasswordAndPin(
+    int userID, String newEncodedValue, String newEncodedPin) {
+  localDB.updateLocalUserPasswordAndPin(userID, newEncodedValue, newEncodedPin);
+}
+
 Future<List<LocalPatient>> searchPatient(String user) {
   return localDB.userConsultation(user);
 }

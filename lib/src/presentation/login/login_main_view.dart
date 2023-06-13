@@ -31,9 +31,7 @@ class LoginScreen extends ConsumerWidget {
                         "inicio de sesión",
                         style: Theme.of(context).textTheme.displayLarge,
                       ),
-                      const SizedBox(
-                        child: LoginForm(),
-                      ),
+                      const LoginForm(),
                     ],
                   ),
                 )
@@ -68,10 +66,8 @@ class LoginScreen extends ConsumerWidget {
                       child: Image(
                         height: 300,
                         image: true
-                            ? AssetImage(
-                                "assets/img/aronnax-icon-dark.png")
-                            : AssetImage(
-                                "assets/img/aronnax-icon-light.png"),
+                            ? AssetImage("assets/img/aronnax-icon-dark.png")
+                            : AssetImage("assets/img/aronnax-icon-light.png"),
                       ),
                     ),
                     Text(

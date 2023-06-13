@@ -63,6 +63,7 @@ abstract class LocalDatabaseInteface {
     required String countryCode,
     required String securityQuestion,
     required String securityAnswer,
+    required String securityPin,
     required String password,
   });
 
@@ -192,6 +193,10 @@ abstract class LocalDatabaseInteface {
   void deleteLocalSession(int sessionId);
 
   Future<List<LocalTreatmentResult>> getTreatmentPlanResults(int patientId);
+
+  void updateProfessionalPassword(int userId, String password);
+  void updateProfessionalPasswordAndPin(
+      int userId, String password, String pin);
 }
 
 final localDatabaseRepositoryProvider = Provider<LocalDatabaseInteface>(

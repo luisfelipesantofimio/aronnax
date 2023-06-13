@@ -33,6 +33,16 @@ class AppMethods {
     return result;
   }
 
+  String generateRandomLetters(int len) {
+    const charList =
+        'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+    String result = List.generate(
+      len,
+      (index) => charList[Random().nextInt(charList.length)],
+    ).join();
+    return result;
+  }
+
   String showMainMenuGreet(int hour) {
     if (hour > 23 || hour < 12) {
       return "Buenos días";
@@ -195,5 +205,55 @@ class AppMethods {
       default:
         return Colors.grey;
     }
+  }
+
+  String partiallyObscureText(String originalText) {
+    int numCharactersToReplace = (originalText.length * (50 / 100)).round();
+
+    List<int> indexes = List.generate(originalText.length, (index) => index);
+    indexes.shuffle();
+
+    for (int i = 0; i < numCharactersToReplace; i++) {
+      int index = indexes[i];
+      originalText = originalText.replaceRange(index, index + 1, '*');
+    }
+
+    return originalText;
+  }
+
+  List<String> generateListOfSimilarText(String originalText) {
+    List<String> newValues = [];
+
+    for (var i = 0; i < 2; i++) {
+      newValues.add(originalText
+          .split('')
+          .map((e) => e != "." && e != "@" && e != '-' && e != '#' && e != ' '
+              ? generateRandomLetters(1)
+              : e)
+          .toList()
+          .join());
+    }
+    newValues.add(originalText);
+    newValues.shuffle();
+    return newValues;
+  }
+
+  List<int> generateListOfSimilarNumbers(int originalNumber) {
+    List<int> newValues = [];
+    for (var i = 0; i < 2; i++) {
+      newValues.add(int.parse(originalNumber
+          .toString()
+          .split('')
+          .toList()
+          .map(
+            (e) => Random().nextInt(9),
+          )
+          .toList()
+          .join()));
+    }
+    newValues.add(originalNumber);
+    newValues.shuffle();
+
+    return newValues;
   }
 }

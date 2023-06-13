@@ -75,6 +75,12 @@ class $LocalProfessionalTable extends LocalProfessional
   late final GeneratedColumn<String> securityAnswers = GeneratedColumn<String>(
       'security_answers', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _encodedRecoverPinMeta =
+      const VerificationMeta('encodedRecoverPin');
+  @override
+  late final GeneratedColumn<String> encodedRecoverPin =
+      GeneratedColumn<String>('encoded_recover_pin', aliasedName, false,
+          type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _passwordMeta =
       const VerificationMeta('password');
   @override
@@ -94,6 +100,7 @@ class $LocalProfessionalTable extends LocalProfessional
         userName,
         securityQuestion,
         securityAnswers,
+        encodedRecoverPin,
         password
       ];
   @override
@@ -179,6 +186,14 @@ class $LocalProfessionalTable extends LocalProfessional
     } else if (isInserting) {
       context.missing(_securityAnswersMeta);
     }
+    if (data.containsKey('encoded_recover_pin')) {
+      context.handle(
+          _encodedRecoverPinMeta,
+          encodedRecoverPin.isAcceptableOrUnknown(
+              data['encoded_recover_pin']!, _encodedRecoverPinMeta));
+    } else if (isInserting) {
+      context.missing(_encodedRecoverPinMeta);
+    }
     if (data.containsKey('password')) {
       context.handle(_passwordMeta,
           password.isAcceptableOrUnknown(data['password']!, _passwordMeta));
@@ -216,6 +231,8 @@ class $LocalProfessionalTable extends LocalProfessional
           DriftSqlType.string, data['${effectivePrefix}security_question'])!,
       securityAnswers: attachedDatabase.typeMapping.read(
           DriftSqlType.string, data['${effectivePrefix}security_answers'])!,
+      encodedRecoverPin: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}encoded_recover_pin'])!,
       password: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}password'])!,
     );
@@ -240,6 +257,7 @@ class LocalProfessionalData extends DataClass
   final String userName;
   final String securityQuestion;
   final String securityAnswers;
+  final String encodedRecoverPin;
   final String password;
   const LocalProfessionalData(
       {required this.id,
@@ -253,6 +271,7 @@ class LocalProfessionalData extends DataClass
       required this.userName,
       required this.securityQuestion,
       required this.securityAnswers,
+      required this.encodedRecoverPin,
       required this.password});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -268,6 +287,7 @@ class LocalProfessionalData extends DataClass
     map['user_name'] = Variable<String>(userName);
     map['security_question'] = Variable<String>(securityQuestion);
     map['security_answers'] = Variable<String>(securityAnswers);
+    map['encoded_recover_pin'] = Variable<String>(encodedRecoverPin);
     map['password'] = Variable<String>(password);
     return map;
   }
@@ -285,6 +305,7 @@ class LocalProfessionalData extends DataClass
       userName: Value(userName),
       securityQuestion: Value(securityQuestion),
       securityAnswers: Value(securityAnswers),
+      encodedRecoverPin: Value(encodedRecoverPin),
       password: Value(password),
     );
   }
@@ -304,6 +325,7 @@ class LocalProfessionalData extends DataClass
       userName: serializer.fromJson<String>(json['userName']),
       securityQuestion: serializer.fromJson<String>(json['securityQuestion']),
       securityAnswers: serializer.fromJson<String>(json['securityAnswers']),
+      encodedRecoverPin: serializer.fromJson<String>(json['encodedRecoverPin']),
       password: serializer.fromJson<String>(json['password']),
     );
   }
@@ -322,6 +344,7 @@ class LocalProfessionalData extends DataClass
       'userName': serializer.toJson<String>(userName),
       'securityQuestion': serializer.toJson<String>(securityQuestion),
       'securityAnswers': serializer.toJson<String>(securityAnswers),
+      'encodedRecoverPin': serializer.toJson<String>(encodedRecoverPin),
       'password': serializer.toJson<String>(password),
     };
   }
@@ -338,6 +361,7 @@ class LocalProfessionalData extends DataClass
           String? userName,
           String? securityQuestion,
           String? securityAnswers,
+          String? encodedRecoverPin,
           String? password}) =>
       LocalProfessionalData(
         id: id ?? this.id,
@@ -351,6 +375,7 @@ class LocalProfessionalData extends DataClass
         userName: userName ?? this.userName,
         securityQuestion: securityQuestion ?? this.securityQuestion,
         securityAnswers: securityAnswers ?? this.securityAnswers,
+        encodedRecoverPin: encodedRecoverPin ?? this.encodedRecoverPin,
         password: password ?? this.password,
       );
   @override
@@ -367,6 +392,7 @@ class LocalProfessionalData extends DataClass
           ..write('userName: $userName, ')
           ..write('securityQuestion: $securityQuestion, ')
           ..write('securityAnswers: $securityAnswers, ')
+          ..write('encodedRecoverPin: $encodedRecoverPin, ')
           ..write('password: $password')
           ..write(')'))
         .toString();
@@ -385,6 +411,7 @@ class LocalProfessionalData extends DataClass
       userName,
       securityQuestion,
       securityAnswers,
+      encodedRecoverPin,
       password);
   @override
   bool operator ==(Object other) =>
@@ -401,6 +428,7 @@ class LocalProfessionalData extends DataClass
           other.userName == this.userName &&
           other.securityQuestion == this.securityQuestion &&
           other.securityAnswers == this.securityAnswers &&
+          other.encodedRecoverPin == this.encodedRecoverPin &&
           other.password == this.password);
 }
 
@@ -417,6 +445,7 @@ class LocalProfessionalCompanion
   final Value<String> userName;
   final Value<String> securityQuestion;
   final Value<String> securityAnswers;
+  final Value<String> encodedRecoverPin;
   final Value<String> password;
   const LocalProfessionalCompanion({
     this.id = const Value.absent(),
@@ -430,6 +459,7 @@ class LocalProfessionalCompanion
     this.userName = const Value.absent(),
     this.securityQuestion = const Value.absent(),
     this.securityAnswers = const Value.absent(),
+    this.encodedRecoverPin = const Value.absent(),
     this.password = const Value.absent(),
   });
   LocalProfessionalCompanion.insert({
@@ -444,6 +474,7 @@ class LocalProfessionalCompanion
     required String userName,
     required String securityQuestion,
     required String securityAnswers,
+    required String encodedRecoverPin,
     required String password,
   })  : personalID = Value(personalID),
         names = Value(names),
@@ -455,6 +486,7 @@ class LocalProfessionalCompanion
         userName = Value(userName),
         securityQuestion = Value(securityQuestion),
         securityAnswers = Value(securityAnswers),
+        encodedRecoverPin = Value(encodedRecoverPin),
         password = Value(password);
   static Insertable<LocalProfessionalData> custom({
     Expression<int>? id,
@@ -468,6 +500,7 @@ class LocalProfessionalCompanion
     Expression<String>? userName,
     Expression<String>? securityQuestion,
     Expression<String>? securityAnswers,
+    Expression<String>? encodedRecoverPin,
     Expression<String>? password,
   }) {
     return RawValuesInsertable({
@@ -482,6 +515,7 @@ class LocalProfessionalCompanion
       if (userName != null) 'user_name': userName,
       if (securityQuestion != null) 'security_question': securityQuestion,
       if (securityAnswers != null) 'security_answers': securityAnswers,
+      if (encodedRecoverPin != null) 'encoded_recover_pin': encodedRecoverPin,
       if (password != null) 'password': password,
     });
   }
@@ -498,6 +532,7 @@ class LocalProfessionalCompanion
       Value<String>? userName,
       Value<String>? securityQuestion,
       Value<String>? securityAnswers,
+      Value<String>? encodedRecoverPin,
       Value<String>? password}) {
     return LocalProfessionalCompanion(
       id: id ?? this.id,
@@ -511,6 +546,7 @@ class LocalProfessionalCompanion
       userName: userName ?? this.userName,
       securityQuestion: securityQuestion ?? this.securityQuestion,
       securityAnswers: securityAnswers ?? this.securityAnswers,
+      encodedRecoverPin: encodedRecoverPin ?? this.encodedRecoverPin,
       password: password ?? this.password,
     );
   }
@@ -551,6 +587,9 @@ class LocalProfessionalCompanion
     if (securityAnswers.present) {
       map['security_answers'] = Variable<String>(securityAnswers.value);
     }
+    if (encodedRecoverPin.present) {
+      map['encoded_recover_pin'] = Variable<String>(encodedRecoverPin.value);
+    }
     if (password.present) {
       map['password'] = Variable<String>(password.value);
     }
@@ -571,6 +610,7 @@ class LocalProfessionalCompanion
           ..write('userName: $userName, ')
           ..write('securityQuestion: $securityQuestion, ')
           ..write('securityAnswers: $securityAnswers, ')
+          ..write('encodedRecoverPin: $encodedRecoverPin, ')
           ..write('password: $password')
           ..write(')'))
         .toString();

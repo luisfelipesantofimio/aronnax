@@ -122,6 +122,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
     required String countryCode,
     required String securityQuestion,
     required String securityAnswer,
+    required String securityPin,
     required String password,
   }) {
     final entity = LocalProfessionalCompanion(
@@ -135,6 +136,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
       countryCode: Value(countryCode),
       securityQuestion: Value(securityQuestion),
       securityAnswers: Value(securityAnswer),
+      encodedRecoverPin: Value(securityPin),
       password: Value(password),
     );
 
@@ -508,5 +510,16 @@ class DatabaseRepository implements LocalDatabaseInteface {
   @override
   void deleteLocalSession(int sessionId) {
     localDB.deleteLocalSession(sessionId);
+  }
+
+  @override
+  void updateProfessionalPassword(int userId, String password) {
+    localDB.updateLocalUserPassword(userId, password);
+  }
+
+  @override
+  void updateProfessionalPasswordAndPin(
+      int userId, String password, String pin) {
+    localDB.updateLocalUserPasswordAndPin(userId, password, pin);
   }
 }

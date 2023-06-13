@@ -15,7 +15,13 @@ abstract class ProfessionalRepositoryInterface {
     required String password,
     required String securityQuestion,
     required String securityAnswer,
+    required int securityPin,
   });
+
+  void updateProfessionalPassword(
+      WidgetRef ref, int professionalId, String newPassword);
+  void updateProfessionalPasswordAndSecretPin(
+      WidgetRef ref, int professionalId, String newPassword, String pin);
 }
 
 final professionalRepositoryProvider = Provider(

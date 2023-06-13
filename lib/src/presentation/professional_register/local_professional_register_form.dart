@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:aronnax/src/data/interfaces/professional_repository_interface.dart';
 import 'package:aronnax/src/data/providers/location_data_provider.dart';
 import 'package:aronnax/src/presentation/core/methods.dart';
@@ -31,6 +33,9 @@ class LocalProfessionalRegisterState
   String? email;
   String? securityQuestion;
   String? securityAnswer;
+
+  int securityPin = int.parse(
+      List.generate(6, (index) => Random().nextInt(9)).toList().join());
 
   @override
   Widget build(BuildContext context) {
@@ -195,8 +200,8 @@ class LocalProfessionalRegisterState
                   margin: const EdgeInsets.all(8),
                   child: countriesList.when(
                     data: (data) => DropdownButtonFormField(
-                      decoration:
-                          const InputDecoration(hintText: 'Select your country'),
+                      decoration: const InputDecoration(
+                          hintText: 'Select your country'),
                       items: data
                           .map(
                             (e) => DropdownMenuItem(
@@ -366,6 +371,58 @@ class LocalProfessionalRegisterState
                     },
                   ),
                 ),
+                //TODO: implement visibility and update for pin
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                                'Your pin (Single use generated number for recovering your account)'),
+                            Row(
+                              children: [
+                                Text(
+                                  securityPin.toString(),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                IconButton(
+                                  tooltip: 'Regenerate pin',
+                                  onPressed: () {
+                                    setState(() {
+                                      securityPin = int.parse(List.generate(
+                                              6, (index) => Random().nextInt(9))
+                                          .join());
+                                    });
+                                  },
+                                  icon: const Icon(Icons.refresh),
+                                ),
+                                IconButton(
+                                  tooltip: 'Copy pin',
+                                  onPressed: () {
+                                    Clipboard.setData(
+                                      ClipboardData(
+                                        text: securityPin.toString(),
+                                      ),
+                                    );
+                                  },
+                                  icon: const Icon(
+                                    Icons.copy,
+                                    size: 30,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.3,
                   child: GenericMinimalButton(
@@ -377,6 +434,7 @@ class LocalProfessionalRegisterState
                         ref
                             .read(professionalRepositoryProvider)
                             .createProfessionalProfile(
+                                securityPin: securityPin,
                                 ref: ref,
                                 names: names!,
                                 lastNames: lastNames!,
@@ -388,7 +446,7 @@ class LocalProfessionalRegisterState
                                 countryCode: selectedCountryCode!,
                                 password: password!,
                                 securityQuestion: securityQuestion!,
-                                securityAnswer: securityAnswer!);
+                                securityAnswer: securityAnswer!.toLowerCase());
 
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(

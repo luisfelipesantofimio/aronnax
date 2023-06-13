@@ -1,4 +1,3 @@
-
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/interfaces/auth_repository_interface.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
@@ -52,5 +51,32 @@ class AuthRepository implements AuthRepositoryInterface {
           (state) => professionalData.map((e) => e.password).toList().single);
     }
     return professionalData.isNotEmpty;
+  }
+
+  @override
+  bool verifyAccountOwner({
+    required Professional professionalData,
+    required String answerProvider,
+  }) {
+    return Crypt(professionalData.encodedSecurityAnswer)
+        .match(answerProvider.toLowerCase());
+  }
+
+  @override
+  bool validateRecoverPin(
+      {required String userInput, required String encodedPin}) {
+    return Crypt(encodedPin).match(userInput);
+  }
+
+  @override
+  bool validateAccountData({
+    required int inputPersonalId,
+    required String inputAdress,
+    required String inputEmail,
+    required Professional professionalData,
+  }) {
+    return professionalData.personalID == inputPersonalId &&
+        professionalData.adress == inputAdress &&
+        professionalData.email == inputEmail;
   }
 }
