@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/interfaces/professional_repository_interface.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
@@ -53,20 +55,31 @@ class ProfessionalRepository implements ProfessionalRepositoryInterface {
   @override
   void updateProfessionalPassword(
       WidgetRef ref, int professionalId, String newPassword) {
+    final hashedPassword = Crypt.sha256(newPassword.toString());
     if (ref.read(offlineStatusProvider).value!) {
-      ref
-          .read(localDatabaseRepositoryProvider)
-          .updateProfessionalPassword(professionalId, newPassword);
+      ref.read(localDatabaseRepositoryProvider).updateProfessionalPassword(
+            professionalId,
+            hashedPassword.toString(),
+          );
     }
   }
 
   @override
   void updateProfessionalPasswordAndSecretPin(
       WidgetRef ref, int professionalId, String newPassword, String pin) {
+    final hashedPassword = Crypt.sha256(newPassword.toString());
+    final hashedPin = Crypt.sha256(
+      pin,
+    );
+
     if (ref.read(offlineStatusProvider).value!) {
       ref
           .read(localDatabaseRepositoryProvider)
-          .updateProfessionalPasswordAndPin(professionalId, newPassword, pin);
+          .updateProfessionalPasswordAndPin(
+            professionalId,
+            hashedPassword.toString(),
+            hashedPin.toString(),
+          );
     }
   }
 }
