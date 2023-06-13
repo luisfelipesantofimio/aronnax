@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/interfaces/professional_repository_interface.dart';

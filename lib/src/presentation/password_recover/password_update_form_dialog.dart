@@ -56,7 +56,7 @@ class _PasswordUpdateFormDialogState
                     fontSize: 20,
                   ),
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.all(10),
                 ),
                 TextFormField(
@@ -75,9 +75,10 @@ class _PasswordUpdateFormDialogState
                     if (value.length < 8) {
                       return 'The password must have at least 8 characters.';
                     }
+                    return null;
                   },
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.all(5),
                 ),
                 TextFormField(
@@ -99,6 +100,7 @@ class _PasswordUpdateFormDialogState
                     if (newPasswordConfirm != newPassword) {
                       return "The password don't match";
                     }
+                    return null;
                   },
                 ),
                 const Padding(
@@ -107,7 +109,7 @@ class _PasswordUpdateFormDialogState
                 Visibility(
                   visible: widget.updateWithPin,
                   child: Padding(
-                    padding: EdgeInsets.only(bottom: 5),
+                    padding: const EdgeInsets.only(bottom: 5),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Row(
