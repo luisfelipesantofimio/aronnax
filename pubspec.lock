@@ -253,18 +253,18 @@ packages:
     dependency: "direct main"
     description:
       name: dio
-      sha256: b99b1d56dc0d5dece70957023af002dbd49614b4a1bf86d3a254af3fe781bdf2
+      sha256: a9d76e72985d7087eb7c5e7903224ae52b337131518d127c554b9405936752b8
       url: "https://pub.dev"
     source: hosted
-    version: "5.2.0+1"
+    version: "5.2.1+1"
   drift:
     dependency: "direct main"
     description:
       name: drift
-      sha256: "708ca5cba66a0f18a2632ffbf3d5181d63bc67e746b370dbe403758120e32f0e"
+      sha256: ece158210150b6fec9380d8ac6eaa3bf8f9acd8f305cfbde6689d059f88df88f
       url: "https://pub.dev"
     source: hosted
-    version: "2.8.1"
+    version: "2.8.2"
   drift_dev:
     dependency: "direct dev"
     description:
@@ -444,10 +444,10 @@ packages:
     dependency: "direct main"
     description:
       name: icons_launcher
-      sha256: f8ccfb80b56856b6eac586980bdd9c14f5ec24fb87127514055445ceb9424f4c
+      sha256: "8f81b295f5de3796e9662ac385c174ee5255f7c4cee1df031393c17c616cff57"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.0"
+    version: "2.1.1"
   image:
     dependency: transitive
     description:
@@ -793,10 +793,10 @@ packages:
     dependency: transitive
     description:
       name: sqlparser
-      sha256: "72f15efc63aacce81ed5081e408e2610f7dc1f5846df4a2acbd21ac6a7138577"
+      sha256: "1c075a15ff144b9f381140b9abc73f46b3f88a7fce9207d3d6607a3c24439cf6"
       url: "https://pub.dev"
     source: hosted
-    version: "0.30.1"
+    version: "0.30.2"
   stack_trace:
     dependency: transitive
     description:
