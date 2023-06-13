@@ -1,5 +1,8 @@
 import 'package:aronnax/src/data/interfaces/auth_repository_interface.dart';
+import 'package:aronnax/src/data/interfaces/professional_repository_interface.dart';
 import 'package:aronnax/src/domain/entities/professional.dart';
+import 'package:aronnax/src/presentation/login/login_main_view.dart';
+import 'package:aronnax/src/presentation/password_recover/password_update_form_dialog.dart';
 import 'package:aronnax/src/presentation/widgets/generic_minimal_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -63,7 +66,38 @@ class _PasswordPinRecoverState extends ConsumerState<PasswordPinRecover> {
                     encodedPin: widget.professionalData.encodedRecoverPin),
                 child: GenericMinimalButton(
                   title: 'Update password',
-                  onTap: () {},
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return PasswordUpdateFormDialog(
+                          updateWithPin: true,
+                          onPasswordChanged: (newPassword, newPin) {
+                            ref
+                                .read(professionalRepositoryProvider)
+                                .updateProfessionalPasswordAndSecretPin(
+                                  ref,
+                                  widget.professionalData.id,
+                                  newPassword,
+                                  newPin.toString(),
+                                );
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                backgroundColor: Colors.green,
+                                content: Text('Password updated'),
+                              ),
+                            );
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const LoginScreen(),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    );
+                  },
                 ),
               ),
             ],
