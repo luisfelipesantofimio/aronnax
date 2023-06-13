@@ -35,12 +35,12 @@ class ResultScaleItem extends StatelessWidget {
               maxY: double.parse(resultData.optionsSize.toString()),
               titlesData: FlTitlesData(
                 show: true,
-                topTitles: AxisTitles(
+                topTitles: const AxisTitles(
                   sideTitles: SideTitles(
                     showTitles: false,
                   ),
                 ),
-                leftTitles: AxisTitles(
+                leftTitles: const AxisTitles(
                   sideTitles: SideTitles(
                     showTitles: false,
                   ),
