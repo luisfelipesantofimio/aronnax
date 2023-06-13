@@ -511,4 +511,15 @@ class DatabaseRepository implements LocalDatabaseInteface {
   void deleteLocalSession(int sessionId) {
     localDB.deleteLocalSession(sessionId);
   }
+
+  @override
+  void updateProfessionalPassword(int userId, String password) {
+    localDB.updateLocalUserPassword(userId, password);
+  }
+
+  @override
+  void updateProfessionalPasswordAndPin(
+      int userId, String password, String pin) {
+    localDB.updateLocalUserPasswordAndPin(userId, password, pin);
+  }
 }

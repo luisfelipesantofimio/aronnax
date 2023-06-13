@@ -1,5 +1,6 @@
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/interfaces/professional_repository_interface.dart';
+import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:crypt/crypt.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -47,6 +48,26 @@ class ProfessionalRepository implements ProfessionalRepositoryInterface {
     //Configure the app to use the local database
     ref.read(localDatabaseRepositoryProvider).updateConnectionMode(true);
     //  }
+  }
+
+  @override
+  void updateProfessionalPassword(
+      WidgetRef ref, int professionalId, String newPassword) {
+    if (ref.read(offlineStatusProvider).value!) {
+      ref
+          .read(localDatabaseRepositoryProvider)
+          .updateProfessionalPassword(professionalId, newPassword);
+    }
+  }
+
+  @override
+  void updateProfessionalPasswordAndSecretPin(
+      WidgetRef ref, int professionalId, String newPassword, String pin) {
+    if (ref.read(offlineStatusProvider).value!) {
+      ref
+          .read(localDatabaseRepositoryProvider)
+          .updateProfessionalPasswordAndPin(professionalId, newPassword, pin);
+    }
   }
 }
 

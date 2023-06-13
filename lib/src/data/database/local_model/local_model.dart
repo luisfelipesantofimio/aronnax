@@ -104,6 +104,16 @@ class LocalDatabase extends _$LocalDatabase {
     );
   }
 
+  Future updateLocalUserPasswordAndPin(
+      int userID, String newEncodedPassword, String newEncodedPin) async {
+    return (update(localProfessional)..where((t) => t.id.equals(userID))).write(
+      LocalProfessionalCompanion(
+        password: Value(newEncodedPassword),
+        encodedRecoverPin: Value(newEncodedPin),
+      ),
+    );
+  }
+
   // Data read
 
   Future<List<LocalPatient>> userConsultation(String userNames) {
