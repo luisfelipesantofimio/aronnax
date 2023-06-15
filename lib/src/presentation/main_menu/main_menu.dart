@@ -9,6 +9,7 @@ import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:aronnax/src/presentation/main_menu/menu_options_bar.dart';
 import 'package:aronnax/src/presentation/patiens_view/patients_view.dart';
 import 'package:aronnax/src/presentation/treatment_plans/treatment_plans_view/treatment_plans_view.dart';
+import 'package:aronnax/src/presentation/widgets/appointment_creation_dialog.dart';
 import 'package:aronnax/src/presentation/widgets/calendar_components/events_list_view.dart';
 import 'package:aronnax/src/presentation/widgets/generic_icon_button.dart';
 import 'package:aronnax/src/presentation/widgets/global_calendar.dart';
@@ -101,18 +102,42 @@ class MainMenuState extends ConsumerState<MainMenu> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SizedBox(
-                                    child: Text(
-                                      DateFormat('dd/MM/yyyy').format(ref.watch(
-                                                  selectedDateProvider)) ==
-                                              DateFormat('dd/MM/yyyy')
-                                                  .format(DateTime.now())
-                                          ? 'Eventos para hoy'
-                                          : 'Eventos del ${DateFormat.yMMMMEEEEd('es').format(ref.watch(selectedDateProvider))}',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall,
-                                    ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.23,
+                                        child: Text(
+                                          DateFormat('dd/MM/yyyy').format(
+                                                      ref.watch(
+                                                          selectedDateProvider)) ==
+                                                  DateFormat('dd/MM/yyyy')
+                                                      .format(DateTime.now())
+                                              ? 'Eventos para hoy'
+                                              : 'Eventos del ${DateFormat.yMMMMEEEEd('es').format(ref.watch(selectedDateProvider))}',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headlineSmall,
+                                        ),
+                                      ),
+                                      IconButton(
+                                        tooltip: 'Add event',
+                                        onPressed: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) =>
+                                                AppointmentCreationDialog(
+                                              selectedDate: ref
+                                                  .read(selectedDateProvider),
+                                            ),
+                                          );
+                                        },
+                                        icon: const Icon(Icons.add),
+                                      ),
+                                    ],
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(
