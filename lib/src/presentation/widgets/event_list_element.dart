@@ -42,149 +42,160 @@ class _EventListElementState extends ConsumerState<EventListElement> {
           .indexWhere((element) => element.idNumber == widget.patientId),
     );
 
-    return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(
-          Radius.circular(10),
-        ),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            width: 20,
-            decoration: BoxDecoration(
-              color: AppMethods().setEventTypeColor(widget.calendarEventType),
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(10),
-                bottomLeft: Radius.circular(10),
-              ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Container(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(
+              Radius.circular(10),
             ),
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                AppMethods()
-                        .parseCalendarEventTypeFromEnum(
-                            widget.calendarEventType)
-                        .substring(0, 1)
-                        .toUpperCase() +
-                    AppMethods()
-                        .parseCalendarEventTypeFromEnum(
-                            widget.calendarEventType)
-                        .substring(1),
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-              ),
-              const Padding(
-                padding: EdgeInsets.all(5),
-              ),
               Container(
-                padding: const EdgeInsets.only(
-                  left: 5,
-                  right: 5,
-                  top: 2,
-                  bottom: 2,
-                ),
+                width: constraints.maxWidth * 0.001,
                 decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(30),
-                    ),
-                    color:
-                        AppMethods().setEventStatusColor(widget.eventStates)),
-                child: Text(
+                  color:
+                      AppMethods().setEventTypeColor(widget.calendarEventType),
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                  ),
+                ),
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
                     AppMethods()
-                            .parseCalendarEventStateFromEnum(widget.eventStates)
+                            .parseCalendarEventTypeFromEnum(
+                                widget.calendarEventType)
                             .substring(0, 1)
                             .toUpperCase() +
                         AppMethods()
-                            .parseCalendarEventStateFromEnum(widget.eventStates)
+                            .parseCalendarEventTypeFromEnum(
+                                widget.calendarEventType)
                             .substring(1),
-                    style: const TextStyle(fontSize: 12)),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 15),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(5),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(
+                      left: 5,
+                      right: 5,
+                      top: 2,
+                      bottom: 2,
+                    ),
+                    decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(30),
+                        ),
+                        color: AppMethods()
+                            .setEventStatusColor(widget.eventStates)),
+                    child: Text(
+                        AppMethods()
+                                .parseCalendarEventStateFromEnum(
+                                    widget.eventStates)
+                                .substring(0, 1)
+                                .toUpperCase() +
+                            AppMethods()
+                                .parseCalendarEventStateFromEnum(
+                                    widget.eventStates)
+                                .substring(1),
+                        style: const TextStyle(fontSize: 12)),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(3),
+                  ),
+                  SizedBox(
+                    width: constraints.maxWidth * 0.4,
+                    child: Text(
+                      "${foundPatient.names} ${foundPatient.lastNames}",
+                    ),
+                  ),
+                ],
               ),
-              const Padding(
-                padding: EdgeInsets.all(3),
+              SizedBox(
+                width: constraints.maxWidth * 0.2,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                        child: Text(
+                      DateFormat.yMMMMEEEEd("es").format(widget.date),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    )),
+                    Text(DateFormat.Hm("es").format(widget.date)),
+                    Text(widget.description ?? 'Sin descripción'),
+                  ],
+                ),
               ),
-              Text(
-                "${foundPatient.names} ${foundPatient.lastNames}",
+              Padding(
+                padding: const EdgeInsets.only(
+                  top: 20,
+                  bottom: 20,
+                  right: 10,
+                ),
+                child: MouseRegion(
+                  onEnter: (event) => setState(() {
+                    isMouseHover = true;
+                  }),
+                  onExit: (event) => setState(() {
+                    isMouseHover = false;
+                  }),
+                  child: AnimatedContainer(
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                        color: isMouseHover
+                            ? const Color.fromARGB(255, 243, 84, 73)
+                            : const Color.fromARGB(255, 241, 142, 135),
+                      ),
+                      width: isMouseHover
+                          ? MediaQuery.of(context).size.width * 0.08
+                          : MediaQuery.of(context).size.width * 0.04,
+                      duration: const Duration(milliseconds: 200),
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 20, bottom: 20, left: 10, right: 10),
+                          child: isMouseHover
+                              ? Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    IconButton(
+                                      tooltip: 'Acutalizar',
+                                      onPressed: widget.onUpdate,
+                                      icon: const Icon(
+                                        Icons.update,
+                                      ),
+                                    ),
+                                    IconButton(
+                                      tooltip: 'Eliminar',
+                                      onPressed: widget.onDelete,
+                                      icon: const Icon(Icons.delete),
+                                    ),
+                                  ],
+                                )
+                              : const Icon(FontAwesomeIcons.bars),
+                        ),
+                      )),
+                ),
               ),
             ],
           ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.1,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                    child: Text(
-                  DateFormat.yMMMMEEEEd("es").format(widget.date),
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                )),
-                Text(DateFormat.Hm("es").format(widget.date)),
-                Text(widget.description ?? 'Sin descripción'),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 20,
-              bottom: 20,
-              right: 10,
-            ),
-            child: MouseRegion(
-              onEnter: (event) => setState(() {
-                isMouseHover = true;
-              }),
-              onExit: (event) => setState(() {
-                isMouseHover = false;
-              }),
-              child: AnimatedContainer(
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(10),
-                    ),
-                    color: isMouseHover
-                        ? const Color.fromARGB(255, 243, 84, 73)
-                        : const Color.fromARGB(255, 241, 142, 135),
-                  ),
-                  width: isMouseHover
-                      ? MediaQuery.of(context).size.width * 0.08
-                      : MediaQuery.of(context).size.width * 0.04,
-                  duration: const Duration(milliseconds: 200),
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          top: 20, bottom: 20, left: 10, right: 10),
-                      child: isMouseHover
-                          ? Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                IconButton(
-                                  tooltip: 'Acutalizar',
-                                  onPressed: widget.onUpdate,
-                                  icon: const Icon(
-                                    Icons.update,
-                                  ),
-                                ),
-                                IconButton(
-                                  tooltip: 'Eliminar',
-                                  onPressed: widget.onDelete,
-                                  icon: const Icon(Icons.delete),
-                                ),
-                              ],
-                            )
-                          : const Icon(FontAwesomeIcons.bars),
-                    ),
-                  )),
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

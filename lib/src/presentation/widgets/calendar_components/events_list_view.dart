@@ -25,27 +25,24 @@ class EventsListView extends ConsumerWidget {
               itemCount: filtedEventsList.length,
               itemBuilder: (context, index) => Padding(
                 padding: const EdgeInsets.only(bottom: 8.0),
-                child: SizedBox(
-                  height: 120,
-                  child: EventListElement(
-                    date: filtedEventsList[index].date,
-                    eventStates: filtedEventsList[index].state,
-                    calendarEventType: filtedEventsList[index].eventType,
-                    patientId: filtedEventsList[index].patientID,
-                    description: filtedEventsList[index].description,
-                    onUpdate: () {},
-                    onDelete: () {
-                      ref.read(calendarRepositoryProvider).deleteEvent(
-                          eventID: filtedEventsList[index].id, ref: ref);
-                      ref.invalidate(appointmentsGlobalListProvider);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          backgroundColor: Colors.green,
-                          content: Text('Evento eliminado.'),
-                        ),
-                      );
-                    },
-                  ),
+                child: EventListElement(
+                  date: filtedEventsList[index].date,
+                  eventStates: filtedEventsList[index].state,
+                  calendarEventType: filtedEventsList[index].eventType,
+                  patientId: filtedEventsList[index].patientID,
+                  description: filtedEventsList[index].description,
+                  onUpdate: () {},
+                  onDelete: () {
+                    ref.read(calendarRepositoryProvider).deleteEvent(
+                        eventID: filtedEventsList[index].id, ref: ref);
+                    ref.invalidate(appointmentsGlobalListProvider);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        backgroundColor: Colors.green,
+                        content: Text('Evento eliminado.'),
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
