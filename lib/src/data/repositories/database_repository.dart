@@ -522,4 +522,42 @@ class DatabaseRepository implements LocalDatabaseInteface {
       int userId, String password, String pin) {
     localDB.updateLocalUserPasswordAndPin(userId, password, pin);
   }
+
+  @override
+  Future<void> addMultiLocalAppointMent({
+    required DateTime date,
+    required int professionalId,
+    required int patientId,
+    required String? description,
+    required CalendarEventStates state,
+    required CalendarEventType eventType,
+    required int numberOfRepetitions,
+  }) async {
+    String eventStatus = AppMethods().parseCalendarEventStateFromEnum(state);
+    String type = AppMethods().parseCalendarEventTypeFromEnum(eventType);
+
+    final data = LocalAppointmentsCompanion(
+      date: Value(date),
+      description: Value(description),
+      patientID: Value(patientId),
+      professionalID: Value(professionalId),
+      sessionType: Value(type),
+      status: Value(eventStatus),
+    );
+    await localDB.insertAppointment(data);
+
+    for (var i = 0; i < numberOfRepetitions - 1; i++) {
+      DateTime previewsDay = date.copyWith(day: date.day + 7 * (i + 1));
+
+      final newDate = LocalAppointmentsCompanion(
+        date: Value(previewsDay),
+        description: Value(description),
+        patientID: Value(patientId),
+        professionalID: Value(professionalId),
+        sessionType: Value(type),
+        status: Value(eventStatus),
+      );
+      await localDB.insertAppointment(newDate);
+    }
+  }
 }
