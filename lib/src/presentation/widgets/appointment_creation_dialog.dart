@@ -7,6 +7,7 @@ import 'package:aronnax/src/presentation/core/constants.dart';
 import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:aronnax/src/presentation/widgets/generic_minimal_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
@@ -24,6 +25,8 @@ class AppointmentCreationDialog extends ConsumerStatefulWidget {
 
 class _AppointmentCreationDialogState
     extends ConsumerState<AppointmentCreationDialog> {
+  int numberOfWeeks = 1;
+  bool multiEventSelection = false;
   Color? itemColor;
   DateTime? selectedDate = DateTime.now();
   TimeOfDay? selectedHour = TimeOfDay.now();
@@ -64,7 +67,6 @@ class _AppointmentCreationDialogState
     return Dialog(
       child: Container(
         height: MediaQuery.of(context).size.height * 0.5,
-        width: MediaQuery.of(context).size.width * 0.4,
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(
             Radius.circular(10),
@@ -73,6 +75,7 @@ class _AppointmentCreationDialogState
         child: Form(
           key: appointmentCreationKey,
           child: Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Container(
                 width: 10,
@@ -84,9 +87,68 @@ class _AppointmentCreationDialogState
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Agendar evento',
-                      style: Theme.of(context).textTheme.headlineMedium,
+                    Row(
+                      children: [
+                        Text(
+                          'Agendar evento',
+                          style: Theme.of(context).textTheme.headlineMedium,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(10),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(multiEventSelection
+                                ? 'Evento semanal'
+                                : 'Evento individual'),
+                            Row(
+                              children: [
+                                Switch(
+                                  value: multiEventSelection,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      multiEventSelection =
+                                          !multiEventSelection;
+                                    });
+                                  },
+                                ),
+                                Visibility(
+                                  visible: multiEventSelection,
+                                  child: SizedBox(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.05,
+                                    child: TextFormField(
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
+                                      initialValue: numberOfWeeks.toString(),
+                                      decoration: const InputDecoration(
+                                          hintText: 'Number of weeks'),
+                                      validator: (value) {
+                                        if (numberOfWeeks == 0) {
+                                          return 'Invalid value';
+                                        }
+                                        if (value!.isEmpty) {
+                                          return 'The field must not be empty';
+                                        }
+                                        return null;
+                                      },
+                                      onChanged: (value) {
+                                        setState(() {
+                                          numberOfWeeks = int.parse(value);
+                                        });
+                                        appointmentCreationKey.currentState!
+                                            .validate();
+                                      },
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        )
+                      ],
                     ),
                     const Padding(padding: EdgeInsets.all(10)),
                     const Text('Fecha:'),
@@ -197,9 +259,10 @@ class _AppointmentCreationDialogState
                         if (appointmentCreationKey.currentState!.validate() &&
                             ref.read(appointmentStatusProvider) != null &&
                             ref.read(appointmentTypeProvider) != null) {
-                          ref
-                              .read(localDatabaseRepositoryProvider)
-                              .addLocalAppointMent(
+                          if (multiEventSelection) {
+                            ref
+                                .read(localDatabaseRepositoryProvider)
+                                .addMultiLocalAppointMent(
                                   date: DateTime(
                                     selectedDate!.year,
                                     selectedDate!.month,
@@ -215,16 +278,47 @@ class _AppointmentCreationDialogState
                                   description:
                                       ref.read(appointmentDescriptionProvider),
                                   state: ref.read(appointmentStatusProvider)!,
-                                  eventType:
-                                      ref.read(appointmentTypeProvider)!);
-                          ref.invalidate(appointmentsGlobalListProvider);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              backgroundColor: Colors.green,
-                              content: Text('Evento creado'),
-                            ),
-                          );
-                          Navigator.pop(context);
+                                  eventType: ref.read(appointmentTypeProvider)!,
+                                  numberOfRepetitions: numberOfWeeks,
+                                );
+                            ref.invalidate(appointmentsGlobalListProvider);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                backgroundColor: Colors.green,
+                                content: Text('Evento creado'),
+                              ),
+                            );
+                            Navigator.pop(context);
+                          } else {
+                            ref
+                                .read(localDatabaseRepositoryProvider)
+                                .addLocalAppointMent(
+                                    date: DateTime(
+                                      selectedDate!.year,
+                                      selectedDate!.month,
+                                      selectedDate!.day,
+                                      selectedHour!.hour,
+                                      selectedHour!.minute,
+                                    ),
+                                    professionalId: ref
+                                        .read(globalUserInformationProvider)!
+                                        .personalID,
+                                    patientId:
+                                        ref.read(appointmentPatientIdProvider)!,
+                                    description: ref
+                                        .read(appointmentDescriptionProvider),
+                                    state: ref.read(appointmentStatusProvider)!,
+                                    eventType:
+                                        ref.read(appointmentTypeProvider)!);
+                            ref.invalidate(appointmentsGlobalListProvider);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                backgroundColor: Colors.green,
+                                content: Text('Evento creado'),
+                              ),
+                            );
+                            Navigator.pop(context);
+                          }
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
