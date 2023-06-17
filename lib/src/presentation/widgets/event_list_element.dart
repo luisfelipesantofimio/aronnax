@@ -122,7 +122,7 @@ class _EventListElementState extends ConsumerState<EventListElement> {
                 ],
               ),
               SizedBox(
-                width: constraints.maxWidth * 0.2,
+                width: constraints.maxWidth * 0.3,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -133,7 +133,12 @@ class _EventListElementState extends ConsumerState<EventListElement> {
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     )),
                     Text(DateFormat.Hm("es").format(widget.date)),
-                    Text(widget.description ?? 'Sin descripción'),
+                    widget.description != null
+                        ? Text(widget.description!.length > 20
+                            ? widget.description!.replaceRange(
+                                20, widget.description?.length, '...')
+                            : widget.description!)
+                        : const Text('No description'),
                   ],
                 ),
               ),
