@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:aronnax/src/data/interfaces/calendar_repository_interface.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/providers/appointments_provider.dart';
 import 'package:aronnax/src/data/providers/patients_provider.dart';
@@ -12,11 +15,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 class AppointmentCreationDialog extends ConsumerStatefulWidget {
-  const AppointmentCreationDialog({
-    Key? key,
-    required this.selectedDate,
-  }) : super(key: key);
+  const AppointmentCreationDialog(
+      {Key? key, required this.selectedDate, required this.eventData})
+      : super(key: key);
   final DateTime selectedDate;
+  final CalendarEvent? eventData;
 
   @override
   ConsumerState<AppointmentCreationDialog> createState() =>
@@ -34,23 +37,44 @@ class _AppointmentCreationDialogState
   @override
   void initState() {
     appointmentCreationKey.currentState?.initState();
-    Future(() {
-      ref.read(appointmentPatientIdProvider.notifier).update(
-            (state) => null,
-          );
-      ref.read(appointmentDescriptionProvider.notifier).update(
-            (state) => null,
-          );
-      ref.read(appointmentStatusProvider.notifier).update(
-            (state) => null,
-          );
-      ref.read(appointmentTypeProvider.notifier).update(
-            (state) => null,
-          );
-      setState(() {
-        selectedDate = widget.selectedDate;
+    if (widget.eventData != null) {
+      Future(() {
+        ref.read(appointmentPatientIdProvider.notifier).update(
+              (state) => widget.eventData!.patientID,
+            );
+        ref.read(appointmentDescriptionProvider.notifier).update(
+              (state) => widget.eventData!.description,
+            );
+        ref.read(appointmentStatusProvider.notifier).update(
+              (state) => widget.eventData!.state,
+            );
+        ref.read(appointmentTypeProvider.notifier).update(
+              (state) => widget.eventData!.eventType,
+            );
+        setState(() {
+          selectedDate = widget.eventData!.date;
+          selectedHour = TimeOfDay.fromDateTime(widget.eventData!.date);
+        });
       });
-    });
+    } else {
+      Future(() {
+        ref.read(appointmentPatientIdProvider.notifier).update(
+              (state) => null,
+            );
+        ref.read(appointmentDescriptionProvider.notifier).update(
+              (state) => null,
+            );
+        ref.read(appointmentStatusProvider.notifier).update(
+              (state) => null,
+            );
+        ref.read(appointmentTypeProvider.notifier).update(
+              (state) => null,
+            );
+        setState(() {
+          selectedDate = widget.selectedDate;
+        });
+      });
+    }
     super.initState();
   }
 
@@ -90,63 +114,68 @@ class _AppointmentCreationDialogState
                     Row(
                       children: [
                         Text(
-                          'Agendar evento',
+                          widget.eventData == null
+                              ? 'Agendar evento'
+                              : 'Actualizar evento',
                           style: Theme.of(context).textTheme.headlineMedium,
                         ),
                         const Padding(
                           padding: EdgeInsets.all(10),
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(multiEventSelection
-                                ? 'Evento semanal'
-                                : 'Evento individual'),
-                            Row(
-                              children: [
-                                Switch(
-                                  value: multiEventSelection,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      multiEventSelection =
-                                          !multiEventSelection;
-                                    });
-                                  },
-                                ),
-                                Visibility(
-                                  visible: multiEventSelection,
-                                  child: SizedBox(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.05,
-                                    child: TextFormField(
-                                      inputFormatters: [
-                                        FilteringTextInputFormatter.digitsOnly
-                                      ],
-                                      initialValue: numberOfWeeks.toString(),
-                                      decoration: const InputDecoration(
-                                          hintText: 'Number of weeks'),
-                                      validator: (value) {
-                                        if (numberOfWeeks == 0) {
-                                          return 'Invalid value';
-                                        }
-                                        if (value!.isEmpty) {
-                                          return 'The field must not be empty';
-                                        }
-                                        return null;
-                                      },
-                                      onChanged: (value) {
-                                        setState(() {
-                                          numberOfWeeks = int.parse(value);
-                                        });
-                                        appointmentCreationKey.currentState!
-                                            .validate();
-                                      },
-                                    ),
+                        Visibility(
+                          visible: widget.eventData == null,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(multiEventSelection
+                                  ? 'Evento semanal'
+                                  : 'Evento individual'),
+                              Row(
+                                children: [
+                                  Switch(
+                                    value: multiEventSelection,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        multiEventSelection =
+                                            !multiEventSelection;
+                                      });
+                                    },
                                   ),
-                                )
-                              ],
-                            ),
-                          ],
+                                  Visibility(
+                                    visible: multiEventSelection,
+                                    child: SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.05,
+                                      child: TextFormField(
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.digitsOnly
+                                        ],
+                                        initialValue: numberOfWeeks.toString(),
+                                        decoration: const InputDecoration(
+                                            hintText: 'Number of weeks'),
+                                        validator: (value) {
+                                          if (numberOfWeeks == 0) {
+                                            return 'Invalid value';
+                                          }
+                                          if (value!.isEmpty) {
+                                            return 'The field must not be empty';
+                                          }
+                                          return null;
+                                        },
+                                        onChanged: (value) {
+                                          setState(() {
+                                            numberOfWeeks = int.parse(value);
+                                          });
+                                          appointmentCreationKey.currentState!
+                                              .validate();
+                                        },
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
                         )
                       ],
                     ),
@@ -227,11 +256,18 @@ class _AppointmentCreationDialogState
                                 ),
                               )
                               .toList(),
+                          value: widget.eventData != null
+                              ? data.elementAt(
+                                  data.indexWhere((element) =>
+                                      element.id ==
+                                      widget.eventData!.patientID),
+                                )
+                              : null,
                           onChanged: (Patient? value) {
                             appointmentCreationKey.currentState?.validate();
                             ref
                                 .read(appointmentPatientIdProvider.notifier)
-                                .update((state) => value!.idNumber);
+                                .update((state) => value!.id);
                           },
                         ),
                         error: (error, stackTrace) =>
@@ -243,6 +279,9 @@ class _AppointmentCreationDialogState
                     SizedBox(
                       width: 250,
                       child: TextFormField(
+                        initialValue: widget.eventData != null
+                            ? widget.eventData!.description
+                            : null,
                         maxLines: 2,
                         decoration: const InputDecoration(
                             hintText: 'Descripción del evento'),
@@ -259,40 +298,11 @@ class _AppointmentCreationDialogState
                         if (appointmentCreationKey.currentState!.validate() &&
                             ref.read(appointmentStatusProvider) != null &&
                             ref.read(appointmentTypeProvider) != null) {
-                          if (multiEventSelection) {
-                            ref
-                                .read(localDatabaseRepositoryProvider)
-                                .addMultiLocalAppointMent(
-                                  date: DateTime(
-                                    selectedDate!.year,
-                                    selectedDate!.month,
-                                    selectedDate!.day,
-                                    selectedHour!.hour,
-                                    selectedHour!.minute,
-                                  ),
-                                  professionalId: ref
-                                      .read(globalUserInformationProvider)!
-                                      .personalID,
-                                  patientId:
-                                      ref.read(appointmentPatientIdProvider)!,
-                                  description:
-                                      ref.read(appointmentDescriptionProvider),
-                                  state: ref.read(appointmentStatusProvider)!,
-                                  eventType: ref.read(appointmentTypeProvider)!,
-                                  numberOfRepetitions: numberOfWeeks,
-                                );
-                            ref.invalidate(appointmentsGlobalListProvider);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                backgroundColor: Colors.green,
-                                content: Text('Evento creado'),
-                              ),
-                            );
-                            Navigator.pop(context);
-                          } else {
-                            ref
-                                .read(localDatabaseRepositoryProvider)
-                                .addLocalAppointMent(
+                          if (widget.eventData == null) {
+                            if (multiEventSelection) {
+                              ref
+                                  .read(localDatabaseRepositoryProvider)
+                                  .addMultiLocalAppointMent(
                                     date: DateTime(
                                       selectedDate!.year,
                                       selectedDate!.month,
@@ -309,12 +319,77 @@ class _AppointmentCreationDialogState
                                         .read(appointmentDescriptionProvider),
                                     state: ref.read(appointmentStatusProvider)!,
                                     eventType:
+                                        ref.read(appointmentTypeProvider)!,
+                                    numberOfRepetitions: numberOfWeeks,
+                                  );
+                              ref.invalidate(appointmentsGlobalListProvider);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  backgroundColor: Colors.green,
+                                  content: Text('Evento creado'),
+                                ),
+                              );
+                              Navigator.pop(context);
+                            } else {
+                              ref
+                                  .read(localDatabaseRepositoryProvider)
+                                  .addLocalAppointMent(
+                                      date: DateTime(
+                                        selectedDate!.year,
+                                        selectedDate!.month,
+                                        selectedDate!.day,
+                                        selectedHour!.hour,
+                                        selectedHour!.minute,
+                                      ),
+                                      professionalId: ref
+                                          .read(globalUserInformationProvider)!
+                                          .id,
+                                      patientId: ref
+                                          .read(appointmentPatientIdProvider)!,
+                                      description: ref
+                                          .read(appointmentDescriptionProvider),
+                                      state:
+                                          ref.read(appointmentStatusProvider)!,
+                                      eventType:
+                                          ref.read(appointmentTypeProvider)!);
+                              ref.invalidate(appointmentsGlobalListProvider);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  backgroundColor: Colors.green,
+                                  content: Text('Evento creado'),
+                                ),
+                              );
+                              Navigator.pop(context);
+                            }
+                          } else {
+                            log(widget.eventData!.id.toString());
+                            CalendarEvent updatedEvent = widget.eventData!
+                                .copyWith(
+                                    date: DateTime(
+                                      selectedDate!.year,
+                                      selectedDate!.month,
+                                      selectedDate!.day,
+                                      selectedHour!.hour,
+                                      selectedHour!.minute,
+                                    ),
+                                    professionalID: ref
+                                        .read(globalUserInformationProvider)!
+                                        .id,
+                                    patientID:
+                                        ref.read(appointmentPatientIdProvider)!,
+                                    description: ref
+                                        .read(appointmentDescriptionProvider),
+                                    state: ref.read(appointmentStatusProvider)!,
+                                    eventType:
                                         ref.read(appointmentTypeProvider)!);
+                            ref
+                                .read(calendarRepositoryProvider)
+                                .updateEvent(ref, updatedEvent);
                             ref.invalidate(appointmentsGlobalListProvider);
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 backgroundColor: Colors.green,
-                                content: Text('Evento creado'),
+                                content: Text('Evento actualizado'),
                               ),
                             );
                             Navigator.pop(context);
