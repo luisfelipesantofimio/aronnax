@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 abstract class IoRepositoryInterface {
   Future<File> exportToTextFile(
       {required String fileName, required String contents});
-  Future<String> readFromTextFile(String pathToFile);
+  Future<String> readFromTextFile(String pathToFile, bool privateFile);
   void encryptFile({
     required File input,
     required String encryptionKey,

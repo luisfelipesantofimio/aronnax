@@ -98,7 +98,7 @@ class _ImportPatientDataDialogState
                               encryptionKey: passwordToDecrypt!);
                       String decryptedFileContents = await ref
                           .read(ioRepositoryProvider)
-                          .readFromTextFile(decryptedFile.path);
+                          .readFromTextFile(decryptedFile.path, true);
                       try {
                         await ref
                             .read(patientsRepositoryProvider)

@@ -21,11 +21,13 @@ class IoRepository implements IoRepositoryInterface {
   }
 
   @override
-  Future<String> readFromTextFile(String pathToFile) async {
+  Future<String> readFromTextFile(String pathToFile, bool privateFile) async {
     String result = '';
     File file = File(pathToFile);
     result = await file.readAsString();
-    file.delete();
+    if (privateFile) {
+      file.delete();
+    }
     return result;
   }
 

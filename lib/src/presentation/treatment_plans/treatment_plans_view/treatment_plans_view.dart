@@ -55,7 +55,7 @@ class TreatmentPlansView extends ConsumerWidget {
                     TreatmentPlan data = TreatmentPlan.fromJson(
                       await ref
                           .read(ioRepositoryProvider)
-                          .readFromTextFile(result.files.first.path!),
+                          .readFromTextFile(result.files.first.path!, false),
                     );
                     ref
                         .read(localDatabaseRepositoryProvider)
