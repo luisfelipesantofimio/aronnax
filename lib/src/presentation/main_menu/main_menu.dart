@@ -130,6 +130,7 @@ class MainMenuState extends ConsumerState<MainMenu> {
                                             context: context,
                                             builder: (context) =>
                                                 AppointmentCreationDialog(
+                                              eventData: null,
                                               selectedDate: ref
                                                   .read(selectedDateProvider),
                                             ),

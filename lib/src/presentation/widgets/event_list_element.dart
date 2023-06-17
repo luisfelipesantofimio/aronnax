@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -39,7 +38,7 @@ class _EventListElementState extends ConsumerState<EventListElement> {
     final patientsList = ref.watch(patientsListProvider);
     Patient foundPatient = patientsList.value!.elementAt(
       patientsList.value!
-          .indexWhere((element) => element.idNumber == widget.patientId),
+          .indexWhere((element) => element.id == widget.patientId),
     );
 
     return LayoutBuilder(

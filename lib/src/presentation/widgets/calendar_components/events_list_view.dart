@@ -1,6 +1,7 @@
 import 'package:aronnax/src/data/interfaces/calendar_repository_interface.dart';
 import 'package:aronnax/src/data/providers/appointments_provider.dart';
 import 'package:aronnax/src/domain/entities/calendar_event.dart';
+import 'package:aronnax/src/presentation/widgets/appointment_creation_dialog.dart';
 import 'package:aronnax/src/presentation/widgets/event_list_element.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -31,7 +32,15 @@ class EventsListView extends ConsumerWidget {
                   calendarEventType: filtedEventsList[index].eventType,
                   patientId: filtedEventsList[index].patientID,
                   description: filtedEventsList[index].description,
-                  onUpdate: () {},
+                  onUpdate: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AppointmentCreationDialog(
+                        eventData: filtedEventsList[index],
+                        selectedDate: ref.read(selectedDateProvider),
+                      ),
+                    );
+                  },
                   onDelete: () {
                     ref.read(calendarRepositoryProvider).deleteEvent(
                         eventID: filtedEventsList[index].id, ref: ref);
