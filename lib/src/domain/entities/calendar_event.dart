@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/presentation/core/methods.dart';
 
@@ -43,5 +42,54 @@ class CalendarEvent {
       eventType:
           AppMethods().parseCalendarEventTypeFromString(data.sessionType),
     );
+  }
+
+  CalendarEvent copyWith({
+    int? id,
+    DateTime? date,
+    CalendarEventStates? state,
+    CalendarEventType? eventType,
+    String? description,
+    int? professionalID,
+    int? patientID,
+  }) {
+    return CalendarEvent(
+      id: id ?? this.id,
+      date: date ?? this.date,
+      state: state ?? this.state,
+      eventType: eventType ?? this.eventType,
+      description: description ?? this.description,
+      professionalID: professionalID ?? this.professionalID,
+      patientID: patientID ?? this.patientID,
+    );
+  }
+
+  @override
+  String toString() {
+    return 'CalendarEvent(id: $id, date: $date, state: $state, eventType: $eventType, description: $description, professionalID: $professionalID, patientID: $patientID)';
+  }
+
+  @override
+  bool operator ==(covariant CalendarEvent other) {
+    if (identical(this, other)) return true;
+
+    return other.id == id &&
+        other.date == date &&
+        other.state == state &&
+        other.eventType == eventType &&
+        other.description == description &&
+        other.professionalID == professionalID &&
+        other.patientID == patientID;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+        date.hashCode ^
+        state.hashCode ^
+        eventType.hashCode ^
+        description.hashCode ^
+        professionalID.hashCode ^
+        patientID.hashCode;
   }
 }

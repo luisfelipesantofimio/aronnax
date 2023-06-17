@@ -1,9 +1,7 @@
-
 import 'package:aronnax/src/data/interfaces/calendar_repository_interface.dart';
 import 'package:aronnax/src/data/providers/appointments_provider.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/domain/entities/calendar_event.dart';
-import 'package:aronnax/src/presentation/widgets/appointment_creation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -98,13 +96,6 @@ class _GlobalCalendarState extends ConsumerState<GlobalCalendar> {
             ref.read(selectedDateProvider.notifier).update(
                   (state) => selectedDay,
                 );
-            Future(
-              () => showDialog(
-                context: context,
-                builder: (context) =>
-                    AppointmentCreationDialog(selectedDate: selectedDay),
-              ),
-            );
           },
           selectedDayPredicate: (day) {
             return isSameDay(_userSelectedDay, day);

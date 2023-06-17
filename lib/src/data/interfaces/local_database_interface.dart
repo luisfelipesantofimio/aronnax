@@ -128,6 +128,18 @@ abstract class LocalDatabaseInteface {
     required CalendarEventType eventType,
   });
 
+  Future<void> addMultiLocalAppointMent({
+    required DateTime date,
+    required int professionalId,
+    required int patientId,
+    required String? description,
+    required CalendarEventStates state,
+    required CalendarEventType eventType,
+    required int numberOfRepetitions,
+  });
+
+  Future<void> updateLocalAppointment({required CalendarEvent eventData});
+
   void updateConfigurationState(bool isConfigured);
 
   Future updateThemeMode(bool isDarkEnabled);

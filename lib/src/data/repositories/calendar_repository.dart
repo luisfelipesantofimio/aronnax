@@ -1,7 +1,7 @@
-
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/interfaces/calendar_repository_interface.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
+import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/domain/entities/calendar_event.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -73,5 +73,14 @@ class CalendarRepository implements CalendarRepositoryInterface {
             DateFormat('dd/MM/yyyy').format(element.date) ==
             DateFormat('dd/MM/yyyy').format(date))
         .toList();
+  }
+
+  @override
+  void updateEvent(WidgetRef ref, CalendarEvent eventData) {
+    if (ref.read(offlineStatusProvider).value!) {
+      ref
+          .read(localDatabaseRepositoryProvider)
+          .updateLocalAppointment(eventData: eventData);
+    }
   }
 }
