@@ -560,4 +560,22 @@ class DatabaseRepository implements LocalDatabaseInteface {
       await localDB.insertAppointment(newDate);
     }
   }
+
+  @override
+  Future<void> updateLocalAppointment(
+      {required CalendarEvent eventData}) async {
+    String eventStatus =
+        AppMethods().parseCalendarEventStateFromEnum(eventData.state);
+    String type =
+        AppMethods().parseCalendarEventTypeFromEnum(eventData.eventType);
+    final data = LocalAppointmentsCompanion(
+      date: Value(eventData.date),
+      description: Value(eventData.description),
+      patientID: Value(eventData.patientID),
+      professionalID: Value(eventData.professionalID),
+      sessionType: Value(type),
+      status: Value(eventStatus),
+    );
+    await localDB.updateLocalAppointment(data, eventData.id);
+  }
 }

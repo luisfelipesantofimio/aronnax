@@ -138,6 +138,8 @@ abstract class LocalDatabaseInteface {
     required int numberOfRepetitions,
   });
 
+  Future<void> updateLocalAppointment({required CalendarEvent eventData});
+
   void updateConfigurationState(bool isConfigured);
 
   Future updateThemeMode(bool isDarkEnabled);

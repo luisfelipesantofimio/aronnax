@@ -322,6 +322,15 @@ class LocalDatabase extends _$LocalDatabase {
     );
   }
 
+  Future updateLocalAppointment(
+      LocalAppointmentsCompanion data, int appointmentId) {
+    return (update(localAppointments)
+          ..where(
+            (tbl) => tbl.id.equals(appointmentId),
+          ))
+        .write(data);
+  }
+
   //Delete
 
   Future deleteLocalEvent(int eventId) {
