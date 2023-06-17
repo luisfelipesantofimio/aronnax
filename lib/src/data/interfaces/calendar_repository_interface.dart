@@ -25,6 +25,8 @@ abstract class CalendarRepositoryInterface {
     required int eventID,
     required WidgetRef ref,
   });
+
+  void updateEvent(WidgetRef ref, CalendarEvent eventData);
 }
 
 final calendarRepositoryProvider = Provider<CalendarRepositoryInterface>(
