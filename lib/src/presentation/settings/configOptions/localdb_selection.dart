@@ -1,4 +1,3 @@
-
 import 'package:aronnax/src/presentation/settings/widgets/no_server_dialog.dart';
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
@@ -35,36 +34,36 @@ class LocalDBActivationScreenState
                 Switch(
                   value: isOfflineEnabled,
                   onChanged: (switchVal) async {
-                    List<ServerDatabaseData> serverConfigurations = await ref
-                        .watch(localDatabaseRepositoryProvider)
-                        .getServerConfigurationList();
+                    // List<ServerDatabaseData> serverConfigurations = await ref
+                    //     .watch(localDatabaseRepositoryProvider)
+                    //     .getServerConfigurationList();
 
-                    List<LocalProfessionalData> professionalsList = await ref
-                        .read(localDatabaseRepositoryProvider)
-                        .getProfessionalsList();
+                    // List<LocalProfessionalData> professionalsList = await ref
+                    //     .read(localDatabaseRepositoryProvider)
+                    //     .getProfessionalsList();
 
-                    if (isOfflineEnabled && serverConfigurations.isEmpty) {
-                      Future(() => showDialog(
-                            context: context,
-                            builder: (context) => const NoServerDialog(),
-                          ));
-                    } else if (!isOfflineEnabled && professionalsList.isEmpty) {
-                      Future(
-                        () => showDialog(
-                          context: context,
-                          builder: (context) =>
-                              const NoLocalDBConfiguredDialog(),
-                        ),
-                      );
-                    } else {
-                      Future(
-                        () async {
-                          ref
-                              .read(localDatabaseRepositoryProvider)
-                              .updateConnectionMode(!switchVal);
-                        },
-                      );
-                    }
+                    // if (isOfflineEnabled && serverConfigurations.isEmpty) {
+                    //   Future(() => showDialog(
+                    //         context: context,
+                    //         builder: (context) => const NoServerDialog(),
+                    //       ));
+                    // } else if (!isOfflineEnabled && professionalsList.isEmpty) {
+                    //   Future(
+                    //     () => showDialog(
+                    //       context: context,
+                    //       builder: (context) =>
+                    //           const NoLocalDBConfiguredDialog(),
+                    //     ),
+                    //   );
+                    // } else {
+                    //   Future(
+                    //     () async {
+                    //       ref
+                    //           .read(localDatabaseRepositoryProvider)
+                    //           .updateConnectionMode(!switchVal);
+                    //     },
+                    //   );
+                    // }
                   },
                   activeColor: Colors.blueGrey,
                   activeTrackColor: Colors.green,
