@@ -10,8 +10,6 @@ class ResultSelectionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> valuesList = resultData.value.toString().split(',');
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -22,7 +20,9 @@ class ResultSelectionItem extends StatelessWidget {
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
-        Text(resultData.value),
+        Text(resultData.value != null
+            ? resultData.value.toString().split('-').join(' ')
+            : 'Nothing was selected'),
       ],
     );
   }

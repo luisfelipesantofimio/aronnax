@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:aronnax/src/data/providers/treatment_plan_providers.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_component.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_result_value.dart';
@@ -61,21 +59,21 @@ class _TreatmentPlanTextFieldState
                     value: value);
 
                 updatedResultsList[itemIndex] = updatedData;
-              } else {
-                final newData = TreatmentPlanResultValue(
-                    componentTitle: widget.componentData.componentTitle,
-                    componentType: 'text',
-                    treatmentPhase: widget.componentData.treatmentPlanPhase,
-                    componentId: widget.componentData.id!,
-                    messurable: widget.componentData.messurable,
-                    value: value);
-                updatedResultsList.add(newData);
               }
+              // else {
+              //   final newData = TreatmentPlanResultValue(
+              //       componentTitle: widget.componentData.componentTitle,
+              //       componentType: 'text',
+              //       treatmentPhase: widget.componentData.treatmentPlanPhase,
+              //       componentId: widget.componentData.id!,
+              //       messurable: widget.componentData.messurable,
+              //       value: value);
+              //   updatedResultsList.add(newData);
+              // }
 
               ref
                   .read(currentTreatmentPlanResponseListProvider.notifier)
                   .update((state) => state = updatedResultsList);
-              log(updatedResultsList.toString());
               treatmentPlanApplicationFormKey.currentState?.validate();
             }),
       ],

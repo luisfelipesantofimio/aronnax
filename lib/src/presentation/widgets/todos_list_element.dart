@@ -89,7 +89,7 @@ class TodosListElement extends ConsumerWidget {
                             ),
                             child: Text(
                               categoryList[index],
-                              style: TextStyle(fontSize: 8),
+                              style: const TextStyle(fontSize: 8),
                             ),
                           );
                         },
