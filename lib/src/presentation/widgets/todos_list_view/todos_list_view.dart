@@ -18,6 +18,7 @@ class TodosListView extends StatelessWidget {
             child: Text('No hay tareas'),
           )
         : ListView.builder(
+            shrinkWrap: true,
             padding: const EdgeInsets.all(0),
             itemCount: todosList.length,
             itemBuilder: (context, index) => TodosListElement(

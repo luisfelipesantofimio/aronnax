@@ -68,6 +68,7 @@ class MainMenuState extends ConsumerState<MainMenu> {
                       padding: EdgeInsets.all(20),
                     ),
                     Column(
+                      mainAxisSize: MainAxisSize.max,
                       children: [
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -204,7 +205,14 @@ class MainMenuState extends ConsumerState<MainMenu> {
                             GenericIconButton(
                               icon: FontAwesomeIcons.microscope,
                               title: 'Tests',
-                              onTap: () {},
+                              onTap: () {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    backgroundColor: Colors.green,
+                                    content: Text('Muy pronto'),
+                                  ),
+                                );
+                              },
                             ),
                             GenericIconButton(
                               icon: FontAwesomeIcons.userGroup,
@@ -256,8 +264,6 @@ class MainMenuState extends ConsumerState<MainMenu> {
                                 SizedBox(
                                   width:
                                       MediaQuery.of(context).size.width * 0.25,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.39,
                                   child: todosList.when(
                                     data: (data) =>
                                         TodosListView(todosList: data),
