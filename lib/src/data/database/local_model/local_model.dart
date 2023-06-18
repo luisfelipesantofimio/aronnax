@@ -208,7 +208,7 @@ class LocalDatabase extends _$LocalDatabase {
   Future<List<LocalSession>> getPatientSessionsList(int patientId) {
     return (select(localSessions)
           ..where(
-            (tbl) => tbl.id.equals(patientId),
+            (tbl) => tbl.idNumber.equals(patientId),
           ))
         .get();
   }
