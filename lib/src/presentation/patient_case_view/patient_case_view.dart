@@ -13,7 +13,6 @@ class PatientCaseView extends StatelessWidget {
     return Scaffold(
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        //  mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.1,
@@ -50,16 +49,11 @@ class PatientCaseView extends StatelessWidget {
           Column(
             children: [
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.45,
+                height: MediaQuery.of(context).size.height * 0.9,
                 width: MediaQuery.of(context).size.width * 0.4,
                 child: PatientCasesListView(
                   patientData: patiendData,
                 ),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.45,
-                width: MediaQuery.of(context).size.width * 0.4,
-                child: const Text('There will be something here.'),
               ),
             ],
           ),

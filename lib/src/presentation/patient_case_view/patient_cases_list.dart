@@ -41,19 +41,21 @@ class PatientCasesListView extends ConsumerWidget {
                 ),
               ],
             )
-          : ListView.builder(
-              // padding: EdgeInsets.all(0),
-              itemCount: data.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) => Padding(
-                padding: const EdgeInsets.only(
-                  bottom: 20,
-                ),
-                child: PatientCaseListElement(
-                  caseData: data[index],
-                  elementIndex: index,
-                  patientId: patientData.id,
-                  isOffline: isOffline.value!,
+          : Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.only(top: 20),
+                itemCount: data.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) => Padding(
+                  padding: const EdgeInsets.only(
+                    bottom: 20,
+                  ),
+                  child: PatientCaseListElement(
+                    caseData: data[index],
+                    elementIndex: index,
+                    patientId: patientData.id,
+                    isOffline: isOffline.value!,
+                  ),
                 ),
               ),
             ),
