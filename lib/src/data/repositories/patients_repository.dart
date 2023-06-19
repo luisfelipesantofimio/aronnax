@@ -411,4 +411,16 @@ class PatientsRepository implements PatientsRepositoryInterface {
 
     ref.invalidate(patientsListProvider);
   }
+
+  @override
+  void closeCurrentPatientCase(WidgetRef ref, int caseId) {
+    if (ref.read(offlineStatusProvider).value!) {
+      ref
+          .read(localDatabaseRepositoryProvider)
+          .closeLocalCurrentPatientCase(caseId);
+      ref.read(localDatabaseRepositoryProvider).disactivatePatientCases(
+            caseId,
+          );
+    }
+  }
 }

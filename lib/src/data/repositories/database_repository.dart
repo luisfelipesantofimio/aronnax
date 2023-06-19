@@ -578,4 +578,9 @@ class DatabaseRepository implements LocalDatabaseInteface {
     );
     await localDB.updateLocalAppointment(data, eventData.id);
   }
+
+  @override
+  void closeLocalCurrentPatientCase(int caseId) async {
+    localDB.closeCurrentCase(caseId);
+  }
 }
