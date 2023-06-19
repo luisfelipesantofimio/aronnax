@@ -322,14 +322,17 @@ class LocalDatabase extends _$LocalDatabase {
     );
   }
 
-  Future closeCurrentCase(int caseId) {
+  Future closeCurrentCase(
+      int caseId, String outcome, String? outcomeDescription) {
     return (update(localPatientCase)
           ..where(
             (tbl) => tbl.id.equals(caseId),
           ))
         .write(
-      const LocalPatientCaseCompanion(
-        patientCaseClosed: Value(true),
+      LocalPatientCaseCompanion(
+        patientCaseClosed: const Value(true),
+        treatmentPlanOutcome: Value(outcome),
+        treatmentPlanOutcomeExplanation: Value(outcomeDescription),
       ),
     );
   }
