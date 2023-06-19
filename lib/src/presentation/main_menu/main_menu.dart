@@ -263,7 +263,9 @@ class MainMenuState extends ConsumerState<MainMenu> {
                                 ),
                                 SizedBox(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.25,
+                                      MediaQuery.of(context).size.width * 0.3,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.3,
                                   child: todosList.when(
                                     data: (data) =>
                                         TodosListView(todosList: data),
