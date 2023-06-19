@@ -34,7 +34,7 @@ class ResultsVisualizationItem extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Results from ${DateFormat('dd/MM/yyyy').format(resultsData.applicationDate)}',
+              'Results from ${DateFormat('dd/MM/yyyy').format(resultsData.applicationDate)} (Phase ${resultsData.phaseNumber + 1})',
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
             const Padding(
