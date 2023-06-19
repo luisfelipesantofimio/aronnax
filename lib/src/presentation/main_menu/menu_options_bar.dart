@@ -1,4 +1,3 @@
-import 'package:aronnax/src/Pages/ClinicHistory/clinic_history_search.dart';
 import 'package:aronnax/src/Pages/Formulary/widgets/consultant_selection_dialog.dart';
 import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
 import 'package:aronnax/src/domain/entities/patient_case.dart';
@@ -61,29 +60,6 @@ class _MenuOptionsBarState extends ConsumerState<MenuOptionsBar> {
                       ),
                     ),
                   ),
-                  // MenuOptionsBarItem(
-                  //   icon: FontAwesomeIcons.notesMedical,
-                  //   title: 'Abrir nuevo caso',
-                  //   onTap: () => showDialog(
-                  //     context: context,
-                  //     builder: (context) {
-                  //       return ConsultantSelectionDialog(
-                  //         onSearchedPatient: (patient) {
-                  //           Navigator.push(
-                  //             context,
-                  //             MaterialPageRoute(
-                  //               builder: (context) => CaseCreationView(
-                  //                 patientData: patient,
-                  //               ),
-                  //             ),
-                  //           );
-                  //         },
-                  //         title: "Selecciona a quién se asignará el caso",
-                  //       );
-                  //     },
-                  //   ),
-                  //   isFullSize: isMouseIn,
-                  // ),
                   MenuOptionsBarItem(
                     icon: FontAwesomeIcons.doorOpen,
                     title: 'Iniciar consulta',
@@ -91,9 +67,6 @@ class _MenuOptionsBarState extends ConsumerState<MenuOptionsBar> {
                       context: context,
                       builder: (context) => ConsultantSelectionDialog(
                         onSearchedPatient: (patient) async {
-                          // final caseData = ref.watch(
-                          //   patientSingleCaseProvider(patient.id),
-                          // );
                           PatientCase? caseData = await ref
                               .read(patientsRepositoryProvider)
                               .getPatientActiveCase(ref, patient.id);
@@ -127,17 +100,6 @@ class _MenuOptionsBarState extends ConsumerState<MenuOptionsBar> {
                           }
                         },
                         title: "Selecciona al consultante",
-                      ),
-                    ),
-                    isFullSize: isMouseIn,
-                  ),
-                  MenuOptionsBarItem(
-                    icon: FontAwesomeIcons.magnifyingGlass,
-                    title: 'Consultar historia clínica',
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: ((context) => const ClinicHistorySearchView()),
                       ),
                     ),
                     isFullSize: isMouseIn,
