@@ -85,7 +85,8 @@ abstract class PatientsRepositoryInterface {
   });
 
   void deletePatientData(WidgetRef ref, int patientId);
-  void closeCurrentPatientCase(WidgetRef ref, int caseId);
+  void closeCurrentPatientCase(
+      WidgetRef ref, int caseId, String outcome, String? outcomeDescription);
 }
 
 final patientsRepositoryProvider = Provider<PatientsRepositoryInterface>(

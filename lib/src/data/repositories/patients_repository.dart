@@ -413,11 +413,12 @@ class PatientsRepository implements PatientsRepositoryInterface {
   }
 
   @override
-  void closeCurrentPatientCase(WidgetRef ref, int caseId) {
+  void closeCurrentPatientCase(
+      WidgetRef ref, int caseId, String outcome, String? outcomeDescription) {
     if (ref.read(offlineStatusProvider).value!) {
       ref
           .read(localDatabaseRepositoryProvider)
-          .closeLocalCurrentPatientCase(caseId);
+          .closeLocalCurrentPatientCase(caseId, outcome, outcomeDescription);
       ref.read(localDatabaseRepositoryProvider).disactivatePatientCases(
             caseId,
           );

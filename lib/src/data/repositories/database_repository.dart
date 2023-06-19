@@ -580,7 +580,8 @@ class DatabaseRepository implements LocalDatabaseInteface {
   }
 
   @override
-  void closeLocalCurrentPatientCase(int caseId) async {
-    localDB.closeCurrentCase(caseId);
+  void closeLocalCurrentPatientCase(
+      int caseId, String outcome, String? outcomeDescription) async {
+    localDB.closeCurrentCase(caseId, outcome, outcomeDescription);
   }
 }
