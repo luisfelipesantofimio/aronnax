@@ -71,7 +71,7 @@ class MainMenuState extends ConsumerState<MainMenu> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
                               decoration: const BoxDecoration(
@@ -179,8 +179,6 @@ class MainMenuState extends ConsumerState<MainMenu> {
                               padding: const EdgeInsets.only(
                                   top: 10, right: 10, left: 20),
                               child: SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.5,
                                 width: MediaQuery.of(context).size.width * 0.25,
                                 child: const GlobalCalendar(),
                               ),
