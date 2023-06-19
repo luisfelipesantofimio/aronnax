@@ -49,6 +49,7 @@ dev_dependencies:
   drift_dev: ^2.2.0+1
  
   flutter_lints: ^2.0.1
+  msix: ^3.14.2
  
 flutter:
  
