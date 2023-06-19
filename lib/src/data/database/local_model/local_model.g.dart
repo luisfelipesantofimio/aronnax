@@ -2433,6 +2433,13 @@ class $LocalPatientCaseTable extends LocalPatientCase
   late final GeneratedColumn<String> treatmentPlanOutcome =
       GeneratedColumn<String>('treatment_plan_outcome', aliasedName, true,
           type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _treatmentPlanOutcomeExplanationMeta =
+      const VerificationMeta('treatmentPlanOutcomeExplanation');
+  @override
+  late final GeneratedColumn<String> treatmentPlanOutcomeExplanation =
+      GeneratedColumn<String>(
+          'treatment_plan_outcome_explanation', aliasedName, true,
+          type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _treatmentPlanIdMeta =
       const VerificationMeta('treatmentPlanId');
   @override
@@ -2462,6 +2469,7 @@ class $LocalPatientCaseTable extends LocalPatientCase
         isActive,
         patientCaseClosed,
         treatmentPlanOutcome,
+        treatmentPlanOutcomeExplanation,
         treatmentPlanId,
         localTreatmentPlanPhase
       ];
@@ -2554,6 +2562,13 @@ class $LocalPatientCaseTable extends LocalPatientCase
           treatmentPlanOutcome.isAcceptableOrUnknown(
               data['treatment_plan_outcome']!, _treatmentPlanOutcomeMeta));
     }
+    if (data.containsKey('treatment_plan_outcome_explanation')) {
+      context.handle(
+          _treatmentPlanOutcomeExplanationMeta,
+          treatmentPlanOutcomeExplanation.isAcceptableOrUnknown(
+              data['treatment_plan_outcome_explanation']!,
+              _treatmentPlanOutcomeExplanationMeta));
+    }
     if (data.containsKey('treatment_plan_id')) {
       context.handle(
           _treatmentPlanIdMeta,
@@ -2601,6 +2616,9 @@ class $LocalPatientCaseTable extends LocalPatientCase
       treatmentPlanOutcome: attachedDatabase.typeMapping.read(
           DriftSqlType.string,
           data['${effectivePrefix}treatment_plan_outcome']),
+      treatmentPlanOutcomeExplanation: attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}treatment_plan_outcome_explanation']),
       treatmentPlanId: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}treatment_plan_id']),
       localTreatmentPlanPhase: attachedDatabase.typeMapping.read(
@@ -2631,6 +2649,7 @@ class LocalPatientCaseData extends DataClass
 
   ///String with a positive, neutral or negative result
   final String? treatmentPlanOutcome;
+  final String? treatmentPlanOutcomeExplanation;
   final int? treatmentPlanId;
   final int? localTreatmentPlanPhase;
   const LocalPatientCaseData(
@@ -2646,6 +2665,7 @@ class LocalPatientCaseData extends DataClass
       required this.isActive,
       required this.patientCaseClosed,
       this.treatmentPlanOutcome,
+      this.treatmentPlanOutcomeExplanation,
       this.treatmentPlanId,
       this.localTreatmentPlanPhase});
   @override
@@ -2668,6 +2688,10 @@ class LocalPatientCaseData extends DataClass
     map['patient_case_closed'] = Variable<bool>(patientCaseClosed);
     if (!nullToAbsent || treatmentPlanOutcome != null) {
       map['treatment_plan_outcome'] = Variable<String>(treatmentPlanOutcome);
+    }
+    if (!nullToAbsent || treatmentPlanOutcomeExplanation != null) {
+      map['treatment_plan_outcome_explanation'] =
+          Variable<String>(treatmentPlanOutcomeExplanation);
     }
     if (!nullToAbsent || treatmentPlanId != null) {
       map['treatment_plan_id'] = Variable<int>(treatmentPlanId);
@@ -2699,6 +2723,10 @@ class LocalPatientCaseData extends DataClass
       treatmentPlanOutcome: treatmentPlanOutcome == null && nullToAbsent
           ? const Value.absent()
           : Value(treatmentPlanOutcome),
+      treatmentPlanOutcomeExplanation:
+          treatmentPlanOutcomeExplanation == null && nullToAbsent
+              ? const Value.absent()
+              : Value(treatmentPlanOutcomeExplanation),
       treatmentPlanId: treatmentPlanId == null && nullToAbsent
           ? const Value.absent()
           : Value(treatmentPlanId),
@@ -2727,6 +2755,8 @@ class LocalPatientCaseData extends DataClass
       patientCaseClosed: serializer.fromJson<bool>(json['patientCaseClosed']),
       treatmentPlanOutcome:
           serializer.fromJson<String?>(json['treatmentPlanOutcome']),
+      treatmentPlanOutcomeExplanation:
+          serializer.fromJson<String?>(json['treatmentPlanOutcomeExplanation']),
       treatmentPlanId: serializer.fromJson<int?>(json['treatmentPlanId']),
       localTreatmentPlanPhase:
           serializer.fromJson<int?>(json['localTreatmentPlanPhase']),
@@ -2748,6 +2778,8 @@ class LocalPatientCaseData extends DataClass
       'isActive': serializer.toJson<bool>(isActive),
       'patientCaseClosed': serializer.toJson<bool>(patientCaseClosed),
       'treatmentPlanOutcome': serializer.toJson<String?>(treatmentPlanOutcome),
+      'treatmentPlanOutcomeExplanation':
+          serializer.toJson<String?>(treatmentPlanOutcomeExplanation),
       'treatmentPlanId': serializer.toJson<int?>(treatmentPlanId),
       'localTreatmentPlanPhase':
           serializer.toJson<int?>(localTreatmentPlanPhase),
@@ -2767,6 +2799,7 @@ class LocalPatientCaseData extends DataClass
           bool? isActive,
           bool? patientCaseClosed,
           Value<String?> treatmentPlanOutcome = const Value.absent(),
+          Value<String?> treatmentPlanOutcomeExplanation = const Value.absent(),
           Value<int?> treatmentPlanId = const Value.absent(),
           Value<int?> localTreatmentPlanPhase = const Value.absent()}) =>
       LocalPatientCaseData(
@@ -2786,6 +2819,9 @@ class LocalPatientCaseData extends DataClass
         treatmentPlanOutcome: treatmentPlanOutcome.present
             ? treatmentPlanOutcome.value
             : this.treatmentPlanOutcome,
+        treatmentPlanOutcomeExplanation: treatmentPlanOutcomeExplanation.present
+            ? treatmentPlanOutcomeExplanation.value
+            : this.treatmentPlanOutcomeExplanation,
         treatmentPlanId: treatmentPlanId.present
             ? treatmentPlanId.value
             : this.treatmentPlanId,
@@ -2808,6 +2844,8 @@ class LocalPatientCaseData extends DataClass
           ..write('isActive: $isActive, ')
           ..write('patientCaseClosed: $patientCaseClosed, ')
           ..write('treatmentPlanOutcome: $treatmentPlanOutcome, ')
+          ..write(
+              'treatmentPlanOutcomeExplanation: $treatmentPlanOutcomeExplanation, ')
           ..write('treatmentPlanId: $treatmentPlanId, ')
           ..write('localTreatmentPlanPhase: $localTreatmentPlanPhase')
           ..write(')'))
@@ -2828,6 +2866,7 @@ class LocalPatientCaseData extends DataClass
       isActive,
       patientCaseClosed,
       treatmentPlanOutcome,
+      treatmentPlanOutcomeExplanation,
       treatmentPlanId,
       localTreatmentPlanPhase);
   @override
@@ -2846,6 +2885,8 @@ class LocalPatientCaseData extends DataClass
           other.isActive == this.isActive &&
           other.patientCaseClosed == this.patientCaseClosed &&
           other.treatmentPlanOutcome == this.treatmentPlanOutcome &&
+          other.treatmentPlanOutcomeExplanation ==
+              this.treatmentPlanOutcomeExplanation &&
           other.treatmentPlanId == this.treatmentPlanId &&
           other.localTreatmentPlanPhase == this.localTreatmentPlanPhase);
 }
@@ -2863,6 +2904,7 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
   final Value<bool> isActive;
   final Value<bool> patientCaseClosed;
   final Value<String?> treatmentPlanOutcome;
+  final Value<String?> treatmentPlanOutcomeExplanation;
   final Value<int?> treatmentPlanId;
   final Value<int?> localTreatmentPlanPhase;
   const LocalPatientCaseCompanion({
@@ -2878,6 +2920,7 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
     this.isActive = const Value.absent(),
     this.patientCaseClosed = const Value.absent(),
     this.treatmentPlanOutcome = const Value.absent(),
+    this.treatmentPlanOutcomeExplanation = const Value.absent(),
     this.treatmentPlanId = const Value.absent(),
     this.localTreatmentPlanPhase = const Value.absent(),
   });
@@ -2894,6 +2937,7 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
     required bool isActive,
     required bool patientCaseClosed,
     this.treatmentPlanOutcome = const Value.absent(),
+    this.treatmentPlanOutcomeExplanation = const Value.absent(),
     this.treatmentPlanId = const Value.absent(),
     this.localTreatmentPlanPhase = const Value.absent(),
   })  : creationDate = Value(creationDate),
@@ -2917,6 +2961,7 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
     Expression<bool>? isActive,
     Expression<bool>? patientCaseClosed,
     Expression<String>? treatmentPlanOutcome,
+    Expression<String>? treatmentPlanOutcomeExplanation,
     Expression<int>? treatmentPlanId,
     Expression<int>? localTreatmentPlanPhase,
   }) {
@@ -2934,6 +2979,8 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
       if (patientCaseClosed != null) 'patient_case_closed': patientCaseClosed,
       if (treatmentPlanOutcome != null)
         'treatment_plan_outcome': treatmentPlanOutcome,
+      if (treatmentPlanOutcomeExplanation != null)
+        'treatment_plan_outcome_explanation': treatmentPlanOutcomeExplanation,
       if (treatmentPlanId != null) 'treatment_plan_id': treatmentPlanId,
       if (localTreatmentPlanPhase != null)
         'local_treatment_plan_phase': localTreatmentPlanPhase,
@@ -2953,6 +3000,7 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
       Value<bool>? isActive,
       Value<bool>? patientCaseClosed,
       Value<String?>? treatmentPlanOutcome,
+      Value<String?>? treatmentPlanOutcomeExplanation,
       Value<int?>? treatmentPlanId,
       Value<int?>? localTreatmentPlanPhase}) {
     return LocalPatientCaseCompanion(
@@ -2968,6 +3016,8 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
       isActive: isActive ?? this.isActive,
       patientCaseClosed: patientCaseClosed ?? this.patientCaseClosed,
       treatmentPlanOutcome: treatmentPlanOutcome ?? this.treatmentPlanOutcome,
+      treatmentPlanOutcomeExplanation: treatmentPlanOutcomeExplanation ??
+          this.treatmentPlanOutcomeExplanation,
       treatmentPlanId: treatmentPlanId ?? this.treatmentPlanId,
       localTreatmentPlanPhase:
           localTreatmentPlanPhase ?? this.localTreatmentPlanPhase,
@@ -3014,6 +3064,10 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
       map['treatment_plan_outcome'] =
           Variable<String>(treatmentPlanOutcome.value);
     }
+    if (treatmentPlanOutcomeExplanation.present) {
+      map['treatment_plan_outcome_explanation'] =
+          Variable<String>(treatmentPlanOutcomeExplanation.value);
+    }
     if (treatmentPlanId.present) {
       map['treatment_plan_id'] = Variable<int>(treatmentPlanId.value);
     }
@@ -3039,6 +3093,8 @@ class LocalPatientCaseCompanion extends UpdateCompanion<LocalPatientCaseData> {
           ..write('isActive: $isActive, ')
           ..write('patientCaseClosed: $patientCaseClosed, ')
           ..write('treatmentPlanOutcome: $treatmentPlanOutcome, ')
+          ..write(
+              'treatmentPlanOutcomeExplanation: $treatmentPlanOutcomeExplanation, ')
           ..write('treatmentPlanId: $treatmentPlanId, ')
           ..write('localTreatmentPlanPhase: $localTreatmentPlanPhase')
           ..write(')'))

@@ -53,6 +53,7 @@ class LocalPatientCase extends Table {
 
   ///String with a positive, neutral or negative result
   TextColumn get treatmentPlanOutcome => text().nullable()();
+  TextColumn get treatmentPlanOutcomeExplanation => text().nullable()();
 
   IntColumn get treatmentPlanId =>
       integer().references(LocalTreatmentPlans, #id).nullable()();
