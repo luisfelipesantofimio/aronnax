@@ -30,7 +30,7 @@ class LocalDBActivationScreenState
             Column(
               children: [
                 Switch(
-                  value: isOfflineEnabled,
+                  value: true,
                   onChanged: (switchVal) async {
                     // List<ServerDatabaseData> serverConfigurations = await ref
                     //     .watch(localDatabaseRepositoryProvider)
