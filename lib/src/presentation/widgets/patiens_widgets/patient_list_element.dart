@@ -45,87 +45,89 @@ class PatientListElement extends StatelessWidget {
             top: 8,
             bottom: 8,
           ),
-          child: Column(
-            children: [
-              LayoutBuilder(
-                builder: (context, constrains) {
-                  return Column(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: AppMethods().randomColorGenerator()),
-                            child: Padding(
-                              padding: const EdgeInsets.all(20),
-                              child: Center(
-                                child: Icon(
-                                  patientData.birthDate == DateTime.now()
-                                      ? FontAwesomeIcons.cakeCandles
-                                      : FontAwesomeIcons.user,
-                                ),
-                              ),
+                      Container(
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: AppMethods().randomColorGenerator()),
+                        child: Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Center(
+                            child: Icon(
+                              patientData.birthDate == DateTime.now()
+                                  ? FontAwesomeIcons.cakeCandles
+                                  : FontAwesomeIcons.user,
                             ),
                           ),
-                          SizedBox(
-                            width: constrains.maxWidth * 0.4,
-                            child: Text(
-                              '${patientData.names} ${patientData.lastNames}',
-                              style: TextStyle(
-                                  decoration: patientData.isActive
-                                      ? TextDecoration.none
-                                      : TextDecoration.lineThrough,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                      const Padding(
-                        padding: EdgeInsets.all(5),
-                      ),
-                      const Divider(),
-                      const Padding(
-                        padding: EdgeInsets.all(5),
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                DateFormat('dd/MM/yyyy')
-                                    .format(patientData.birthDate),
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                  '${AppMethods().ageCalculator(patientData.birthDate).toString()} años'),
-                            ],
+                      SizedBox(
+                        width: constraints.maxWidth * 0.5,
+                        child: Text(
+                          '${patientData.names} ${patientData.lastNames}',
+                          style: TextStyle(
+                            decoration: patientData.isActive
+                                ? TextDecoration.none
+                                : TextDecoration.lineThrough,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
                           ),
-                          const Padding(
-                            padding: EdgeInsets.all(10),
-                          ),
-                          Icon(
-                            AppMethods().getUserGenderIcon(patientData.gender),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.all(10),
-                          ),
-                          SizedBox(
-                              width: constrains.maxWidth * 0.4,
-                              child: Text(
-                                  '${patientData.city}, ${patientData.state}'))
-                        ],
+                        ),
                       ),
                     ],
-                  );
-                },
-              ),
-            ],
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(5),
+                  ),
+                  const Divider(),
+                  const Padding(
+                    padding: EdgeInsets.all(5),
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            DateFormat('dd/MM/yyyy')
+                                .format(patientData.birthDate),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            '${AppMethods().ageCalculator(patientData.birthDate).toString()} años',
+                          ),
+                        ],
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.all(10),
+                      ),
+                      Icon(
+                        AppMethods().getUserGenderIcon(patientData.gender),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.all(10),
+                      ),
+                      SizedBox(
+                        width: constraints.maxWidth * 0.4,
+                        child: Text(
+                          '${patientData.city}, ${patientData.state}',
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),
