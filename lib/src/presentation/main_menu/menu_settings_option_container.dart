@@ -1,4 +1,4 @@
-import 'package:aronnax/src/Pages/Help/help_main_view.dart';
+import 'package:aronnax/src/Pages/help/help_main_view.dart';
 import 'package:aronnax/src/presentation/login/login_main_view.dart';
 import 'package:aronnax/src/presentation/settings/settings_main.dart';
 import 'package:aronnax/src/presentation/widgets/menu_options_bar_item.dart';

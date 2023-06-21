@@ -1,4 +1,4 @@
-import 'package:aronnax/src/Pages/Help/legal_info.dart';
+import 'package:aronnax/src/Pages/help/legal_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -22,11 +22,7 @@ class MainHelpView extends ConsumerWidget {
                   children: [
                     const Image(
                       height: 300,
-                      image: true
-                          ? AssetImage(
-                              "assets/img/aronnax-icon-light.png")
-                          : AssetImage(
-                              "assets/img/aronnax-icon-dark.png"),
+                      image: AssetImage("assets/img/aronnax-icon-dark.png"),
                     ),
                     Text(
                       "Aronnax",
