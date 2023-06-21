@@ -2,6 +2,9 @@ import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
 import 'package:aronnax/src/data/providers/patient_case_providers.dart';
 import 'package:aronnax/src/data/providers/treatment_plan_providers.dart';
 import 'package:aronnax/src/domain/entities/patient_case.dart';
+import 'package:aronnax/src/presentation/patient_case_view/dialogs/case_close_dialog.dart';
+import 'package:aronnax/src/presentation/patient_case_view/dialogs/case_delete_dialog.dart';
+import 'package:aronnax/src/presentation/patient_case_view/dialogs/case_outcome_visualization_dialog.dart';
 import 'package:aronnax/src/presentation/patient_case_view/patient_sessions_list.dart';
 import 'package:aronnax/src/presentation/widgets/results_visualization/results_dialog.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +30,7 @@ class PatientCaseListElement extends ConsumerWidget {
       treatmentPlanListProvider(isOffline),
     );
     return LayoutBuilder(
-      builder: (p0, constrains) {
+      builder: (context, constrains) {
         return Container(
           decoration: const BoxDecoration(
             color: Colors.white,
@@ -52,23 +55,51 @@ class PatientCaseListElement extends ConsumerWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Case #${elementIndex + 1}'),
-                      const Row(
-                        children: [],
+                      Text(
+                        'Case #${elementIndex + 1}',
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
                       ),
                     ],
                   ),
-                  const Text('Consultation reason'),
+                  const Padding(
+                    padding: EdgeInsets.all(10),
+                  ),
+                  const Text(
+                    'Consultation reason',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                   Text(caseData.consultationReason),
                   const Padding(
                     padding: EdgeInsets.all(10),
                   ),
-                  const Text('Diagnostic'),
+                  const Text(
+                    'Diagnostic',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                   Text(caseData.diagnostic),
+                  const Padding(
+                    padding: EdgeInsets.all(5),
+                  ),
+                  Visibility(
+                    visible: caseData.icdDiagnosticCode != null,
+                    child: Row(
+                      children: [
+                        const Text(
+                          'Diagnostic code: ',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(caseData.icdDiagnosticCode ?? ''),
+                      ],
+                    ),
+                  ),
                   const Padding(
                     padding: EdgeInsets.all(10),
                   ),
-                  const Text('Treatment proposal'),
+                  const Text(
+                    'Treatment proposal',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                   Text(caseData.treatmentProposal),
                   const Padding(
                     padding: EdgeInsets.all(10),
@@ -78,7 +109,10 @@ class PatientCaseListElement extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('Notes'),
+                        const Text(
+                          'Notes',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                         Text(caseData.caseNotes ?? ''),
                       ],
                     ),
@@ -87,7 +121,10 @@ class PatientCaseListElement extends ConsumerWidget {
                     data: (data) => caseData.treatmentPlanId != null
                         ? Row(
                             children: [
-                              const Text('Treatment plan: '),
+                              const Text(
+                                'Treatment plan: ',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
                               Text(data
                                   .elementAt(
                                     data.indexWhere((element) =>
@@ -102,6 +139,7 @@ class PatientCaseListElement extends ConsumerWidget {
                     loading: () => const CircularProgressIndicator(),
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: [
@@ -141,31 +179,76 @@ class PatientCaseListElement extends ConsumerWidget {
                                   color: Colors.black),
                             ),
                           ),
-                          Text(caseData.isActive
-                              ? 'Active case'
-                              : 'Inactive case'),
-                          Switch(
-                            value: caseData.isActive,
-                            onChanged: (value) {
-                              ref
-                                  .read(patientsRepositoryProvider)
-                                  .updatePatientCaseActiveState(ref, patientId,
-                                      caseData.id, caseData.isActive);
-                              ref.invalidate(patientCaseListProvider);
+                          Visibility(
+                            visible: !caseData.patientCaseClosed,
+                            child: Text(caseData.isActive
+                                ? 'Active case'
+                                : 'Inactive case'),
+                          ),
+                          Visibility(
+                            visible: !caseData.patientCaseClosed,
+                            child: Switch(
+                              value: caseData.isActive,
+                              onChanged: (value) {
+                                ref
+                                    .read(patientsRepositoryProvider)
+                                    .updatePatientCaseActiveState(
+                                        ref,
+                                        patientId,
+                                        caseData.id,
+                                        caseData.isActive);
+                                ref.invalidate(patientCaseListProvider);
+                              },
+                            ),
+                          ),
+                          IconButton(
+                            tooltip: 'Delete case',
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) =>
+                                    CaseDeleteDialog(caseData: caseData),
+                              );
                             },
-                          )
+                            icon: const Icon(Icons.delete),
+                          ),
                         ],
                       ),
-                      IconButton(
-                        tooltip: 'Delete case',
-                        onPressed: () {
-                          ref
-                              .read(patientsRepositoryProvider)
-                              .deletePatientCase(ref, caseData.id);
-                          ref.invalidate(patientCaseListProvider);
-                        },
-                        icon: const Icon(Icons.delete),
-                      ),
+                      caseData.patientCaseClosed
+                          ? TextButton(
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return CaseOutcomeVisualizationDialog(
+                                      caseData: caseData,
+                                    );
+                                  },
+                                );
+                              },
+                              child: const Text(
+                                'See case outcome',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.red),
+                              ),
+                            )
+                          : TextButton(
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return CaseCloseDialog(caseData: caseData);
+                                  },
+                                );
+                              },
+                              child: const Text(
+                                'Close current case',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                            ),
                     ],
                   )
                 ],

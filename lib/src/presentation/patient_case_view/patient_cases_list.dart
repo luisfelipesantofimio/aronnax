@@ -42,7 +42,7 @@ class PatientCasesListView extends ConsumerWidget {
               ],
             )
           : ListView.builder(
-              // padding: EdgeInsets.all(0),
+              padding: const EdgeInsets.only(top: 20),
               itemCount: data.length,
               shrinkWrap: true,
               itemBuilder: (context, index) => Padding(

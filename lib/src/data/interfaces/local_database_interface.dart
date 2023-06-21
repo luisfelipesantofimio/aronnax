@@ -209,6 +209,9 @@ abstract class LocalDatabaseInteface {
   void updateProfessionalPassword(int userId, String password);
   void updateProfessionalPasswordAndPin(
       int userId, String password, String pin);
+
+  void closeLocalCurrentPatientCase(
+      int caseId, String outcome, String? outcomeDescription);
 }
 
 final localDatabaseRepositoryProvider = Provider<LocalDatabaseInteface>(

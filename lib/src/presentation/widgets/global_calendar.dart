@@ -72,7 +72,6 @@ class _GlobalCalendarState extends ConsumerState<GlobalCalendar> {
           rangeStartDay: _rangeStartDay,
           rangeEndDay: _rangeEndDay,
           focusedDay: _focusedDay,
-
           headerStyle: const HeaderStyle(
             formatButtonVisible: false,
           ),
@@ -101,23 +100,6 @@ class _GlobalCalendarState extends ConsumerState<GlobalCalendar> {
             return isSameDay(_userSelectedDay, day);
           },
           rangeSelectionMode: rangeSelectionMode,
-          // onRangeSelected: (start, end, focusedDay) async {
-          //   setState(() {
-          //     rangeSelectionMode = RangeSelectionMode.toggledOn;
-          //   });
-          //   List<CalendarEvent> eventsList = await ref
-          //       .read(calendarRepositoryProvider)
-          //       .getListOfEventsByRange(
-          //           start: start,
-          //           end: end,
-          //           selectedDate: focusedDay,
-          //           isOfflineEnabled: ref.read(globalOfflineStatusProvider),
-          //           ref: ref);
-
-          //   ref
-          //       .read(appointmentsListProvider.notifier)
-          //       .update((state) => eventsList);
-          // },
           eventLoader: (day) => _getEventsByDay(day),
           locale: 'es',
         ),

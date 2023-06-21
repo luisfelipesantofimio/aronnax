@@ -36,6 +36,7 @@ class TreatmentPlanApplicationView extends ConsumerStatefulWidget {
 class _TreatmentPlanApplicationViewState
     extends ConsumerState<TreatmentPlanApplicationView> {
   List<Section> sectionList = [];
+  List<TreatmentPlanResultValue> resultsValue = [];
   int currentTreatmentPhase = 0;
 
   @override
@@ -60,7 +61,6 @@ class _TreatmentPlanApplicationViewState
           );
     });
 
-    log(ref.read(currentTreatmentPlanResponseListProvider).toString());
     setState(() {
       sectionList = widget.treatmentPlanData.sectionsList;
       currentTreatmentPhase = widget.caseData.currentTreatmentPlanPhase!;
@@ -69,16 +69,24 @@ class _TreatmentPlanApplicationViewState
         widget.treatmentPlanData.sectionsList[currentTreatmentPhase].components;
 
     for (var element in componentsList) {
-      ref.read(currentTreatmentPlanResponseListProvider.notifier).state.add(
-            TreatmentPlanResultValue(
-                componentTitle: element.componentTitle,
-                componentType: element.componentType,
-                componentId: element.id!,
-                treatmentPhase: widget.caseData.currentTreatmentPlanPhase!,
-                messurable: element.messurable,
-                value: null),
-          );
+      resultsValue.add(
+        TreatmentPlanResultValue(
+            componentTitle: element.componentTitle,
+            componentType: element.componentType,
+            componentId: element.id!,
+            treatmentPhase: widget.caseData.currentTreatmentPlanPhase!,
+            messurable: element.messurable,
+            value: element.componentType == 'task' ? false : null),
+      );
     }
+    Future(
+      () {
+        ref.read(currentTreatmentPlanResponseListProvider.notifier).update(
+              (state) => resultsValue,
+            );
+      },
+    );
+    log('Results values: ${resultsValue.toString()}');
     super.initState();
   }
 
@@ -116,7 +124,7 @@ class _TreatmentPlanApplicationViewState
                   child: Column(
                     children: [
                       SizedBox(
-                        height: constrains.maxHeight * 0.8,
+                        height: constrains.maxHeight * 0.9,
                         child: Form(
                           key: treatmentPlanApplicationFormKey,
                           child: ListView.builder(

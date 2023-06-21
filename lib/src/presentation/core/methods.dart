@@ -256,4 +256,30 @@ class AppMethods {
 
     return newValues;
   }
+
+  IconData getTreatmentPlanOutcomeIcon(String outcome) {
+    switch (outcome) {
+      case 'positive':
+        return FontAwesomeIcons.faceSmile;
+      case 'neutral':
+        return FontAwesomeIcons.faceMeh;
+      case 'negative':
+        return FontAwesomeIcons.faceSadCry;
+      default:
+        return FontAwesomeIcons.faceMeh;
+    }
+  }
+
+  Color getTreatmentPlanOutcomeColor(String outcome) {
+    switch (outcome) {
+      case 'positive':
+        return Colors.green;
+      case 'neutral':
+        return Colors.blue;
+      case 'negative':
+        return Colors.red;
+      default:
+        return Colors.white;
+    }
+  }
 }
