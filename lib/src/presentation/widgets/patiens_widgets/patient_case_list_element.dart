@@ -3,6 +3,7 @@ import 'package:aronnax/src/data/providers/patient_case_providers.dart';
 import 'package:aronnax/src/data/providers/treatment_plan_providers.dart';
 import 'package:aronnax/src/domain/entities/patient_case.dart';
 import 'package:aronnax/src/presentation/patient_case_view/dialogs/case_close_dialog.dart';
+import 'package:aronnax/src/presentation/patient_case_view/dialogs/case_delete_dialog.dart';
 import 'package:aronnax/src/presentation/patient_case_view/patient_sessions_list.dart';
 import 'package:aronnax/src/presentation/widgets/results_visualization/results_dialog.dart';
 import 'package:flutter/material.dart';
@@ -202,10 +203,11 @@ class PatientCaseListElement extends ConsumerWidget {
                           IconButton(
                             tooltip: 'Delete case',
                             onPressed: () {
-                              ref
-                                  .read(patientsRepositoryProvider)
-                                  .deletePatientCase(ref, caseData.id);
-                              ref.invalidate(patientCaseListProvider);
+                              showDialog(
+                                context: context,
+                                builder: (context) =>
+                                    CaseDeleteDialog(caseData: caseData),
+                              );
                             },
                             icon: const Icon(Icons.delete),
                           ),
