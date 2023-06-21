@@ -1,5 +1,4 @@
 import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
-import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/forms_providers/register_form_provider.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:aronnax/src/presentation/clinic_history_form_screen/clinic_history_register_view.dart';
@@ -15,65 +14,66 @@ class MainViewRegister extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    bool isOfflineEnabled = ref.watch(globalOfflineStatusProvider);
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 166, 211, 227),
       body: Padding(
         padding: const EdgeInsets.only(left: 40, right: 40),
-        child: Center(
-          child: Stack(
-            children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.20,
-                  child: const Text(
-                    'Registrar consultante',
-                    style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+        child: Center(child: LayoutBuilder(
+          builder: (context, constraints) {
+            return Row(
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: SizedBox(
+                    width: constraints.maxWidth * 0.20,
+                    child: const Text(
+                      'Registrar consultante',
+                      style:
+                          TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ),
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(top: 20),
-                      child: Text(
-                        "Información personal",
-                        style: Theme.of(context).textTheme.displayMedium,
-                      ),
-                    ),
-                    const Padding(padding: EdgeInsets.all(10)),
-                    Container(
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(
-                            15,
-                          ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(top: 20),
+                        child: Text(
+                          "Información personal",
+                          style: Theme.of(context).textTheme.displayMedium,
                         ),
                       ),
-                      padding: const EdgeInsets.all(10),
-                      width: MediaQuery.of(context).size.width * 0.75,
-                      height: MediaQuery.of(context).size.height * 0.85,
-                      child: Column(
-                        children: [
-                          SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.7,
-                              child: const Padding(
-                                padding: EdgeInsets.only(
-                                  left: 20,
-                                  top: 20,
-                                ),
-                                child: RegisterForm(),
-                              )),
-                          SizedBox(
-                            width: 350,
-                            child: Padding(
+                      const Padding(padding: EdgeInsets.all(10)),
+                      Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              15,
+                            ),
+                          ),
+                        ),
+                        padding: const EdgeInsets.all(10),
+                        width: constraints.maxWidth * 0.8,
+                        height: MediaQuery.of(context).size.height * 0.83,
+                        child: Column(
+                          children: [
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.7,
+                                child: const Padding(
+                                  padding: EdgeInsets.only(
+                                    left: 20,
+                                    top: 20,
+                                  ),
+                                  child: RegisterForm(),
+                                )),
+                            Padding(
                               padding: const EdgeInsets.all(15.0),
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   IconButton(
                                     onPressed: () {
@@ -91,8 +91,6 @@ class MainViewRegister extends ConsumerWidget {
                                       if (basicKey.currentState!.validate()) {
                                         basicKey.currentState!.save();
 
-                                        // isOfflineEnabled
-                                        //     ?
                                         Patient? patientData = await ref
                                             .read(patientsRepositoryProvider)
                                             .addPatient(
@@ -133,21 +131,7 @@ class MainViewRegister extends ConsumerWidget {
                                                       globalUserInformationProvider)!
                                                   .professionalID,
                                             );
-                                        // : insertPatientData(
-                                        //     names,
-                                        //     lastNames,
-                                        //     birthdate,
-                                        //     ID,
-                                        //     phoneNumber,
-                                        //     mail,
-                                        //     selectedCity,
-                                        //     selectedState,
-                                        //     adress,
-                                        //     insurance,
-                                        //     education,
-                                        //     ocupation,
-                                        //     emergencyContactName,
-                                        //     emergencyContactNumber);
+
                                         if (patientData != null) {
                                           Future(() {
                                             ScaffoldMessenger.of(context)
@@ -185,19 +169,19 @@ class MainViewRegister extends ConsumerWidget {
                                 ],
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.all(10),
-                    ),
-                  ],
+                      const Padding(
+                        padding: EdgeInsets.all(10),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ),
+              ],
+            );
+          },
+        )),
       ),
     );
   }
