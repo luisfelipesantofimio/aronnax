@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
@@ -15,6 +16,7 @@ class PatientCase {
   final bool isActive;
   final bool patientCaseClosed;
   final String? treatmentPlanOutcome;
+  final String? treatmentPlanOutcomeExplanation;
   final int? treatmentPlanId;
   final int? currentTreatmentPlanPhase;
   PatientCase({
@@ -30,6 +32,7 @@ class PatientCase {
     required this.isActive,
     required this.patientCaseClosed,
     this.treatmentPlanOutcome,
+    this.treatmentPlanOutcomeExplanation,
     this.treatmentPlanId,
     this.currentTreatmentPlanPhase,
   });
@@ -48,6 +51,7 @@ class PatientCase {
       'isActive': isActive,
       'patientCaseClosed': patientCaseClosed,
       'treatmentPlanOutcome': treatmentPlanOutcome,
+      'treatmentPlanOutcomeExplanation': treatmentPlanOutcomeExplanation,
       'treatmentPlanId': treatmentPlanId,
       'currentTreatmentPlanPhase': currentTreatmentPlanPhase,
     };
@@ -72,6 +76,10 @@ class PatientCase {
       treatmentPlanOutcome: map['treatmentPlanOutcome'] != null
           ? map['treatmentPlanOutcome'] as String
           : null,
+      treatmentPlanOutcomeExplanation:
+          map['treatmentPlanOutcomeExplanation'] != null
+              ? map['treatmentPlanOutcomeExplanation'] as String
+              : null,
       treatmentPlanId:
           map['treatmentPlanId'] != null ? map['treatmentPlanId'] as int : null,
       currentTreatmentPlanPhase: map['currentTreatmentPlanPhase'] != null
@@ -82,21 +90,21 @@ class PatientCase {
 
   factory PatientCase.fromLocalModel(LocalPatientCaseData data) {
     return PatientCase(
-      id: data.id,
-      creationDate: data.creationDate,
-      patientId: data.patientId,
-      professionalId: data.professionalId,
-      consultationReason: data.consultationReason,
-      diagnostic: data.diagnostic,
-      treatmentProposal: data.treatmentProposal,
-      caseNotes: data.caseNotes,
-      isActive: data.isActive,
-      patientCaseClosed: data.patientCaseClosed,
-      treatmentPlanId: data.treatmentPlanId,
-      treatmentPlanOutcome: data.treatmentPlanOutcome,
-      currentTreatmentPlanPhase: data.localTreatmentPlanPhase,
-      icdDiagnosticCode: data.icdDiagnosticCode,
-    );
+        id: data.id,
+        creationDate: data.creationDate,
+        patientId: data.patientId,
+        professionalId: data.professionalId,
+        consultationReason: data.consultationReason,
+        diagnostic: data.diagnostic,
+        treatmentProposal: data.treatmentProposal,
+        caseNotes: data.caseNotes,
+        isActive: data.isActive,
+        patientCaseClosed: data.patientCaseClosed,
+        treatmentPlanId: data.treatmentPlanId,
+        treatmentPlanOutcome: data.treatmentPlanOutcome,
+        currentTreatmentPlanPhase: data.localTreatmentPlanPhase,
+        icdDiagnosticCode: data.icdDiagnosticCode,
+        treatmentPlanOutcomeExplanation: data.treatmentPlanOutcomeExplanation);
   }
 
   String toJson() => json.encode(toMap());
@@ -117,6 +125,7 @@ class PatientCase {
     bool? isActive,
     bool? patientCaseClosed,
     String? treatmentPlanOutcome,
+    String? treatmentPlanOutcomeExplanation,
     int? treatmentPlanId,
     int? currentTreatmentPlanPhase,
   }) {
@@ -133,6 +142,8 @@ class PatientCase {
       isActive: isActive ?? this.isActive,
       patientCaseClosed: patientCaseClosed ?? this.patientCaseClosed,
       treatmentPlanOutcome: treatmentPlanOutcome ?? this.treatmentPlanOutcome,
+      treatmentPlanOutcomeExplanation: treatmentPlanOutcomeExplanation ??
+          this.treatmentPlanOutcomeExplanation,
       treatmentPlanId: treatmentPlanId ?? this.treatmentPlanId,
       currentTreatmentPlanPhase:
           currentTreatmentPlanPhase ?? this.currentTreatmentPlanPhase,
@@ -141,7 +152,7 @@ class PatientCase {
 
   @override
   String toString() {
-    return 'PatientCase(id: $id, creationDate: $creationDate, patientId: $patientId, professionalId: $professionalId, consultationReason: $consultationReason, diagnostic: $diagnostic, icdDiagnosticCode: $icdDiagnosticCode, treatmentProposal: $treatmentProposal, caseNotes: $caseNotes, isActive: $isActive, patientCaseClosed: $patientCaseClosed, treatmentPlanOutcome: $treatmentPlanOutcome, treatmentPlanId: $treatmentPlanId, currentTreatmentPlanPhase: $currentTreatmentPlanPhase)';
+    return 'PatientCase(id: $id, creationDate: $creationDate, patientId: $patientId, professionalId: $professionalId, consultationReason: $consultationReason, diagnostic: $diagnostic, icdDiagnosticCode: $icdDiagnosticCode, treatmentProposal: $treatmentProposal, caseNotes: $caseNotes, isActive: $isActive, patientCaseClosed: $patientCaseClosed, treatmentPlanOutcome: $treatmentPlanOutcome, treatmentPlanOutcomeExplanation: $treatmentPlanOutcomeExplanation, treatmentPlanId: $treatmentPlanId, currentTreatmentPlanPhase: $currentTreatmentPlanPhase)';
   }
 
   @override
@@ -160,6 +171,8 @@ class PatientCase {
         other.isActive == isActive &&
         other.patientCaseClosed == patientCaseClosed &&
         other.treatmentPlanOutcome == treatmentPlanOutcome &&
+        other.treatmentPlanOutcomeExplanation ==
+            treatmentPlanOutcomeExplanation &&
         other.treatmentPlanId == treatmentPlanId &&
         other.currentTreatmentPlanPhase == currentTreatmentPlanPhase;
   }
@@ -178,6 +191,7 @@ class PatientCase {
         isActive.hashCode ^
         patientCaseClosed.hashCode ^
         treatmentPlanOutcome.hashCode ^
+        treatmentPlanOutcomeExplanation.hashCode ^
         treatmentPlanId.hashCode ^
         currentTreatmentPlanPhase.hashCode;
   }
