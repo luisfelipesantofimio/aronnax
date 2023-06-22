@@ -38,111 +38,124 @@ class _ImportPatientDataDialogState
         width: MediaQuery.of(context).size.width * 0.4,
         child: patientsList.when(
           data: (data) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('Import encrypted data'),
-                Row(
-                  children: [
-                    const Text('Select your file: '),
-                    TextButton(
-                      onPressed: () async {
-                        FilePickerResult? result =
-                            await FilePicker.platform.pickFiles(
-                          allowMultiple: false,
-                          type: FileType.custom,
-                          allowedExtensions: ['arnx.encrypted'],
-                        );
-                        if (result != null) {
-                          setState(() {
-                            selectedFile = File(result.files.first.path!);
-                          });
-                        }
-                      },
-                      child: Text(
-                        selectedFile == null
-                            ? 'No file selected'
-                            : selectedFile!.path.split('/').last,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.black),
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        setState(() {
-                          selectedFile = null;
-                        });
-                      },
-                      icon: const Icon(Icons.restart_alt),
-                    ),
-                  ],
-                ),
-                const Text('Please, insert the password for file below'),
-                TextField(
-                  decoration: const InputDecoration(
-                      hintText: 'Your generated decryption password'),
-                  onChanged: (value) {
-                    setState(() {
-                      passwordToDecrypt = value;
-                    });
-                  },
-                ),
-                GenericMinimalButton(
-                  title: 'Done',
-                  onTap: () async {
-                    if (selectedFile != null && passwordToDecrypt != null) {
-                      File decryptedFile = await ref
-                          .read(ioRepositoryProvider)
-                          .decryptFile(
-                              encryptedFilePath: selectedFile!.path,
-                              encryptionKey: passwordToDecrypt!);
-                      String decryptedFileContents = await ref
-                          .read(ioRepositoryProvider)
-                          .readFromTextFile(decryptedFile.path, true);
-                      try {
-                        await ref
-                            .read(patientsRepositoryProvider)
-                            .importPatientData(
-                              ref: ref,
-                              decryptedPatientData: decryptedFileContents,
-                              professionalId:
-                                  ref.read(globalUserInformationProvider)!.id,
-                            );
-                        Future(
-                          () => Navigator.pop(context),
-                        );
-                      } on Exception catch (e) {
-                        Future(
-                          () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                backgroundColor: Colors.red,
-                                content: Text('$e'),
-                              ),
-                            );
-                          },
-                        );
-                        Future(
-                          () {
-                            Navigator.pop(context);
-                          },
-                        );
-                        rethrow;
-                      }
-                    } else {
-                      Future(() {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            backgroundColor: Colors.red,
-                            content: Text(
-                                'You must select a file and set a password'),
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Import encrypted data',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontSize: 20),
+                  ),
+                  Row(
+                    children: [
+                      const Text('Select your file: '),
+                      TextButton(
+                        onPressed: () async {
+                          FilePickerResult? result =
+                              await FilePicker.platform.pickFiles(
+                            allowMultiple: false,
+                            type: FileType.custom,
+                            allowedExtensions: ['arnx.encrypted'],
+                          );
+                          if (result != null) {
+                            setState(() {
+                              selectedFile = File(result.files.first.path!);
+                            });
+                          }
+                        },
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.2,
+                          child: Text(
+                            selectedFile == null
+                                ? 'No file selected'
+                                : selectedFile!.path.split('/').last,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
                           ),
-                        );
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            selectedFile = null;
+                          });
+                        },
+                        icon: const Icon(Icons.restart_alt),
+                      ),
+                    ],
+                  ),
+                  const Text('Please, insert the password for file below'),
+                  TextField(
+                    decoration: const InputDecoration(
+                        hintText: 'Your generated decryption password'),
+                    onChanged: (value) {
+                      setState(() {
+                        passwordToDecrypt = value;
                       });
-                    }
-                  },
-                ),
-              ],
+                    },
+                  ),
+                  GenericMinimalButton(
+                    title: 'Done',
+                    onTap: () async {
+                      if (selectedFile != null && passwordToDecrypt != null) {
+                        File decryptedFile = await ref
+                            .read(ioRepositoryProvider)
+                            .decryptFile(
+                                encryptedFilePath: selectedFile!.path,
+                                encryptionKey: passwordToDecrypt!);
+                        String decryptedFileContents = await ref
+                            .read(ioRepositoryProvider)
+                            .readFromTextFile(decryptedFile.path, true);
+                        try {
+                          await ref
+                              .read(patientsRepositoryProvider)
+                              .importPatientData(
+                                ref: ref,
+                                decryptedPatientData: decryptedFileContents,
+                                professionalId:
+                                    ref.read(globalUserInformationProvider)!.id,
+                              );
+                          Future(
+                            () => Navigator.pop(context),
+                          );
+                        } on Exception catch (e) {
+                          Future(
+                            () {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  backgroundColor: Colors.red,
+                                  content: Text('$e'),
+                                ),
+                              );
+                            },
+                          );
+                          Future(
+                            () {
+                              Navigator.pop(context);
+                            },
+                          );
+                          rethrow;
+                        }
+                      } else {
+                        Future(() {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              backgroundColor: Colors.red,
+                              content: Text(
+                                  'You must select a file and set a password'),
+                            ),
+                          );
+                        });
+                      }
+                    },
+                  ),
+                ],
+              ),
             );
           },
           error: (error, stackTrace) => const Text('Something went wrong.'),

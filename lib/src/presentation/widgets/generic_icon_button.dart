@@ -25,8 +25,6 @@ class GenericIconButton extends StatelessWidget {
             ),
             color: Theme.of(context).colorScheme.onPrimary,
           ),
-          height: 80,
-          width: 80,
           child: Center(
             child: Padding(
               padding: const EdgeInsets.all(8.0),

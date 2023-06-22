@@ -27,7 +27,7 @@ class PatientsList extends ConsumerWidget {
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
-            mainAxisExtent: MediaQuery.of(context).size.height * 0.2,
+            mainAxisExtent: MediaQuery.of(context).size.height * 0.3,
             crossAxisCount: crossAxisCount,
           ),
         );

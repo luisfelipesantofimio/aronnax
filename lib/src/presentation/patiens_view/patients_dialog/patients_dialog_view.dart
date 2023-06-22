@@ -36,22 +36,27 @@ class _PatientsDialogViewState extends ConsumerState<PatientsDialogView> {
 
     return Dialog(
       child: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.5,
+        //height: MediaQuery.of(context).size.height * 0.5,
         width: MediaQuery.of(context).size.width * 0.45,
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: LayoutBuilder(
             builder: (context, constrains) => Column(
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
+                  mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                      '${widget.patientData.names} ${widget.patientData.lastNames}',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 40,
+                    SizedBox(
+                      width: constrains.maxWidth * 0.6,
+                      child: Text(
+                        '${widget.patientData.names} ${widget.patientData.lastNames}',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 40,
+                        ),
                       ),
                     ),
                     const Padding(
@@ -75,8 +80,11 @@ class _PatientsDialogViewState extends ConsumerState<PatientsDialogView> {
                             ),
                           ],
                         ),
-                        Text(
-                            '${widget.patientData.city}, ${widget.patientData.state}'),
+                        SizedBox(
+                          width: constrains.maxWidth * 0.2,
+                          child: Text(
+                              '${widget.patientData.city}, ${widget.patientData.state}'),
+                        ),
                       ],
                     ),
                   ],
@@ -291,11 +299,14 @@ class _PatientsDialogViewState extends ConsumerState<PatientsDialogView> {
                                         ),
                                       );
                                     },
-                                    child: const Text(
-                                      'Go to current patient information',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
+                                    child: SizedBox(
+                                      width: constrains.minWidth * 0.3,
+                                      child: const Text(
+                                        'Go to current patient information',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                        ),
                                       ),
                                     ),
                                   ),

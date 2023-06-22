@@ -37,174 +37,200 @@ class _SessionFormViewState extends ConsumerState<SessionFormView> {
   Widget build(BuildContext context) {
     final treatmentPlan = ref.watch(
         treatmentPlanListProvider(ref.read(offlineStatusProvider).value!));
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    final cellWidth = MediaQuery.of(context).size.width * 0.3;
+    final crossAxisCount = (screenWidth / cellWidth).floor();
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 166, 211, 227),
       body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Stack(
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.2,
-                  child:
-                      SessionInformationView(patientData: widget.patientData),
-                ),
-                SizedBox(
-                  height: 120,
-                  width: MediaQuery.of(context).size.width * 0.2,
-                  child: Row(
+          padding: const EdgeInsets.all(20),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return Row(
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      GenericIconButton(
-                        icon: FontAwesomeIcons.noteSticky,
-                        title: 'Añadir nota',
-                        onTap: () => showDialog(
-                          context: context,
-                          builder: (context) => const NoteCreationDialog(),
-                        ),
+                      SizedBox(
+                        width: constraints.maxWidth * 0.2,
+                        child: SessionInformationView(
+                            patientData: widget.patientData),
                       ),
-                      GenericIconButton(
-                        icon: FontAwesomeIcons.squareCheck,
-                        title: 'Añadir tarea',
-                        onTap: () => showDialog(
-                          context: context,
-                          builder: (context) => const TodosCreationDialog(),
-                        ),
-                      ),
-                      GenericIconButton(
-                        icon: FontAwesomeIcons.microscope,
-                        title: 'Iniciar prueba',
-                        onTap: () => ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            backgroundColor: Colors.green,
-                            content: Text('Muy pronto!'),
+                      SizedBox(
+                        width: constraints.maxWidth * 0.2,
+                        child: GridView(
+                          shrinkWrap: true,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10,
+                            childAspectRatio: 4 / 4,
+                            crossAxisCount: crossAxisCount,
                           ),
+                          children: [
+                            GenericIconButton(
+                              icon: FontAwesomeIcons.noteSticky,
+                              title: 'Añadir nota',
+                              onTap: () => showDialog(
+                                context: context,
+                                builder: (context) =>
+                                    const NoteCreationDialog(),
+                              ),
+                            ),
+                            GenericIconButton(
+                              icon: FontAwesomeIcons.squareCheck,
+                              title: 'Añadir tarea',
+                              onTap: () => showDialog(
+                                context: context,
+                                builder: (context) =>
+                                    const TodosCreationDialog(),
+                              ),
+                            ),
+                            GenericIconButton(
+                              icon: FontAwesomeIcons.microscope,
+                              title: 'Iniciar prueba',
+                              onTap: () =>
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  backgroundColor: Colors.green,
+                                  content: Text('Muy pronto!'),
+                                ),
+                              ),
+                            ),
+                            treatmentPlan.when(
+                              data: (data) => Visibility(
+                                visible:
+                                    widget.patientCaseData.treatmentPlanId !=
+                                        null,
+                                child: GenericIconButton(
+                                  icon: FontAwesomeIcons.handHoldingMedical,
+                                  title: 'Iniciar plan de tratamiento',
+                                  onTap: () => treatmentPlanResultsSaved
+                                      ? ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                          const SnackBar(
+                                            backgroundColor: Colors.red,
+                                            content: Text(
+                                                'Treatment plan results already saved.'),
+                                          ),
+                                        )
+                                      : showDialog(
+                                          context: context,
+                                          builder: (context) =>
+                                              TreatmentPlanApplicationView(
+                                            patientSessionAmount:
+                                                widget.patientSessionAmount,
+                                            caseData: widget.patientCaseData,
+                                            treatmentPlanData: data.elementAt(
+                                              data.indexWhere((element) =>
+                                                  element.id ==
+                                                  widget.patientCaseData
+                                                      .treatmentPlanId),
+                                            ),
+                                            onResultsSaving: (resultsSaved) {
+                                              setState(() {
+                                                treatmentPlanResultsSaved =
+                                                    true;
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                ),
+                              ),
+                              error: (error, stackTrace) =>
+                                  const Text('Something went wrong'),
+                              loading: () => const CircularProgressIndicator(),
+                            ),
+                          ],
                         ),
-                      ),
-                      treatmentPlan.when(
-                        data: (data) => Visibility(
-                          visible:
-                              widget.patientCaseData.treatmentPlanId != null,
-                          child: GenericIconButton(
-                            icon: FontAwesomeIcons.handHoldingMedical,
-                            title: 'Iniciar plan de tratamiento',
-                            onTap: () => treatmentPlanResultsSaved
-                                ? ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      backgroundColor: Colors.red,
-                                      content: Text(
-                                          'Treatment plan results already saved.'),
-                                    ),
-                                  )
-                                : showDialog(
-                                    context: context,
-                                    builder: (context) =>
-                                        TreatmentPlanApplicationView(
-                                      patientSessionAmount:
-                                          widget.patientSessionAmount,
-                                      caseData: widget.patientCaseData,
-                                      treatmentPlanData: data.elementAt(
-                                        data.indexWhere((element) =>
-                                            element.id ==
-                                            widget.patientCaseData
-                                                .treatmentPlanId),
-                                      ),
-                                      onResultsSaving: (resultsSaved) {
-                                        setState(() {
-                                          treatmentPlanResultsSaved = true;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                          ),
-                        ),
-                        error: (error, stackTrace) =>
-                            const Text('Something went wrong'),
-                        loading: () => const CircularProgressIndicator(),
-                      ),
+                      )
                     ],
                   ),
-                )
-              ],
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Text(
-                      "Nueva sesión",
-                      style: Theme.of(context).textTheme.displayLarge,
-                    ),
+                  const Padding(
+                    padding: EdgeInsets.all(10),
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(20),
-                    width: MediaQuery.of(context).size.width * 0.75,
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(
-                          15,
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Text(
+                            "Nueva sesión",
+                            style: Theme.of(context).textTheme.displayLarge,
+                          ),
                         ),
-                      ),
-                    ),
-                    child: Center(
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.7,
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                left: 20,
-                                top: 20,
-                              ),
-                              child: SessionsForm(
-                                patientData: widget.patientData,
+                        Container(
+                          padding: const EdgeInsets.all(20),
+                          width: MediaQuery.of(context).size.width * 0.75,
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(
+                                15,
                               ),
                             ),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              IconButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                icon: const Icon(Icons.arrow_back),
-                                tooltip: "Volver",
-                              ),
-                              const Padding(padding: EdgeInsets.all(10)),
-                              GenericGlobalButton(
-                                height: 40,
-                                width: 200,
-                                title: 'Guardar sesión',
-                                onPressed: () {
-                                  if (sessionFormKey.currentState!.validate()) {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) =>
-                                          SessionPerformanceDialog(
-                                              patientCaseData:
-                                                  widget.patientCaseData,
-                                              patientData: widget.patientData),
-                                    );
-                                  }
-                                },
-                              ),
-                            ],
+                          child: Center(
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.7,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 20,
+                                      top: 20,
+                                    ),
+                                    child: SessionsForm(
+                                      patientData: widget.patientData,
+                                    ),
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      icon: const Icon(Icons.arrow_back),
+                                      tooltip: "Volver",
+                                    ),
+                                    const Padding(padding: EdgeInsets.all(10)),
+                                    GenericGlobalButton(
+                                      height: 40,
+                                      width: 200,
+                                      title: 'Guardar sesión',
+                                      onPressed: () {
+                                        if (sessionFormKey.currentState!
+                                            .validate()) {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) =>
+                                                SessionPerformanceDialog(
+                                                    patientCaseData:
+                                                        widget.patientCaseData,
+                                                    patientData:
+                                                        widget.patientData),
+                                          );
+                                        }
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
-              ),
-            ),
-          ],
-        ),
-      ),
+              );
+            },
+          )),
     );
   }
 }
