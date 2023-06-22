@@ -236,7 +236,6 @@ class _TreatmentPlanCreationViewState
                                         .add(
                                           sectionList[selectedSectionIndex]
                                               .components[index],
-                                          //TODO: fix error when adding components
                                         );
                                     setState(() {});
                                   },
@@ -250,14 +249,18 @@ class _TreatmentPlanCreationViewState
                   visible: sectionList.isNotEmpty,
                   child: Align(
                     alignment: Alignment.bottomRight,
-                    child: GenericIconButton(
-                      icon: Icons.add,
-                      title: 'New component',
-                      onTap: () {
-                        setState(() {
-                          componentSelectionItemSelected = true;
-                        });
-                      },
+                    child: SizedBox(
+                      height: MediaQuery.sizeOf(context).height * 0.1,
+                      width: MediaQuery.sizeOf(context).width * 0.1,
+                      child: GenericIconButton(
+                        icon: Icons.add,
+                        title: 'New component',
+                        onTap: () {
+                          setState(() {
+                            componentSelectionItemSelected = true;
+                          });
+                        },
+                      ),
                     ),
                   ),
                 ),
