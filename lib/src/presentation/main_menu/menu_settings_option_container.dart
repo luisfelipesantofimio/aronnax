@@ -42,7 +42,7 @@ class _MenuSettingsOptionContainerState
                     ),
                   ),
                   MenuOptionsBarItem(
-                    icon: Icons.logout_outlined,
+                    icon: Icons.question_mark,
                     title: 'Ayuda',
                     isFullSize: isMouseIn,
                     onTap: () => Navigator.push(
