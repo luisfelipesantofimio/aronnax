@@ -1,6 +1,7 @@
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/providers/theme_provider.dart';
 import 'package:aronnax/src/presentation/loading_screen/loading_screen.dart';
+import 'package:aronnax/src/presentation/temporal-screen/temporal-screen.dart';
 import 'package:aronnax/src/presentation/themes/custom_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -63,7 +64,11 @@ class MyAppState extends ConsumerState<MyApp> {
       theme: GlobalThemes.lightTheme,
       darkTheme: GlobalThemes.darkTheme,
       themeMode: ref.watch(themeProvider),
-      home: const LoadingScreen(),
+      home: DateTime.now().month == DateTime.july ||
+              DateTime.now().month == DateTime.june &&
+                  DateTime.now().year == 2023
+          ? const LoadingScreen()
+          : const TemporalScreen(),
     );
   }
 }
