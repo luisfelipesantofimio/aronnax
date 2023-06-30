@@ -2,8 +2,9 @@ import 'dart:math';
 
 import 'package:aronnax/src/data/interfaces/professional_repository_interface.dart';
 import 'package:aronnax/src/data/providers/location_data_provider.dart';
+import 'package:aronnax/src/presentation/core/constants.dart';
 import 'package:aronnax/src/presentation/core/methods.dart';
-import 'package:aronnax/src/presentation/icd_view/icd_view.dart';
+import 'package:aronnax/src/presentation/login/login_main_view.dart';
 import 'package:aronnax/src/presentation/widgets/generic_minimal_button.dart';
 import 'package:country_state_city/country_state_city.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,6 @@ class LocalProfessionalRegister extends ConsumerStatefulWidget {
 
 class LocalProfessionalRegisterState
     extends ConsumerState<LocalProfessionalRegister> {
-  final professionalKey = GlobalKey<FormState>();
   int? personalID;
   String? names;
   String? lastNames;
@@ -42,7 +42,6 @@ class LocalProfessionalRegisterState
     final countriesList = ref.watch(countriesListProvider);
 
     return ListView(
-      controller: ScrollController(),
       children: [
         Form(
           key: professionalKey,
@@ -371,7 +370,6 @@ class LocalProfessionalRegisterState
                     },
                   ),
                 ),
-                //TODO: implement visibility and update for pin
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Align(
@@ -456,8 +454,8 @@ class LocalProfessionalRegisterState
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  const IcdView(isConfigured: false),
+                              builder: (context) => const LoginScreen(),
+                              // const IcdView(isConfigured: false),
                             ));
                       }
                     },

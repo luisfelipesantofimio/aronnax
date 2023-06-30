@@ -4,7 +4,6 @@ import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/login_provider.dart';
 import 'package:aronnax/src/domain/entities/professional.dart';
-import 'package:aronnax/src/presentation/core/constants.dart';
 import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:aronnax/src/presentation/main_menu/main_menu.dart';
 import 'package:aronnax/src/presentation/password_recover/password_recover_dialog.dart';
@@ -21,6 +20,7 @@ class LoginForm extends ConsumerStatefulWidget {
 class LoginFormState extends ConsumerState<LoginForm> {
   bool isPasswordVisible = false;
   bool userExists = false;
+  final loginKey = GlobalKey<FormState>();
 
   @override
   void didChangeDependencies() {
@@ -53,7 +53,6 @@ class LoginFormState extends ConsumerState<LoginForm> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 TextFormField(
-                  //  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   style: Theme.of(context).textTheme.bodyMedium,
                   onFieldSubmitted: (value) {
                     loginKey.currentState!.validate();

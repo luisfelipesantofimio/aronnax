@@ -1,4 +1,5 @@
 import 'package:aronnax/src/data/remote_database/server_api.dart';
+import 'package:aronnax/src/presentation/core/constants.dart';
 import 'package:crypt/crypt.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,6 @@ class ProfessionalForm extends StatefulWidget {
 }
 
 class _ProfessionalFormState extends State<ProfessionalForm> {
-  final professionalKey = GlobalKey<FormState>();
   String personalID = "";
   String names = "";
   String lastNames = "";
@@ -25,10 +25,9 @@ class _ProfessionalFormState extends State<ProfessionalForm> {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      controller: ScrollController(),
       children: [
         Form(
-          key: professionalKey,
+          //  key: professionalKey,
           child: Column(
             children: [
               Container(

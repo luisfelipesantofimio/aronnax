@@ -12,5 +12,5 @@ class AppConstants {
 }
 
 //Form controllers
-final loginKey = GlobalKey<FormState>();
+final professionalKey = GlobalKey<FormState>();
 final appointmentCreationKey = GlobalKey<FormState>();
