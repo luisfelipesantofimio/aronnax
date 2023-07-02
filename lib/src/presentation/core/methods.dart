@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:aronnax/src/Pages/Formulary/professionalForm/professional_form.dart';
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/domain/entities/calendar_event.dart';
+import 'package:aronnax/src/domain/entities/session.dart';
 import 'package:aronnax/src/presentation/settings/configOptions/localdb_selection.dart';
 import 'package:aronnax/src/presentation/settings/configOptions/theme_select.dart';
 import 'package:aronnax/src/presentation/settings/setting_options_view_profile.dart';
@@ -277,6 +278,34 @@ class AppMethods {
       case 'neutral':
         return Colors.blue;
       case 'negative':
+        return Colors.red;
+      default:
+        return Colors.white;
+    }
+  }
+
+  ///This method must be used for parsing [Session] values.
+  String getSessionPerformanceAsText(int sessionPerformance) {
+    switch (sessionPerformance) {
+      case 0:
+        return 'bad';
+      case 1:
+        return 'regular';
+      case 2:
+        return 'good';
+      default:
+        return '';
+    }
+  }
+
+  ///This method must be used for parsing [Session] values.
+  Color getSessionPerformanceColor(int outcome) {
+    switch (outcome) {
+      case 2:
+        return Colors.green;
+      case 1:
+        return Colors.blue;
+      case 0:
         return Colors.red;
       default:
         return Colors.white;
