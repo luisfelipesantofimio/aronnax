@@ -1,3 +1,4 @@
+import 'package:aronnax/src/data/providers/forms_providers/session_form_provider.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:aronnax/src/presentation/core/controllers.dart';
 import 'package:flutter/material.dart';
@@ -12,14 +13,9 @@ class SessionsForm extends ConsumerStatefulWidget {
 }
 
 class SessionsFormState extends ConsumerState<SessionsForm> {
-  String sessionSummary = "";
-  String sessionObjectives = "";
-  String therapeuticArchievements = "";
-
   @override
   Widget build(BuildContext context) {
     return ListView(
-      controller: ScrollController(),
       children: [
         Form(
           key: sessionFormKey,
@@ -37,11 +33,9 @@ class SessionsFormState extends ConsumerState<SessionsForm> {
                     floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (valResume) {
-                    setState(
-                      () {
-                        sessionSummary = valResume;
-                      },
-                    );
+                    ref
+                        .read(sessionSummaryProvider.notifier)
+                        .update((state) => valResume);
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -63,11 +57,9 @@ class SessionsFormState extends ConsumerState<SessionsForm> {
                     floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (valObjective) {
-                    setState(
-                      () {
-                        sessionObjectives = valObjective;
-                      },
-                    );
+                    ref
+                        .read(sessionObjectivesProvider.notifier)
+                        .update((state) => valObjective);
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -89,11 +81,9 @@ class SessionsFormState extends ConsumerState<SessionsForm> {
                     floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                   onChanged: (valArchievement) {
-                    setState(
-                      () {
-                        therapeuticArchievements = valArchievement;
-                      },
-                    );
+                    ref
+                        .read(sessionTherapeuticArchievementsProvider.notifier)
+                        .update((state) => valArchievement);
                   },
                   validator: (value) {
                     if (value!.isEmpty) {

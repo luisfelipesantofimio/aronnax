@@ -1,5 +1,4 @@
 import 'package:aronnax/src/data/database/local_model/local_queries.dart';
-import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/forms_providers/session_form_provider.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:aronnax/src/domain/entities/patient_case.dart';
@@ -31,8 +30,6 @@ class _SessionPerformanceDialogState
   String? performanceExplanation;
   @override
   Widget build(BuildContext context) {
-    bool isOfflineEnabled = ref.watch(offlineStatusProvider).value!;
-
     return Dialog(
       child: SizedBox(
         height: 400,
