@@ -1,4 +1,5 @@
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
+import 'package:aronnax/src/data/providers/forms_providers/session_form_provider.dart';
 import 'package:aronnax/src/data/providers/treatment_plan_providers.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:aronnax/src/domain/entities/patient_case.dart';
@@ -32,6 +33,19 @@ class SessionFormView extends ConsumerStatefulWidget {
 
 class _SessionFormViewState extends ConsumerState<SessionFormView> {
   bool treatmentPlanResultsSaved = false;
+
+  @override
+  void initState() {
+    Future(() {
+      ref.read(sessionSummaryProvider.notifier).update((state) => '');
+      ref.read(sessionObjectivesProvider.notifier).update((state) => '');
+      ref
+          .read(sessionTherapeuticArchievementsProvider.notifier)
+          .update((state) => '');
+      ref.read(sessionNotesProvider.notifier).update((state) => null);
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
