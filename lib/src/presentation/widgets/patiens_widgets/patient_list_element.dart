@@ -61,7 +61,9 @@ class PatientListElement extends StatelessWidget {
                           padding: const EdgeInsets.all(20),
                           child: Center(
                             child: Icon(
-                              patientData.birthDate == DateTime.now()
+                              patientData.birthDate.day == DateTime.now().day &&
+                                      patientData.birthDate.month ==
+                                          DateTime.now().month
                                   ? FontAwesomeIcons.cakeCandles
                                   : FontAwesomeIcons.user,
                             ),
