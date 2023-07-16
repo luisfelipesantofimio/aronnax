@@ -78,8 +78,9 @@ class _CaseDiagnosticDialogState extends ConsumerState<CaseDiagnosticDialog> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    const IcdView(isConfigured: true),
+                                builder: (context) => const IcdView(
+                                  isConfigured: true,
+                                ),
                               ),
                             );
                           },

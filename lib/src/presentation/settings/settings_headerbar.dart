@@ -83,7 +83,7 @@ class _SettingsHeaderBarState extends State<SettingsHeaderBar> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "Crear usuario",
+                                  "Reparar base de datos CIE",
                                   style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                               ],
@@ -91,48 +91,69 @@ class _SettingsHeaderBarState extends State<SettingsHeaderBar> {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(30),
-                        child: TextButton(
-                          onPressed: () {
-                            setState(() {
-                              currentView.value = 2;
-                            });
-                          },
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Tema oscuro",
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(30),
-                        child: TextButton(
-                          onPressed: () {
-                            setState(() {
-                              currentView.value = 3;
-                            });
-                          },
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Base de datos local",
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.all(30),
+                      //   child: TextButton(
+                      //     onPressed: () {
+                      //       setState(() {
+                      //         currentView.value = 1;
+                      //       });
+                      //     },
+                      //     child: Center(
+                      //       child: Column(
+                      //         mainAxisAlignment: MainAxisAlignment.center,
+                      //         children: [
+                      //           Text(
+                      //             "Crear usuario",
+                      //             style: Theme.of(context).textTheme.bodyMedium,
+                      //           ),
+                      //         ],
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      // Padding(
+                      //   padding: const EdgeInsets.all(30),
+                      //   child: TextButton(
+                      //     onPressed: () {
+                      //       setState(() {
+                      //         currentView.value = 2;
+                      //       });
+                      //     },
+                      //     child: Center(
+                      //       child: Column(
+                      //         mainAxisAlignment: MainAxisAlignment.center,
+                      //         children: [
+                      //           Text(
+                      //             "Tema oscuro",
+                      //             style: Theme.of(context).textTheme.bodyMedium,
+                      //           ),
+                      //         ],
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      // Padding(
+                      //   padding: const EdgeInsets.all(30),
+                      //   child: TextButton(
+                      //     onPressed: () {
+                      //       setState(() {
+                      //         currentView.value = 3;
+                      //       });
+                      //     },
+                      //     child: Center(
+                      //       child: Column(
+                      //         mainAxisAlignment: MainAxisAlignment.center,
+                      //         children: [
+                      //           Text(
+                      //             "Base de datos local",
+                      //             style: Theme.of(context).textTheme.bodyMedium,
+                      //           ),
+                      //         ],
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

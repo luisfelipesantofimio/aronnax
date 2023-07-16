@@ -9,8 +9,10 @@ class IcdView extends ConsumerWidget {
   const IcdView({
     Key? key,
     required this.isConfigured,
+    this.onDownloadCompleted,
   }) : super(key: key);
   final bool isConfigured;
+  final Function(bool completedTask)? onDownloadCompleted;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,50 +27,57 @@ class IcdView extends ConsumerWidget {
         children: [
           icdData.when(
             skipLoadingOnRefresh: false,
-            data: (data) => Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Text(
-                  '¡Todo listo!',
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
-                ),
-                const Padding(
-                  padding: EdgeInsets.all(10),
-                ),
-                const Icon(
-                  FontAwesomeIcons.laptopMedical,
-                  size: 50,
-                ),
-                const Padding(
-                  padding: EdgeInsets.all(10),
-                ),
-                const Text('Ya tienes una copia del CIE-11 a tu disposición.'),
-                const Padding(
-                  padding: EdgeInsets.all(20),
-                ),
-                TextButton(
-                  onPressed: () => isConfigured
-                      ? Navigator.pop(context)
-                      : Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const FinishConfig(),
-                          ),
-                        ),
-                  child: const Text(
-                    'Continuar',
+            data: (data) {
+              if (onDownloadCompleted != null) {
+                onDownloadCompleted!(false);
+              }
+
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text(
+                    '¡Todo listo!',
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Colors.black),
                   ),
-                ),
-              ],
-            ),
+                  const Padding(
+                    padding: EdgeInsets.all(10),
+                  ),
+                  const Icon(
+                    FontAwesomeIcons.laptopMedical,
+                    size: 50,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(10),
+                  ),
+                  const Text(
+                      'Ya tienes una copia del CIE-11 a tu disposición.'),
+                  const Padding(
+                    padding: EdgeInsets.all(20),
+                  ),
+                  TextButton(
+                    onPressed: () => isConfigured
+                        ? Navigator.pop(context)
+                        : Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const FinishConfig(),
+                            ),
+                          ),
+                    child: const Text(
+                      'Continuar',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                    ),
+                  ),
+                ],
+              );
+            },
             error: (error, stackTrace) => Column(
               children: [
                 Text('Error $error'),

@@ -1,9 +1,9 @@
 import 'dart:math';
 
-import 'package:aronnax/src/Pages/Formulary/professionalForm/professional_form.dart';
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/domain/entities/calendar_event.dart';
 import 'package:aronnax/src/domain/entities/session.dart';
+import 'package:aronnax/src/presentation/settings/configOptions/icd_data_repair.dart';
 import 'package:aronnax/src/presentation/settings/configOptions/localdb_selection.dart';
 import 'package:aronnax/src/presentation/settings/configOptions/theme_select.dart';
 import 'package:aronnax/src/presentation/settings/setting_options_view_profile.dart';
@@ -64,7 +64,8 @@ class AppMethods {
         );
 
       case 1:
-        return const ProfessionalForm();
+        return const IcdDataRepair();
+      // return const ProfessionalForm();
       case 2:
         return ThemeSelector(
           settingsData: settings,
