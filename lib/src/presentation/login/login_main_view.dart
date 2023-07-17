@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/presentation/core/constants.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,7 +29,7 @@ class LoginScreen extends ConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "inicio de sesión",
+                        AppLocalizations.of(context)!.loginTitle,
                         style: Theme.of(context).textTheme.displayLarge,
                       ),
                       const LoginForm(),
@@ -88,7 +89,7 @@ class LoginScreen extends ConsumerWidget {
                     child: Row(
                       children: [
                         Text(
-                          "Versión ${AppConstants.globalVersion}",
+                          "Version ${AppConstants.globalVersion}",
                           style: GoogleFonts.montserrat(
                             fontSize: 15,
                             color: true

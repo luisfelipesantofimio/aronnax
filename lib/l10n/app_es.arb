@@ -1,3 +1,14 @@
 {
-    "helloWorld": "¡Hola Mundo!"
+    "genericErrorMessage": "Algo salió mal",
+    "loginTitle": "Iniciar sesión",
+    "loginUsername": "Nombre de usuario",
+    "loginLabelPassword": "Nombre de usuario",
+    "loginHintUsername": "Ingresa tu nombre de usuario registrado",
+    "loginUserPassword": "Contraseña",
+    "loginUserPasswordDefined": "Contraseña para",
+    "loginUserPasswordRecover": "¿Olvidaste tu contraseña?",
+    "loginErrorEmptyUsername": "Ingresa tu nombre de usuario",
+    "loginErrorEmptyPassword": "Ingresa tu contraseña",
+    "loginErrorIncorrectPassword": "Contraseña incorrecta",
+    "loginErrorUserDontExist": "El usuario no existe"
 }

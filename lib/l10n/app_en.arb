@@ -1,6 +1,14 @@
 {
-  "helloWorld": "Hello World!",
-  "@helloWorld": {
-    "description": "The conventional newborn programmer greeting"
-  }
+    "genericErrorMessage": "Something went wrong",
+    "loginTitle": "Login",
+    "loginUsername": "User name",
+    "loginLabelPassword": "User name",
+    "loginHintUsername": "Write your registered user name",
+    "loginUserPassword": "Password",
+    "loginUserPasswordDefined": "Password for",
+    "loginUserPasswordRecover": "Forgot your password?",
+    "loginErrorEmptyUsername": "Insert your username",
+    "loginErrorEmptyPassword": "Insert your password",
+    "loginErrorIncorrectPassword": "Invalid password",
+    "loginErrorUserDontExist": "This user does not exist"
 }

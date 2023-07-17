@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/interfaces/auth_repository_interface.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
@@ -73,18 +74,20 @@ class LoginFormState extends ConsumerState<LoginForm> {
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Inserta tu nombre de usuario";
+                      return AppLocalizations.of(context)!
+                          .loginErrorEmptyUsername;
                     }
                     if (!userExists) {
-                      return "El usuario no existe";
+                      return AppLocalizations.of(context)!
+                          .loginErrorUserDontExist;
                     }
                     return null;
                   },
                   autofocus: true,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.all(0),
-                    labelText: "Nombre de usuario",
-                    hintText: "Ingresa tu nombre de usuario registrado",
+                    labelText: AppLocalizations.of(context)!.loginUsername,
+                    hintText: AppLocalizations.of(context)!.loginHintUsername,
                     labelStyle: Theme.of(context).textTheme.bodyMedium,
                     hintStyle: Theme.of(context).textTheme.bodyMedium,
                     prefixIcon: const Icon(
@@ -103,12 +106,14 @@ class LoginFormState extends ConsumerState<LoginForm> {
                     },
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "Ingresa tu contraseña";
+                        return AppLocalizations.of(context)!
+                            .loginErrorEmptyPassword;
                       }
                       if (professionalData != null &&
                           !ref.read(authenticationProvider).validatePassword(
                               professionalData.password, value)) {
-                        return "Contraseña incorrecta";
+                        return AppLocalizations.of(context)!
+                            .loginErrorIncorrectPassword;
                       } else {
                         Future(
                           () => Navigator.push(
@@ -124,9 +129,10 @@ class LoginFormState extends ConsumerState<LoginForm> {
                     autofocus: true,
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.all(0),
-                      labelText: "Contraseña",
+                      labelText:
+                          AppLocalizations.of(context)!.loginLabelPassword,
                       hintText:
-                          "Contraseña para ${professionalData != null ? professionalData.names : ''} ${professionalData != null ? professionalData.lastNames : ''}",
+                          "${AppLocalizations.of(context)!.loginUserPasswordDefined} ${professionalData != null ? professionalData.names : ''} ${professionalData != null ? professionalData.lastNames : ''}",
                       labelStyle: Theme.of(context).textTheme.bodyMedium,
                       hintStyle: Theme.of(context).textTheme.bodyMedium,
                       prefixIcon: const Icon(
@@ -150,8 +156,8 @@ class LoginFormState extends ConsumerState<LoginForm> {
                           builder: (context) => const PasswordRecoverDialog(),
                         );
                       },
-                      child: const Text(
-                        'Forgot your password?',
+                      child: Text(
+                        AppLocalizations.of(context)!.loginUserPasswordRecover,
                         style: TextStyle(
                           fontWeight: FontWeight.normal,
                           color: Colors.black,
@@ -178,8 +184,8 @@ class LoginFormState extends ConsumerState<LoginForm> {
           ),
         );
       },
-      error: (error, stackTrace) => const Center(
-        child: Text("Algo salió mal"),
+      error: (error, stackTrace) => Center(
+        child: Text(AppLocalizations.of(context)!.genericErrorMessage),
       ),
       loading: () => const CircularProgressIndicator(),
     );
