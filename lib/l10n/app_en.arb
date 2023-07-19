@@ -1,4 +1,6 @@
 {
+    "@@author": "Luis Felipe Santofimio Buitrago",
+    "@@locale": "en",
     "genericErrorMessage": "Something went wrong",
     "loginTitle": "Login",
     "loginUsername": "User name",
@@ -10,5 +12,15 @@
     "loginErrorEmptyUsername": "Insert your username",
     "loginErrorEmptyPassword": "Insert your password",
     "loginErrorIncorrectPassword": "Invalid password",
-    "loginErrorUserDontExist": "This user does not exist"
+    "loginErrorUserDontExist": "This user does not exist",
+    "passwordRecoverQuestionaryTitle": "Personal data questionary",
+    "passwordRecoverQuestionaryAnswerHint": "Your answer",
+    "passwordRecoverPinAnswerHint": "Your pin",
+    "passwordRecoverQuestionaryInstructions": "Answer the questions below to confirm your identity",
+    "passwordRecoverPinInstructions": "Insert your account's recover pin",
+    "passwordRecoverQuestionaryPersonalId": "Select your personal Id",
+    "passwordRecoverQuestionaryAdress": "Select your home adress",
+    "passwordRecoverQuestionaryEmail": "Select your email adress",
+    "passwordRecoverQuestionaryUpdatePasswordTitle": "Update your password",
+    "passwordRecoverQuestionaryPasswordConfirmationAlert": "Password updated"
 }

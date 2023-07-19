@@ -158,7 +158,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
                       },
                       child: Text(
                         AppLocalizations.of(context)!.loginUserPasswordRecover,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.normal,
                           color: Colors.black,
                         ),

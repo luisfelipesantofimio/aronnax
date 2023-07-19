@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/auth_repository_interface.dart';
 import 'package:aronnax/src/domain/entities/professional.dart';
 import 'package:aronnax/src/presentation/password_recover/password_recover_form.dart';
@@ -44,9 +45,9 @@ class _PasswordQuestionaryState extends ConsumerState<PasswordQuestionary> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                'Personal data questionary',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              Text(
+                AppLocalizations.of(context)!.passwordRecoverQuestionaryTitle,
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
               const Padding(
                 padding: EdgeInsets.all(10),
