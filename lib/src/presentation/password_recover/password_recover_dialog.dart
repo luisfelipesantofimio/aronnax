@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/auth_repository_interface.dart';
 import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:aronnax/src/presentation/password_recover/password_recover_view.dart';
@@ -31,16 +32,18 @@ class _PasswordRecoverDialogState extends ConsumerState<PasswordRecoverDialog> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  'Please, insert your username',
+                Text(
+                  AppLocalizations.of(context)!.passwordRecoverDialogTitle,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const Padding(
                   padding: EdgeInsets.all(5),
                 ),
                 TextFormField(
-                  decoration:
-                      const InputDecoration(hintText: 'Your login username'),
+                  decoration: InputDecoration(
+                    hintText:
+                        AppLocalizations.of(context)!.passwordRecoverDialogHint,
+                  ),
                   onChanged: (value) async {
                     userExists = await ref
                         .read(authenticationProvider)
@@ -50,10 +53,12 @@ class _PasswordRecoverDialogState extends ConsumerState<PasswordRecoverDialog> {
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Inserta tu nombre de usuario";
+                      return AppLocalizations.of(context)!
+                          .passwordRecoverDialogErrorEmpty;
                     }
                     if (!userExists) {
-                      return "El usuario no existe";
+                      return AppLocalizations.of(context)!
+                          .passwordRecoverDialogErrorDontExist;
                     }
                     return null;
                   },
@@ -68,7 +73,8 @@ class _PasswordRecoverDialogState extends ConsumerState<PasswordRecoverDialog> {
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width * 0.2,
                       child: GenericMinimalButton(
-                        title: 'Continue',
+                        title: AppLocalizations.of(context)!
+                            .passwordRecoverDialogContinueButton,
                         onTap: () {
                           Navigator.push(
                             context,
