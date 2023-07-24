@@ -4,7 +4,7 @@ import 'package:aronnax/src/data/interfaces/professional_repository_interface.da
 import 'package:aronnax/src/data/providers/location_data_provider.dart';
 import 'package:aronnax/src/presentation/core/constants.dart';
 import 'package:aronnax/src/presentation/core/methods.dart';
-import 'package:aronnax/src/presentation/login/login_main_view.dart';
+import 'package:aronnax/src/presentation/icd_view/icd_view.dart';
 import 'package:aronnax/src/presentation/widgets/generic_minimal_button.dart';
 import 'package:country_state_city/country_state_city.dart';
 import 'package:flutter/material.dart';
@@ -454,8 +454,8 @@ class LocalProfessionalRegisterState
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const LoginScreen(),
-                              // const IcdView(isConfigured: false),
+                              builder: (context) =>
+                                  const IcdView(isConfigured: false),
                             ));
                       }
                     },
