@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
 import 'package:aronnax/src/data/providers/forms_providers/register_form_provider.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
@@ -26,10 +27,10 @@ class MainViewRegister extends ConsumerWidget {
                   alignment: Alignment.centerLeft,
                   child: SizedBox(
                     width: constraints.maxWidth * 0.20,
-                    child: const Text(
-                      'Registrar consultante',
+                    child: Text(
+                      AppLocalizations.of(context)!.registerTitle,
                       style:
-                          TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                          const TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
@@ -41,7 +42,7 @@ class MainViewRegister extends ConsumerWidget {
                       Container(
                         margin: const EdgeInsets.only(top: 20),
                         child: Text(
-                          "Información personal",
+                          AppLocalizations.of(context)!.registerFormTitle,
                           style: Theme.of(context).textTheme.displayMedium,
                         ),
                       ),
@@ -80,13 +81,15 @@ class MainViewRegister extends ConsumerWidget {
                                       Navigator.pop(context);
                                     },
                                     icon: const Icon(Icons.arrow_back),
-                                    tooltip: "Volver",
+                                    tooltip: AppLocalizations.of(context)!
+                                        .registerBackButtonTitle,
                                   ),
                                   const Padding(padding: EdgeInsets.all(20)),
                                   GenericGlobalButton(
                                     height: 40,
                                     width: 200,
-                                    title: "Guardar registro",
+                                    title: AppLocalizations.of(context)!
+                                        .registerSaveButtonTitle,
                                     onPressed: () async {
                                       if (basicKey.currentState!.validate()) {
                                         basicKey.currentState!.save();
@@ -136,10 +139,12 @@ class MainViewRegister extends ConsumerWidget {
                                           Future(() {
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(
-                                              const SnackBar(
+                                              SnackBar(
                                                 backgroundColor: Colors.green,
                                                 content: Text(
-                                                    "Paciente registrado guardada"),
+                                                  AppLocalizations.of(context)!
+                                                      .registerSuccessAlertTitle,
+                                                ),
                                               ),
                                             );
                                             Navigator.push(
@@ -156,9 +161,11 @@ class MainViewRegister extends ConsumerWidget {
                                           Future(() {
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(
-                                              const SnackBar(
+                                              SnackBar(
                                                 backgroundColor: Colors.red,
-                                                content: Text("Algo salió mal"),
+                                                content: Text(AppLocalizations
+                                                        .of(context)!
+                                                    .registerErrorAlertTitle),
                                               ),
                                             );
                                           });

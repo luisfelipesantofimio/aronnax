@@ -34,7 +34,7 @@ class _PasswordRecoverDialogState extends ConsumerState<PasswordRecoverDialog> {
               children: [
                 Text(
                   AppLocalizations.of(context)!.passwordRecoverDialogTitle,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const Padding(
                   padding: EdgeInsets.all(5),

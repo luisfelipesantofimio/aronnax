@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
 import 'package:aronnax/src/data/providers/forms_providers/register_form_provider.dart';
 import 'package:aronnax/src/data/providers/location_data_provider.dart';
@@ -22,12 +23,27 @@ class RegisterForm extends ConsumerStatefulWidget {
 class RegisterFormState extends ConsumerState<RegisterForm> {
   String stateCode = '';
   String selectedCity = '';
-  List<Gender> genders = [
-    Gender(value: 'masculine', name: 'Masculino'),
-    Gender(value: 'femenine', name: 'Femenino'),
-    Gender(value: 'other', name: 'Otro'),
-  ];
+  List<Gender> genders = [];
   bool patientFound = false;
+  @override
+  void initState() {
+    setState(() {
+      genders = [
+        Gender(
+          value: 'masculine',
+          name: AppLocalizations.of(context)!.registerFormMaleOption,
+        ),
+        Gender(
+            value: 'femenine',
+            name: AppLocalizations.of(context)!.registerFormFemaleOption),
+        Gender(
+            value: 'other',
+            name: AppLocalizations.of(context)!.registerFormOtherOption),
+      ];
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final stateList = ref.watch(stateListProvider);
@@ -48,7 +64,8 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                   style: Theme.of(context).textTheme.bodyMedium,
                   autofocus: true,
                   decoration: InputDecoration(
-                    labelText: "Nombres",
+                    labelText:
+                        AppLocalizations.of(context)!.registerFormNamesField,
                     labelStyle: Theme.of(context).textTheme.bodyMedium,
                     floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
@@ -60,7 +77,7 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Inserta un valor";
+                      return AppLocalizations.of(context)!.errorEmptyField;
                     }
                     return null;
                   },
@@ -75,7 +92,8 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                   style: Theme.of(context).textTheme.bodyMedium,
                   autofocus: true,
                   decoration: InputDecoration(
-                      labelText: "Apellidos",
+                      labelText: AppLocalizations.of(context)!
+                          .registerFormLastNamesField,
                       labelStyle: Theme.of(context).textTheme.bodyMedium),
                   onChanged: (valLastNames) {
                     ref.read(registerLastNamesProvider.notifier).update(
@@ -85,7 +103,7 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Inserta un valor";
+                      return AppLocalizations.of(context)!.errorEmptyField;
                     }
                     return null;
                   },
@@ -105,7 +123,8 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                   style: Theme.of(context).textTheme.bodyMedium,
                   autofocus: true,
                   decoration: InputDecoration(
-                      labelText: "Número de identificación",
+                      labelText: AppLocalizations.of(context)!
+                          .registerFormIdentificationNumberField,
                       labelStyle: Theme.of(context).textTheme.bodyMedium),
                   onChanged: (valID) async {
                     ref.read(registerIdNumberProvider.notifier).update(
@@ -127,10 +146,11 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Inserta un valor";
+                      return AppLocalizations.of(context)!.errorEmptyField;
                     }
                     if (patientFound) {
-                      return 'This user is already registered';
+                      return AppLocalizations.of(context)!
+                          .registerFormErrorUserExists;
                     }
                     return null;
                   },
@@ -142,8 +162,9 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.15,
                 child: DropdownButtonFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Género',
+                  decoration: InputDecoration(
+                    hintText:
+                        AppLocalizations.of(context)!.registerFormSexField,
                   ),
                   items: genders
                       .map(
@@ -185,7 +206,8 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                   style: Theme.of(context).textTheme.bodyMedium,
                   autofocus: true,
                   decoration: InputDecoration(
-                    labelText: "Número de contacto",
+                    labelText: AppLocalizations.of(context)!
+                        .registerFormContactNumberField,
                     labelStyle: Theme.of(context).textTheme.bodyMedium,
                     floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
@@ -206,7 +228,8 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                   style: Theme.of(context).textTheme.bodyMedium,
                   autofocus: true,
                   decoration: InputDecoration(
-                    labelText: "Correo electrónico",
+                    labelText:
+                        AppLocalizations.of(context)!.registerFormEmailField,
                     labelStyle: Theme.of(context).textTheme.bodyMedium,
                     floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
@@ -218,10 +241,11 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Inserta un valor";
+                      return AppLocalizations.of(context)!.errorEmptyField;
                     } else {
                       if (!AppMethods().validateEmail(value)) {
-                        return "Correo inválido";
+                        return AppLocalizations.of(context)!
+                            .registerFormErrorEmail;
                       }
                     }
                     return null;
@@ -266,10 +290,12 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                   ),
                   error: (error, stackTrace) => Row(
                     children: [
-                      const Text('Something went wrong'),
+                      Text(
+                        AppLocalizations.of(context)!.genericErrorMessage,
+                      ),
                       TextButton(
                         onPressed: () => ref.invalidate(stateListProvider),
-                        child: const Text('Try again'),
+                        child: Text(AppLocalizations.of(context)!.tryAgain),
                       )
                     ],
                   ),
@@ -302,7 +328,7 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                   ),
                   error: (error, stackTrace) => Row(
                     children: [
-                      const Text('Something went wrong'),
+                      Text(AppLocalizations.of(context)!.genericErrorMessage),
                       TextButton(
                         onPressed: () => ref.invalidate(citiesListProvider),
                         child: const Text('Try again'),
@@ -328,7 +354,8 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                   style: Theme.of(context).textTheme.bodyMedium,
                   autofocus: true,
                   decoration: InputDecoration(
-                    labelText: "Dirección",
+                    labelText:
+                        AppLocalizations.of(context)!.registerFormAdressField,
                     labelStyle: Theme.of(context).textTheme.bodyMedium,
                     floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
@@ -340,7 +367,7 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Inserta un valor";
+                      return AppLocalizations.of(context)!.errorEmptyField;
                     }
                     return null;
                   },
@@ -357,7 +384,8 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                   style: Theme.of(context).textTheme.bodyMedium,
                   autofocus: true,
                   decoration: InputDecoration(
-                    labelText: "Escolaridad",
+                    labelText: AppLocalizations.of(context)!
+                        .registerFormEducationalAttainmentField,
                     labelStyle: Theme.of(context).textTheme.bodyMedium,
                     floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
@@ -369,7 +397,7 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Inserta un valor";
+                      return AppLocalizations.of(context)!.errorEmptyField;
                     }
                     return null;
                   },
@@ -382,7 +410,8 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                   style: Theme.of(context).textTheme.bodyMedium,
                   autofocus: true,
                   decoration: InputDecoration(
-                    labelText: "Ocupación",
+                    labelText: AppLocalizations.of(context)!
+                        .registerFormOcupationField,
                     labelStyle: Theme.of(context).textTheme.bodyMedium,
                     floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
@@ -394,7 +423,7 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Inserta un valor";
+                      return AppLocalizations.of(context)!.errorEmptyField;
                     }
                     return null;
                   },
@@ -411,7 +440,8 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                   style: Theme.of(context).textTheme.bodyMedium,
                   autofocus: true,
                   decoration: InputDecoration(
-                    labelText: "EPS",
+                    labelText: AppLocalizations.of(context)!
+                        .registerFormInsuranceField,
                     labelStyle: Theme.of(context).textTheme.bodyMedium,
                     floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
@@ -423,7 +453,7 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Inserta un valor";
+                      return AppLocalizations.of(context)!.errorEmptyField;
                     }
                     return null;
                   },
@@ -436,7 +466,8 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                   style: Theme.of(context).textTheme.bodyMedium,
                   autofocus: true,
                   decoration: InputDecoration(
-                    labelText: "Nombre de contacto de emergencia",
+                    labelText: AppLocalizations.of(context)!
+                        .registerFormEmergencyContanctNameField,
                     labelStyle: Theme.of(context).textTheme.bodyMedium,
                     floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
@@ -450,7 +481,7 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Inserta un valor";
+                      return AppLocalizations.of(context)!.errorEmptyField;
                     }
                     return null;
                   },
@@ -466,7 +497,8 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
               style: Theme.of(context).textTheme.bodyMedium,
               autofocus: true,
               decoration: InputDecoration(
-                labelText: "Número de contacto de emergencia",
+                labelText: AppLocalizations.of(context)!
+                    .registerFormEmergencyContanctNumberField,
                 labelStyle: Theme.of(context).textTheme.bodyMedium,
                 floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
               ),
@@ -480,7 +512,7 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
               },
               validator: (value) {
                 if (value!.isEmpty) {
-                  return "Inserta un valor";
+                  return AppLocalizations.of(context)!.errorEmptyField;
                 }
                 return null;
               },
