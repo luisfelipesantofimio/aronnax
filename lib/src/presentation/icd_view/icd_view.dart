@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/providers/icd_data_provider.dart';
 import 'package:aronnax/src/presentation/welcome_screens/finish.dart';
@@ -36,9 +37,9 @@ class IcdView extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Text(
-                    '¡Todo listo!',
-                    style: TextStyle(
+                  Text(
+                    AppLocalizations.of(context)!.icdSuccess,
+                    style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Colors.black),
@@ -53,8 +54,7 @@ class IcdView extends ConsumerWidget {
                   const Padding(
                     padding: EdgeInsets.all(10),
                   ),
-                  const Text(
-                      'Ya tienes una copia del CIE-11 a tu disposición.'),
+                  Text(AppLocalizations.of(context)!.icdSuccessDescription),
                   const Padding(
                     padding: EdgeInsets.all(20),
                   ),
@@ -67,9 +67,9 @@ class IcdView extends ConsumerWidget {
                               builder: (context) => const FinishConfig(),
                             ),
                           ),
-                    child: const Text(
-                      'Continuar',
-                      style: TextStyle(
+                    child: Text(
+                      AppLocalizations.of(context)!.continueButton,
+                      style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
@@ -89,27 +89,26 @@ class IcdView extends ConsumerWidget {
                         .deleteSavedIcdData(),
                     ref.invalidate(icdDataProvider),
                   },
-                  child: const Text("Try again"),
+                  child: Text(AppLocalizations.of(context)!.tryAgain),
                 ),
               ],
             ),
             loading: () => SizedBox(
               width: MediaQuery.of(context).size.width * 0.5,
-              child: const Column(
+              child: Column(
                 children: [
                   Text(
-                    '¡Sé paciente!',
-                    style: TextStyle(
+                    AppLocalizations.of(context)!.icdLoadingTitle,
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.all(10),
                   ),
-                  Text(
-                      'Aronnax está haciendo una copia local de la Clasificación Internacional de Enfermedades, 11a revisión (CIE-11), usando la API de la OMS para dar soporte en tus impresiones diagnósticas. Esto puede llevar varios minutos.'),
-                  CircularProgressIndicator()
+                  Text(AppLocalizations.of(context)!.icdLoadingDescription),
+                  const CircularProgressIndicator()
                 ],
               ),
             ),

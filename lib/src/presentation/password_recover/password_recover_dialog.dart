@@ -73,8 +73,7 @@ class _PasswordRecoverDialogState extends ConsumerState<PasswordRecoverDialog> {
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width * 0.2,
                       child: GenericMinimalButton(
-                        title: AppLocalizations.of(context)!
-                            .passwordRecoverDialogContinueButton,
+                        title: AppLocalizations.of(context)!.continueButton,
                         onTap: () {
                           Navigator.push(
                             context,
