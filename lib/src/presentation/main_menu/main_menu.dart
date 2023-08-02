@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/calendar_repository_interface.dart';
 import 'package:aronnax/src/data/providers/appointments_provider.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
@@ -117,15 +118,17 @@ class MainMenuState extends ConsumerState<MainMenu> {
                                                           selectedDateProvider)) ==
                                                   DateFormat('dd/MM/yyyy')
                                                       .format(DateTime.now())
-                                              ? 'Eventos para hoy'
-                                              : 'Eventos del ${DateFormat.yMMMMEEEEd('es').format(ref.watch(selectedDateProvider))}',
+                                              ? AppLocalizations.of(context)!
+                                                  .mainMenuEventsForToday
+                                              : '${AppLocalizations.of(context)!.mainMenuEventsForDefinedDate} ${DateFormat.yMMMMEEEEd(Localizations.localeOf(context).languageCode).format(ref.watch(selectedDateProvider))}',
                                           style: Theme.of(context)
                                               .textTheme
                                               .headlineSmall,
                                         ),
                                       ),
                                       IconButton(
-                                        tooltip: 'Add event',
+                                        tooltip: AppLocalizations.of(context)!
+                                            .mainMenuAddEventTooltip,
                                         onPressed: () {
                                           showDialog(
                                             context: context,
@@ -165,8 +168,9 @@ class MainMenuState extends ConsumerState<MainMenu> {
                                               filtedEventsList:
                                                   filtedEventsList);
                                         },
-                                        error: (error, stackTrace) =>
-                                            const Text('Something went wrong.'),
+                                        error: (error, stackTrace) => Text(
+                                            AppLocalizations.of(context)!
+                                                .genericErrorMessage),
                                         loading: () =>
                                             const CircularProgressIndicator(),
                                       ),
@@ -189,7 +193,8 @@ class MainMenuState extends ConsumerState<MainMenu> {
                           children: [
                             GenericIconButton(
                               icon: FontAwesomeIcons.book,
-                              title: 'Treatment plans',
+                              title: AppLocalizations.of(context)!
+                                  .treatmentPlansMenuTitle,
                               onTap: () {
                                 Navigator.push(
                                   context,
@@ -202,7 +207,8 @@ class MainMenuState extends ConsumerState<MainMenu> {
                             ),
                             GenericIconButton(
                               icon: FontAwesomeIcons.microscope,
-                              title: 'Tests',
+                              title:
+                                  AppLocalizations.of(context)!.testsMenuTitle,
                               onTap: () {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
@@ -214,7 +220,8 @@ class MainMenuState extends ConsumerState<MainMenu> {
                             ),
                             GenericIconButton(
                               icon: FontAwesomeIcons.userGroup,
-                              title: 'Patiens list',
+                              title: AppLocalizations.of(context)!
+                                  .patientsListMenuTitle,
                               onTap: () {
                                 Navigator.push(
                                   context,
@@ -239,7 +246,8 @@ class MainMenuState extends ConsumerState<MainMenu> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Tareas',
+                                      AppLocalizations.of(context)!
+                                          .tasksMenuTitle,
                                       style: Theme.of(context)
                                           .textTheme
                                           .headlineSmall,
@@ -248,7 +256,8 @@ class MainMenuState extends ConsumerState<MainMenu> {
                                       padding: EdgeInsets.all(10),
                                     ),
                                     IconButton(
-                                      tooltip: 'Añadir tarea',
+                                      tooltip: AppLocalizations.of(context)!
+                                          .taskMenuAddButton,
                                       onPressed: () => showDialog(
                                         context: context,
                                         builder: (context) =>
@@ -267,8 +276,9 @@ class MainMenuState extends ConsumerState<MainMenu> {
                                   child: todosList.when(
                                     data: (data) =>
                                         TodosListView(todosList: data),
-                                    error: (error, stackTrace) =>
-                                        const Text('Something went wrong'),
+                                    error: (error, stackTrace) => Text(
+                                        AppLocalizations.of(context)!
+                                            .genericErrorMessage),
                                     loading: () =>
                                         const CircularProgressIndicator(),
                                   ),

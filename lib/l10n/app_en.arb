@@ -3,7 +3,6 @@
     "@@locale": "en",
     "genericErrorMessage": "Something went wrong",
     "continueButton": "Continue",
-
     "tryAgain": "Try again",
     "errorEmptyField": "The field is empty",
     "loginTitle": "Login",
@@ -54,8 +53,17 @@
     "registerFormEmergencyContanctNumberField": "Emergency contact number",
     "registerFormErrorEmail": "Invalid email format",
     "registerFormErrorUserExists": "This user is already registered",
-    "icdSuccess" : "Done!",
-    "icdSuccessDescription" : "You have a copy of the ICD-11 for your use",
-    "icdLoadingTitle" : "Be patient",
-    "icdLoadingDescription" : "Aronnax is making a local copy of the International Classification of Diseases 11th Revision, using the WHO API for helping you in your diagnostic impressions. This can take a few minutes."
+    "icdSuccess": "Done!",
+    "icdSuccessDescription": "You have a copy of the ICD-11 for your use",
+    "icdLoadingTitle": "Be patient",
+    "icdLoadingDescription": "Aronnax is creating a local copy of the International Classification of Diseases 11th Revision, using the WHO API for helping you in your diagnostic impressions. This can take a few minutes.",
+    "mainMenuEventsForToday": "Events for today",
+    "mainMenuEventsForDefinedDate": "Events for",
+    "mainMenuAddEventTooltip": "Add event",
+    "treatmentPlansMenuTitle": "Treatment plans",
+    "testsMenuTitle": "Tests",
+    "testsMenuAlert": "Soon",
+    "patientsListMenuTitle": "Patients list",
+    "tasksMenuTitle": "To-do",
+    "taskMenuAddButton": "Add to-do"
 }
