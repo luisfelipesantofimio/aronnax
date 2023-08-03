@@ -76,5 +76,9 @@
             }
         }
     },
-    "mainMenuOptionsBarPatientSelectionDialogTitle": "Select the patient"
+    "mainMenuOptionsBarPatientSelectionDialogTitle": "Select the patient",
+    "mainMenuOptionsBarTitleSettings": "Settings",
+    "mainMenuOptionsBarTitleHelp": "Help",
+    "mainMenuOptionsBarTitleRegisterSignOut": "Sign out",
+    "mainMenuOptionsBarTitleMoreOptions": "More options"
 }
