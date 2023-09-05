@@ -80,5 +80,16 @@
     "mainMenuOptionsBarTitleSettings": "Settings",
     "mainMenuOptionsBarTitleHelp": "Help",
     "mainMenuOptionsBarTitleRegisterSignOut": "Sign out",
-    "mainMenuOptionsBarTitleMoreOptions": "More options"
+    "mainMenuOptionsBarTitleMoreOptions": "More options",
+    "sessionFormAddNote": "Add note",
+    "sessionFormTask": "Add task",
+    "sessionFormStartTest": "Start test",
+    "sessionFormStartTestSoon": "Soon",
+    "sessionFormBeginTreatmentPlan": "Begin treatment plan",
+    "sessionFormBeginTreatmentPlanTaken": "Treatment plan results already saved",
+    "sessionFormNewSession": "New session",
+    "sessionFormSaveSession": "Save session",
+    "sessionFormFieldSessionSummary": "Session summary",
+    "sessionFormFieldSessionGoal": "Session goal",
+    "sessionFormFieldTherapeuticArchievements": "Therapeutic archievements"
 }
