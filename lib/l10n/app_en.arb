@@ -24,7 +24,7 @@
     "passwordRecoverQuestionaryAnswerHint": "Your answer",
     "passwordRecoverPinAnswerHint": "Your pin",
     "passwordRecoverQuestionaryInstructions": "Answer the questions below to confirm your identity",
-    "passwordRecoverPinInstructions": "Insert your account's recover pin",
+    "passwordRecoverPinInstructions": "Insert your account''s recover pin",
     "passwordRecoverQuestionaryPersonalId": "Select your personal Id",
     "passwordRecoverQuestionaryAdress": "Select your home adress",
     "passwordRecoverQuestionaryEmail": "Select your email adress",
@@ -68,7 +68,7 @@
     "taskMenuAddButton": "Add to-do",
     "mainMenuOptionsBarTitleRegisterConsultant": "Register consultant",
     "mainMenuOptionsBarTitleStartConsultation": "Start consultation",
-    "mainMenuOptionsBarAlertCaseNotFound": "This user does not have any open case. Go to ${patientNames}'s profile and create or enable a case.",
+    "mainMenuOptionsBarAlertCaseNotFound": "This user does not have any open case. Go to ${patientNames}''s profile and create or enable a case.",
     "@mainMenuOptionsBarAlertCaseNotFound": {
         "placeholders": {
             "patientNames": {
