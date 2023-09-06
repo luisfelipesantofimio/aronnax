@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +17,7 @@ class SessionInformationView extends ConsumerWidget {
       children: [
         Text(
           AppLocalizations.of(context)!.sessionInformationDateTitle,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
         Text(
           DateFormat('dd/MM/yyyy').format(
@@ -31,7 +29,7 @@ class SessionInformationView extends ConsumerWidget {
         ),
         Text(
           AppLocalizations.of(context)!.sessionInformationPatientTitle,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
         Text("${patientData.names} ${patientData.lastNames}"),
         const Padding(
