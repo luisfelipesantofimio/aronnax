@@ -1,3 +1,6 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,8 +17,8 @@ class SessionInformationView extends ConsumerWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Fecha de la sesión:',
+        Text(
+          AppLocalizations.of(context)!.sessionInformationDateTitle,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
         Text(
@@ -26,20 +29,13 @@ class SessionInformationView extends ConsumerWidget {
         const Padding(
           padding: EdgeInsets.all(10),
         ),
-        const Text(
-          'Consultante:',
+        Text(
+          AppLocalizations.of(context)!.sessionInformationPatientTitle,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
         Text("${patientData.names} ${patientData.lastNames}"),
         const Padding(
           padding: EdgeInsets.all(10),
-        ),
-        const Text(
-          'Fecha de creación:',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        ),
-        Text(
-          DateFormat('dd/MM/yyyy').format(DateTime.now()),
         ),
       ],
     );

@@ -91,5 +91,7 @@
     "sessionFormSaveSession": "Save session",
     "sessionFormFieldSessionSummary": "Session summary",
     "sessionFormFieldSessionGoal": "Session goal",
-    "sessionFormFieldTherapeuticArchievements": "Therapeutic archievements"
+    "sessionFormFieldTherapeuticArchievements": "Therapeutic archievements",
+    "sessionInformationDateTitle" : "Session date",
+    "sessionInformationPatientTitle" : "Patient"
 }
