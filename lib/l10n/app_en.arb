@@ -93,5 +93,11 @@
     "sessionFormFieldSessionGoal": "Session goal",
     "sessionFormFieldTherapeuticArchievements": "Therapeutic archievements",
     "sessionInformationDateTitle" : "Session date",
-    "sessionInformationPatientTitle" : "Patient"
+    "sessionInformationPatientTitle" : "Patient",
+    "sessionNewNoteDialogTitle" : "New note",
+    "sessionNewNoteDialogHintText" : "Aditional notes for this session",
+    "sessionNewNoteDialogSaveTitle" : "Save note",
+    "sessionNewNoteDialogSaveConfirmation": "Note saved",
+    "sessionNewNoteDialogDeleteNote" : "Delete note",
+    "sessionNewNoteDialogDeleteNoteConfirmation": "Note deleted"
 }

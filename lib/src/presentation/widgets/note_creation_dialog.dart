@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/providers/forms_providers/session_form_provider.dart';
 import 'package:aronnax/src/presentation/session_creation_view/note_creation/note_creation_action_button.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,7 @@ class _NoteCreationDialogState extends ConsumerState<NoteCreationDialog> {
               Row(
                 children: [
                   Text(
-                    'Nueva nota',
+                    AppLocalizations.of(context)!.sessionNewNoteDialogTitle,
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                 ],
@@ -40,23 +41,24 @@ class _NoteCreationDialogState extends ConsumerState<NoteCreationDialog> {
               TextFormField(
                 initialValue: ref.read(sessionNotesProvider) ?? '',
                 maxLines: 5,
-                decoration: const InputDecoration(
-                    focusedBorder: OutlineInputBorder(
+                decoration: InputDecoration(
+                    focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
                         color: Color.fromARGB(255, 111, 94, 63),
                       ),
                     ),
-                    enabledBorder: OutlineInputBorder(
+                    enabledBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
                         color: Color.fromARGB(255, 193, 165, 114),
                       ),
                     ),
-                    border: OutlineInputBorder(
+                    border: const OutlineInputBorder(
                       borderSide: BorderSide(
                         color: Color.fromARGB(255, 111, 94, 63),
                       ),
                     ),
-                    hintText: 'Notas adicionales para esta sesión'),
+                    hintText: AppLocalizations.of(context)!
+                        .sessionNewNoteDialogHintText),
                 onChanged: (value) => setState(() {
                   noteContent = value;
                 }),
@@ -67,15 +69,17 @@ class _NoteCreationDialogState extends ConsumerState<NoteCreationDialog> {
               Row(
                 children: [
                   NoteCreationActionButton(
-                    title: 'Guardar nota',
+                    title: AppLocalizations.of(context)!
+                        .sessionNewNoteDialogSaveTitle,
                     icon: FontAwesomeIcons.pen,
                     onTap: () {
                       ref
                           .read(sessionNotesProvider.notifier)
                           .update((state) => noteContent);
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('¡Nota guardada!'),
+                        SnackBar(
+                          content: Text(AppLocalizations.of(context)!
+                              .sessionNewNoteDialogSaveConfirmation),
                         ),
                       );
                       Navigator.pop(context);
@@ -85,14 +89,16 @@ class _NoteCreationDialogState extends ConsumerState<NoteCreationDialog> {
                     visible: ref.read(sessionNotesProvider) != null,
                     child: NoteCreationActionButton(
                       icon: FontAwesomeIcons.eraser,
-                      title: 'Borrar nota',
+                      title: AppLocalizations.of(context)!
+                          .sessionNewNoteDialogDeleteNote,
                       onTap: () {
                         ref
                             .read(sessionNotesProvider.notifier)
                             .update((state) => null);
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Nota borrada'),
+                          SnackBar(
+                            content: Text(AppLocalizations.of(context)!
+                                .sessionNewNoteDialogDeleteNoteConfirmation),
                           ),
                         );
                         Navigator.pop(context);
