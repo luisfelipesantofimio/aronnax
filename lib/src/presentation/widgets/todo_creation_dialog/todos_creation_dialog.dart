@@ -1,4 +1,4 @@
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/providers/todos_provider.dart';
 import 'package:aronnax/src/presentation/widgets/todo_creation_dialog/todo_category_item.dart';
@@ -39,7 +39,7 @@ class _TodosCreationDialogState extends ConsumerState<TodosCreationDialog> {
               Row(
                 children: [
                   Text(
-                    'Crear tarea',
+                    AppLocalizations.of(context)!.todoCreateTodoTitle,
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                 ],
@@ -52,8 +52,9 @@ class _TodosCreationDialogState extends ConsumerState<TodosCreationDialog> {
                   SizedBox(
                     width: 400,
                     child: TextField(
-                      decoration:
-                          const InputDecoration(hintText: 'Nueva tarea'),
+                      decoration: InputDecoration(
+                          hintText: AppLocalizations.of(context)!
+                              .todoCreateTodoPlaceholder),
                       onChanged: (value) {
                         setState(() {
                           todoTitle = value;
@@ -71,7 +72,9 @@ class _TodosCreationDialogState extends ConsumerState<TodosCreationDialog> {
               ),
               TextField(
                 maxLines: 3,
-                decoration: const InputDecoration(hintText: 'Descripción'),
+                decoration: InputDecoration(
+                    hintText: AppLocalizations.of(context)!
+                        .todoCreateTodoDescriptionPlaceholder),
                 onChanged: (value) {
                   setState(() {
                     todoDescription = value;
@@ -89,7 +92,8 @@ class _TodosCreationDialogState extends ConsumerState<TodosCreationDialog> {
                     child: TextField(
                       controller: categoryInputController,
                       decoration: InputDecoration(
-                        hintText: 'Categoría',
+                        hintText: AppLocalizations.of(context)!
+                            .todoCreateTodoCategory,
                         suffix: TextButton(
                           onPressed: () {
                             if (currentCategoryList.length < 3 &&
@@ -99,7 +103,8 @@ class _TodosCreationDialogState extends ConsumerState<TodosCreationDialog> {
                             categoryInputController.clear();
                             setState(() {});
                           },
-                          child: const Text('Añadir'),
+                          child: Text(
+                              AppLocalizations.of(context)!.todoCreateTodoAdd),
                         ),
                       ),
                       onChanged: (value) {
@@ -116,7 +121,8 @@ class _TodosCreationDialogState extends ConsumerState<TodosCreationDialog> {
                     height: 45,
                     width: MediaQuery.of(context).size.width * 0.25,
                     child: currentCategoryList.isEmpty
-                        ? const Text('Aquí verás tus categorías')
+                        ? Text(AppLocalizations.of(context)!
+                            .todoCreateTodoPlaceholder)
                         : ListView.builder(
                             shrinkWrap: true,
                             padding: const EdgeInsets.all(0),
@@ -237,12 +243,12 @@ class _TodosCreationDialogState extends ConsumerState<TodosCreationDialog> {
                           color: const Color.fromARGB(255, 91, 91, 91),
                         ),
                       ),
-                      child: const Center(
+                      child: Center(
                         child: Padding(
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           child: Text(
-                            'Guardar tarea',
-                            style: TextStyle(
+                            AppLocalizations.of(context)!.todoCreateTodoSave,
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
                           ),

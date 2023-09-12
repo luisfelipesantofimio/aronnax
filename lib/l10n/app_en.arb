@@ -99,5 +99,12 @@
     "sessionNewNoteDialogSaveTitle" : "Save note",
     "sessionNewNoteDialogSaveConfirmation": "Note saved",
     "sessionNewNoteDialogDeleteNote" : "Delete note",
-    "sessionNewNoteDialogDeleteNoteConfirmation": "Note deleted"
+    "sessionNewNoteDialogDeleteNoteConfirmation": "Note deleted",
+    "todoCreateTodoTitle" : "Create To-do",
+    "todoCreateTodoPlaceholder" : "New To-do",
+    "todoCreateTodoDescriptionPlaceholder" : "Description",
+    "todoCreateTodoCategory" : "Category",
+    "todoCreateTodoCategoryListEmpty" : "Here you will see your categories",
+    "todoCreateTodoAdd" : "Add",
+    "todoCreateTodoSave": "Save To-do"
 }
