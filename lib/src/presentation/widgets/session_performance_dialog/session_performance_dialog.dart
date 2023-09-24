@@ -80,7 +80,7 @@ class _SessionPerformanceDialogState
                       SessionPerformanceElement(
                         icon: FontAwesomeIcons.faceSmileBeam,
                         title: AppLocalizations.of(context)!
-                            .sessionReportDialogNormalOption,
+                            .sessionReportDialogGoodOption,
                         performance: 2,
                         isSelected: selectedItem == 2,
                         onTap: () {
