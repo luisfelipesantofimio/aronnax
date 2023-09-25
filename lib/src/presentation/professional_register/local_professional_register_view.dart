@@ -60,8 +60,8 @@ class LocalProfessionalRegisterView extends ConsumerWidget {
                         Navigator.pop(context);
                       },
                       icon: const Icon(Icons.arrow_back),
-                      tooltip: AppLocalizations.of(context)!
-                          .welcomeScreenBackButtonTooltip,
+                      tooltip:
+                          AppLocalizations.of(context)!.registerBackButtonTitle,
                     ),
                   ],
                 ),

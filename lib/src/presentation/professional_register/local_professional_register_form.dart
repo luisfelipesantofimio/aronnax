@@ -443,7 +443,7 @@ class LocalProfessionalRegisterState
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.3,
                   child: GenericMinimalButton(
-                    title: 'Continuar',
+                    title: AppLocalizations.of(context)!.continueButton,
                     onTap: () {
                       if (professionalKey.currentState!.validate()) {
                         professionalKey.currentState!.save();
@@ -467,7 +467,8 @@ class LocalProfessionalRegisterState
 
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text("¡Hola! $names"),
+                            content: Text(AppLocalizations.of(context)!
+                                .welcomeScreenWelcomeGreeting(names!)),
                           ),
                         );
                         Navigator.push(

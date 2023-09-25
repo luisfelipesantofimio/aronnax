@@ -49,7 +49,14 @@
     "welcomeScreenRegeneratePin": "Regenerate PIN",
     "welcomeScreenCreateAccountLocal": "Create Local Account",
     "welcomeScreenRememberData": "Remember, your data will be saved in your computer''s documents folder. Make regular backups of the 'aronnax_localDB.sqlite' file. Any damage or loss will result in irrecoverable data.",
-    "welcomeScreenBackButtonTooltip": "Back",
+    "welcomeScreenWelcomeGreeting": "Hello {name}",
+    "@welcomeScreenWelcomeGreeting" : {
+        "placeholders": {
+            "name" : {
+                "type": "String"
+            }
+        }
+    },
     "loginTitle": "Login",
     "loginUsername": "User name",
     "loginLabelPassword": "User name",
