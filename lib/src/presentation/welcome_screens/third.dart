@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/remote_database/server_api.dart';
 import 'package:aronnax/src/presentation/welcome_screens/professional_create.dart';
 import 'package:flutter/material.dart';
@@ -15,9 +16,11 @@ class ThirdStep extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "¡Ya casi terminas!",
+              AppLocalizations.of(context)!.welcomeScreenAlmostDone,
               style: GoogleFonts.montserrat(
-                  fontSize: 35, fontWeight: FontWeight.bold),
+                fontSize: 35,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const Padding(
               padding: EdgeInsets.all(20.0),
@@ -27,7 +30,7 @@ class ThirdStep extends StatelessWidget {
               ),
             ),
             Text(
-              "¡Ya se ha configurado tu base de datos!\nEs hora de crearla en el servidor.",
+              AppLocalizations.of(context)!.welcomeScreenDatabaseConfigured,
               style: GoogleFonts.montserrat(
                 fontSize: 20,
               ),
@@ -45,7 +48,8 @@ class ThirdStep extends StatelessWidget {
                   );
                 },
                 child: Text(
-                  "Crear base datos y continuar",
+                  AppLocalizations.of(context)!
+                      .welcomeScreenCreateDatabaseAndContinue,
                   style:
                       GoogleFonts.montserrat(fontSize: 15, color: Colors.black),
                 ),

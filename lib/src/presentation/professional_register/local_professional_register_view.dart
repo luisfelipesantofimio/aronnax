@@ -1,3 +1,5 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:aronnax/src/presentation/professional_register/local_professional_register_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -34,9 +36,10 @@ class LocalProfessionalRegisterView extends ConsumerWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
-                      "Crear cuenta local",
-                      style: TextStyle(
+                    Text(
+                      AppLocalizations.of(context)!
+                          .welcomeScreenCreateAccountLocal,
+                      style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
@@ -46,8 +49,9 @@ class LocalProfessionalRegisterView extends ConsumerWidget {
                         10,
                       ),
                     ),
-                    const Text(
-                        "Recuerda, tus datos permanecerán guardados en la carpeta de documentos de tu equipo, mantén copias de seguridad constantes del archivo 'aronnax_localDB.sqlite'. Cualquier daño o pérdida hará de tus datos irrecuperables."),
+                    Text(
+                      AppLocalizations.of(context)!.welcomeScreenRememberData,
+                    ),
                     const Padding(
                       padding: EdgeInsets.all(10),
                     ),
@@ -56,6 +60,8 @@ class LocalProfessionalRegisterView extends ConsumerWidget {
                         Navigator.pop(context);
                       },
                       icon: const Icon(Icons.arrow_back),
+                      tooltip: AppLocalizations.of(context)!
+                          .welcomeScreenBackButtonTooltip,
                     ),
                   ],
                 ),

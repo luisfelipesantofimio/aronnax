@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/presentation/professional_register/local_professional_register_view.dart';
 import 'package:aronnax/src/presentation/welcome_screens/create_server.dart';
 import 'package:aronnax/src/presentation/welcome_screens/server_config.dart';
@@ -16,17 +17,20 @@ class SecondWelcome extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Text(
-              "¿Qué deseas hacer?",
+              AppLocalizations.of(context)!.welcomeScreenWhatToDo,
               style: GoogleFonts.montserrat(
-                  fontSize: 35, fontWeight: FontWeight.bold),
+                fontSize: 35,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            const Padding(
-              padding: EdgeInsets.only(
+            Padding(
+              padding: const EdgeInsets.only(
                 left: 30,
                 right: 30,
               ),
               child: Text(
-                  "Aronnax requiere de una base de datos para guardar toda la información que registras en tus consultas. Puedes conectarte a un servidor externo con una basde datos SQL ya configurada o simplemente almacenar la base de datos directamente en tu computadora."),
+                AppLocalizations.of(context)!.welcomeScreenDatabaseDescription,
+              ),
             ),
             const Image(
               height: 300,
@@ -41,14 +45,16 @@ class SecondWelcome extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        "Configurar un nuevo servidor",
+                        AppLocalizations.of(context)!
+                            .welcomeScreenConfigureNewServer,
                         style: GoogleFonts.montserrat(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
-                        "Si es la primera vez que utilizas Aronnax, elije esta opción para que configuremos todo por ti.",
+                        AppLocalizations.of(context)!
+                            .welcomeScreenConfigureNewServerDescription,
                         style: GoogleFonts.montserrat(
                           fontSize: 15,
                         ),
@@ -75,12 +81,16 @@ class SecondWelcome extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        "Conectarme a un servidor existente",
+                        AppLocalizations.of(context)!
+                            .welcomeScreenConnectToExistingServer,
                         style: GoogleFonts.montserrat(
-                            fontSize: 20, fontWeight: FontWeight.bold),
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       Text(
-                        "Si ya haz utilizado y configurado Aronnax para tu equipo o para ti, elije esta opción para conectarte.",
+                        AppLocalizations.of(context)!
+                            .welcomeScreenConnectToExistingServerDescription,
                         style: GoogleFonts.montserrat(
                           fontSize: 15,
                         ),
@@ -113,21 +123,22 @@ class SecondWelcome extends StatelessWidget {
                   ),
                 );
               },
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "Almacenaré la información en mi computadora.",
-                    style: TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.bold),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(
-                      10,
+                    AppLocalizations.of(context)!
+                        .welcomeScreenStoreInfoOnMyComputer,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Icon(Icons.arrow_forward),
+                  const Padding(
+                    padding: EdgeInsets.all(10),
+                  ),
+                  const Icon(Icons.arrow_forward),
                 ],
               ),
             )
