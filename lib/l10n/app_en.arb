@@ -12,6 +12,9 @@
     },
     "genericErrorPasswordsDontMatch": "The passwords don´t match",
     "genericSelectionText": "Select an option",
+    "genericPatientSelectionTitlte": "Select a patient",
+    "genericSelectTitle": "Select",
+    "genericPatientTitle": "Patient",
     "continueButton": "Continue",
     "tryAgain": "Try again",
     "errorEmptyField": "The field is empty",
@@ -50,9 +53,9 @@
     "welcomeScreenCreateAccountLocal": "Create Local Account",
     "welcomeScreenRememberData": "Remember, your data will be saved in your computer''s documents folder. Make regular backups of the 'aronnax_localDB.sqlite' file. Any damage or loss will result in irrecoverable data.",
     "welcomeScreenWelcomeGreeting": "Hello {name}",
-    "@welcomeScreenWelcomeGreeting" : {
+    "@welcomeScreenWelcomeGreeting": {
         "placeholders": {
-            "name" : {
+            "name": {
                 "type": "String"
             }
         }
@@ -165,5 +168,29 @@
     "todoCreateTodoCategory": "Category",
     "todoCreateTodoCategoryListEmpty": "Here you will see your categories",
     "todoCreateTodoAdd": "Add",
-    "todoCreateTodoSave": "Save To-do"
+    "todoCreateTodoSave": "Save To-do",
+    "calendarEventGlobalTitleCreate" : "Schedule event",
+    "calendarEventGlobalTitleUpdate" : "Update event",
+    "calendarEventEmpty": "There are not events for this day.",
+    "calendarEventDeleted": "Event removed",
+    "calendarEventStatusTitle": "Event status",
+    "calendarEventStatusScheduled": "Scheduled",
+    "calendarEventStatusCanceled": "Canceled",
+    "calendarEventStatusDone": "Done",
+    "calendarEventWeeklyEvent" : "Weekly event",
+    "calendarEventIndividualEvent" : "Individual event",
+    "calendarEventTypeTitle": "Event type",
+    "calendarEventTypeMeeting": "Meeting",
+    "calendarEventTypeConsultation": "Consultation",
+    "calendarEventTypeFollowUp": "Follow-up",
+    "calendarEventFormDate": "Date",
+    "calendarEventFormTime": "Time",
+    "calendarEventFormDescription": "Event description",
+    "calendarEventFormNumberOfWeeks": "Number of weeks",
+    "calendarEventFormErrorNoPatientSelected": "You must select a patient",
+    "calendarEventFormErrorNoOptionsSelected": "You must select a status and a type of event",
+    "calendarEventFormErrorInvalidNumberOfWeeks": "Invalid value",
+    "calendarEventScheduleButtonTitle": "Schedule",
+    "calendarEventCreationConfirmationText": "Event created",
+    "calendarEventUpdateConfirmationText": "Event updated"
 }
