@@ -1,7 +1,8 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/calendar_repository_interface.dart';
 import 'package:aronnax/src/data/providers/appointments_provider.dart';
 import 'package:aronnax/src/domain/entities/calendar_event.dart';
-import 'package:aronnax/src/presentation/widgets/appointment_creation_dialog.dart';
+import 'package:aronnax/src/presentation/appointment_creation/appointment_creation_dialog.dart';
 import 'package:aronnax/src/presentation/widgets/event_list_element.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,8 +18,8 @@ class EventsListView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       child: filtedEventsList.isEmpty
-          ? const Center(
-              child: Text("No hay eventos para este día."),
+          ? Center(
+              child: Text(AppLocalizations.of(context)!.calendarEventEmpty),
             )
           : ListView.builder(
               shrinkWrap: true,
@@ -46,9 +47,10 @@ class EventsListView extends ConsumerWidget {
                         eventID: filtedEventsList[index].id, ref: ref);
                     ref.invalidate(appointmentsGlobalListProvider);
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
+                      SnackBar(
                         backgroundColor: Colors.green,
-                        content: Text('Evento eliminado.'),
+                        content: Text(
+                            AppLocalizations.of(context)!.calendarEventDeleted),
                       ),
                     );
                   },
