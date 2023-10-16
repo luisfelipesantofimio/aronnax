@@ -25,7 +25,7 @@ class _EventDateTimeSelectionState extends State<EventDateTimeSelection> {
       children: [
         Text(
           AppLocalizations.of(context)!.calendarEventFormDate,
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -51,17 +51,17 @@ class _EventDateTimeSelectionState extends State<EventDateTimeSelection> {
               child: Text(
                 AppLocalizations.of(context)!.genericSelectTitle,
                 style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                    const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
             ),
           ],
         ),
-        Padding(
+        const Padding(
           padding: EdgeInsets.all(10),
         ),
         Text(
           AppLocalizations.of(context)!.calendarEventFormTime,
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -80,7 +80,7 @@ class _EventDateTimeSelectionState extends State<EventDateTimeSelection> {
               child: Text(
                 AppLocalizations.of(context)!.genericSelectTitle,
                 style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                    const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
             ),
           ],

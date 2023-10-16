@@ -65,20 +65,15 @@ class LoginScreen extends ConsumerWidget {
                     const SizedBox(
                       width: 200,
                       child: Image(
-                        height: 300,
-                        image: true
-                            ? AssetImage("assets/img/aronnax-icon-dark.png")
-                            : AssetImage("assets/img/aronnax-icon-light.png"),
-                      ),
+                          height: 300,
+                          image:
+                              AssetImage("assets/img/aronnax-icon-dark.png")),
                     ),
                     Text(
                       "Aronnax",
                       style: GoogleFonts.montserrat(
-                        fontSize: 60,
-                        color: true
-                            ? const Color.fromARGB(255, 28, 28, 28)
-                            : const Color.fromARGB(255, 215, 215, 215),
-                      ),
+                          fontSize: 60,
+                          color: const Color.fromARGB(255, 28, 28, 28)),
                     ),
                   ],
                 ),
@@ -91,11 +86,8 @@ class LoginScreen extends ConsumerWidget {
                         Text(
                           "Version ${AppConstants.globalVersion}",
                           style: GoogleFonts.montserrat(
-                            fontSize: 15,
-                            color: true
-                                ? const Color.fromARGB(255, 28, 28, 28)
-                                : const Color.fromARGB(255, 215, 215, 215),
-                          ),
+                              fontSize: 15,
+                              color: const Color.fromARGB(255, 28, 28, 28)),
                         )
                       ],
                     ),
