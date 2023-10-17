@@ -1,4 +1,4 @@
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/patients_provider.dart';
@@ -44,9 +44,9 @@ class _CaseCreationDialogState extends ConsumerState<CaseCreationDialog> {
           padding: const EdgeInsets.all(20),
           child: ListView(
             children: [
-              const Text(
-                'New case',
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.caseCreationTitle,
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
                 ),
@@ -73,9 +73,13 @@ class _CaseCreationDialogState extends ConsumerState<CaseCreationDialog> {
                       }
                     },
                   ),
-                  Text(treatmentPlanActivated
-                      ? 'Case with treatment plan'
-                      : 'Case without treatment plan')
+                  Text(
+                    treatmentPlanActivated
+                        ? AppLocalizations.of(context)!
+                            .caseCreationWithTreatment
+                        : AppLocalizations.of(context)!
+                            .caseCreationWithoutTreatment,
+                  )
                 ],
               ),
               const Padding(
@@ -86,13 +90,16 @@ class _CaseCreationDialogState extends ConsumerState<CaseCreationDialog> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Add new treatment plan',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                    Text(
+                      AppLocalizations.of(context)!.caseCreationFormTitleAdd,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     treatmentPlanList.when(
                       data: (data) => DropdownButtonFormField(
-                        hint: const Text('Select a treatment plan'),
+                        hint: Text(
+                          AppLocalizations.of(context)!
+                              .caseCreationFormSelectTreatment,
+                        ),
                         items: data
                             .map(
                               (e) => DropdownMenuItem(
@@ -107,8 +114,8 @@ class _CaseCreationDialogState extends ConsumerState<CaseCreationDialog> {
                               .update((state) => value);
                         },
                       ),
-                      error: (error, stackTrace) =>
-                          const Text('Something went wrong'),
+                      error: (error, stackTrace) => Text(
+                          AppLocalizations.of(context)!.genericErrorMessage),
                       loading: () => const CircularProgressIndicator(),
                     ),
                   ],
@@ -118,7 +125,7 @@ class _CaseCreationDialogState extends ConsumerState<CaseCreationDialog> {
                 padding: EdgeInsets.all(10),
               ),
               GenericMinimalButton(
-                title: 'Save case',
+                title: AppLocalizations.of(context)!.genericSaveTitle,
                 onTap: () {
                   if (caseCreationFormKey.currentState!.validate()) {
                     ref.read(patientsRepositoryProvider).addPatientCase(
@@ -146,9 +153,10 @@ class _CaseCreationDialogState extends ConsumerState<CaseCreationDialog> {
                         ref.read(offlineStatusProvider).value!);
 
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
+                      SnackBar(
                         backgroundColor: Colors.green,
-                        content: Text('User case saved.'),
+                        content: Text(AppLocalizations.of(context)!
+                            .caseCreationFormSaveConfirmation),
                       ),
                     );
                     Navigator.pop(context);

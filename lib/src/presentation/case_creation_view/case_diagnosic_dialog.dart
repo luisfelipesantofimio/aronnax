@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/providers/icd_data_provider.dart';
 import 'package:aronnax/src/domain/entities/icd_data.dart';
 import 'package:aronnax/src/presentation/icd_view/icd_view.dart';
@@ -53,9 +54,10 @@ class _CaseDiagnosticDialogState extends ConsumerState<CaseDiagnosticDialog> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
-                          'The ICD diagnostic data is empty',
-                          style: TextStyle(
+                        Text(
+                          AppLocalizations.of(context)!
+                              .caseDiagnosticIcdDataEmpty,
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20),
                         ),
                         const Padding(
@@ -70,8 +72,8 @@ class _CaseDiagnosticDialogState extends ConsumerState<CaseDiagnosticDialog> {
                         ),
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.5,
-                          child: const Text(
-                              'If you want to assing the ICD code for your diagnostic impression, you must download the required data from the ICD provider.\n\nThis process can take a few minutes. Be patient.'),
+                          child: Text(AppLocalizations.of(context)!
+                              .caseDiagnosticIcdDescription),
                         ),
                         TextButton(
                           onPressed: () {
@@ -84,9 +86,9 @@ class _CaseDiagnosticDialogState extends ConsumerState<CaseDiagnosticDialog> {
                               ),
                             );
                           },
-                          child: const Text(
-                            'Continue',
-                            style: TextStyle(
+                          child: Text(
+                            AppLocalizations.of(context)!.continueButton,
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
                             ),
@@ -105,8 +107,9 @@ class _CaseDiagnosticDialogState extends ConsumerState<CaseDiagnosticDialog> {
                                   query = value;
                                 });
                               },
-                              decoration: const InputDecoration(
-                                  hintText: 'Search any term'),
+                              decoration: InputDecoration(
+                                  hintText: AppLocalizations.of(context)!
+                                      .caseDiagnosticSearchTerm),
                             ),
                             const Padding(
                               padding: EdgeInsets.all(10),
@@ -185,7 +188,8 @@ class _CaseDiagnosticDialogState extends ConsumerState<CaseDiagnosticDialog> {
                                               width: constrains.maxWidth * 0.4,
                                               child: Text(filteredList[index]
                                                       .definition ??
-                                                  'No definition found'),
+                                                  AppLocalizations.of(context)!
+                                                      .caseDiagnosticTermNotFound),
                                             ),
                                           ],
                                         ),
@@ -200,7 +204,8 @@ class _CaseDiagnosticDialogState extends ConsumerState<CaseDiagnosticDialog> {
                       },
                     );
             },
-            error: (error, stackTrace) => const Text('Something went wrong'),
+            error: (error, stackTrace) =>
+                Text(AppLocalizations.of(context)!.genericErrorMessage),
             loading: () => const CircularProgressIndicator(),
           ),
         ),

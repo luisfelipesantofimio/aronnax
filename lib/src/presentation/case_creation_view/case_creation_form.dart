@@ -1,4 +1,4 @@
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/providers/patients_provider.dart';
 import 'package:aronnax/src/domain/entities/icd_data.dart';
 import 'package:aronnax/src/presentation/case_creation_view/case_diagnosic_dialog.dart';
@@ -24,10 +24,13 @@ class _CaseCreationFormState extends ConsumerState<CaseCreationForm> {
         children: [
           TextFormField(
             maxLines: 3,
-            decoration: const InputDecoration(hintText: 'Motivo de consulta'),
+            decoration: InputDecoration(
+              hintText: AppLocalizations.of(context)!
+                  .caseCreationFormHintConsultationReason,
+            ),
             validator: (value) {
               if (value!.isEmpty) {
-                return 'El campo no puede estar vacío';
+                return AppLocalizations.of(context)!.errorEmptyField;
               }
               return null;
             },
@@ -43,9 +46,11 @@ class _CaseCreationFormState extends ConsumerState<CaseCreationForm> {
           TextFormField(
             maxLines: 3,
             decoration: InputDecoration(
-                hintText: 'Diagnóstico',
+                hintText: AppLocalizations.of(context)!
+                    .caseCreationFormTitleDiagnostic,
                 suffix: IconButton(
-                  tooltip: 'Buscar código CIE',
+                  tooltip:
+                      AppLocalizations.of(context)!.caseDiagnosticSearchTerm,
                   onPressed: () {
                     showDialog(
                       context: context,
@@ -70,7 +75,7 @@ class _CaseCreationFormState extends ConsumerState<CaseCreationForm> {
                 )),
             validator: (value) {
               if (value!.isEmpty) {
-                return 'El campo no puede estar vacío';
+                return AppLocalizations.of(context)!.genericErrorMessage;
               }
               return null;
             },
@@ -84,9 +89,10 @@ class _CaseCreationFormState extends ConsumerState<CaseCreationForm> {
             visible: selectedIcdCategory != null,
             child: Row(
               children: [
-                const Text(
-                  'Diagnóstico seleccionado: ',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                Text(
+                  AppLocalizations.of(context)!
+                      .caseCreationFormTitleSelectedDiagnostic,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text(
                     '${selectedIcdCategory == null ? '' : selectedIcdCategory!.title} (${selectedIcdCategory == null ? '' : selectedIcdCategory!.code})'),
@@ -117,11 +123,12 @@ class _CaseCreationFormState extends ConsumerState<CaseCreationForm> {
           ),
           TextFormField(
             maxLines: 3,
-            decoration:
-                const InputDecoration(hintText: 'Propuesta de tratamiento'),
+            decoration: InputDecoration(
+                hintText: AppLocalizations.of(context)!
+                    .caseCreationFormTitleTreatmentProposotion),
             validator: (value) {
               if (value!.isEmpty) {
-                return 'El campo no puede estar vacío';
+                return AppLocalizations.of(context)!.errorEmptyField;
               }
               return null;
             },
