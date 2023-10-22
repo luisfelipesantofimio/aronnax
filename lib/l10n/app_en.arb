@@ -208,6 +208,11 @@
     "caseDiagnosticIcdDataEmpty" : "The ICD diagnostic data is empty",
     "caseDiagnosticIcdDescription" : "If you want to assing the ICD code for your diagnostic impression, you must download the required data from the ICD provider. This process can take a few minutes. Be patient.",
     "caseDiagnosticSearchTerm" : "Search any term",
-    "caseDiagnosticTermNotFound" : "Term not found"
-
+    "caseDiagnosticTermNotFound" : "Term not found",
+    "treatmentPlanScreenTitle" : "Add treatment plan",
+    "treatmentPlanScreenOptionImport" : "Import treatment plan",
+    "treatmentPlanScreenImportConfirmation":"Imported treatment plan",
+    "treatmentPlanListNumberOfPhases" : "Number of phases",
+    "treatmentPlanListFileExportedPath" : "File exported path",
+    "treatmentPlanListDeleteConfirmation": "Treatment plan deleted"
 }

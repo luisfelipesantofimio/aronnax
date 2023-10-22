@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/io_repository_interface.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/interfaces/treatment_plans_repository_interface.dart';
@@ -30,7 +31,7 @@ class TreatmentPlansView extends ConsumerWidget {
             children: [
               GenericIconButton(
                 icon: FontAwesomeIcons.bookOpen,
-                title: 'Add treatment plan',
+                title: AppLocalizations.of(context)!.treatmentPlanScreenTitle,
                 onTap: () {
                   Navigator.push(
                     context,
@@ -43,7 +44,8 @@ class TreatmentPlansView extends ConsumerWidget {
               ),
               GenericIconButton(
                 icon: FontAwesomeIcons.fileImport,
-                title: 'Import treatment plan',
+                title: AppLocalizations.of(context)!
+                    .treatmentPlanScreenOptionImport,
                 onTap: () async {
                   FilePickerResult? result =
                       await FilePicker.platform.pickFiles(
@@ -72,8 +74,8 @@ class TreatmentPlansView extends ConsumerWidget {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           backgroundColor: Colors.green,
-                          content:
-                              Text('Imported treatment plan: ${data.title}'),
+                          content: Text(
+                              '${AppLocalizations.of(context)!.treatmentPlanScreenImportConfirmation}: ${data.title}'),
                         ),
                       );
                     });
@@ -104,12 +106,15 @@ class TreatmentPlansView extends ConsumerWidget {
                   child: Row(
                     children: [
                       SizedBox(
-                          width: 300,
-                          child: Text('Something went wrong: $error')),
+                        width: 300,
+                        child: Text(
+                          AppLocalizations.of(context)!.genericErrorMessage,
+                        ),
+                      ),
                       TextButton(
                         onPressed: () =>
                             ref.invalidate(treatmentPlanListProvider),
-                        child: const Text('Try again'),
+                        child: Text(AppLocalizations.of(context)!.tryAgain),
                       ),
                     ],
                   ),
