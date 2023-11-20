@@ -1,5 +1,4 @@
-import 'dart:developer';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/interfaces/treatment_plans_repository_interface.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
@@ -103,10 +102,12 @@ class _TreatmentPlanCreationViewState
                                         } else {
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
-                                            const SnackBar(
+                                            SnackBar(
                                               backgroundColor: Colors.red,
                                               content: Text(
-                                                  'There must be at least one section!'),
+                                                AppLocalizations.of(context)!
+                                                    .treatmentPlanCreationError,
+                                              ),
                                             ),
                                           );
                                         }
@@ -132,7 +133,8 @@ class _TreatmentPlanCreationViewState
                                       sectionTitle: sectionList[index].name,
                                       sectionDescription:
                                           sectionList[index].description ??
-                                              'No description',
+                                              AppLocalizations.of(context)!
+                                                  .genericNoDescription,
                                       onTap: () {
                                         setState(() {
                                           selectedSectionIndex = index;
@@ -162,9 +164,10 @@ class _TreatmentPlanCreationViewState
                                 ),
                               );
                             },
-                            child: const Row(
+                            child: Row(
                               children: [
-                                Text('Add section'),
+                                Text(AppLocalizations.of(context)!
+                                    .treatmentPlanCreationTitleAddSection),
                                 Icon(
                                   Icons.add,
                                 ),
@@ -177,7 +180,10 @@ class _TreatmentPlanCreationViewState
                         padding: EdgeInsets.all(20),
                       ),
                       decodedComponents.isEmpty
-                          ? const Text('Aún no seleccionas componentes')
+                          ? Text(
+                              AppLocalizations.of(context)!
+                                  .treatmentPlanCreationErrorNoSelectedComponent,
+                            )
                           : SizedBox(
                               height: MediaQuery.of(context).size.height * 0.7,
                               child: ListView.builder(
@@ -254,7 +260,8 @@ class _TreatmentPlanCreationViewState
                       width: MediaQuery.sizeOf(context).width * 0.1,
                       child: GenericIconButton(
                         icon: Icons.add,
-                        title: 'New component',
+                        title: AppLocalizations.of(context)!
+                            .treatmentPlanCreationTitleNewComponent,
                         onTap: () {
                           setState(() {
                             componentSelectionItemSelected = true;
@@ -291,7 +298,6 @@ class _TreatmentPlanCreationViewState
                                   id: sectionList[selectedSectionIndex]
                                       .components
                                       .length);
-                              log('Componente guardado con id: ${newComponent.id}');
                               sectionList[selectedSectionIndex]
                                   .components
                                   .add(newComponent);
@@ -344,16 +350,20 @@ class _TreatmentPlanCreationViewState
                       ),
                       GenericMinimalButton(
                         title: widget.treatmentPlanData == null
-                            ? 'Save treatment plan'
-                            : 'Update treatment plan',
+                            ? AppLocalizations.of(context)!
+                                .treatmentPlanCreationButtonTitleSave
+                            : AppLocalizations.of(context)!
+                                .treatmentPlanCreationButtonTitleUpdate,
                         onTap: () {
                           if (treatmentPlanTitle == null ||
                               treatmentPlanDescription == null) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
+                              SnackBar(
                                 backgroundColor: Colors.red,
                                 content: Text(
-                                    'You must set a title and description'),
+                                  AppLocalizations.of(context)!
+                                      .treatmentPlanCreationErrorNoTitleDescription,
+                                ),
                               ),
                             );
                           } else {
@@ -375,9 +385,12 @@ class _TreatmentPlanCreationViewState
                                   );
                               ref.invalidate(treatmentPlanListProvider);
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
+                                SnackBar(
                                   backgroundColor: Colors.green,
-                                  content: Text('Treatment plan created!'),
+                                  content: Text(
+                                    AppLocalizations.of(context)!
+                                        .treatmentPlanCreationMessageTreamentPlanCreated,
+                                  ),
                                 ),
                               );
                               Navigator.pop(context);
@@ -391,9 +404,10 @@ class _TreatmentPlanCreationViewState
                               ref.invalidate(treatmentPlanListProvider);
                               Navigator.pop(context);
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
+                                SnackBar(
                                   backgroundColor: Colors.green,
-                                  content: Text('Treatment plan updated!'),
+                                  content: Text(AppLocalizations.of(context)!
+                                      .treatmentPlanCreationMessageTreamentPlanUpdated),
                                 ),
                               );
                             }
