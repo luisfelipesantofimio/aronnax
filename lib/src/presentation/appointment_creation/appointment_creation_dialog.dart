@@ -87,7 +87,7 @@ class _AppointmentCreationDialogState
   Widget build(BuildContext context) {
     return Dialog(
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.5,
+        // height: MediaQuery.of(context).size.height * 0.5,
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(
             Radius.circular(10),
@@ -106,6 +106,7 @@ class _AppointmentCreationDialogState
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     EventDaysSelector(

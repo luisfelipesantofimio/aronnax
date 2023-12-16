@@ -23,6 +23,7 @@ class _EventStatusSelectorState extends ConsumerState<EventStatusSelector> {
     return SizedBox(
       width: 300,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(AppLocalizations.of(context)!.calendarEventStatusTitle),

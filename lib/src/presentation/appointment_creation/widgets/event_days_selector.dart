@@ -37,6 +37,7 @@ class _EventDaysSelectorState extends State<EventDaysSelector> {
         Visibility(
           visible: widget.eventData == null,
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(multiEventSelection
