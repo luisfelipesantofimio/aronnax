@@ -26,7 +26,7 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
   List<Gender> genders = [];
   bool patientFound = false;
   @override
-  void initState() {
+  void didChangeDependencies() {
     setState(() {
       genders = [
         Gender(
@@ -41,7 +41,7 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
             name: AppLocalizations.of(context)!.registerFormOtherOption),
       ];
     });
-    super.initState();
+    super.didChangeDependencies();
   }
 
   @override
