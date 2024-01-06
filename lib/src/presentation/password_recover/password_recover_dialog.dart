@@ -21,14 +21,21 @@ class _PasswordRecoverDialogState extends ConsumerState<PasswordRecoverDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+      elevation: 20,
       child: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.2,
+        //TODO: continue testing components and creating their own themes
         width: MediaQuery.of(context).size.width * 0.4,
         child: Form(
           key: formKey,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(20),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
