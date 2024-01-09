@@ -51,11 +51,34 @@ class GlobalThemes {
     );
   }
 
+//TODO: Fix switch and colors
   static ThemeData get lightTheme {
     return ThemeData(
-      primaryColor: CustomDarkColors.accentColorCustom,
+      dialogTheme: const DialogTheme(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
+        ),
+        surfaceTintColor: CustomLightColors.background,
+        actionsPadding: EdgeInsets.all(10),
+        shadowColor: Colors.grey,
+      ),
+      colorScheme: const ColorScheme(
+          brightness: Brightness.light,
+          primary: CustomLightColors.primary,
+          onPrimary: Colors.black,
+          secondary: CustomLightColors.secondary,
+          onSecondary: Colors.black,
+          error: Colors.red,
+          onError: Colors.white,
+          background: CustomLightColors.background,
+          onBackground: Colors.black,
+          surface: CustomLightColors.background,
+          onSurface: Colors.black),
+      primaryColor: CustomLightColors.primary,
       scaffoldBackgroundColor: CustomLightColors.background,
-      iconTheme: const IconThemeData(color: CustomLightColors.buttonColor),
+      iconTheme: const IconThemeData(color: CustomLightColors.textColor),
       //Form custom theme
       inputDecorationTheme: const InputDecorationTheme(
         errorBorder: OutlineInputBorder(
@@ -64,7 +87,7 @@ class GlobalThemes {
           ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: CustomLightColors.barColor),
+          borderSide: BorderSide(color: CustomLightColors.secondary),
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
@@ -78,9 +101,11 @@ class GlobalThemes {
       //Text custom theme
       textTheme: TextTheme(
         bodyLarge: GoogleFonts.montserrat(
-            color: CustomLightColors.textColor, fontSize: 20),
+            color: CustomLightColors.textColor, fontSize: 18),
         bodyMedium: GoogleFonts.montserrat(
             color: CustomLightColors.textColor, fontSize: 15),
+        bodySmall: GoogleFonts.montserrat(
+            color: CustomLightColors.textColor, fontSize: 12),
         displayLarge: GoogleFonts.montserrat(
             color: CustomLightColors.textColor, fontSize: 40),
         displayMedium: GoogleFonts.montserrat(
