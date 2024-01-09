@@ -46,7 +46,7 @@ class LoginScreen extends ConsumerWidget {
                 topRight: Radius.circular(50),
                 bottomRight: Radius.circular(30),
               ),
-              color: Theme.of(context).colorScheme.background,
+              color: Theme.of(context).colorScheme.secondary,
               boxShadow: const [
                 BoxShadow(
                   spreadRadius: 2.0,
