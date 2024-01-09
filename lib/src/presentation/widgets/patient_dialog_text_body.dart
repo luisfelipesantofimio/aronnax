@@ -25,6 +25,7 @@ class PatientDialogTextBody extends StatelessWidget {
           SizedBox(
             width: constrains.maxWidth * 0.2,
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
