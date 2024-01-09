@@ -168,7 +168,7 @@ class _TreatmentPlanCreationViewState
                               children: [
                                 Text(AppLocalizations.of(context)!
                                     .treatmentPlanCreationTitleAddSection),
-                                Icon(
+                                const Icon(
                                   Icons.add,
                                 ),
                               ],

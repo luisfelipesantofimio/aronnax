@@ -21,11 +21,13 @@ class _EventDateTimeSelectionState extends State<EventDateTimeSelection> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           AppLocalizations.of(context)!.calendarEventFormDate,
-          style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          style:
+              const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -50,8 +52,8 @@ class _EventDateTimeSelectionState extends State<EventDateTimeSelection> {
               },
               child: Text(
                 AppLocalizations.of(context)!.genericSelectTitle,
-                style:
-                    const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
               ),
             ),
           ],
@@ -61,7 +63,8 @@ class _EventDateTimeSelectionState extends State<EventDateTimeSelection> {
         ),
         Text(
           AppLocalizations.of(context)!.calendarEventFormTime,
-          style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          style:
+              const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -79,8 +82,8 @@ class _EventDateTimeSelectionState extends State<EventDateTimeSelection> {
               },
               child: Text(
                 AppLocalizations.of(context)!.genericSelectTitle,
-                style:
-                    const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
               ),
             ),
           ],

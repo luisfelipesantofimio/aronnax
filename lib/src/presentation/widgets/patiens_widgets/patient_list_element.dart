@@ -16,6 +16,7 @@ class PatientListElement extends StatelessWidget {
       onTap: () {
         showDialog(
           context: context,
+          //TODO: Fix dialog size
           builder: (context) => PatientsDialogView(patientData: patientData),
         );
       },
@@ -47,16 +48,16 @@ class PatientListElement extends StatelessWidget {
           ),
           child: LayoutBuilder(
             builder: (context, constraints) {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
+              return ListView(
                 children: [
                   Row(
+                    mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Container(
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: AppMethods().randomColorGenerator()),
+                            color: AppMethods.randomColorGenerator()),
                         child: Padding(
                           padding: const EdgeInsets.all(20),
                           child: Center(
@@ -93,6 +94,7 @@ class PatientListElement extends StatelessWidget {
                     padding: EdgeInsets.all(5),
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Column(

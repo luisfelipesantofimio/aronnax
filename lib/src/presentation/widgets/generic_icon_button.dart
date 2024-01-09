@@ -23,7 +23,7 @@ class GenericIconButton extends StatelessWidget {
                 10,
               ),
             ),
-            color: Theme.of(context).colorScheme.onPrimary,
+            color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
           ),
           child: Center(
             child: Padding(

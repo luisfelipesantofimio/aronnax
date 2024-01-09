@@ -181,7 +181,7 @@ class AppMethods {
   }
 
   /// Just returns a random color for any purpose
-  Color randomColorGenerator() {
+  static Color randomColorGenerator() {
     List<Color> colorsList = [
       const Color.fromARGB(255, 138, 193, 238),
       const Color.fromARGB(255, 152, 241, 169),

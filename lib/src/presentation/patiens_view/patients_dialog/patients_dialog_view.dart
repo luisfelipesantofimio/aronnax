@@ -40,287 +40,303 @@ class _PatientsDialogViewState extends ConsumerState<PatientsDialogView> {
         width: MediaQuery.of(context).size.width * 0.45,
         child: Padding(
           padding: const EdgeInsets.all(20),
-          child: LayoutBuilder(
-            builder: (context, constrains) => Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+          child: ListView(
+            shrinkWrap: true,
+            children: [
+              LayoutBuilder(
+                builder: (context, constrains) => Column(
                   mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      width: constrains.maxWidth * 0.6,
-                      child: Text(
-                        '${widget.patientData.names} ${widget.patientData.lastNames}',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 40,
-                        ),
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.all(10),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Row(
-                          children: [
-                            Text(
-                              DateFormat('dd/MM/yyyy')
-                                  .format(widget.patientData.birthDate),
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.all(10),
-                            ),
-                            Icon(
-                              AppMethods()
-                                  .getUserGenderIcon(widget.patientData.gender),
-                            ),
-                          ],
-                        ),
                         SizedBox(
-                          width: constrains.maxWidth * 0.2,
+                          width: constrains.maxWidth * 0.6,
                           child: Text(
-                              '${widget.patientData.city}, ${widget.patientData.state}'),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                const Divider(),
-                Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        PatientDialogTextBody(
-                          title: 'ID',
-                          body: widget.patientData.idNumber.toString(),
-                          title2: 'Contact number',
-                          body2: widget.patientData.contactNumber.toString(),
-                          constrains: constrains,
-                        ),
-                        PatientDialogTextBody(
-                          constrains: constrains,
-                          title: 'E-mail',
-                          body: widget.patientData.mail,
-                          title2: 'Adress',
-                          body2: widget.patientData.adress,
-                        ),
-                        PatientDialogTextBody(
-                          constrains: constrains,
-                          title: 'Educational level',
-                          body: widget.patientData.education,
-                          title2: 'Ocupation',
-                          body2: widget.patientData.ocupation,
-                        ),
-                        PatientDialogTextBody(
-                          constrains: constrains,
-                          title: 'Health provider',
-                          body: widget.patientData.insurance,
-                          title2: 'Emergency contact name',
-                          body2: widget.patientData.emergencyContactName,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Emergency contact number',
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                            '${widget.patientData.names} ${widget.patientData.lastNames}',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 40,
                             ),
-                            Text(
-                              widget.patientData.emergencyContactNumber
-                                  .toString(),
-                            ),
-                          ],
+                          ),
                         ),
                         const Padding(
                           padding: EdgeInsets.all(10),
                         ),
-                        Row(
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               children: [
                                 Text(
-                                  widget.patientData.isActive
-                                      ? 'Active user'
-                                      : 'Inactive user',
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                  DateFormat('dd/MM/yyyy')
+                                      .format(widget.patientData.birthDate),
                                 ),
-                                Switch(
-                                  value: widget.patientData.isActive,
-                                  onChanged: (value) {
-                                    ref
-                                        .read(patientsRepositoryProvider)
-                                        .updateLocalPatientActiveState(
-                                            ref,
-                                            widget.patientData.id,
-                                            !widget.patientData.isActive,
-                                            ref
-                                                .read(offlineStatusProvider)
-                                                .value!);
-                                    ref.invalidate(patientsListProvider);
-                                  },
-                                )
+                                const Padding(
+                                  padding: EdgeInsets.all(10),
+                                ),
+                                Icon(
+                                  AppMethods().getUserGenderIcon(
+                                      widget.patientData.gender),
+                                ),
                               ],
                             ),
-                            const Padding(
-                              padding: EdgeInsets.all(20),
-                            ),
-                            IconButton(
-                              tooltip: 'Export patient data',
-                              onPressed: () async {
-                                final sessionData = await ref
-                                    .read(patientsRepositoryProvider)
-                                    .getPatientSessionsList(
-                                        ref, widget.patientData.id);
-                                final clinicHistoryData = await ref
-                                    .read(clinicHistoryRepositoryProvider)
-                                    .getPatientClinicHistoryFromConsumer(
-                                        ref, widget.patientData.id);
-
-                                final caseData = await ref
-                                    .read(patientsRepositoryProvider)
-                                    .getPatientCaseListFromConsumer(
-                                        ref, widget.patientData.id);
-                                String result = ref
-                                    .read(patientsRepositoryProvider)
-                                    .encodePatientData(
-                                      patientData: widget.patientData,
-                                      sessionData: sessionData,
-                                      clinicHistory: clinicHistoryData,
-                                      caseData: caseData,
-                                    );
-                                File contentsToFile = await ref
-                                    .read(ioRepositoryProvider)
-                                    .exportToTextFile(
-                                      fileName:
-                                          '${widget.patientData.names}-${widget.patientData.lastNames}-data',
-                                      contents: result,
-                                    );
-                                String fileKey =
-                                    AppMethods().codeGeneration(32);
-                                ref.read(ioRepositoryProvider).encryptFile(
-                                      input: contentsToFile,
-                                      encryptionKey: fileKey,
-                                    );
-                                Future(() {
-                                  String fileName =
-                                      contentsToFile.path.split('/').last;
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) => ExportPasswordDialog(
-                                      fileName: fileName,
-                                      password: fileKey,
-                                    ),
-                                  );
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      showCloseIcon: true,
-                                      duration: const Duration(minutes: 2),
-                                      backgroundColor: Colors.green,
-                                      content: Text(
-                                          'Data exported to ${contentsToFile.path.replaceFirst(fileName, '')}'),
-                                    ),
-                                  );
-                                });
-                              },
-                              icon: const Icon(Icons.download),
-                            ),
-                            IconButton(
-                              tooltip: 'Delete patient',
-                              onPressed: () {
-                                ref
-                                    .read(patientsRepositoryProvider)
-                                    .deletePatientData(
-                                        ref, widget.patientData.id);
-                                Navigator.pop(context);
-                              },
-                              icon: const Icon(Icons.delete),
+                            SizedBox(
+                              width: constrains.maxWidth * 0.2,
+                              child: Text(
+                                  '${widget.patientData.city}, ${widget.patientData.state}'),
                             ),
                           ],
                         ),
                       ],
                     ),
-                    clinicHistoryList.when(
-                      data: (data) => data.isEmpty
-                          ? TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        ClinicHistoryRegisterView(
-                                            patientData: widget.patientData),
-                                  ),
-                                );
-                              },
-                              child: const Text(
-                                'Create clinic history',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            )
-                          : Column(
+                    const Divider(),
+                    Row(
+                      children: [
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            PatientDialogTextBody(
+                              title: 'ID',
+                              body: widget.patientData.idNumber.toString(),
+                              title2: 'Contact number',
+                              body2:
+                                  widget.patientData.contactNumber.toString(),
+                              constrains: constrains,
+                            ),
+                            PatientDialogTextBody(
+                              constrains: constrains,
+                              title: 'E-mail',
+                              body: widget.patientData.mail,
+                              title2: 'Adress',
+                              body2: widget.patientData.adress,
+                            ),
+                            PatientDialogTextBody(
+                              constrains: constrains,
+                              title: 'Educational level',
+                              body: widget.patientData.education,
+                              title2: 'Ocupation',
+                              body2: widget.patientData.ocupation,
+                            ),
+                            PatientDialogTextBody(
+                              constrains: constrains,
+                              title: 'Health provider',
+                              body: widget.patientData.insurance,
+                              title2: 'Emergency contact name',
+                              body2: widget.patientData.emergencyContactName,
+                            ),
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                TextButton(
+                                const Text(
+                                  'Emergency contact number',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  widget.patientData.emergencyContactNumber
+                                      .toString(),
+                                ),
+                              ],
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.all(10),
+                            ),
+                            Row(
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      widget.patientData.isActive
+                                          ? 'Active user'
+                                          : 'Inactive user',
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Switch(
+                                      value: widget.patientData.isActive,
+                                      onChanged: (value) {
+                                        ref
+                                            .read(patientsRepositoryProvider)
+                                            .updateLocalPatientActiveState(
+                                                ref,
+                                                widget.patientData.id,
+                                                !widget.patientData.isActive,
+                                                ref
+                                                    .read(offlineStatusProvider)
+                                                    .value!);
+                                        ref.invalidate(patientsListProvider);
+                                      },
+                                    )
+                                  ],
+                                ),
+                                const Padding(
+                                  padding: EdgeInsets.all(20),
+                                ),
+                                IconButton(
+                                  tooltip: 'Export patient data',
+                                  onPressed: () async {
+                                    final sessionData = await ref
+                                        .read(patientsRepositoryProvider)
+                                        .getPatientSessionsList(
+                                            ref, widget.patientData.id);
+                                    final clinicHistoryData = await ref
+                                        .read(clinicHistoryRepositoryProvider)
+                                        .getPatientClinicHistoryFromConsumer(
+                                            ref, widget.patientData.id);
+
+                                    final caseData = await ref
+                                        .read(patientsRepositoryProvider)
+                                        .getPatientCaseListFromConsumer(
+                                            ref, widget.patientData.id);
+                                    String result = ref
+                                        .read(patientsRepositoryProvider)
+                                        .encodePatientData(
+                                          patientData: widget.patientData,
+                                          sessionData: sessionData,
+                                          clinicHistory: clinicHistoryData,
+                                          caseData: caseData,
+                                        );
+                                    File contentsToFile = await ref
+                                        .read(ioRepositoryProvider)
+                                        .exportToTextFile(
+                                          fileName:
+                                              '${widget.patientData.names}-${widget.patientData.lastNames}-data',
+                                          contents: result,
+                                        );
+                                    String fileKey =
+                                        AppMethods().codeGeneration(32);
+                                    ref.read(ioRepositoryProvider).encryptFile(
+                                          input: contentsToFile,
+                                          encryptionKey: fileKey,
+                                        );
+                                    Future(() {
+                                      String fileName =
+                                          contentsToFile.path.split('/').last;
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) =>
+                                            ExportPasswordDialog(
+                                          fileName: fileName,
+                                          password: fileKey,
+                                        ),
+                                      );
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          showCloseIcon: true,
+                                          duration: const Duration(minutes: 2),
+                                          backgroundColor: Colors.green,
+                                          content: Text(
+                                              'Data exported to ${contentsToFile.path.replaceFirst(fileName, '')}'),
+                                        ),
+                                      );
+                                    });
+                                  },
+                                  icon: const Icon(Icons.download),
+                                ),
+                                IconButton(
+                                  tooltip: 'Delete patient',
                                   onPressed: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => CaseCreationDialog(
-                                          patientData: widget.patientData),
+                                    ref
+                                        .read(patientsRepositoryProvider)
+                                        .deletePatientData(
+                                            ref, widget.patientData.id);
+                                    Navigator.pop(context);
+                                  },
+                                  icon: const Icon(Icons.delete),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        clinicHistoryList.when(
+                          data: (data) => data.isEmpty
+                              ? TextButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            ClinicHistoryRegisterView(
+                                                patientData:
+                                                    widget.patientData),
+                                      ),
                                     );
-                                    ref.invalidate(patientCaseListProvider);
                                   },
                                   child: const Text(
-                                    'Create new case',
+                                    'Create clinic history',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black,
                                     ),
                                   ),
-                                ),
-                                Visibility(
-                                  visible: data.isNotEmpty,
-                                  child: TextButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => PatientCaseView(
-                                              patiendData: widget.patientData),
-                                        ),
-                                      );
-                                    },
-                                    child: SizedBox(
-                                      width: constrains.minWidth * 0.3,
+                                )
+                              : Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    TextButton(
+                                      onPressed: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) =>
+                                              CaseCreationDialog(
+                                                  patientData:
+                                                      widget.patientData),
+                                        );
+                                        ref.invalidate(patientCaseListProvider);
+                                      },
                                       child: const Text(
-                                        'Go to current patient information',
+                                        'Create new case',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Colors.black,
                                         ),
                                       ),
                                     ),
-                                  ),
+                                    Visibility(
+                                      visible: data.isNotEmpty,
+                                      child: TextButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  PatientCaseView(
+                                                      patiendData:
+                                                          widget.patientData),
+                                            ),
+                                          );
+                                        },
+                                        child: SizedBox(
+                                          width: constrains.minWidth * 0.3,
+                                          child: const Text(
+                                            'Go to current patient information',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                      error: (error, stackTrace) =>
-                          const Text('There was an error'),
-                      loading: () => const CircularProgressIndicator(),
+                          error: (error, stackTrace) =>
+                              const Text('There was an error'),
+                          loading: () => const CircularProgressIndicator(),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
