@@ -13,6 +13,7 @@
   "genericErrorPasswordsDontMatch": "The passwords don´t match",
   "genericSelectionText": "Select an option",
   "genericPatientSelectionTitlte": "Select a patient",
+  "genericPatientNameTitle": "Patient name",
   "genericNoDescription": "No description",
   "genericTitleYourTitle": "Your title",
   "genericSelectTitle": "Select",
