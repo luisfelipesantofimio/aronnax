@@ -11,9 +11,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PasswordRecoverForm extends ConsumerStatefulWidget {
   const PasswordRecoverForm({
-    Key? key,
+    super.key,
     required this.professionalData,
-  }) : super(key: key);
+  });
 
   final Professional professionalData;
 

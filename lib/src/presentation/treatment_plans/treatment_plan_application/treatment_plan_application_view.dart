@@ -17,12 +17,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TreatmentPlanApplicationView extends ConsumerStatefulWidget {
   const TreatmentPlanApplicationView({
-    Key? key,
+    super.key,
     required this.treatmentPlanData,
     required this.caseData,
     required this.patientSessionAmount,
     required this.onResultsSaving,
-  }) : super(key: key);
+  });
   final TreatmentPlan treatmentPlanData;
   final PatientCase caseData;
   final int patientSessionAmount;

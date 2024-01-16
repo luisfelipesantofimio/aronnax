@@ -8,10 +8,10 @@ import 'package:flutter/material.dart';
 
 class ComponentSelectionItem extends StatefulWidget {
   const ComponentSelectionItem({
-    Key? key,
+    super.key,
     required this.onComponentSelected,
     required this.sectionIndex,
-  }) : super(key: key);
+  });
   final Function(TreatmentPlanComponent component) onComponentSelected;
   final int sectionIndex;
 

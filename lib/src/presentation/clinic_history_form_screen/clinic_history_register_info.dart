@@ -5,10 +5,10 @@ import 'package:intl/intl.dart';
 
 class ClinicHistoryRegisterInformation extends ConsumerWidget {
   const ClinicHistoryRegisterInformation({
-    Key? key,
+    super.key,
     required this.patientName,
     required this.registerCode,
-  }) : super(key: key);
+  });
 
   final String patientName;
   final String registerCode;

@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 
 class GenericGlobalButton extends StatefulWidget {
   const GenericGlobalButton(
-      {Key? key,
+      {super.key,
       required this.height,
       required this.width,
       required this.title,
-      required this.onPressed})
-      : super(key: key);
+      required this.onPressed});
   final double height;
   final double width;
   final String title;

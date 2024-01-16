@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MenuSettingsOptionContainer extends StatefulWidget {
-  const MenuSettingsOptionContainer({Key? key}) : super(key: key);
+  const MenuSettingsOptionContainer({super.key});
 
   @override
   State<MenuSettingsOptionContainer> createState() =>

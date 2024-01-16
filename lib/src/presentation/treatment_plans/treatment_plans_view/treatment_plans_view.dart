@@ -15,7 +15,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TreatmentPlansView extends ConsumerWidget {
-  const TreatmentPlansView({Key? key}) : super(key: key);
+  const TreatmentPlansView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

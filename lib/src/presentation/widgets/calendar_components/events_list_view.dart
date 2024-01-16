@@ -9,9 +9,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class EventsListView extends ConsumerWidget {
   const EventsListView({
-    Key? key,
+    super.key,
     required this.filtedEventsList,
-  }) : super(key: key);
+  });
   final List<CalendarEvent> filtedEventsList;
 
   @override

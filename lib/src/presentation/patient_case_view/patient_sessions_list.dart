@@ -7,10 +7,10 @@ import 'package:intl/intl.dart';
 
 class PatientSessionsList extends ConsumerWidget {
   const PatientSessionsList({
-    Key? key,
+    super.key,
     required this.patientId,
     required this.caseId,
-  }) : super(key: key);
+  });
   final int patientId;
   final int caseId;
 

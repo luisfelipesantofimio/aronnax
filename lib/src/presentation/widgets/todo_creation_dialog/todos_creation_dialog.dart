@@ -8,7 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TodosCreationDialog extends ConsumerStatefulWidget {
-  const TodosCreationDialog({Key? key}) : super(key: key);
+  const TodosCreationDialog({super.key});
 
   @override
   ConsumerState<TodosCreationDialog> createState() =>

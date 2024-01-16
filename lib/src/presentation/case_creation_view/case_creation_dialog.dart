@@ -13,8 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CaseCreationDialog extends ConsumerStatefulWidget {
-  const CaseCreationDialog({Key? key, required this.patientData})
-      : super(key: key);
+  const CaseCreationDialog({super.key, required this.patientData});
   final Patient patientData;
 
   @override

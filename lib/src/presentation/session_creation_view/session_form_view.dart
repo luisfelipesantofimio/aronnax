@@ -19,11 +19,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SessionFormView extends ConsumerStatefulWidget {
   const SessionFormView({
-    Key? key,
+    super.key,
     required this.patientData,
     required this.patientCaseData,
     required this.patientSessionAmount,
-  }) : super(key: key);
+  });
   final Patient patientData;
   final PatientCase patientCaseData;
   final int patientSessionAmount;

@@ -15,8 +15,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AppointmentCreationDialog extends ConsumerStatefulWidget {
   const AppointmentCreationDialog(
-      {Key? key, required this.selectedDate, required this.eventData})
-      : super(key: key);
+      {super.key, required this.selectedDate, required this.eventData});
   final DateTime selectedDate;
   final CalendarEvent? eventData;
 

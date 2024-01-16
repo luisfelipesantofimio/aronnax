@@ -10,7 +10,7 @@ import 'package:aronnax/src/presentation/core/methods.dart';
 
 class EventListElement extends ConsumerStatefulWidget {
   const EventListElement({
-    Key? key,
+    super.key,
     required this.date,
     required this.eventStates,
     required this.calendarEventType,
@@ -18,7 +18,7 @@ class EventListElement extends ConsumerStatefulWidget {
     required this.patientId,
     required this.onDelete,
     required this.onUpdate,
-  }) : super(key: key);
+  });
   final DateTime date;
   final CalendarEventStates eventStates;
   final CalendarEventType calendarEventType;

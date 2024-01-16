@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ExistingServerForm extends ConsumerStatefulWidget {
-  const ExistingServerForm({Key? key}) : super(key: key);
+  const ExistingServerForm({super.key});
 
   @override
   ExistingServerFormState createState() => ExistingServerFormState();

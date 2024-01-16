@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FinishConfig extends StatelessWidget {
-  const FinishConfig({Key? key}) : super(key: key);
+  const FinishConfig({super.key});
 
   @override
   Widget build(BuildContext context) {

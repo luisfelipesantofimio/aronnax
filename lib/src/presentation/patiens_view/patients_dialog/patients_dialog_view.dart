@@ -19,8 +19,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 class PatientsDialogView extends ConsumerStatefulWidget {
-  const PatientsDialogView({Key? key, required this.patientData})
-      : super(key: key);
+  const PatientsDialogView({super.key, required this.patientData});
   final Patient patientData;
 
   @override

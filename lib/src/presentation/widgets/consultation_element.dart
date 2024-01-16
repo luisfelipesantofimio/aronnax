@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 
 class ConsultationMenuElement extends StatelessWidget {
   const ConsultationMenuElement(
-      {Key? key,
+      {super.key,
       required this.name,
       required this.idNumber,
-      required this.onTap})
-      : super(key: key);
+      required this.onTap});
   final String name;
   final String idNumber;
   final VoidCallback onTap;

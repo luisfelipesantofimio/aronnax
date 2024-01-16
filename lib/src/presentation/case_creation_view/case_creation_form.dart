@@ -8,7 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CaseCreationForm extends ConsumerStatefulWidget {
-  const CaseCreationForm({Key? key}) : super(key: key);
+  const CaseCreationForm({super.key});
 
   @override
   ConsumerState<CaseCreationForm> createState() => _CaseCreationFormState();

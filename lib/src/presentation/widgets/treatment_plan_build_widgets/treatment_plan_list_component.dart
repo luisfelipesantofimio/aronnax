@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class TreatmentPlanListComponent extends StatelessWidget {
   const TreatmentPlanListComponent({
-    Key? key,
+    super.key,
     required this.component,
     required this.onEdit,
     required this.onDelete,
     required this.onDuplicate,
     required this.editionComponent,
-  }) : super(key: key);
+  });
   final Widget component;
   final VoidCallback onDuplicate;
   final VoidCallback onEdit;

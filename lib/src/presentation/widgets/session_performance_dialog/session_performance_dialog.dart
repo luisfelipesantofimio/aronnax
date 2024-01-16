@@ -13,10 +13,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SessionPerformanceDialog extends ConsumerStatefulWidget {
   const SessionPerformanceDialog({
-    Key? key,
+    super.key,
     required this.patientData,
     required this.patientCaseData,
-  }) : super(key: key);
+  });
   final Patient patientData;
   final PatientCase patientCaseData;
 

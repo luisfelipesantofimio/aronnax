@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ServerConfig extends ConsumerWidget {
-  const ServerConfig({Key? key}) : super(key: key);
+  const ServerConfig({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -80,7 +80,7 @@ class ServerConfig extends ConsumerWidget {
 }
 
 class Header extends StatelessWidget {
-  const Header({Key? key}) : super(key: key);
+  const Header({super.key});
 
   @override
   Widget build(BuildContext context) {

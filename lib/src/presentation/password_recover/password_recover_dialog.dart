@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PasswordRecoverDialog extends ConsumerStatefulWidget {
-  const PasswordRecoverDialog({Key? key}) : super(key: key);
+  const PasswordRecoverDialog({super.key});
 
   @override
   ConsumerState<PasswordRecoverDialog> createState() =>

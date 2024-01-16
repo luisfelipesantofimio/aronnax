@@ -3,10 +3,10 @@ import 'package:intl/intl.dart';
 
 class DateSelector extends StatefulWidget {
   const DateSelector({
-    Key? key,
+    super.key,
     required this.date,
     required this.onChanged,
-  }) : super(key: key);
+  });
   final DateTime date;
   final ValueChanged<DateTime> onChanged;
 

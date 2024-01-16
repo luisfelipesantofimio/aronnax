@@ -9,11 +9,11 @@ import 'package:flutter/material.dart';
 
 class TreatmentPlanComponentUpdateDialog extends StatefulWidget {
   const TreatmentPlanComponentUpdateDialog({
-    Key? key,
+    super.key,
     required this.onComponentUpdated,
     this.dataToUpdate,
     required this.sectionIndex,
-  }) : super(key: key);
+  });
   final Function(TreatmentPlanComponent component) onComponentUpdated;
   final TreatmentPlanComponent? dataToUpdate;
   final int sectionIndex;

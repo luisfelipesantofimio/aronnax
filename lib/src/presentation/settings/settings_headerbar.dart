@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 ValueNotifier<int> currentView = ValueNotifier(0);
 
 class SettingsHeaderBar extends StatefulWidget {
-  const SettingsHeaderBar({Key? key}) : super(key: key);
+  const SettingsHeaderBar({super.key});
 
   @override
   State<SettingsHeaderBar> createState() => _SettingsHeaderBarState();

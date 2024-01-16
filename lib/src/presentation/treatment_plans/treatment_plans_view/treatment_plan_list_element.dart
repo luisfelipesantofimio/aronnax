@@ -10,8 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TreatmentPlanListElement extends ConsumerWidget {
-  const TreatmentPlanListElement({Key? key, required this.treatmentPlanData})
-      : super(key: key);
+  const TreatmentPlanListElement({super.key, required this.treatmentPlanData});
   final TreatmentPlan treatmentPlanData;
 
   @override

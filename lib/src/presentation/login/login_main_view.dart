@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'login_form.dart';
 
 class LoginScreen extends ConsumerWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

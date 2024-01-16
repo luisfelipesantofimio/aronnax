@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class TodosColorSelection extends StatelessWidget {
   const TodosColorSelection({
-    Key? key,
+    super.key,
     required this.icon,
     required this.color,
     required this.onSelected,
     required this.isSelected,
-  }) : super(key: key);
+  });
   final IconData icon;
   final Color color;
   final bool isSelected;

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ClinicHistoryConfirmPasswordDialog extends ConsumerStatefulWidget {
-  const ClinicHistoryConfirmPasswordDialog({Key? key}) : super(key: key);
+  const ClinicHistoryConfirmPasswordDialog({super.key});
 
   @override
   ClinicHistoryConfirmPasswordDialogState createState() =>

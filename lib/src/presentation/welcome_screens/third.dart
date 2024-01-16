@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ThirdStep extends StatelessWidget {
-  const ThirdStep({Key? key}) : super(key: key);
+  const ThirdStep({super.key});
 
   @override
   Widget build(BuildContext context) {

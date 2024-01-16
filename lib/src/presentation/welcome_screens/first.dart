@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FirstWelcome extends StatelessWidget {
-  const FirstWelcome({Key? key}) : super(key: key);
+  const FirstWelcome({super.key});
 
   @override
   Widget build(BuildContext context) {

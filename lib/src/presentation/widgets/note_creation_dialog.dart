@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class NoteCreationDialog extends ConsumerStatefulWidget {
-  const NoteCreationDialog({Key? key}) : super(key: key);
+  const NoteCreationDialog({super.key});
 
   @override
   ConsumerState<NoteCreationDialog> createState() => _NoteCreationDialogState();

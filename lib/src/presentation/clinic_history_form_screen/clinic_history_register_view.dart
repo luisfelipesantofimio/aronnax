@@ -17,9 +17,9 @@ import 'package:intl/intl.dart';
 
 class ClinicHistoryRegisterView extends ConsumerStatefulWidget {
   const ClinicHistoryRegisterView({
-    Key? key,
+    super.key,
     required this.patientData,
-  }) : super(key: key);
+  });
   final Patient patientData;
 
   @override

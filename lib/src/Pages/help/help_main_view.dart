@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 var padding = const EdgeInsets.only(left: 60);
 
 class MainHelpView extends ConsumerWidget {
-  const MainHelpView({Key? key}) : super(key: key);
+  const MainHelpView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

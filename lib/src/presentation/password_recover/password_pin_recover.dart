@@ -10,9 +10,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PasswordPinRecover extends ConsumerStatefulWidget {
   const PasswordPinRecover({
-    Key? key,
+    super.key,
     required this.professionalData,
-  }) : super(key: key);
+  });
   final Professional professionalData;
 
   @override

@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 
 class SessionsListElement extends StatelessWidget {
   const SessionsListElement(
-      {Key? key,
+      {super.key,
       required this.sessionSummary,
       required this.sessionArchievements,
       required this.sessionObjectives,
       required this.sessionID,
       required this.sessionDate,
       required this.sessionProfessional,
-      required this.itemIndex})
-      : super(key: key);
+      required this.itemIndex});
   final int sessionID;
   final String sessionDate;
   final String sessionProfessional;

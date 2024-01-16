@@ -7,10 +7,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PasswordUpdateFormDialog extends ConsumerStatefulWidget {
   const PasswordUpdateFormDialog({
-    Key? key,
+    super.key,
     required this.updateWithPin,
     required this.onPasswordChanged,
-  }) : super(key: key);
+  });
   final bool updateWithPin;
   final Function(String newPassword, int newPin) onPasswordChanged;
 

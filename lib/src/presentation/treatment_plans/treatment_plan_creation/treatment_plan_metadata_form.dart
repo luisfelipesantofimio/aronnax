@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 
 class TreatmentPlanMetadataForm extends StatefulWidget {
   const TreatmentPlanMetadataForm(
-      {Key? key,
+      {super.key,
       required this.onTitleChanged,
       required this.onDescriptionChanged,
-      this.treatmentPlanData})
-      : super(key: key);
+      this.treatmentPlanData});
   final TreatmentPlan? treatmentPlanData;
   final Function(String data) onTitleChanged;
   final Function(String data) onDescriptionChanged;

@@ -8,9 +8,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PatientCasesListView extends ConsumerWidget {
   const PatientCasesListView({
-    Key? key,
+    super.key,
     required this.patientData,
-  }) : super(key: key);
+  });
   final Patient patientData;
 
   @override

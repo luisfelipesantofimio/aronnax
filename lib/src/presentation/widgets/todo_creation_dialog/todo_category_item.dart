@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class TodoCategoryItem extends StatelessWidget {
   const TodoCategoryItem({
-    Key? key,
+    super.key,
     required this.title,
     required this.itemColor,
     required this.onTap,
-  }) : super(key: key);
+  });
   final String title;
   final Color itemColor;
   final VoidCallback onTap;

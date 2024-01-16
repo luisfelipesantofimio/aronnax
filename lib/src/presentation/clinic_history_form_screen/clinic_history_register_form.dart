@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ClinicHistoryRegisterForm extends ConsumerStatefulWidget {
-  const ClinicHistoryRegisterForm({Key? key}) : super(key: key);
+  const ClinicHistoryRegisterForm({super.key});
 
   @override
   ConsumerState<ClinicHistoryRegisterForm> createState() =>

@@ -5,8 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 class ResultsVisualizationItem extends ConsumerWidget {
-  const ResultsVisualizationItem({Key? key, required this.resultsData})
-      : super(key: key);
+  const ResultsVisualizationItem({super.key, required this.resultsData});
   final TreatmentPlanResult resultsData;
 
   @override

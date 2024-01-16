@@ -13,7 +13,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LocalProfessionalRegister extends ConsumerStatefulWidget {
-  const LocalProfessionalRegister({Key? key}) : super(key: key);
+  const LocalProfessionalRegister({super.key});
 
   @override
   LocalProfessionalRegisterState createState() =>

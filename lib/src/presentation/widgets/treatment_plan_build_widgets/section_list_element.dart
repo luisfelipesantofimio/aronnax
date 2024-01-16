@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class SectionListElement extends StatelessWidget {
   const SectionListElement({
-    Key? key,
+    super.key,
     required this.sectionTitle,
     required this.sectionDescription,
     required this.onTap,
@@ -10,7 +10,7 @@ class SectionListElement extends StatelessWidget {
     required this.onEdit,
     required this.editionComponent,
     required this.selectedItem,
-  }) : super(key: key);
+  });
   final String sectionTitle;
   final String sectionDescription;
   final VoidCallback onDelete;

@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SettingsOptionsProfile extends ConsumerWidget {
-  const SettingsOptionsProfile({Key? key, required this.settingsData})
-      : super(key: key);
+  const SettingsOptionsProfile({super.key, required this.settingsData});
   final AsyncValue<Setting> settingsData;
 
   @override

@@ -4,7 +4,7 @@ import 'package:aronnax/src/presentation/welcome_screens/server_config.dart';
 import 'package:flutter/material.dart';
 
 class NoServerDialog extends StatelessWidget {
-  const NoServerDialog({Key? key}) : super(key: key);
+  const NoServerDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class NoServerDialog extends StatelessWidget {
 }
 
 class NoLocalDBConfiguredDialog extends StatelessWidget {
-  const NoLocalDBConfiguredDialog({Key? key}) : super(key: key);
+  const NoLocalDBConfiguredDialog({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 
 class SectionMetadataDialog extends StatefulWidget {
   const SectionMetadataDialog({
-    Key? key,
+    super.key,
     required this.onSelectedMetadata,
     this.sectionData,
-  }) : super(key: key);
+  });
   final Function(String title, String description) onSelectedMetadata;
   final Section? sectionData;
 

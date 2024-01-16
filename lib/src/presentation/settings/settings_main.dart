@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'settings_headerbar.dart';
 
 class SettingsMain extends ConsumerWidget {
-  const SettingsMain({Key? key}) : super(key: key);
+  const SettingsMain({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

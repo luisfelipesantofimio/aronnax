@@ -8,9 +8,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CaseDiagnosticDialog extends ConsumerStatefulWidget {
   const CaseDiagnosticDialog({
-    Key? key,
+    super.key,
     required this.onSelectedCategory,
-  }) : super(key: key);
+  });
   final Function(IcdDataCategory data) onSelectedCategory;
 
   @override

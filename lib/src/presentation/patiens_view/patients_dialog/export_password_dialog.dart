@@ -3,10 +3,10 @@ import 'package:flutter/services.dart';
 
 class ExportPasswordDialog extends StatelessWidget {
   const ExportPasswordDialog({
-    Key? key,
+    super.key,
     required this.fileName,
     required this.password,
-  }) : super(key: key);
+  });
   final String fileName;
   final String password;
 

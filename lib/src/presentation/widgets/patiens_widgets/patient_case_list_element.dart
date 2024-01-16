@@ -12,12 +12,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PatientCaseListElement extends ConsumerWidget {
   const PatientCaseListElement({
-    Key? key,
+    super.key,
     required this.caseData,
     required this.elementIndex,
     required this.patientId,
     required this.isOffline,
-  }) : super(key: key);
+  });
 
   final PatientCase caseData;
   final int elementIndex;

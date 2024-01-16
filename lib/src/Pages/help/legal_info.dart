@@ -2,7 +2,7 @@ import 'package:aronnax/src/presentation/core/constants.dart';
 import 'package:flutter/material.dart';
 
 class LegalInfo extends StatelessWidget {
-  const LegalInfo({Key? key}) : super(key: key);
+  const LegalInfo({super.key});
 
   @override
   Widget build(BuildContext context) {

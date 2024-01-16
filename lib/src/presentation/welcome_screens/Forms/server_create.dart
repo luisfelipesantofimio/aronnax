@@ -2,7 +2,7 @@ import 'package:aronnax/src/presentation/welcome_screens/third.dart';
 import 'package:flutter/material.dart';
 
 class NewServerForm extends StatefulWidget {
-  const NewServerForm({Key? key}) : super(key: key);
+  const NewServerForm({super.key});
 
   @override
   State<NewServerForm> createState() => _NewServerFormState();

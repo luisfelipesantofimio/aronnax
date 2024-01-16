@@ -12,7 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MenuOptionsBar extends ConsumerStatefulWidget {
-  const MenuOptionsBar({Key? key}) : super(key: key);
+  const MenuOptionsBar({super.key});
 
   @override
   ConsumerState<MenuOptionsBar> createState() => _MenuOptionsBarState();

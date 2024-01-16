@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HeaderLogin extends StatelessWidget {
-  const HeaderLogin({Key? key}) : super(key: key);
+  const HeaderLogin({super.key});
 
   @override
   Widget build(BuildContext context) {

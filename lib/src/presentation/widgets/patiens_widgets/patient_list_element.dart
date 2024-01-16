@@ -6,8 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
 class PatientListElement extends StatelessWidget {
-  const PatientListElement({Key? key, required this.patientData})
-      : super(key: key);
+  const PatientListElement({super.key, required this.patientData});
   final Patient patientData;
 
   @override

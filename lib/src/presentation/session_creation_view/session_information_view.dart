@@ -5,8 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 class SessionInformationView extends ConsumerWidget {
-  const SessionInformationView({Key? key, required this.patientData})
-      : super(key: key);
+  const SessionInformationView({super.key, required this.patientData});
   final Patient patientData;
 
   @override

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SessionsForm extends ConsumerStatefulWidget {
-  const SessionsForm({Key? key, required this.patientData}) : super(key: key);
+  const SessionsForm({super.key, required this.patientData});
   final Patient patientData;
 
   @override

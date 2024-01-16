@@ -8,10 +8,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class IcdView extends ConsumerWidget {
   const IcdView({
-    Key? key,
+    super.key,
     required this.isConfigured,
     this.onDownloadCompleted,
-  }) : super(key: key);
+  });
   final bool isConfigured;
   final Function(bool completedTask)? onDownloadCompleted;
 

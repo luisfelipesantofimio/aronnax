@@ -7,9 +7,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PasswordQuestionary extends ConsumerStatefulWidget {
   const PasswordQuestionary({
-    Key? key,
+    super.key,
     required this.professionalData,
-  }) : super(key: key);
+  });
   final Professional professionalData;
 
   @override

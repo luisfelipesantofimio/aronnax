@@ -15,7 +15,7 @@ bool isPasswordVisible = true;
 Crypt _hashNewPassword = Crypt.sha256(confirmNewPassword);
 
 class UpdatePasswordDialog extends ConsumerStatefulWidget {
-  const UpdatePasswordDialog({Key? key}) : super(key: key);
+  const UpdatePasswordDialog({super.key});
 
   @override
   UpdatePasswordDialogState createState() => UpdatePasswordDialogState();

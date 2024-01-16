@@ -18,8 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TreatmentPlanCreationView extends ConsumerStatefulWidget {
-  const TreatmentPlanCreationView(this.treatmentPlanData, {Key? key})
-      : super(key: key);
+  const TreatmentPlanCreationView(this.treatmentPlanData, {super.key});
   final TreatmentPlan? treatmentPlanData;
 
   @override

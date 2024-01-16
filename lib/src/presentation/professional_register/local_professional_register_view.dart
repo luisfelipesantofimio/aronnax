@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LocalProfessionalRegisterView extends ConsumerWidget {
-  const LocalProfessionalRegisterView({Key? key}) : super(key: key);
+  const LocalProfessionalRegisterView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

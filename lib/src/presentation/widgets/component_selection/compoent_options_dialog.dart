@@ -7,8 +7,7 @@ import 'package:flutter/services.dart';
 
 class ComponentOptionsDialog extends StatefulWidget {
   const ComponentOptionsDialog(
-      {Key? key, required this.fieldType, required this.optionsSelected})
-      : super(key: key);
+      {super.key, required this.fieldType, required this.optionsSelected});
   final String fieldType;
   final Function(List<OptionType> optionsList) optionsSelected;
 

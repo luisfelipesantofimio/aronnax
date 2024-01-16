@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ScreenInformationContainer extends StatelessWidget {
-  const ScreenInformationContainer({Key? key}) : super(key: key);
+  const ScreenInformationContainer({super.key});
 
   @override
   Widget build(BuildContext context) {
