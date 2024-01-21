@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,25 +20,25 @@ class ClinicHistoryRegisterInformation extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text(
-          'Consultante:',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        Text(
+          AppLocalizations.of(context)!.clinicHistoryInfoPatientName,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
         Text(patientName),
         const Padding(
           padding: EdgeInsets.all(10),
         ),
-        const Text(
-          'Código único de la historia clínica',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        Text(
+          AppLocalizations.of(context)!.clinicHistoryInfoCreationDate,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
         Text(registerCode),
         const Padding(
           padding: EdgeInsets.all(10),
         ),
-        const Text(
-          'Profesional',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        Text(
+          AppLocalizations.of(context)!.clinicHistoryInfoProfessionalName,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
         Text(
           "${ref.read(globalUserInformationProvider)!.names} ${ref.read(globalUserInformationProvider)!.lastNames}",
@@ -45,9 +46,9 @@ class ClinicHistoryRegisterInformation extends ConsumerWidget {
         const Padding(
           padding: EdgeInsets.all(10),
         ),
-        const Text(
-          'Fecha de creación',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        Text(
+          AppLocalizations.of(context)!.clinicHistoryInfoCreationDate,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
         Text(
           DateFormat('dd/MM/yyyy').format(DateTime.now()),

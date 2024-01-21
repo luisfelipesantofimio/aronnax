@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/providers/forms_providers/clinic_history_form_provider.dart';
 import 'package:aronnax/src/presentation/core/controllers.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,8 @@ class _ClinicHistoryRegisterFormState
                   maxLines: 5,
                   autofocus: true,
                   decoration: InputDecoration(
-                    labelText: "Examen mental",
+                    labelText: AppLocalizations.of(context)!
+                        .clinicHistoryFormMentalExamination,
                     labelStyle: Theme.of(context).textTheme.bodyMedium,
                     floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
@@ -41,7 +43,7 @@ class _ClinicHistoryRegisterFormState
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Inserta un valor";
+                      return AppLocalizations.of(context)!.errorEmptyField;
                     }
                     return null;
                   },
@@ -54,7 +56,8 @@ class _ClinicHistoryRegisterFormState
                   maxLines: 5,
                   autofocus: true,
                   decoration: InputDecoration(
-                    labelText: "Antecedentes psicológicos",
+                    labelText: AppLocalizations.of(context)!
+                        .clinicHistoryFormPsyAntecedents,
                     labelStyle: Theme.of(context).textTheme.bodyMedium,
                     floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
@@ -67,7 +70,7 @@ class _ClinicHistoryRegisterFormState
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Inserta un valor";
+                      return AppLocalizations.of(context)!.errorEmptyField;
                     }
                     return null;
                   },
@@ -80,7 +83,8 @@ class _ClinicHistoryRegisterFormState
                   maxLines: 5,
                   autofocus: true,
                   decoration: InputDecoration(
-                    labelText: "Antecedentes médicos",
+                    labelText: AppLocalizations.of(context)!
+                        .clinicHistoryFormMedAntecedents,
                     labelStyle: Theme.of(context).textTheme.bodyMedium,
                     floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
@@ -93,7 +97,7 @@ class _ClinicHistoryRegisterFormState
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Inserta un valor";
+                      return AppLocalizations.of(context)!.errorEmptyField;
                     }
                     return null;
                   },
@@ -106,7 +110,8 @@ class _ClinicHistoryRegisterFormState
                   maxLines: 10,
                   autofocus: true,
                   decoration: InputDecoration(
-                    labelText: "Historia personal",
+                    labelText: AppLocalizations.of(context)!
+                        .clinicHistoryFormPersonalHistory,
                     labelStyle: Theme.of(context).textTheme.bodyMedium,
                     floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
@@ -119,7 +124,7 @@ class _ClinicHistoryRegisterFormState
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Inserta un valor";
+                      return AppLocalizations.of(context)!.errorEmptyField;
                     }
                     return null;
                   },
@@ -132,7 +137,8 @@ class _ClinicHistoryRegisterFormState
                   maxLines: 10,
                   autofocus: true,
                   decoration: InputDecoration(
-                    labelText: "Historia familiar",
+                    labelText: AppLocalizations.of(context)!
+                        .clinicHistoryFormFamilyHistory,
                     labelStyle: Theme.of(context).textTheme.bodyMedium,
                     floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
@@ -145,7 +151,7 @@ class _ClinicHistoryRegisterFormState
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Inserta un valor";
+                      return AppLocalizations.of(context)!.errorEmptyField;
                     }
                     return null;
                   },
