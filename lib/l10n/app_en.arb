@@ -257,5 +257,10 @@
   "treatmentPlanUpdateDialogFieldListOfValues": "List of values",
   "treatmentPlanUpdateDialogFieldListOfValuesValueOption": "Value",
   "treatmentPlanUpdateDialogFieldListOfValuesLabelOption": "Label",
-  "treatmentPlanUpdateDialogUpdateButtonTitle": "Update component"
+  "treatmentPlanUpdateDialogUpdateButtonTitle": "Update component",
+  "helpScreenTitle": "Development information",
+  "helpScreenDescriptionText" : "A patient and medical records management software, minimalist and efficient.\nMade by psychologists, for psychologists.",
+  "helpScreenDevelopedBy":"Developed by",
+  "helpScreenAronnaxPoweredBy":"Aronnax is powered by Flutter",
+  "helpScreenLegalInformationTitle": "Legal information"
 }
