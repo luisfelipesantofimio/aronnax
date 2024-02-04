@@ -6,7 +6,6 @@ import 'settings_headerbar.dart';
 
 class SettingsMain extends ConsumerWidget {
   const SettingsMain({super.key});
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final settingsStream = ref.watch(settingsStreamProvider);

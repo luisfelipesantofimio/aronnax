@@ -262,5 +262,23 @@
   "helpScreenDescriptionText" : "A patient and medical records management software, minimalist and efficient.\nMade by psychologists, for psychologists.",
   "helpScreenDevelopedBy":"Developed by",
   "helpScreenAronnaxPoweredBy":"Aronnax is powered by Flutter",
-  "helpScreenLegalInformationTitle": "Legal information"
+  "helpScreenLegalInformationTitle": "Legal information",
+  "settingsScreenBarTitleInformation": "My information",
+  "settingsScreenBarTitleDbRepair": "Repair ICD database",
+  "settingsScreenPersonalInfoUpdatePassword": "Update password",
+  "icdDataRepairConfirmation":"Repair completed",
+  "icdDataRepairTitle":"Repair ICD database",
+  "icdDataRepairDescription":"If there was an error during the ICD data download process, you can fix it here.",
+  "profileUpdatePasswordTitle": "Update {user}'s password",
+  "@profileUpdatePasswordTitle": {
+    "placeholders": {
+      "user":{
+        "type": "String"
+      }
+    }
+  },
+  "profileNewPasswordCurrentPassword": "Current password",
+  "profileNewPasswordNewPassword": "New password",
+  "profileNewPasswordUpdateButton": "Update password",
+  "profileNewPasswordConfirmationSuccess":"Your password has been updated"
 }

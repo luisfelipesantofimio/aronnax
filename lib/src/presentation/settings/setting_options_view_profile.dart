@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/presentation/settings/configOptions/update_password.dart';
 import 'package:aronnax/src/presentation/core/user_global_values.dart';
@@ -24,9 +25,10 @@ class SettingsOptionsProfile extends ConsumerWidget {
                 style: Theme.of(context).textTheme.displayLarge,
               ),
               Text(
-                  "Tarjeta profesional: ${ref.read(globalUserInformationProvider)!.professionalID}"),
+                  "${AppLocalizations.of(context)!.welcomeScreenProfessionalID}: ${ref.read(globalUserInformationProvider)!.professionalID}"),
               TextButton(
-                child: const Text("Cambiar mi contraseña"),
+                child: Text(AppLocalizations.of(context)!
+                    .settingsScreenPersonalInfoUpdatePassword),
                 onPressed: () {
                   showDialog(
                       context: context,
