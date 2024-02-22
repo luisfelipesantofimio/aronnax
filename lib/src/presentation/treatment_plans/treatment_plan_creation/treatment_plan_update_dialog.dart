@@ -32,9 +32,9 @@ class _TreatmentPlanComponentUpdateDialogState
   String? componentTitle;
   String? componentDescription;
   final formKey = GlobalKey<FormState>();
-
+//TODO: Fix section component constrains with listview
   @override
-  void initState() {
+  void didChangeDependencies() {
     componentTypeList.addAll([
       ComponentType(
         title: AppLocalizations.of(context)!
@@ -57,6 +57,11 @@ class _TreatmentPlanComponentUpdateDialogState
         componentType: 'task',
       )
     ]);
+    super.didChangeDependencies();
+  }
+
+  @override
+  void initState() {
     setState(() {
       componentTitle = widget.dataToUpdate!.componentTitle;
       componentDescription = widget.dataToUpdate!.componentDescription;

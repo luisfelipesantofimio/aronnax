@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/option_type.dart';
 import 'package:aronnax/src/presentation/widgets/generic_minimal_button.dart';
 import 'package:aronnax/src/presentation/widgets/radio_example_item.dart';
@@ -26,7 +27,6 @@ class _ComponentOptionsDialogState extends State<ComponentOptionsDialog> {
   Widget build(BuildContext context) {
     return Dialog(
       child: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.3,
         width: MediaQuery.of(context).size.width * 0.3,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -34,14 +34,17 @@ class _ComponentOptionsDialogState extends State<ComponentOptionsDialog> {
             shrinkWrap: true,
             children: [
               Column(
+                mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(isNumericField
-                          ? 'Escala numérica'
-                          : 'Escala no numérica'),
+                          ? AppLocalizations.of(context)!
+                              .treatmentPlanComponentListOptionsNumericScale
+                          : AppLocalizations.of(context)!
+                              .treatmentPlanComponentListOptionsNonNumericScale),
                       Switch(
                         value: isNumericField,
                         onChanged: (value) {
@@ -106,8 +109,9 @@ class _ComponentOptionsDialogState extends State<ComponentOptionsDialog> {
                                   width: 150,
                                   child: TextField(
                                     controller: labelInputController,
-                                    decoration: const InputDecoration(
-                                        hintText: 'Write something'),
+                                    decoration: InputDecoration(
+                                        hintText: AppLocalizations.of(context)!
+                                            .treatmentPlanComponentListOptionsTextOptionHint),
                                     onChanged: (value) {
                                       setState(() {
                                         selectedLabel = value;
@@ -156,7 +160,8 @@ class _ComponentOptionsDialogState extends State<ComponentOptionsDialog> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.1,
                     child: GenericMinimalButton(
-                      title: 'Add options list',
+                      title: AppLocalizations.of(context)!
+                          .treatmentPlanComponentListOptionsSaveTitle,
                       onTap: () {
                         widget.optionsSelected(optionsList);
                         Navigator.pop(context);

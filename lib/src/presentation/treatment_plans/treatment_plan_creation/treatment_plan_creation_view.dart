@@ -33,11 +33,12 @@ class _TreatmentPlanCreationViewState
   List<Section> sectionList = [];
   String? treatmentPlanTitle;
   String? treatmentPlanDescription;
+  List<Widget> decodedComponents = [];
   @override
-  void initState() {
+  void didChangeDependencies() {
     sectionList.add(
       Section(
-        name: 'Phase 1',
+        name: '${AppLocalizations.of(context)!.treatmentPlansSectionTitle} 1',
         components: [],
       ),
     );
@@ -49,12 +50,13 @@ class _TreatmentPlanCreationViewState
         treatmentPlanDescription = widget.treatmentPlanData!.description;
       });
     }
-    super.initState();
+
+    super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
-    final decodedComponents = ref.watch(
+    decodedComponents = ref.watch(
       treatmentPlanComponentDecoding(
         ref
             .read(treatmentPlanRepositoryProvider)
@@ -79,6 +81,7 @@ class _TreatmentPlanCreationViewState
                       Row(
                         children: [
                           SizedBox(
+                            width: MediaQuery.sizeOf(context).width * 0.53,
                             height: 150,
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
@@ -90,11 +93,15 @@ class _TreatmentPlanCreationViewState
                                     right: 10,
                                   ),
                                   child: SizedBox(
+                                    width:
+                                        MediaQuery.sizeOf(context).width * 0.15,
                                     child: SectionListElement(
                                       selectedItem:
                                           selectedSectionIndex == index,
                                       editionComponent: true,
                                       onDelete: () {
+                                        selectedSectionIndex =
+                                            selectedSectionIndex - 1;
                                         if (sectionList.length > 1) {
                                           sectionList.removeAt(index);
                                           setState(() {});
@@ -151,6 +158,7 @@ class _TreatmentPlanCreationViewState
                                 context: context,
                                 builder: (context) => SectionMetadataDialog(
                                   onSelectedMetadata: (title, description) {
+                                    selectedSectionIndex = sectionList.length;
                                     sectionList.add(
                                       Section(
                                         name: title,
@@ -165,6 +173,9 @@ class _TreatmentPlanCreationViewState
                             },
                             child: Row(
                               children: [
+                                const Padding(
+                                  padding: EdgeInsets.all(10),
+                                ),
                                 Text(AppLocalizations.of(context)!
                                     .treatmentPlanCreationTitleAddSection),
                                 const Icon(

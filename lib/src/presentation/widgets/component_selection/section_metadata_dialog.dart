@@ -43,9 +43,7 @@ class _SectionMetadataDialogState extends State<SectionMetadataDialog> {
             children: [
               const Text('Section title'),
               TextFormField(
-                initialValue: widget.sectionData != null
-                    ? widget.sectionData!.name
-                    : null,
+                initialValue: widget.sectionData?.name,
                 decoration: const InputDecoration(
                     hintText: 'Title or heading for this section'),
                 onChanged: (value) {

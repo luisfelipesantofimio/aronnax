@@ -10,6 +10,10 @@
       }
     }
   },
+  "genericTitle": "Title",
+  "genericEdit": "Edit",
+  "genericDelete": "Delete",
+  "genericDescription": "Description",
   "genericErrorPasswordsDontMatch": "The passwords don´t match",
   "genericSelectionText": "Select an option",
   "genericPatientSelectionTitlte": "Select a patient",
@@ -259,20 +263,20 @@
   "treatmentPlanUpdateDialogFieldListOfValuesLabelOption": "Label",
   "treatmentPlanUpdateDialogUpdateButtonTitle": "Update component",
   "helpScreenTitle": "Development information",
-  "helpScreenDescriptionText" : "A patient and medical records management software, minimalist and efficient.\nMade by psychologists, for psychologists.",
-  "helpScreenDevelopedBy":"Developed by",
-  "helpScreenAronnaxPoweredBy":"Aronnax is powered by Flutter",
+  "helpScreenDescriptionText": "A patient and medical records management software, minimalist and efficient.\nMade by psychologists, for psychologists.",
+  "helpScreenDevelopedBy": "Developed by",
+  "helpScreenAronnaxPoweredBy": "Aronnax is powered by Flutter",
   "helpScreenLegalInformationTitle": "Legal information",
   "settingsScreenBarTitleInformation": "My information",
   "settingsScreenBarTitleDbRepair": "Repair ICD database",
   "settingsScreenPersonalInfoUpdatePassword": "Update password",
-  "icdDataRepairConfirmation":"Repair completed",
-  "icdDataRepairTitle":"Repair ICD database",
-  "icdDataRepairDescription":"If there was an error during the ICD data download process, you can fix it here.",
+  "icdDataRepairConfirmation": "Repair completed",
+  "icdDataRepairTitle": "Repair ICD database",
+  "icdDataRepairDescription": "If there was an error during the ICD data download process, you can fix it here.",
   "profileUpdatePasswordTitle": "Update {user}'s password",
   "@profileUpdatePasswordTitle": {
     "placeholders": {
-      "user":{
+      "user": {
         "type": "String"
       }
     }
@@ -280,5 +284,30 @@
   "profileNewPasswordCurrentPassword": "Current password",
   "profileNewPasswordNewPassword": "New password",
   "profileNewPasswordUpdateButton": "Update password",
-  "profileNewPasswordConfirmationSuccess":"Your password has been updated"
+  "profileNewPasswordConfirmationSuccess": "Your password has been updated",
+  "treatmentPlansInformationTitle": "Information",
+  "treatmentPlansInformationBody": "Create personalized treatment plans in phased forms to monitor and track your patient's progress towards specific treatment objectives",
+  "treatmentPlansSectionTitle": "Section",
+  "treatmentPlansTemplateTile": "New treatment plan",
+  "treatmentPlanComponentTypeTextField": "Text field",
+  "treatmentPlanComponentTypeScale": "Scale",
+  "treatmentPlanComponentTypeSelection": "Selection",
+  "treatmentPlanComponentTypeTask": "Task",
+  "treatmentPlanComponentSelectionTitle": "Field type",
+  "treatmentPlanComponentTitleFieldDescription": "Field title",
+  "treatmentPlanComponentDescriptionFieldDescription": "Optional description",
+  "treatmentPlanComponentRequiredField": "Required field",
+  "treatmentPlanCompoentRequiredTrue": "Required",
+  "treatmentPlanCompoentRequiredFalse": "Optional",
+  "treatmentPlanComponentQuantifiableTrue": "Quantifiable",
+  "treatmentPlanComponentQuantifiableFalse": "Not quantifiable",
+  "treatmentPlanComponentListOfValues": "List of values",
+  "treatmentPlanComponentListOfValuesValue": "Value",
+  "treatmentPlanComponentListOfValuesLabel": "Label",
+  "treatmentPlanComponentAddButtonTitle": "Add component",
+  "treatmentPlanComponentListOptionsNumericScale": "Numeric scale",
+  "treatmentPlanComponentListOptionsNonNumericScale": "Non-numeric scale",
+  "treatmentPlanComponentListOptionsNumericMaxOptions": "Maximum value",
+  "treatmentPlanComponentListOptionsTextOptionHint": "Write something",
+  "treatmentPlanComponentListOptionsSaveTitle": "Add options list"
 }

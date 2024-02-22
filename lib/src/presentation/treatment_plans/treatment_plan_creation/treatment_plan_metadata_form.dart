@@ -20,9 +20,19 @@ class TreatmentPlanMetadataForm extends StatefulWidget {
 class _TreatmentPlanMetadataFormState extends State<TreatmentPlanMetadataForm> {
   final treatmentPlanMetadataFormKey = GlobalKey<FormState>();
 
-  String titleValue = 'Lorem ipsum';
+  String titleValue = '';
   String description =
       "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.";
+
+  @override
+  void didChangeDependencies() {
+    if (widget.treatmentPlanData != null) {
+      setState(() {
+        titleValue = AppLocalizations.of(context)!.treatmentPlansTemplateTile;
+      });
+    }
+    super.didChangeDependencies();
+  }
 
   @override
   void initState() {

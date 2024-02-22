@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/component_type.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/option_type.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_component.dart';
@@ -20,24 +21,7 @@ class ComponentSelectionItem extends StatefulWidget {
 }
 
 class _ComponentSelectionItemState extends State<ComponentSelectionItem> {
-  List<ComponentType> componentTypeList = [
-    ComponentType(
-      title: 'Campo de texto',
-      componentType: 'textField',
-    ),
-    ComponentType(
-      title: 'Escala',
-      componentType: 'scale',
-    ),
-    ComponentType(
-      title: 'Selección múltiple',
-      componentType: 'selection',
-    ),
-    ComponentType(
-      title: 'Tarea',
-      componentType: 'task',
-    )
-  ];
+  List<ComponentType> componentTypeList = [];
   List<OptionType> optionTypeList = [];
   ComponentType? selectedComponent;
   bool isRequired = true;
@@ -46,6 +30,34 @@ class _ComponentSelectionItemState extends State<ComponentSelectionItem> {
   String? componentDescription;
 
   final formKey = GlobalKey<FormState>();
+
+  @override
+  void didChangeDependencies() {
+    componentTypeList.addAll(
+      [
+        ComponentType(
+          title:
+              AppLocalizations.of(context)!.treatmentPlanComponentTypeTextField,
+          componentType: 'textField',
+        ),
+        ComponentType(
+          title: AppLocalizations.of(context)!.treatmentPlanComponentTypeScale,
+          componentType: 'scale',
+        ),
+        ComponentType(
+          title:
+              AppLocalizations.of(context)!.treatmentPlanComponentTypeSelection,
+          componentType: 'selection',
+        ),
+        ComponentType(
+          title: AppLocalizations.of(context)!.treatmentPlanComponentTypeTask,
+          componentType: 'task',
+        )
+      ],
+    );
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -71,176 +83,199 @@ class _ComponentSelectionItemState extends State<ComponentSelectionItem> {
                 key: formKey,
                 child: SizedBox(
                   height: MediaQuery.of(context).size.height * 0.33,
-                  child: ListView(
-                    shrinkWrap: true,
-                    children: [
-                      const Text('Tipo de campo'),
-                      DropdownButtonFormField(
-                        hint: const Text('El tipo de campo que diligenciarás'),
-                        items: componentTypeList
-                            .map(
-                              (e) => DropdownMenuItem(
-                                value: e,
-                                child: Text(e.title),
-                              ),
-                            )
-                            .toList(),
-                        onChanged: (ComponentType? value) {
-                          setState(() {
-                            selectedComponent = value;
-                          });
-                        },
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.all(10),
-                      ),
-                      const Text('Título'),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                            hintText: 'El enunciado de este campo'),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'This field must not be empty';
-                          }
-                          return null;
-                        },
-                        onChanged: (value) {
-                          setState(() {
-                            componentTitle = value;
-                          });
-                        },
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.all(10),
-                      ),
-                      const Text('Descripción'),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                            hintText: 'Descripción opcional'),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'This field must not be empty';
-                          }
-                          return null;
-                        },
-                        onChanged: (value) {
-                          setState(() {
-                            componentDescription = value;
-                          });
-                        },
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.all(10),
-                      ),
-                      const Text('Campo requerido'),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Switch(
-                            value: isRequired,
-                            onChanged: (value) => setState(() {
-                              isRequired = !isRequired;
-                            }),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(AppLocalizations.of(context)!
+                            .treatmentPlanComponentSelectionTitle),
+                        DropdownButtonFormField(
+                          hint: Text(AppLocalizations.of(context)!
+                              .treatmentPlanComponentSelectionTitle),
+                          items: componentTypeList
+                              .map(
+                                (e) => DropdownMenuItem(
+                                  value: e,
+                                  child: Text(e.title),
+                                ),
+                              )
+                              .toList(),
+                          onChanged: (ComponentType? value) {
+                            setState(() {
+                              selectedComponent = value;
+                            });
+                          },
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(10),
+                        ),
+                        Text(AppLocalizations.of(context)!.genericTitle),
+                        TextFormField(
+                          decoration: InputDecoration(
+                              hintText: AppLocalizations.of(context)!
+                                  .treatmentPlanComponentTitleFieldDescription),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return AppLocalizations.of(context)!
+                                  .errorEmptyField;
+                            }
+                            return null;
+                          },
+                          onChanged: (value) {
+                            setState(() {
+                              componentTitle = value;
+                            });
+                          },
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(10),
+                        ),
+                        Text(AppLocalizations.of(context)!.genericDescription),
+                        TextFormField(
+                          decoration: InputDecoration(
+                            hintText: AppLocalizations.of(context)!
+                                .treatmentPlanComponentDescriptionFieldDescription,
                           ),
-                          Text(isRequired ? 'Requerido' : 'Opcional')
-                        ],
-                      ),
-                      Visibility(
-                        visible: selectedComponent != null &&
-                            selectedComponent?.componentType != 'textField',
-                        child: Row(
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return AppLocalizations.of(context)!
+                                  .errorEmptyField;
+                            }
+                            return null;
+                          },
+                          onChanged: (value) {
+                            setState(() {
+                              componentDescription = value;
+                            });
+                          },
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(10),
+                        ),
+                        Text(AppLocalizations.of(context)!
+                            .treatmentPlanComponentRequiredField),
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Switch(
-                              value: isMessurable,
+                              value: isRequired,
                               onChanged: (value) => setState(() {
-                                isMessurable = !isMessurable;
+                                isRequired = !isRequired;
                               }),
                             ),
-                            Text(isMessurable
-                                ? 'Cuantificable'
-                                : 'No cuantificable')
+                            Text(isRequired
+                                ? AppLocalizations.of(context)!
+                                    .treatmentPlanCompoentRequiredTrue
+                                : AppLocalizations.of(context)!
+                                    .treatmentPlanCompoentRequiredFalse)
                           ],
                         ),
-                      ),
-                      Visibility(
-                        visible: selectedComponent != null &&
-                                selectedComponent!.componentType == 'scale' ||
-                            selectedComponent?.componentType == 'selection',
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                const Text('Lista de valores'),
-                                IconButton(
-                                  onPressed: () => showDialog(
-                                    context: context,
-                                    builder: (context) =>
-                                        ComponentOptionsDialog(
-                                      fieldType:
-                                          selectedComponent!.componentType,
-                                      optionsSelected: (optionsList) {
-                                        setState(() {
-                                          optionTypeList = optionsList;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                  icon: const Icon(
-                                    Icons.add,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: optionTypeList.length,
-                              itemBuilder: (context, index) => Column(
+                        Visibility(
+                          visible: selectedComponent != null &&
+                              selectedComponent?.componentType != 'textField',
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Switch(
+                                value: isMessurable,
+                                onChanged: (value) => setState(() {
+                                  isMessurable = !isMessurable;
+                                }),
+                              ),
+                              Text(
+                                isMessurable
+                                    ? AppLocalizations.of(context)!
+                                        .treatmentPlanComponentQuantifiableTrue
+                                    : AppLocalizations.of(context)!
+                                        .treatmentPlanComponentQuantifiableFalse,
+                              )
+                            ],
+                          ),
+                        ),
+                        Visibility(
+                          visible: selectedComponent != null &&
+                                  selectedComponent!.componentType == 'scale' ||
+                              selectedComponent?.componentType == 'selection',
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
                                 children: [
-                                  Row(
-                                    children: [
-                                      const Text('Valor: '),
-                                      Text(optionTypeList[index]
-                                          .value
-                                          .toString()),
-                                    ],
+                                  Text(
+                                    AppLocalizations.of(context)!
+                                        .treatmentPlanComponentListOfValues,
                                   ),
-                                  Row(
-                                    children: [
-                                      const Text('Etiqueta: '),
-                                      Text(optionTypeList[index].title),
-                                    ],
+                                  IconButton(
+                                    onPressed: () => showDialog(
+                                      context: context,
+                                      builder: (context) =>
+                                          ComponentOptionsDialog(
+                                        fieldType:
+                                            selectedComponent!.componentType,
+                                        optionsSelected: (optionsList) {
+                                          setState(() {
+                                            optionTypeList = optionsList;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                    icon: const Icon(
+                                      Icons.add,
+                                    ),
                                   ),
                                 ],
                               ),
-                            ),
-                          ],
+                              ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: optionTypeList.length,
+                                itemBuilder: (context, index) => Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                            "${AppLocalizations.of(context)!.treatmentPlanComponentListOfValuesValue}: "),
+                                        Text(optionTypeList[index]
+                                            .value
+                                            .toString()),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                            "${AppLocalizations.of(context)!.treatmentPlanComponentListOfValuesLabel}: "),
+                                        Text(optionTypeList[index].title),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      GenericMinimalButton(
-                        title: 'Añadir componente',
-                        onTap: () {
-                          widget.onComponentSelected(
-                            TreatmentPlanComponent(
-                              treatmentPlanPhase: widget.sectionIndex,
-                              componentType: selectedComponent!.componentType,
-                              componentTitle: componentTitle!,
-                              messurable: isMessurable,
-                              componentDescription: componentDescription!,
-                              isRequired: isRequired,
-                              optionsList: optionTypeList
-                                  .map(
-                                    (e) => TreatmentPlanOption(
-                                        value: e.value, optionName: e.title),
-                                  )
-                                  .toList(),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
+                        GenericMinimalButton(
+                          title: 'Añadir componente',
+                          onTap: () {
+                            widget.onComponentSelected(
+                              TreatmentPlanComponent(
+                                treatmentPlanPhase: widget.sectionIndex,
+                                componentType: selectedComponent!.componentType,
+                                componentTitle: componentTitle!,
+                                messurable: isMessurable,
+                                componentDescription: componentDescription!,
+                                isRequired: isRequired,
+                                optionsList: optionTypeList
+                                    .map(
+                                      (e) => TreatmentPlanOption(
+                                          value: e.value, optionName: e.title),
+                                    )
+                                    .toList(),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
