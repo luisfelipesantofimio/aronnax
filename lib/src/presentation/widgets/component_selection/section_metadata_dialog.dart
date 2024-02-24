@@ -57,9 +57,7 @@ class _SectionMetadataDialogState extends State<SectionMetadataDialog> {
               ),
               const Text('Section description'),
               TextFormField(
-                initialValue: widget.sectionData != null
-                    ? widget.sectionData!.description
-                    : null,
+                initialValue: widget.sectionData?.description,
                 decoration: const InputDecoration(
                     hintText: 'Short description for this section'),
                 onChanged: (value) {

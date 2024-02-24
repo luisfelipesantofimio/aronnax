@@ -51,7 +51,7 @@ class _PasswordUpdateFormDialogState
               children: [
                 Text(
                   AppLocalizations.of(context)!.profileNewPasswordUpdateButton,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),

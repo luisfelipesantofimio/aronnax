@@ -150,9 +150,7 @@ class _AppointmentCreationDialogState
                     SizedBox(
                       width: 250,
                       child: TextFormField(
-                        initialValue: widget.eventData != null
-                            ? widget.eventData!.description
-                            : null,
+                        initialValue: widget.eventData?.description,
                         maxLines: 2,
                         decoration: InputDecoration(
                             hintText: AppLocalizations.of(context)!

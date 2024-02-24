@@ -137,14 +137,9 @@ class _CaseCreationDialogState extends ConsumerState<CaseCreationDialog> {
                         ref.read(caseFormDiagnosticProvider)!,
                         ref.read(caseFormDiagnosticCodeProvider),
                         ref.read(caseFormCaseNotesProvider),
-                        ref.read(caseFormTreatmentPlanProvider) == null
-                            ? null
-                            : ref.read(caseFormTreatmentPlanProvider)!.id,
-                        ref.read(caseFormTreatmentPlanProvider) == null
-                            ? null
-                            : ref
-                                .read(caseFormTreatmentPlanProvider)!
-                                .sectionsList
+                        ref.read(caseFormTreatmentPlanProvider)?.id,
+                        ref
+                                .read(caseFormTreatmentPlanProvider)?.sectionsList
                                 .indexOf(ref
                                     .read(caseFormTreatmentPlanProvider)!
                                     .sectionsList
