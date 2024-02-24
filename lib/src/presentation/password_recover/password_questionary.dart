@@ -47,7 +47,8 @@ class _PasswordQuestionaryState extends ConsumerState<PasswordQuestionary> {
             children: [
               Text(
                 AppLocalizations.of(context)!.passwordRecoverQuestionaryTitle,
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
               const Padding(
                 padding: EdgeInsets.all(10),
@@ -57,7 +58,10 @@ class _PasswordQuestionaryState extends ConsumerState<PasswordQuestionary> {
                 padding: EdgeInsets.all(10),
               ),
               TextFormField(
-                decoration: const InputDecoration(hintText: 'Your answer'),
+                decoration: InputDecoration(
+                  hintText:
+                      AppLocalizations.of(context)!.welcomeScreenYourAnswer,
+                ),
                 onChanged: (value) {
                   setState(() {
                     userAnswer = value;

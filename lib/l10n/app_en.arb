@@ -15,6 +15,14 @@
   "genericDelete": "Delete",
   "genericDescription": "Description",
   "genericErrorPasswordsDontMatch": "The passwords don´t match",
+  "genericMinimumCharacters": "Minimum {amount} characters",
+  "@genericMinimumCharacters": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "genericSelectionText": "Select an option",
   "genericPatientSelectionTitlte": "Select a patient",
   "genericPatientNameTitle": "Patient name",
@@ -93,6 +101,8 @@
   "passwordRecoverQuestionaryEmail": "Select your email adress",
   "passwordRecoverQuestionaryUpdatePasswordTitle": "Update your password",
   "passwordRecoverQuestionaryPasswordConfirmationAlert": "Password updated",
+  "passwordRecoverPinTitle": "Your pin (Single use generated number for recovering your account)",
+  "passwordRecoverCopyPin": "Copy pin",
   "registerTitle": "Register consultant",
   "registerFormTitle": "Personal information",
   "registerBackButtonTitle": "Back",
