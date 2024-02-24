@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 ValueNotifier<int> currentView = ValueNotifier(0);
 
 class SettingsHeaderBar extends StatefulWidget {
-  const SettingsHeaderBar({Key? key}) : super(key: key);
+  const SettingsHeaderBar({super.key});
 
   @override
   State<SettingsHeaderBar> createState() => _SettingsHeaderBarState();
@@ -40,11 +41,13 @@ class _SettingsHeaderBarState extends State<SettingsHeaderBar> {
                               },
                               icon: const Icon(Icons.arrow_back),
                               iconSize: 35,
-                              tooltip: "Volver",
+                              tooltip: AppLocalizations.of(context)!
+                                  .registerBackButtonTitle,
                             ),
                           ),
                           Text(
-                            "Ajustes",
+                            AppLocalizations.of(context)!
+                                .mainMenuOptionsBarTitleSettings,
                             style: Theme.of(context).textTheme.displayMedium,
                           ),
                         ],
@@ -62,7 +65,8 @@ class _SettingsHeaderBarState extends State<SettingsHeaderBar> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "Mi información",
+                                  AppLocalizations.of(context)!
+                                      .settingsScreenBarTitleInformation,
                                   style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                               ],
@@ -83,7 +87,8 @@ class _SettingsHeaderBarState extends State<SettingsHeaderBar> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "Reparar base de datos CIE",
+                                  AppLocalizations.of(context)!
+                                      .settingsScreenBarTitleDbRepair,
                                   style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                               ],

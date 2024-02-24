@@ -7,9 +7,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TreatmentPlanTextField extends ConsumerStatefulWidget {
   const TreatmentPlanTextField({
-    Key? key,
+    super.key,
     required this.componentData,
-  }) : super(key: key);
+  });
   final TreatmentPlanComponent componentData;
 
   @override

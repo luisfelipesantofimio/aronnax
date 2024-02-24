@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/providers/icd_data_provider.dart';
 import 'package:aronnax/src/presentation/icd_view/icd_view.dart';
@@ -25,9 +26,10 @@ class _IcdDataRepairState extends ConsumerState<IcdDataRepair> {
                     .read(icdStateProvider.notifier)
                     .update((state) => completedTask);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
+                  SnackBar(
                     backgroundColor: Colors.green,
-                    content: Text('Reparación completa!'),
+                    content: Text(AppLocalizations.of(context)!
+                        .icdDataRepairConfirmation),
                   ),
                 );
               });
@@ -39,14 +41,15 @@ class _IcdDataRepairState extends ConsumerState<IcdDataRepair> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Reparar base de datos de códigos de diagnóstico',
+                  AppLocalizations.of(context)!.icdDataRepairTitle,
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 const Padding(
                   padding: EdgeInsets.all(5),
                 ),
-                const Text(
-                    'Si durante el proceso de descarga hubo un error o no encuentras un código que debería existir, puedes reparar la base de datos.'),
+                Text(
+                  AppLocalizations.of(context)!.icdDataRepairDescription,
+                ),
                 const Padding(
                   padding: EdgeInsets.all(10),
                 ),
@@ -58,17 +61,14 @@ class _IcdDataRepairState extends ConsumerState<IcdDataRepair> {
                     ref.invalidate(icdDataProvider);
                     ref.read(icdStateProvider.notifier).update((state) => true);
                   },
-                  child: const Text(
-                    'Continuar',
-                    style: TextStyle(
+                  child: Text(
+                    AppLocalizations.of(context)!.continueButton,
+                    style: const TextStyle(
                         fontWeight: FontWeight.bold, color: Colors.black),
                   ),
                 ),
               ],
             ),
           );
-    // return icdData.when(data: (data) {
-    //   return
-    // }, error: error, loading: loading);
   }
 }

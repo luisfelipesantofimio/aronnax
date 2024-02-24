@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/forms_providers/session_form_provider.dart';
 import 'package:aronnax/src/data/providers/treatment_plan_providers.dart';
@@ -18,11 +19,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SessionFormView extends ConsumerStatefulWidget {
   const SessionFormView({
-    Key? key,
+    super.key,
     required this.patientData,
     required this.patientCaseData,
     required this.patientSessionAmount,
-  }) : super(key: key);
+  });
   final Patient patientData;
   final PatientCase patientCaseData;
   final int patientSessionAmount;
@@ -85,7 +86,8 @@ class _SessionFormViewState extends ConsumerState<SessionFormView> {
                           children: [
                             GenericIconButton(
                               icon: FontAwesomeIcons.noteSticky,
-                              title: 'Añadir nota',
+                              title: AppLocalizations.of(context)!
+                                  .sessionFormAddNote,
                               onTap: () => showDialog(
                                 context: context,
                                 builder: (context) =>
@@ -94,7 +96,8 @@ class _SessionFormViewState extends ConsumerState<SessionFormView> {
                             ),
                             GenericIconButton(
                               icon: FontAwesomeIcons.squareCheck,
-                              title: 'Añadir tarea',
+                              title:
+                                  AppLocalizations.of(context)!.sessionFormTask,
                               onTap: () => showDialog(
                                 context: context,
                                 builder: (context) =>
@@ -103,12 +106,14 @@ class _SessionFormViewState extends ConsumerState<SessionFormView> {
                             ),
                             GenericIconButton(
                               icon: FontAwesomeIcons.microscope,
-                              title: 'Iniciar prueba',
+                              title: AppLocalizations.of(context)!
+                                  .sessionFormStartTest,
                               onTap: () =>
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
+                                SnackBar(
                                   backgroundColor: Colors.green,
-                                  content: Text('Muy pronto!'),
+                                  content: Text(AppLocalizations.of(context)!
+                                      .sessionFormStartTestSoon),
                                 ),
                               ),
                             ),
@@ -119,14 +124,16 @@ class _SessionFormViewState extends ConsumerState<SessionFormView> {
                                         null,
                                 child: GenericIconButton(
                                   icon: FontAwesomeIcons.handHoldingMedical,
-                                  title: 'Iniciar plan de tratamiento',
+                                  title: AppLocalizations.of(context)!
+                                      .sessionFormBeginTreatmentPlan,
                                   onTap: () => treatmentPlanResultsSaved
                                       ? ScaffoldMessenger.of(context)
                                           .showSnackBar(
-                                          const SnackBar(
+                                          SnackBar(
                                             backgroundColor: Colors.red,
-                                            content: Text(
-                                                'Treatment plan results already saved.'),
+                                            content: Text(AppLocalizations.of(
+                                                    context)!
+                                                .sessionFormBeginTreatmentPlanTaken),
                                           ),
                                         )
                                       : showDialog(
@@ -152,8 +159,9 @@ class _SessionFormViewState extends ConsumerState<SessionFormView> {
                                         ),
                                 ),
                               ),
-                              error: (error, stackTrace) =>
-                                  const Text('Something went wrong'),
+                              error: (error, stackTrace) => Text(
+                                  AppLocalizations.of(context)!
+                                      .genericErrorMessage),
                               loading: () => const CircularProgressIndicator(),
                             ),
                           ],
@@ -171,7 +179,7 @@ class _SessionFormViewState extends ConsumerState<SessionFormView> {
                         Padding(
                           padding: const EdgeInsets.all(10),
                           child: Text(
-                            "Nueva sesión",
+                            AppLocalizations.of(context)!.sessionFormNewSession,
                             style: Theme.of(context).textTheme.displayLarge,
                           ),
                         ),
@@ -210,13 +218,15 @@ class _SessionFormViewState extends ConsumerState<SessionFormView> {
                                         Navigator.pop(context);
                                       },
                                       icon: const Icon(Icons.arrow_back),
-                                      tooltip: "Volver",
+                                      tooltip: AppLocalizations.of(context)!
+                                          .registerBackButtonTitle,
                                     ),
                                     const Padding(padding: EdgeInsets.all(10)),
                                     GenericGlobalButton(
                                       height: 40,
                                       width: 200,
-                                      title: 'Guardar sesión',
+                                      title: AppLocalizations.of(context)!
+                                          .sessionFormSaveSession,
                                       onPressed: () {
                                         if (sessionFormKey.currentState!
                                             .validate()) {

@@ -1,5 +1,5 @@
 import 'dart:math';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/presentation/widgets/generic_minimal_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,10 +7,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PasswordUpdateFormDialog extends ConsumerStatefulWidget {
   const PasswordUpdateFormDialog({
-    Key? key,
+    super.key,
     required this.updateWithPin,
     required this.onPasswordChanged,
-  }) : super(key: key);
+  });
   final bool updateWithPin;
   final Function(String newPassword, int newPin) onPasswordChanged;
 
@@ -49,9 +49,9 @@ class _PasswordUpdateFormDialogState
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  'Update your password',
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.profileNewPasswordUpdateButton,
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),
@@ -60,8 +60,9 @@ class _PasswordUpdateFormDialogState
                   padding: EdgeInsets.all(10),
                 ),
                 TextFormField(
-                  decoration:
-                      const InputDecoration(hintText: 'Your new password'),
+                  decoration: InputDecoration(
+                      hintText: AppLocalizations.of(context)!
+                          .profileNewPasswordNewPassword),
                   onChanged: (value) {
                     setState(() {
                       newPassword = value;
@@ -70,10 +71,11 @@ class _PasswordUpdateFormDialogState
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'The field must not be empty';
+                      return AppLocalizations.of(context)!.errorEmptyField;
                     }
                     if (value.length < 8) {
-                      return 'The password must have at least 8 characters.';
+                      return AppLocalizations.of(context)!
+                          .genericMinimumCharacters("8");
                     }
                     return null;
                   },
@@ -82,8 +84,10 @@ class _PasswordUpdateFormDialogState
                   padding: EdgeInsets.all(5),
                 ),
                 TextFormField(
-                  decoration:
-                      const InputDecoration(hintText: 'Your new password'),
+                  decoration: InputDecoration(
+                    hintText: AppLocalizations.of(context)!
+                        .profileNewPasswordNewPassword,
+                  ),
                   onChanged: (value) {
                     setState(() {
                       newPasswordConfirm = value;
@@ -92,13 +96,15 @@ class _PasswordUpdateFormDialogState
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'The field must not be empty';
+                      return AppLocalizations.of(context)!.errorEmptyField;
                     }
                     if (value.length < 8) {
-                      return 'The password must have at least 8 characters.';
+                      return AppLocalizations.of(context)!
+                          .genericMinimumCharacters("8");
                     }
                     if (newPasswordConfirm != newPassword) {
-                      return "The password don't match";
+                      return AppLocalizations.of(context)!
+                          .genericErrorPasswordsDontMatch;
                     }
                     return null;
                   },
@@ -119,8 +125,8 @@ class _PasswordUpdateFormDialogState
                             children: [
                               SizedBox(
                                 width: MediaQuery.of(context).size.height * 0.4,
-                                child: const Text(
-                                    'Your pin (Single use generated number for recovering your account)'),
+                                child: Text(AppLocalizations.of(context)!
+                                    .passwordRecoverPinTitle),
                               ),
                               Row(
                                 children: [
@@ -130,7 +136,8 @@ class _PasswordUpdateFormDialogState
                                         fontWeight: FontWeight.bold),
                                   ),
                                   IconButton(
-                                    tooltip: 'Regenerate pin',
+                                    tooltip: AppLocalizations.of(context)!
+                                        .welcomeScreenRegeneratePin,
                                     onPressed: () {
                                       setState(() {
                                         newPin = int.parse(List.generate(6,
@@ -141,7 +148,8 @@ class _PasswordUpdateFormDialogState
                                     icon: const Icon(Icons.refresh),
                                   ),
                                   IconButton(
-                                    tooltip: 'Copy pin',
+                                    tooltip: AppLocalizations.of(context)!
+                                        .passwordRecoverCopyPin,
                                     onPressed: () {
                                       Clipboard.setData(
                                         ClipboardData(
@@ -164,7 +172,8 @@ class _PasswordUpdateFormDialogState
                   ),
                 ),
                 GenericMinimalButton(
-                  title: 'Update password',
+                  title: AppLocalizations.of(context)!
+                      .settingsScreenPersonalInfoUpdatePassword,
                   onTap: () {
                     if (formKey.currentState!.validate()) {
                       widget.onPasswordChanged(

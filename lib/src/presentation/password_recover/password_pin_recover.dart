@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/auth_repository_interface.dart';
 import 'package:aronnax/src/data/interfaces/professional_repository_interface.dart';
 import 'package:aronnax/src/domain/entities/professional.dart';
@@ -9,9 +10,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PasswordPinRecover extends ConsumerStatefulWidget {
   const PasswordPinRecover({
-    Key? key,
+    super.key,
     required this.professionalData,
-  }) : super(key: key);
+  });
   final Professional professionalData;
 
   @override
@@ -42,15 +43,17 @@ class _PasswordPinRecoverState extends ConsumerState<PasswordPinRecover> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                'Insert your account recover pin',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              Text(
+                AppLocalizations.of(context)!.passwordRecoverPinInstructions,
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
               const Padding(
                 padding: EdgeInsets.all(10),
               ),
               TextFormField(
-                decoration: const InputDecoration(hintText: 'Your pin'),
+                decoration: InputDecoration(
+                    hintText: AppLocalizations.of(context)!
+                        .passwordRecoverPinAnswerHint),
                 onChanged: (value) {
                   setState(() {
                     userPin = value;
@@ -65,7 +68,8 @@ class _PasswordPinRecoverState extends ConsumerState<PasswordPinRecover> {
                     userInput: userPin,
                     encodedPin: widget.professionalData.encodedRecoverPin),
                 child: GenericMinimalButton(
-                  title: 'Update password',
+                  title: AppLocalizations.of(context)!
+                      .passwordRecoverQuestionaryUpdatePasswordTitle,
                   onTap: () {
                     showDialog(
                       context: context,
@@ -82,9 +86,10 @@ class _PasswordPinRecoverState extends ConsumerState<PasswordPinRecover> {
                                   newPin.toString(),
                                 );
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
+                              SnackBar(
                                 backgroundColor: Colors.green,
-                                content: Text('Password updated'),
+                                content: Text(AppLocalizations.of(context)!
+                                    .passwordRecoverQuestionaryPasswordConfirmationAlert),
                               ),
                             );
                             Navigator.pushReplacement(

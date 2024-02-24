@@ -10,10 +10,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TreatmentPlanSelectionComponent extends ConsumerStatefulWidget {
   const TreatmentPlanSelectionComponent({
-    Key? key,
+    super.key,
     required this.componentData,
     required this.valuesList,
-  }) : super(key: key);
+  });
   final TreatmentPlanComponent componentData;
   final List<TreatmentPlanOption> valuesList;
 

@@ -6,8 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
 class PatientListElement extends StatelessWidget {
-  const PatientListElement({Key? key, required this.patientData})
-      : super(key: key);
+  const PatientListElement({super.key, required this.patientData});
   final Patient patientData;
 
   @override
@@ -16,6 +15,7 @@ class PatientListElement extends StatelessWidget {
       onTap: () {
         showDialog(
           context: context,
+          //TODO: Fix dialog size
           builder: (context) => PatientsDialogView(patientData: patientData),
         );
       },
@@ -47,16 +47,16 @@ class PatientListElement extends StatelessWidget {
           ),
           child: LayoutBuilder(
             builder: (context, constraints) {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
+              return ListView(
                 children: [
                   Row(
+                    mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Container(
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: AppMethods().randomColorGenerator()),
+                            color: AppMethods.randomColorGenerator()),
                         child: Padding(
                           padding: const EdgeInsets.all(20),
                           child: Center(
@@ -93,6 +93,7 @@ class PatientListElement extends StatelessWidget {
                     padding: EdgeInsets.all(5),
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Column(

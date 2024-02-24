@@ -9,8 +9,8 @@ import 'package:table_calendar/table_calendar.dart';
 
 class GlobalCalendar extends ConsumerStatefulWidget {
   const GlobalCalendar({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   ConsumerState<GlobalCalendar> createState() => _GlobalCalendarState();

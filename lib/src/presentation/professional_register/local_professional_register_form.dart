@@ -1,10 +1,11 @@
-import 'dart:math';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'dart:math';
 import 'package:aronnax/src/data/interfaces/professional_repository_interface.dart';
 import 'package:aronnax/src/data/providers/location_data_provider.dart';
 import 'package:aronnax/src/presentation/core/constants.dart';
 import 'package:aronnax/src/presentation/core/methods.dart';
-import 'package:aronnax/src/presentation/login/login_main_view.dart';
+import 'package:aronnax/src/presentation/icd_view/icd_view.dart';
 import 'package:aronnax/src/presentation/widgets/generic_minimal_button.dart';
 import 'package:country_state_city/country_state_city.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LocalProfessionalRegister extends ConsumerStatefulWidget {
-  const LocalProfessionalRegister({Key? key}) : super(key: key);
+  const LocalProfessionalRegister({super.key});
 
   @override
   LocalProfessionalRegisterState createState() =>
@@ -56,13 +57,14 @@ class LocalProfessionalRegisterState
                     style: Theme.of(context).textTheme.bodyMedium,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "El campo no puede estar vacío";
+                        return AppLocalizations.of(context)!.errorEmptyField;
                       }
                       return null;
                     },
                     autofocus: true,
                     decoration: InputDecoration(
-                      labelText: "Número de identificación personal",
+                      labelText:
+                          AppLocalizations.of(context)!.welcomeScreenPersonalID,
                       labelStyle: Theme.of(context).textTheme.bodyMedium,
                     ),
                     onChanged: (varID) {
@@ -79,13 +81,14 @@ class LocalProfessionalRegisterState
                     style: Theme.of(context).textTheme.bodyMedium,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "El campo no puede estar vacío";
+                        return AppLocalizations.of(context)!.errorEmptyField;
                       }
                       return null;
                     },
                     autofocus: true,
                     decoration: InputDecoration(
-                      labelText: "Nombres",
+                      labelText:
+                          AppLocalizations.of(context)!.welcomeScreenNames,
                       labelStyle: Theme.of(context).textTheme.bodyMedium,
                     ),
                     onChanged: (varNames) {
@@ -102,13 +105,14 @@ class LocalProfessionalRegisterState
                     style: Theme.of(context).textTheme.bodyMedium,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "El campo no puede estar vacío";
+                        return AppLocalizations.of(context)!.errorEmptyField;
                       }
                       return null;
                     },
                     autofocus: true,
                     decoration: InputDecoration(
-                      labelText: "Apellidos",
+                      labelText:
+                          AppLocalizations.of(context)!.welcomeScreenLastNames,
                       labelStyle: Theme.of(context).textTheme.bodyMedium,
                     ),
                     onChanged: (varLastNames) {
@@ -125,14 +129,15 @@ class LocalProfessionalRegisterState
                     style: Theme.of(context).textTheme.bodyMedium,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "El campo no puede estar vacío";
+                        return AppLocalizations.of(context)!.errorEmptyField;
                       }
 
                       return null;
                     },
                     autofocus: true,
                     decoration: InputDecoration(
-                      labelText: "Your adress",
+                      labelText: AppLocalizations.of(context)!
+                          .welcomeScreenYourAddress,
                       labelStyle: Theme.of(context).textTheme.bodyMedium,
                     ),
                     onChanged: (value) {
@@ -149,18 +154,20 @@ class LocalProfessionalRegisterState
                     style: Theme.of(context).textTheme.bodyMedium,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "El campo no puede estar vacío";
+                        return AppLocalizations.of(context)!.errorEmptyField;
                       }
 
                       if (!AppMethods().validateEmail(value)) {
-                        return 'Invalid email format';
+                        return AppLocalizations.of(context)!
+                            .registerFormErrorEmail;
                       }
 
                       return null;
                     },
                     autofocus: true,
                     decoration: InputDecoration(
-                      labelText: "Your email",
+                      labelText:
+                          AppLocalizations.of(context)!.welcomeScreenYourEmail,
                       labelStyle: Theme.of(context).textTheme.bodyMedium,
                     ),
                     onChanged: (value) {
@@ -177,13 +184,14 @@ class LocalProfessionalRegisterState
                     style: Theme.of(context).textTheme.bodyMedium,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "El campo no puede estar vacío";
+                        return AppLocalizations.of(context)!.errorEmptyField;
                       }
                       return null;
                     },
                     autofocus: true,
                     decoration: InputDecoration(
-                      labelText: "Tarjeta profesional",
+                      labelText: AppLocalizations.of(context)!
+                          .welcomeScreenProfessionalID,
                       labelStyle: Theme.of(context).textTheme.bodyMedium,
                     ),
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -199,8 +207,9 @@ class LocalProfessionalRegisterState
                   margin: const EdgeInsets.all(8),
                   child: countriesList.when(
                     data: (data) => DropdownButtonFormField(
-                      decoration: const InputDecoration(
-                          hintText: 'Select your country'),
+                      decoration: InputDecoration(
+                          hintText: AppLocalizations.of(context)!
+                              .welcomeScreenSelectCountry),
                       items: data
                           .map(
                             (e) => DropdownMenuItem(
@@ -226,18 +235,19 @@ class LocalProfessionalRegisterState
                       },
                       validator: (value) {
                         if (selectedCountryCode == null) {
-                          return 'You must select a value';
+                          return AppLocalizations.of(context)!
+                              .genericSelectionText;
                         }
                         return null;
                       },
                     ),
                     error: (error, stackTrace) => Row(
                       children: [
-                        const Text('Something went wrong'),
+                        Text(AppLocalizations.of(context)!.genericErrorMessage),
                         TextButton(
                           onPressed: () =>
                               ref.invalidate(countriesListProvider),
-                          child: const Text('Try again'),
+                          child: Text(AppLocalizations.of(context)!.tryAgain),
                         ),
                       ],
                     ),
@@ -250,13 +260,14 @@ class LocalProfessionalRegisterState
                     style: Theme.of(context).textTheme.bodyMedium,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "El campo no puede estar vacío";
+                        return AppLocalizations.of(context)!.errorEmptyField;
                       }
                       return null;
                     },
                     autofocus: true,
                     decoration: InputDecoration(
-                      labelText: "Nombre de usuario",
+                      labelText:
+                          AppLocalizations.of(context)!.welcomeScreenUsername,
                       labelStyle: Theme.of(context).textTheme.bodyMedium,
                     ),
                     onChanged: (userVar) {
@@ -273,16 +284,18 @@ class LocalProfessionalRegisterState
                     style: Theme.of(context).textTheme.bodyMedium,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "El campo no puede estar vacío";
+                        return AppLocalizations.of(context)!.errorEmptyField;
                       }
                       if (value.length < 8) {
-                        return 'The password must have at least eight characters.';
+                        return AppLocalizations.of(context)!
+                            .welcomeScreenErrorPasswordLenght;
                       }
                       return null;
                     },
                     autofocus: true,
                     decoration: InputDecoration(
-                      labelText: "Tu contraseña",
+                      labelText: AppLocalizations.of(context)!
+                          .welcomeScreenYourPassword,
                       labelStyle: Theme.of(context).textTheme.bodyMedium,
                     ),
                     onChanged: (varPassword) {
@@ -299,17 +312,19 @@ class LocalProfessionalRegisterState
                     style: Theme.of(context).textTheme.bodyMedium,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "El campo no puede estar vacío";
+                        return AppLocalizations.of(context)!.errorEmptyField;
                       }
                       if (password2 != password) {
-                        return "The passwords don't match!";
+                        return AppLocalizations.of(context)!
+                            .genericErrorPasswordsDontMatch;
                       }
 
                       return null;
                     },
                     autofocus: true,
                     decoration: InputDecoration(
-                      labelText: "Confirma tu contraseña",
+                      labelText: AppLocalizations.of(context)!
+                          .welcomeScreenYourPassword,
                       labelStyle: Theme.of(context).textTheme.bodyMedium,
                     ),
                     onChanged: (varPassword) {
@@ -326,16 +341,17 @@ class LocalProfessionalRegisterState
                     style: Theme.of(context).textTheme.bodyMedium,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "El campo no puede estar vacío";
+                        return AppLocalizations.of(context)!.errorEmptyField;
                       }
 
                       return null;
                     },
                     autofocus: true,
                     decoration: InputDecoration(
-                      labelText: "Pregunta de seguridad",
-                      helperText:
-                          'Deberás recordar esta pregunta en caso de perder tu contraseña',
+                      labelText: AppLocalizations.of(context)!
+                          .welcomeScreenSecurityQuestion,
+                      helperText: AppLocalizations.of(context)!
+                          .welcomeScreenSecurityQuestionDescription,
                       labelStyle: Theme.of(context).textTheme.bodyMedium,
                     ),
                     onChanged: (value) {
@@ -352,14 +368,15 @@ class LocalProfessionalRegisterState
                     style: Theme.of(context).textTheme.bodyMedium,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "El campo no puede estar vacío";
+                        return AppLocalizations.of(context)!.errorEmptyField;
                       }
 
                       return null;
                     },
                     autofocus: true,
                     decoration: InputDecoration(
-                      labelText: "Tu respuesta",
+                      labelText:
+                          AppLocalizations.of(context)!.welcomeScreenYourAnswer,
                       labelStyle: Theme.of(context).textTheme.bodyMedium,
                     ),
                     onChanged: (value) {
@@ -379,8 +396,8 @@ class LocalProfessionalRegisterState
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                                'Your pin (Single use generated number for recovering your account)'),
+                            Text(AppLocalizations.of(context)!
+                                .welcomeScreenPinDescription),
                             Row(
                               children: [
                                 Text(
@@ -389,7 +406,8 @@ class LocalProfessionalRegisterState
                                       fontWeight: FontWeight.bold),
                                 ),
                                 IconButton(
-                                  tooltip: 'Regenerate pin',
+                                  tooltip: AppLocalizations.of(context)!
+                                      .welcomeScreenRegeneratePin,
                                   onPressed: () {
                                     setState(() {
                                       securityPin = int.parse(List.generate(
@@ -400,7 +418,8 @@ class LocalProfessionalRegisterState
                                   icon: const Icon(Icons.refresh),
                                 ),
                                 IconButton(
-                                  tooltip: 'Copy pin',
+                                  tooltip: AppLocalizations.of(context)!
+                                      .genericCopyMessage("PIN"),
                                   onPressed: () {
                                     Clipboard.setData(
                                       ClipboardData(
@@ -424,7 +443,7 @@ class LocalProfessionalRegisterState
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.3,
                   child: GenericMinimalButton(
-                    title: 'Continuar',
+                    title: AppLocalizations.of(context)!.continueButton,
                     onTap: () {
                       if (professionalKey.currentState!.validate()) {
                         professionalKey.currentState!.save();
@@ -448,14 +467,15 @@ class LocalProfessionalRegisterState
 
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text("¡Hola! $names"),
+                            content: Text(AppLocalizations.of(context)!
+                                .welcomeScreenWelcomeGreeting(names!)),
                           ),
                         );
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const LoginScreen(),
-                              // const IcdView(isConfigured: false),
+                              builder: (context) =>
+                                  const IcdView(isConfigured: false),
                             ));
                       }
                     },

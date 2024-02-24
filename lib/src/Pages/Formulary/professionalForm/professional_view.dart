@@ -2,7 +2,7 @@ import 'package:aronnax/src/Pages/Formulary/professionalForm/professional_form.d
 import 'package:flutter/material.dart';
 
 class ProfessionalView extends StatelessWidget {
-  const ProfessionalView({Key? key}) : super(key: key);
+  const ProfessionalView({super.key});
 
   @override
   Widget build(BuildContext context) {

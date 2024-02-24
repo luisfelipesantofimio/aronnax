@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/io_repository_interface.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/providers/treatment_plan_providers.dart';
@@ -10,8 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TreatmentPlanListElement extends ConsumerWidget {
-  const TreatmentPlanListElement({Key? key, required this.treatmentPlanData})
-      : super(key: key);
+  const TreatmentPlanListElement({super.key, required this.treatmentPlanData});
   final TreatmentPlan treatmentPlanData;
 
   @override
@@ -52,7 +51,7 @@ class TreatmentPlanListElement extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                    'Número de fases: ${treatmentPlanData.sectionsList.length}'),
+                    '${AppLocalizations.of(context)!.treatmentPlanListNumberOfPhases}: ${treatmentPlanData.sectionsList.length}'),
                 Row(
                   children: [
                     IconButton(
@@ -71,8 +70,8 @@ class TreatmentPlanListElement extends ConsumerWidget {
                             SnackBar(
                               backgroundColor: Colors.green,
                               showCloseIcon: true,
-                              content:
-                                  Text('File exported to path: ${result.path}'),
+                              content: Text(
+                                  '${AppLocalizations.of(context)!.treatmentPlanListFileExportedPath}: ${result.path}'),
                             ),
                           );
                         });
@@ -97,9 +96,10 @@ class TreatmentPlanListElement extends ConsumerWidget {
                             .read(localDatabaseRepositoryProvider)
                             .deleteLocalTreatmentPlan(treatmentPlanData.id);
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
+                          SnackBar(
                             backgroundColor: Colors.red,
-                            content: Text('Treatment plan removed'),
+                            content: Text(AppLocalizations.of(context)!
+                                .treatmentPlanListDeleteConfirmation),
                           ),
                         );
                         ref.invalidate(treatmentPlanListProvider);

@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 class MenuOptionsBarItem extends StatefulWidget {
   const MenuOptionsBarItem({
-    Key? key,
+    super.key,
     required this.icon,
     required this.title,
     required this.onTap,
     required this.isFullSize,
-  }) : super(key: key);
+  });
   final IconData icon;
   final String title;
   final VoidCallback onTap;

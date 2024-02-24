@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 
 class ScaleExampleComponent extends StatelessWidget {
   const ScaleExampleComponent(
-      {Key? key,
+      {super.key,
       required this.valueTitle,
       required this.labelTitle,
-      required this.onDelete})
-      : super(key: key);
+      required this.onDelete});
   final String valueTitle;
   final String labelTitle;
   final VoidCallback onDelete;

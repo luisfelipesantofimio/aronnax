@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/Pages/Formulary/widgets/consultant_selection_dialog.dart';
 import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
 import 'package:aronnax/src/domain/entities/patient_case.dart';
@@ -11,7 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MenuOptionsBar extends ConsumerStatefulWidget {
-  const MenuOptionsBar({Key? key}) : super(key: key);
+  const MenuOptionsBar({super.key});
 
   @override
   ConsumerState<MenuOptionsBar> createState() => _MenuOptionsBarState();
@@ -51,7 +52,8 @@ class _MenuOptionsBarState extends ConsumerState<MenuOptionsBar> {
                   ),
                   MenuOptionsBarItem(
                     icon: FontAwesomeIcons.clipboardUser,
-                    title: 'Registrar consultante',
+                    title: AppLocalizations.of(context)!
+                        .mainMenuOptionsBarTitleRegisterConsultant,
                     isFullSize: isMouseIn,
                     onTap: () => Navigator.push(
                       context,
@@ -62,7 +64,8 @@ class _MenuOptionsBarState extends ConsumerState<MenuOptionsBar> {
                   ),
                   MenuOptionsBarItem(
                     icon: FontAwesomeIcons.doorOpen,
-                    title: 'Iniciar consulta',
+                    title: AppLocalizations.of(context)!
+                        .mainMenuOptionsBarTitleStartConsultation,
                     onTap: () => showDialog(
                       context: context,
                       builder: (context) => ConsultantSelectionDialog(
@@ -79,7 +82,10 @@ class _MenuOptionsBarState extends ConsumerState<MenuOptionsBar> {
                                 SnackBar(
                                   backgroundColor: Colors.red,
                                   content: Text(
-                                      "This user does not have any open case. Go to ${patient.names}'s profile and create or enable a case."),
+                                    AppLocalizations.of(context)!
+                                        .mainMenuOptionsBarAlertCaseNotFound(
+                                            patient.names),
+                                  ),
                                 ),
                               );
                               Navigator.pop(context);
@@ -99,7 +105,8 @@ class _MenuOptionsBarState extends ConsumerState<MenuOptionsBar> {
                             );
                           }
                         },
-                        title: "Selecciona al consultante",
+                        title: AppLocalizations.of(context)!
+                            .mainMenuOptionsBarPatientSelectionDialogTitle,
                       ),
                     ),
                     isFullSize: isMouseIn,

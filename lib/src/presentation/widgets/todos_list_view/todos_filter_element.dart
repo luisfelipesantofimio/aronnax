@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class TodosFilterElement extends StatelessWidget {
   const TodosFilterElement({
-    Key? key,
+    super.key,
     required this.title,
     required this.onTap,
-  }) : super(key: key);
+  });
   final String title;
   final VoidCallback onTap;
 

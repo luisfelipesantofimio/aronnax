@@ -9,9 +9,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TreatmentPlanTaskComponent extends ConsumerStatefulWidget {
   const TreatmentPlanTaskComponent({
-    Key? key,
+    super.key,
     required this.componentData,
-  }) : super(key: key);
+  });
   final TreatmentPlanComponent componentData;
 
   @override

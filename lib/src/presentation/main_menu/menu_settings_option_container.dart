@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/Pages/help/help_main_view.dart';
 import 'package:aronnax/src/presentation/login/login_main_view.dart';
 import 'package:aronnax/src/presentation/settings/settings_main.dart';
@@ -6,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MenuSettingsOptionContainer extends StatefulWidget {
-  const MenuSettingsOptionContainer({Key? key}) : super(key: key);
+  const MenuSettingsOptionContainer({super.key});
 
   @override
   State<MenuSettingsOptionContainer> createState() =>
@@ -32,7 +33,8 @@ class _MenuSettingsOptionContainerState
                 children: [
                   MenuOptionsBarItem(
                     icon: FontAwesomeIcons.gear,
-                    title: 'Ajustes',
+                    title: AppLocalizations.of(context)!
+                        .mainMenuOptionsBarTitleSettings,
                     isFullSize: isMouseIn,
                     onTap: () => Navigator.push(
                       context,
@@ -43,7 +45,8 @@ class _MenuSettingsOptionContainerState
                   ),
                   MenuOptionsBarItem(
                     icon: Icons.question_mark,
-                    title: 'Ayuda',
+                    title: AppLocalizations.of(context)!
+                        .mainMenuOptionsBarTitleHelp,
                     isFullSize: isMouseIn,
                     onTap: () => Navigator.push(
                       context,
@@ -54,7 +57,8 @@ class _MenuSettingsOptionContainerState
                   ),
                   MenuOptionsBarItem(
                     icon: Icons.logout_outlined,
-                    title: 'Cerrar sesión',
+                    title: AppLocalizations.of(context)!
+                        .mainMenuOptionsBarTitleRegisterSignOut,
                     isFullSize: isMouseIn,
                     onTap: () => Navigator.push(
                       context,
@@ -65,18 +69,19 @@ class _MenuSettingsOptionContainerState
                   ),
                 ],
               )
-            : const Row(
+            : Row(
                 children: [
-                  Icon(
+                  const Icon(
                     FontAwesomeIcons.gear,
                     color: Colors.white,
                   ),
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.all(10),
                   ),
                   Text(
-                    'Más opciones',
-                    style: TextStyle(color: Colors.white),
+                    AppLocalizations.of(context)!
+                        .mainMenuOptionsBarTitleMoreOptions,
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ],
               ),

@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/presentation/core/constants.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'login_form.dart';
 
 class LoginScreen extends ConsumerWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -28,7 +29,7 @@ class LoginScreen extends ConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "inicio de sesión",
+                        AppLocalizations.of(context)!.loginTitle,
                         style: Theme.of(context).textTheme.displayLarge,
                       ),
                       const LoginForm(),
@@ -45,7 +46,7 @@ class LoginScreen extends ConsumerWidget {
                 topRight: Radius.circular(50),
                 bottomRight: Radius.circular(30),
               ),
-              color: Theme.of(context).colorScheme.background,
+              color: Theme.of(context).colorScheme.secondary,
               boxShadow: const [
                 BoxShadow(
                   spreadRadius: 2.0,
@@ -64,20 +65,15 @@ class LoginScreen extends ConsumerWidget {
                     const SizedBox(
                       width: 200,
                       child: Image(
-                        height: 300,
-                        image: true
-                            ? AssetImage("assets/img/aronnax-icon-dark.png")
-                            : AssetImage("assets/img/aronnax-icon-light.png"),
-                      ),
+                          height: 300,
+                          image:
+                              AssetImage("assets/img/aronnax-icon-dark.png")),
                     ),
                     Text(
                       "Aronnax",
                       style: GoogleFonts.montserrat(
-                        fontSize: 60,
-                        color: true
-                            ? const Color.fromARGB(255, 28, 28, 28)
-                            : const Color.fromARGB(255, 215, 215, 215),
-                      ),
+                          fontSize: 60,
+                          color: const Color.fromARGB(255, 28, 28, 28)),
                     ),
                   ],
                 ),
@@ -88,13 +84,10 @@ class LoginScreen extends ConsumerWidget {
                     child: Row(
                       children: [
                         Text(
-                          "Versión ${AppConstants.globalVersion}",
+                          "Version ${AppConstants.globalVersion}",
                           style: GoogleFonts.montserrat(
-                            fontSize: 15,
-                            color: true
-                                ? const Color.fromARGB(255, 28, 28, 28)
-                                : const Color.fromARGB(255, 215, 215, 215),
-                          ),
+                              fontSize: 15,
+                              color: const Color.fromARGB(255, 28, 28, 28)),
                         )
                       ],
                     ),

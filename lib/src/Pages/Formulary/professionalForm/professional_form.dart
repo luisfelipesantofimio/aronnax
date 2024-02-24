@@ -8,7 +8,7 @@ String _password = "";
 final _hashedPassword = Crypt.sha256(_password);
 
 class ProfessionalForm extends StatefulWidget {
-  const ProfessionalForm({Key? key}) : super(key: key);
+  const ProfessionalForm({super.key});
 
   @override
   _ProfessionalFormState createState() => _ProfessionalFormState();

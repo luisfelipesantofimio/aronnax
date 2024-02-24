@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class TreatmentPlanSection extends StatelessWidget {
   const TreatmentPlanSection({
-    Key? key,
+    super.key,
     required this.title,
     required this.description,
     required this.componentsList,
-  }) : super(key: key);
+  });
   final String title;
   final String description;
   final List<Widget> componentsList;

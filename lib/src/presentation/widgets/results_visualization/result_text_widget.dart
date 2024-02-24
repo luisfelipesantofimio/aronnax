@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 class ResultTextItem extends StatelessWidget {
   const ResultTextItem({
-    Key? key,
+    super.key,
     required this.resultData,
-  }) : super(key: key);
+  });
   final TreatmentPlanResultValue resultData;
 
   @override

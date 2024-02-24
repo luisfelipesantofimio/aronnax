@@ -8,9 +8,9 @@ import 'package:intl/intl.dart';
 
 class TodosListElement extends ConsumerWidget {
   const TodosListElement({
-    Key? key,
+    super.key,
     required this.todoData,
-  }) : super(key: key);
+  });
   final Todo todoData;
 
   @override

@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PatientsList extends ConsumerWidget {
-  const PatientsList({Key? key}) : super(key: key);
+  const PatientsList({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final patientsData = ref.watch(patientsListProvider);
     final screenWidth = MediaQuery.of(context).size.width;
 
-    final cellWidth = MediaQuery.of(context).size.width * 0.3;
+    final cellWidth = MediaQuery.of(context).size.width * 0.35;
     final crossAxisCount = (screenWidth / cellWidth).floor();
 
     return patientsData.when(
@@ -27,7 +27,7 @@ class PatientsList extends ConsumerWidget {
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
-            mainAxisExtent: MediaQuery.of(context).size.height * 0.3,
+            mainAxisExtent: MediaQuery.of(context).size.height * 0.2,
             crossAxisCount: crossAxisCount,
           ),
         );

@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 
 class ResultsDialog extends StatelessWidget {
   const ResultsDialog(
-      {Key? key, required this.patientId, required this.caseData})
-      : super(key: key);
+      {super.key, required this.patientId, required this.caseData});
   final int patientId;
   final PatientCase caseData;
 

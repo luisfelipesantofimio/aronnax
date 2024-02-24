@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/Pages/help/legal_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -5,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 var padding = const EdgeInsets.only(left: 60);
 
 class MainHelpView extends ConsumerWidget {
-  const MainHelpView({Key? key}) : super(key: key);
+  const MainHelpView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -37,14 +38,14 @@ class MainHelpView extends ConsumerWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 60),
                       child: Text(
-                        "Un software de gestión de pacientes e historias clínicas, minimalista y eficiente.\nHecho por psicólogos, para psicólogos.",
+                        AppLocalizations.of(context)!.helpScreenDescriptionText,
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 60, top: 60),
                       child: Text(
-                        "Información de desarrollo",
+                        AppLocalizations.of(context)!.helpScreenTitle,
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ),
@@ -52,7 +53,8 @@ class MainHelpView extends ConsumerWidget {
                       padding: padding,
                       child: RichText(
                         text: TextSpan(
-                          text: "Desarrollado por: ",
+                          text:
+                              "${AppLocalizations.of(context)!.helpScreenDevelopedBy}: ",
                           style: Theme.of(context).textTheme.bodyMedium,
                           children: [
                             TextSpan(
@@ -66,14 +68,16 @@ class MainHelpView extends ConsumerWidget {
                     Padding(
                       padding: padding,
                       child: Text(
-                        "Aronnax funciona gracias a la tecnología de Flutter.",
+                        AppLocalizations.of(context)!
+                            .helpScreenAronnaxPoweredBy,
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 60),
                       child: TextButton(
-                        child: const Text("Información legal"),
+                        child: Text(AppLocalizations.of(context)!
+                            .helpScreenLegalInformationTitle),
                         onPressed: () {
                           Navigator.push(
                             context,
@@ -95,7 +99,7 @@ class MainHelpView extends ConsumerWidget {
                   Navigator.pop(context);
                 },
                 icon: const Icon(Icons.arrow_back),
-                tooltip: "Volver",
+                tooltip: AppLocalizations.of(context)!.registerBackButtonTitle,
               ),
             ),
           ],
@@ -104,3 +108,4 @@ class MainHelpView extends ConsumerWidget {
     );
   }
 }
+//Commit this

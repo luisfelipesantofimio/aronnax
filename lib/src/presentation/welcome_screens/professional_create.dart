@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class NewProfessional extends StatelessWidget {
-  const NewProfessional({Key? key}) : super(key: key);
+  const NewProfessional({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class NewProfessional extends StatelessWidget {
 }
 
 class NewProfessionalHeader extends StatelessWidget {
-  const NewProfessionalHeader({Key? key}) : super(key: key);
+  const NewProfessionalHeader({super.key});
 
   @override
   Widget build(BuildContext context) {

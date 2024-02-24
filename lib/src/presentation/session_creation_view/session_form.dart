@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/providers/forms_providers/session_form_provider.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:aronnax/src/presentation/core/controllers.dart';
@@ -5,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SessionsForm extends ConsumerStatefulWidget {
-  const SessionsForm({Key? key, required this.patientData}) : super(key: key);
+  const SessionsForm({super.key, required this.patientData});
   final Patient patientData;
 
   @override
@@ -28,7 +29,8 @@ class SessionsFormState extends ConsumerState<SessionsForm> {
                   maxLines: 5,
                   autofocus: true,
                   decoration: InputDecoration(
-                    labelText: "Resumen de la sesión",
+                    labelText: AppLocalizations.of(context)!
+                        .sessionFormFieldSessionSummary,
                     labelStyle: Theme.of(context).textTheme.bodyMedium,
                     floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
@@ -39,7 +41,7 @@ class SessionsFormState extends ConsumerState<SessionsForm> {
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Inserta un valor";
+                      return AppLocalizations.of(context)!.errorEmptyField;
                     }
                     return null;
                   },
@@ -52,7 +54,8 @@ class SessionsFormState extends ConsumerState<SessionsForm> {
                   maxLines: 5,
                   autofocus: true,
                   decoration: InputDecoration(
-                    labelText: "Objetivo de la sesión",
+                    labelText: AppLocalizations.of(context)!
+                        .sessionFormFieldSessionGoal,
                     labelStyle: Theme.of(context).textTheme.bodyMedium,
                     floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
@@ -63,7 +66,7 @@ class SessionsFormState extends ConsumerState<SessionsForm> {
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Inserta un valor";
+                      return AppLocalizations.of(context)!.errorEmptyField;
                     }
                     return null;
                   },
@@ -76,7 +79,8 @@ class SessionsFormState extends ConsumerState<SessionsForm> {
                   maxLines: 5,
                   autofocus: true,
                   decoration: InputDecoration(
-                    labelText: "Logros terapéuticos",
+                    labelText: AppLocalizations.of(context)!
+                        .sessionFormFieldTherapeuticArchievements,
                     labelStyle: Theme.of(context).textTheme.bodyMedium,
                     floatingLabelStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
@@ -87,7 +91,7 @@ class SessionsFormState extends ConsumerState<SessionsForm> {
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Inserta un valor";
+                      return AppLocalizations.of(context)!.errorEmptyField;
                     }
                     return null;
                   },

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class GenericIconButton extends StatelessWidget {
   const GenericIconButton({
-    Key? key,
+    super.key,
     required this.icon,
     required this.title,
     required this.onTap,
-  }) : super(key: key);
+  });
   final IconData icon;
   final String title;
   final VoidCallback onTap;
@@ -23,7 +23,7 @@ class GenericIconButton extends StatelessWidget {
                 10,
               ),
             ),
-            color: Theme.of(context).colorScheme.onPrimary,
+            color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
           ),
           child: Center(
             child: Padding(

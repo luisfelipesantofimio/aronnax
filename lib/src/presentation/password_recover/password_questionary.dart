@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/auth_repository_interface.dart';
 import 'package:aronnax/src/domain/entities/professional.dart';
 import 'package:aronnax/src/presentation/password_recover/password_recover_form.dart';
@@ -6,9 +7,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PasswordQuestionary extends ConsumerStatefulWidget {
   const PasswordQuestionary({
-    Key? key,
+    super.key,
     required this.professionalData,
-  }) : super(key: key);
+  });
   final Professional professionalData;
 
   @override
@@ -44,9 +45,10 @@ class _PasswordQuestionaryState extends ConsumerState<PasswordQuestionary> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                'Personal data questionary',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              Text(
+                AppLocalizations.of(context)!.passwordRecoverQuestionaryTitle,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
               const Padding(
                 padding: EdgeInsets.all(10),
@@ -56,7 +58,10 @@ class _PasswordQuestionaryState extends ConsumerState<PasswordQuestionary> {
                 padding: EdgeInsets.all(10),
               ),
               TextFormField(
-                decoration: const InputDecoration(hintText: 'Your answer'),
+                decoration: InputDecoration(
+                  hintText:
+                      AppLocalizations.of(context)!.welcomeScreenYourAnswer,
+                ),
                 onChanged: (value) {
                   setState(() {
                     userAnswer = value;

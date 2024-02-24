@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PatientsView extends ConsumerWidget {
-  const PatientsView({Key? key}) : super(key: key);
+  const PatientsView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

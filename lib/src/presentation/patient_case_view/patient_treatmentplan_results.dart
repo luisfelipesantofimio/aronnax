@@ -7,10 +7,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PatientTreatmentPlanResultsView extends ConsumerStatefulWidget {
   const PatientTreatmentPlanResultsView({
-    Key? key,
+    super.key,
     required this.patientId,
     required this.caseData,
-  }) : super(key: key);
+  });
   final int patientId;
   final PatientCase caseData;
 

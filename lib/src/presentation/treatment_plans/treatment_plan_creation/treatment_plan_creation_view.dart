@@ -1,5 +1,4 @@
-import 'dart:developer';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/interfaces/treatment_plans_repository_interface.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
@@ -19,8 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TreatmentPlanCreationView extends ConsumerStatefulWidget {
-  const TreatmentPlanCreationView(this.treatmentPlanData, {Key? key})
-      : super(key: key);
+  const TreatmentPlanCreationView(this.treatmentPlanData, {super.key});
   final TreatmentPlan? treatmentPlanData;
 
   @override
@@ -35,11 +33,12 @@ class _TreatmentPlanCreationViewState
   List<Section> sectionList = [];
   String? treatmentPlanTitle;
   String? treatmentPlanDescription;
+  List<Widget> decodedComponents = [];
   @override
-  void initState() {
+  void didChangeDependencies() {
     sectionList.add(
       Section(
-        name: 'Phase 1',
+        name: '${AppLocalizations.of(context)!.treatmentPlansSectionTitle} 1',
         components: [],
       ),
     );
@@ -51,12 +50,13 @@ class _TreatmentPlanCreationViewState
         treatmentPlanDescription = widget.treatmentPlanData!.description;
       });
     }
-    super.initState();
+
+    super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
-    final decodedComponents = ref.watch(
+    decodedComponents = ref.watch(
       treatmentPlanComponentDecoding(
         ref
             .read(treatmentPlanRepositoryProvider)
@@ -81,6 +81,7 @@ class _TreatmentPlanCreationViewState
                       Row(
                         children: [
                           SizedBox(
+                            width: MediaQuery.sizeOf(context).width * 0.53,
                             height: 150,
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
@@ -92,21 +93,27 @@ class _TreatmentPlanCreationViewState
                                     right: 10,
                                   ),
                                   child: SizedBox(
+                                    width:
+                                        MediaQuery.sizeOf(context).width * 0.15,
                                     child: SectionListElement(
                                       selectedItem:
                                           selectedSectionIndex == index,
                                       editionComponent: true,
                                       onDelete: () {
+                                        selectedSectionIndex =
+                                            selectedSectionIndex - 1;
                                         if (sectionList.length > 1) {
                                           sectionList.removeAt(index);
                                           setState(() {});
                                         } else {
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
-                                            const SnackBar(
+                                            SnackBar(
                                               backgroundColor: Colors.red,
                                               content: Text(
-                                                  'There must be at least one section!'),
+                                                AppLocalizations.of(context)!
+                                                    .treatmentPlanCreationError,
+                                              ),
                                             ),
                                           );
                                         }
@@ -132,7 +139,8 @@ class _TreatmentPlanCreationViewState
                                       sectionTitle: sectionList[index].name,
                                       sectionDescription:
                                           sectionList[index].description ??
-                                              'No description',
+                                              AppLocalizations.of(context)!
+                                                  .genericNoDescription,
                                       onTap: () {
                                         setState(() {
                                           selectedSectionIndex = index;
@@ -150,6 +158,7 @@ class _TreatmentPlanCreationViewState
                                 context: context,
                                 builder: (context) => SectionMetadataDialog(
                                   onSelectedMetadata: (title, description) {
+                                    selectedSectionIndex = sectionList.length;
                                     sectionList.add(
                                       Section(
                                         name: title,
@@ -162,10 +171,14 @@ class _TreatmentPlanCreationViewState
                                 ),
                               );
                             },
-                            child: const Row(
+                            child: Row(
                               children: [
-                                Text('Add section'),
-                                Icon(
+                                const Padding(
+                                  padding: EdgeInsets.all(10),
+                                ),
+                                Text(AppLocalizations.of(context)!
+                                    .treatmentPlanCreationTitleAddSection),
+                                const Icon(
                                   Icons.add,
                                 ),
                               ],
@@ -177,7 +190,10 @@ class _TreatmentPlanCreationViewState
                         padding: EdgeInsets.all(20),
                       ),
                       decodedComponents.isEmpty
-                          ? const Text('Aún no seleccionas componentes')
+                          ? Text(
+                              AppLocalizations.of(context)!
+                                  .treatmentPlanCreationErrorNoSelectedComponent,
+                            )
                           : SizedBox(
                               height: MediaQuery.of(context).size.height * 0.7,
                               child: ListView.builder(
@@ -254,7 +270,8 @@ class _TreatmentPlanCreationViewState
                       width: MediaQuery.sizeOf(context).width * 0.1,
                       child: GenericIconButton(
                         icon: Icons.add,
-                        title: 'New component',
+                        title: AppLocalizations.of(context)!
+                            .treatmentPlanCreationTitleNewComponent,
                         onTap: () {
                           setState(() {
                             componentSelectionItemSelected = true;
@@ -291,7 +308,6 @@ class _TreatmentPlanCreationViewState
                                   id: sectionList[selectedSectionIndex]
                                       .components
                                       .length);
-                              log('Componente guardado con id: ${newComponent.id}');
                               sectionList[selectedSectionIndex]
                                   .components
                                   .add(newComponent);
@@ -344,16 +360,20 @@ class _TreatmentPlanCreationViewState
                       ),
                       GenericMinimalButton(
                         title: widget.treatmentPlanData == null
-                            ? 'Save treatment plan'
-                            : 'Update treatment plan',
+                            ? AppLocalizations.of(context)!
+                                .treatmentPlanCreationButtonTitleSave
+                            : AppLocalizations.of(context)!
+                                .treatmentPlanCreationButtonTitleUpdate,
                         onTap: () {
                           if (treatmentPlanTitle == null ||
                               treatmentPlanDescription == null) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
+                              SnackBar(
                                 backgroundColor: Colors.red,
                                 content: Text(
-                                    'You must set a title and description'),
+                                  AppLocalizations.of(context)!
+                                      .treatmentPlanCreationErrorNoTitleDescription,
+                                ),
                               ),
                             );
                           } else {
@@ -375,9 +395,12 @@ class _TreatmentPlanCreationViewState
                                   );
                               ref.invalidate(treatmentPlanListProvider);
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
+                                SnackBar(
                                   backgroundColor: Colors.green,
-                                  content: Text('Treatment plan created!'),
+                                  content: Text(
+                                    AppLocalizations.of(context)!
+                                        .treatmentPlanCreationMessageTreamentPlanCreated,
+                                  ),
                                 ),
                               );
                               Navigator.pop(context);
@@ -391,9 +414,10 @@ class _TreatmentPlanCreationViewState
                               ref.invalidate(treatmentPlanListProvider);
                               Navigator.pop(context);
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
+                                SnackBar(
                                   backgroundColor: Colors.green,
-                                  content: Text('Treatment plan updated!'),
+                                  content: Text(AppLocalizations.of(context)!
+                                      .treatmentPlanCreationMessageTreamentPlanUpdated),
                                 ),
                               );
                             }

@@ -1,4 +1,4 @@
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
 import 'package:aronnax/src/data/providers/patients_provider.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
@@ -12,10 +12,10 @@ final globalSelectedConsultantIDProvider = StateProvider<int>((ref) => 0);
 
 class ConsultantSelectionDialog extends ConsumerStatefulWidget {
   const ConsultantSelectionDialog({
-    Key? key,
+    super.key,
     required this.title,
     required this.onSearchedPatient,
-  }) : super(key: key);
+  });
   final String title;
 
   final Function(Patient patient) onSearchedPatient;
@@ -54,8 +54,9 @@ class ConsultantSelectionDialogState
                 padding: EdgeInsets.all(10),
               ),
               TextField(
-                decoration:
-                    const InputDecoration(hintText: "Nombre del consultante"),
+                decoration: InputDecoration(
+                    hintText:
+                        AppLocalizations.of(context)!.genericPatientNameTitle),
                 onChanged: (value) {
                   setState(() {
                     queriedPatients = ref
@@ -95,7 +96,8 @@ class ConsultantSelectionDialogState
             ],
           ),
         ),
-        error: (error, stackTrace) => const Text('Something went wrong'),
+        error: (error, stackTrace) =>
+            Text(AppLocalizations.of(context)!.genericErrorMessage),
         loading: () => const CircularProgressIndicator(),
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/Pages/Formulary/widgets/consultant_selection_dialog.dart';
 import 'package:aronnax/src/data/interfaces/clinic_history_repository_interface.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
@@ -17,9 +18,9 @@ import 'package:intl/intl.dart';
 
 class ClinicHistoryRegisterView extends ConsumerStatefulWidget {
   const ClinicHistoryRegisterView({
-    Key? key,
+    super.key,
     required this.patientData,
-  }) : super(key: key);
+  });
   final Patient patientData;
 
   @override
@@ -35,7 +36,7 @@ class _ClinicHistoryRegisterViewState
   void initState() {
     setState(() {
       registerCode =
-          "HC-${AppMethods().codeGeneration(8)}-${DateFormat('ddMM').format(DateTime.now())}";
+          "ARN-${AppMethods().codeGeneration(8)}-${DateFormat('ddMM').format(DateTime.now())}";
     });
     super.initState();
   }
@@ -68,7 +69,7 @@ class _ClinicHistoryRegisterViewState
                   Padding(
                     padding: const EdgeInsets.all(15),
                     child: Text(
-                      "Historia clínica",
+                      AppLocalizations.of(context)!.clinicHistoryTitle,
                       style: Theme.of(context).textTheme.displayLarge,
                     ),
                   ),
@@ -107,13 +108,15 @@ class _ClinicHistoryRegisterViewState
                                     Navigator.pop(context);
                                   },
                                   icon: const Icon(Icons.arrow_back),
-                                  tooltip: "Volver",
+                                  tooltip: AppLocalizations.of(context)!
+                                      .registerBackButtonTitle,
                                 ),
                                 const Padding(padding: EdgeInsets.all(20)),
                                 GenericGlobalButton(
                                   height: 40,
                                   width: 200,
-                                  title: "Guardar registro",
+                                  title: AppLocalizations.of(context)!
+                                      .clinicHistorySaveRegister,
                                   onPressed: () {
                                     if (clinicHistoryKey.currentState!
                                         .validate()) {
@@ -155,9 +158,11 @@ class _ClinicHistoryRegisterViewState
                                               professionalID);
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
-                                        const SnackBar(
+                                        SnackBar(
                                           backgroundColor: Colors.green,
-                                          content: Text("Historia guardada"),
+                                          content: Text(AppLocalizations.of(
+                                                  context)!
+                                              .clinicHistorySaveConfirmation),
                                         ),
                                       );
 

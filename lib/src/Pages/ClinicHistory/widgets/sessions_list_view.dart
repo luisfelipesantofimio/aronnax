@@ -7,8 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SessionsListView extends ConsumerWidget {
   const SessionsListView(
-      {Key? key, required this.remoteSessions, required this.localSessions})
-      : super(key: key);
+      {super.key, required this.remoteSessions, required this.localSessions});
 
   final List<RemoteSession> remoteSessions;
   final List<LocalSession> localSessions;

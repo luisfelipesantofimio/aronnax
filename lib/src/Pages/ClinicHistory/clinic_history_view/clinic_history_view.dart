@@ -10,7 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 var globalPadding = const EdgeInsets.all(30);
 
 class ClinicHistoryView extends ConsumerStatefulWidget {
-  const ClinicHistoryView({Key? key}) : super(key: key);
+  const ClinicHistoryView({super.key});
 
   @override
   ClinicHistoryViewState createState() => ClinicHistoryViewState();
@@ -492,7 +492,7 @@ class ClinicHistoryViewState extends ConsumerState<ClinicHistoryView> {
 }
 
 class HeaderClinicHistoryView extends ConsumerStatefulWidget {
-  const HeaderClinicHistoryView({Key? key}) : super(key: key);
+  const HeaderClinicHistoryView({super.key});
 
   @override
   HeaderClinicHistoryViewState createState() => HeaderClinicHistoryViewState();

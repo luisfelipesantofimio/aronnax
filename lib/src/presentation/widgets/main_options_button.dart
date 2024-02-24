@@ -10,8 +10,7 @@ class MainOptionsButton extends StatelessWidget {
   final String text;
   final VoidCallback onTap;
   const MainOptionsButton(
-      {Key? key, required this.icon, required this.text, required this.onTap})
-      : super(key: key);
+      {super.key, required this.icon, required this.text, required this.onTap});
 
   @override
   Widget build(BuildContext context) {

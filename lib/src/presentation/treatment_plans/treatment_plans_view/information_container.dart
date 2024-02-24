@@ -1,14 +1,17 @@
+import 'package:aronnax/src/presentation/themes/color_scheme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class ScreenInformationContainer extends StatelessWidget {
-  const ScreenInformationContainer({Key? key}) : super(key: key);
+  const ScreenInformationContainer({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.all(20),
       width: MediaQuery.of(context).size.width * 0.3,
       decoration: const BoxDecoration(
-        color: Color.fromARGB(255, 122, 121, 124),
+        color: CustomLightColors.secondary,
         boxShadow: [
           BoxShadow(
             offset: Offset(3, 6),
@@ -20,10 +23,11 @@ class ScreenInformationContainer extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text('Information'),
-          const Text(
-            'Information here',
+          Text(AppLocalizations.of(context)!.treatmentPlansInformationTitle),
+          const Padding(
+            padding: EdgeInsets.all(10),
           ),
+          Text(AppLocalizations.of(context)!.treatmentPlansInformationBody),
           IconButton(
             onPressed: () => Navigator.pop(context),
             icon: const Icon(Icons.arrow_back),

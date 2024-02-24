@@ -5,8 +5,7 @@ import "package:flutter/material.dart";
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LocalDBActivationScreen extends ConsumerStatefulWidget {
-  const LocalDBActivationScreen({Key? key, required this.settingsData})
-      : super(key: key);
+  const LocalDBActivationScreen({super.key, required this.settingsData});
   final AsyncValue<Setting> settingsData;
   @override
   LocalDBActivationScreenState createState() => LocalDBActivationScreenState();

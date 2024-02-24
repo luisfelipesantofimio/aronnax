@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/auth_repository_interface.dart';
 import 'package:aronnax/src/data/interfaces/professional_repository_interface.dart';
 import 'package:aronnax/src/domain/entities/professional.dart';
@@ -10,9 +11,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PasswordRecoverForm extends ConsumerStatefulWidget {
   const PasswordRecoverForm({
-    Key? key,
+    super.key,
     required this.professionalData,
-  }) : super(key: key);
+  });
 
   final Professional professionalData;
 
@@ -67,14 +68,16 @@ class _PasswordRecoverFormState extends ConsumerState<PasswordRecoverForm> {
     return Form(
       child: Column(
         children: [
-          const Text(
-            'Responde las siguientes preguntas para confirmar tu identidad',
-            style: TextStyle(fontWeight: FontWeight.bold),
+          Text(
+            AppLocalizations.of(context)!
+                .passwordRecoverQuestionaryInstructions,
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           const Padding(
             padding: EdgeInsets.all(10),
           ),
-          const Text('Select your personal Id'),
+          Text(AppLocalizations.of(context)!
+              .passwordRecoverQuestionaryPersonalId),
           SizedBox(
             height: 80,
             child: ListView.builder(
@@ -101,7 +104,7 @@ class _PasswordRecoverFormState extends ConsumerState<PasswordRecoverForm> {
               },
             ),
           ),
-          const Text('Select your home adress'),
+          Text(AppLocalizations.of(context)!.passwordRecoverQuestionaryAdress),
           SizedBox(
             height: 80,
             child: ListView.builder(
@@ -128,7 +131,7 @@ class _PasswordRecoverFormState extends ConsumerState<PasswordRecoverForm> {
               },
             ),
           ),
-          const Text('Select your email adress'),
+          Text(AppLocalizations.of(context)!.passwordRecoverQuestionaryEmail),
           SizedBox(
             height: 80,
             child: ListView.builder(
@@ -163,7 +166,8 @@ class _PasswordRecoverFormState extends ConsumerState<PasswordRecoverForm> {
                   professionalData: widget.professionalData,
                 ),
             child: GenericMinimalButton(
-              title: 'Update your password',
+              title: AppLocalizations.of(context)!
+                  .passwordRecoverQuestionaryUpdatePasswordTitle,
               onTap: () {
                 showDialog(
                   context: context,
@@ -179,9 +183,10 @@ class _PasswordRecoverFormState extends ConsumerState<PasswordRecoverForm> {
                               newPassword,
                             );
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
+                          SnackBar(
                             backgroundColor: Colors.green,
-                            content: Text('Password updated'),
+                            content: Text(AppLocalizations.of(context)!
+                                .passwordRecoverQuestionaryPasswordConfirmationAlert),
                           ),
                         );
                         Navigator.pushReplacement(

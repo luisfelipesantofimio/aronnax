@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/database/local_model/local_queries.dart';
 import 'package:aronnax/src/data/providers/forms_providers/session_form_provider.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
@@ -12,10 +13,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SessionPerformanceDialog extends ConsumerStatefulWidget {
   const SessionPerformanceDialog({
-    Key? key,
+    super.key,
     required this.patientData,
     required this.patientCaseData,
-  }) : super(key: key);
+  });
   final Patient patientData;
   final PatientCase patientCaseData;
 
@@ -42,10 +43,10 @@ class _SessionPerformanceDialogState
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Cómo estuvo la sesión?',
+                  Text(AppLocalizations.of(context)!.sessionReportDialogTitle,
                       style: Theme.of(context).textTheme.headlineSmall),
-                  const Text(
-                      'Asigna el elemento que mejor describa el desarrollo de esta sesión:'),
+                  Text(
+                      "${AppLocalizations.of(context)!.sessionReportDialogDescription}:"),
                   const Padding(
                     padding: EdgeInsets.all(20),
                   ),
@@ -54,7 +55,8 @@ class _SessionPerformanceDialogState
                     children: [
                       SessionPerformanceElement(
                         icon: FontAwesomeIcons.faceSadTear,
-                        title: 'Mal',
+                        title: AppLocalizations.of(context)!
+                            .sessionReportDialogBadOption,
                         performance: 0,
                         isSelected: selectedItem == 0,
                         onTap: () {
@@ -65,7 +67,8 @@ class _SessionPerformanceDialogState
                       ),
                       SessionPerformanceElement(
                         icon: FontAwesomeIcons.faceMeh,
-                        title: 'Regular',
+                        title: AppLocalizations.of(context)!
+                            .sessionReportDialogNormalOption,
                         performance: 1,
                         isSelected: selectedItem == 1,
                         onTap: () {
@@ -76,7 +79,8 @@ class _SessionPerformanceDialogState
                       ),
                       SessionPerformanceElement(
                         icon: FontAwesomeIcons.faceSmileBeam,
-                        title: 'Bien',
+                        title: AppLocalizations.of(context)!
+                            .sessionReportDialogGoodOption,
                         performance: 2,
                         isSelected: selectedItem == 2,
                         onTap: () {
@@ -95,13 +99,15 @@ class _SessionPerformanceDialogState
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('Performance explanation (optional)'),
+                        Text(AppLocalizations.of(context)!
+                            .sessionReportDialogDescription),
                         TextField(
                           onChanged: (value) => setState(() {
                             performanceExplanation = value;
                           }),
-                          decoration: const InputDecoration(
-                              hintText: 'Your explanation here.'),
+                          decoration: InputDecoration(
+                              hintText: AppLocalizations.of(context)!
+                                  .sessionReportDialogPerformanceExplanationHintText),
                         ),
                       ],
                     ),
@@ -112,7 +118,7 @@ class _SessionPerformanceDialogState
                   GenericGlobalButton(
                     height: 40,
                     width: 200,
-                    title: 'Continuar',
+                    title: AppLocalizations.of(context)!.continueButton,
                     onPressed: () {
                       if (selectedItem != null) {
                         // isOfflineEnabled
@@ -148,9 +154,10 @@ class _SessionPerformanceDialogState
                         //   );
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
+                          SnackBar(
                             backgroundColor: Colors.red,
-                            content: Text('Selecciona una opción'),
+                            content: Text(AppLocalizations.of(context)!
+                                .genericSelectionText),
                           ),
                         );
                       }

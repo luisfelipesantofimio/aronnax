@@ -6,7 +6,7 @@ import "package:flutter/material.dart";
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ThemeSelector extends ConsumerWidget {
-  const ThemeSelector({Key? key, required this.settingsData}) : super(key: key);
+  const ThemeSelector({super.key, required this.settingsData});
   final AsyncValue<Setting> settingsData;
 
   @override

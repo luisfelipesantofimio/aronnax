@@ -1,11 +1,11 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 class SessionInformationView extends ConsumerWidget {
-  const SessionInformationView({Key? key, required this.patientData})
-      : super(key: key);
+  const SessionInformationView({super.key, required this.patientData});
   final Patient patientData;
 
   @override
@@ -14,9 +14,9 @@ class SessionInformationView extends ConsumerWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Fecha de la sesión:',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        Text(
+          AppLocalizations.of(context)!.sessionInformationDateTitle,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
         Text(
           DateFormat('dd/MM/yyyy').format(
@@ -26,20 +26,13 @@ class SessionInformationView extends ConsumerWidget {
         const Padding(
           padding: EdgeInsets.all(10),
         ),
-        const Text(
-          'Consultante:',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        Text(
+          AppLocalizations.of(context)!.sessionInformationPatientTitle,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
         Text("${patientData.names} ${patientData.lastNames}"),
         const Padding(
           padding: EdgeInsets.all(10),
-        ),
-        const Text(
-          'Fecha de creación:',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        ),
-        Text(
-          DateFormat('dd/MM/yyyy').format(DateTime.now()),
         ),
       ],
     );

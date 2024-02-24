@@ -1,9 +1,10 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/presentation/login/login_main_view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FinishConfig extends StatelessWidget {
-  const FinishConfig({Key? key}) : super(key: key);
+  const FinishConfig({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +15,11 @@ class FinishConfig extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Eso es todo",
+              AppLocalizations.of(context)!.welcomeScreenFinishConfigFinish,
               style: GoogleFonts.montserrat(
-                  fontSize: 35, fontWeight: FontWeight.bold),
+                fontSize: 35,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const Padding(
               padding: EdgeInsets.all(20.0),
@@ -26,9 +29,12 @@ class FinishConfig extends StatelessWidget {
               ),
             ),
             Text(
-              "Ahora puedes iniciar sesión y empezar a mejorar la calidad de vida de tus consultantes.",
+              AppLocalizations.of(context)!
+                  .welcomeScreenFinishConfigImageDescription,
               style: GoogleFonts.montserrat(
-                  fontSize: 15, fontWeight: FontWeight.bold),
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             TextButton(
               onPressed: () {
@@ -40,7 +46,8 @@ class FinishConfig extends StatelessWidget {
                 );
               },
               child: Text(
-                "Empezar a usar Aronnax",
+                AppLocalizations.of(context)!
+                    .welcomeScreenFinishConfigStartUsingAronnax,
                 style:
                     GoogleFonts.montserrat(fontSize: 15, color: Colors.black),
               ),

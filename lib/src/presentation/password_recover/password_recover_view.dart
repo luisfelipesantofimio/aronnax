@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 
 class PasswordRecoverView extends StatelessWidget {
   const PasswordRecoverView({
-    Key? key,
+    super.key,
     required this.professionalData,
-  }) : super(key: key);
+  });
   final Professional professionalData;
 
   @override

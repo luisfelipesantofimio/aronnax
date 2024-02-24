@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ClinicHistorySearchForm extends ConsumerStatefulWidget {
-  const ClinicHistorySearchForm({Key? key}) : super(key: key);
+  const ClinicHistorySearchForm({super.key});
 
   @override
   ClinicHistorySearchFormState createState() => ClinicHistorySearchFormState();

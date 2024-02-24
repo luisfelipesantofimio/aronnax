@@ -4,8 +4,7 @@ import 'package:aronnax/src/presentation/patient_case_view/patient_cases_list.da
 import 'package:flutter/material.dart';
 
 class PatientCaseView extends StatelessWidget {
-  const PatientCaseView({Key? key, required this.patiendData})
-      : super(key: key);
+  const PatientCaseView({super.key, required this.patiendData});
   final Patient patiendData;
 
   @override

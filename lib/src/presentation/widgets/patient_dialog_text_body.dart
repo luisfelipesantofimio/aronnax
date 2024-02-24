@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 
 class PatientDialogTextBody extends StatelessWidget {
   const PatientDialogTextBody(
-      {Key? key,
+      {super.key,
       required this.constrains,
       required this.title,
       required this.body,
       required this.title2,
-      required this.body2})
-      : super(key: key);
+      required this.body2});
   final BoxConstraints constrains;
   final String title;
   final String body;
@@ -25,6 +24,7 @@ class PatientDialogTextBody extends StatelessWidget {
           SizedBox(
             width: constrains.maxWidth * 0.2,
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(

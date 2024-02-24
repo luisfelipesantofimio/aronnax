@@ -11,8 +11,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ImportPatientDataDialog extends ConsumerStatefulWidget {
   const ImportPatientDataDialog({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   ConsumerState<ImportPatientDataDialog> createState() =>

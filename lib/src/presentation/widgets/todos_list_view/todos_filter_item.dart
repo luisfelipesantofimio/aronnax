@@ -8,8 +8,8 @@ class TodosFilterItem extends StatefulWidget {
   const TodosFilterItem({
     required this.categoryList,
     required this.onCategorySelected,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
   final List<Todo> categoryList;
   final Function(String) onCategorySelected;
 

@@ -6,9 +6,9 @@ import 'package:aronnax/src/domain/entities/todo.dart';
 
 class TodosListView extends StatelessWidget {
   const TodosListView({
-    Key? key,
+    super.key,
     required this.todosList,
-  }) : super(key: key);
+  });
   final List<Todo> todosList;
 
   @override

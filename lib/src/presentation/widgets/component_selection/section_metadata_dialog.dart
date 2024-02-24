@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 
 class SectionMetadataDialog extends StatefulWidget {
   const SectionMetadataDialog({
-    Key? key,
+    super.key,
     required this.onSelectedMetadata,
     this.sectionData,
-  }) : super(key: key);
+  });
   final Function(String title, String description) onSelectedMetadata;
   final Section? sectionData;
 
@@ -43,9 +43,7 @@ class _SectionMetadataDialogState extends State<SectionMetadataDialog> {
             children: [
               const Text('Section title'),
               TextFormField(
-                initialValue: widget.sectionData != null
-                    ? widget.sectionData!.name
-                    : null,
+                initialValue: widget.sectionData?.name,
                 decoration: const InputDecoration(
                     hintText: 'Title or heading for this section'),
                 onChanged: (value) {
@@ -59,9 +57,7 @@ class _SectionMetadataDialogState extends State<SectionMetadataDialog> {
               ),
               const Text('Section description'),
               TextFormField(
-                initialValue: widget.sectionData != null
-                    ? widget.sectionData!.description
-                    : null,
+                initialValue: widget.sectionData?.description,
                 decoration: const InputDecoration(
                     hintText: 'Short description for this section'),
                 onChanged: (value) {

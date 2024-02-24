@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/component_type.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/option_type.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_component.dart';
@@ -8,11 +9,11 @@ import 'package:flutter/material.dart';
 
 class TreatmentPlanComponentUpdateDialog extends StatefulWidget {
   const TreatmentPlanComponentUpdateDialog({
-    Key? key,
+    super.key,
     required this.onComponentUpdated,
     this.dataToUpdate,
     required this.sectionIndex,
-  }) : super(key: key);
+  });
   final Function(TreatmentPlanComponent component) onComponentUpdated;
   final TreatmentPlanComponent? dataToUpdate;
   final int sectionIndex;
@@ -23,24 +24,7 @@ class TreatmentPlanComponentUpdateDialog extends StatefulWidget {
 
 class _TreatmentPlanComponentUpdateDialogState
     extends State<TreatmentPlanComponentUpdateDialog> {
-  List<ComponentType> componentTypeList = [
-    ComponentType(
-      title: 'Campo de texto',
-      componentType: 'textField',
-    ),
-    ComponentType(
-      title: 'Escala',
-      componentType: 'scale',
-    ),
-    ComponentType(
-      title: 'Selección múltiple',
-      componentType: 'selection',
-    ),
-    ComponentType(
-      title: 'Tarea',
-      componentType: 'task',
-    )
-  ];
+  List<ComponentType> componentTypeList = [];
   List<OptionType> optionTypeList = [];
   ComponentType? selectedComponent;
   bool isRequired = true;
@@ -48,6 +32,33 @@ class _TreatmentPlanComponentUpdateDialogState
   String? componentTitle;
   String? componentDescription;
   final formKey = GlobalKey<FormState>();
+//TODO: Fix section component constrains with listview
+  @override
+  void didChangeDependencies() {
+    componentTypeList.addAll([
+      ComponentType(
+        title: AppLocalizations.of(context)!
+            .treatmentPlanUpdateDialogOptionTextField,
+        componentType: 'textField',
+      ),
+      ComponentType(
+        title:
+            AppLocalizations.of(context)!.treatmentPlanUpdateDialogOptionScale,
+        componentType: 'scale',
+      ),
+      ComponentType(
+        title: AppLocalizations.of(context)!
+            .treatmentPlanUpdateDialogOptionMultipleSelection,
+        componentType: 'selection',
+      ),
+      ComponentType(
+        title:
+            AppLocalizations.of(context)!.treatmentPlanUpdateDialogOptionTask,
+        componentType: 'task',
+      )
+    ]);
+    super.didChangeDependencies();
+  }
 
   @override
   void initState() {
@@ -91,9 +102,11 @@ class _TreatmentPlanComponentUpdateDialogState
                 child: ListView(
                   shrinkWrap: true,
                   children: [
-                    const Text('Tipo de campo'),
+                    Text(AppLocalizations.of(context)!
+                        .treatmentPlanUpdateDialogFieldTypeTitle),
                     DropdownButtonFormField(
-                      hint: const Text('El tipo de campo que diligenciarás'),
+                      hint: Text(AppLocalizations.of(context)!
+                          .treatmentPlanUpdateDialogFieldTypeTitle),
                       items: componentTypeList
                           .map(
                             (e) => DropdownMenuItem(
@@ -115,14 +128,16 @@ class _TreatmentPlanComponentUpdateDialogState
                     const Padding(
                       padding: EdgeInsets.all(10),
                     ),
-                    const Text('Título'),
+                    Text(AppLocalizations.of(context)!
+                        .treatmentPlanUpdateDialogFieldTitle),
                     TextFormField(
                       initialValue: widget.dataToUpdate!.componentTitle,
-                      decoration: const InputDecoration(
-                          hintText: 'El enunciado de este campo'),
+                      decoration: InputDecoration(
+                          hintText: AppLocalizations.of(context)!
+                              .treatmentPlanUpdateDialogFieldTitleHint),
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'This field must not be empty';
+                          return AppLocalizations.of(context)!.errorEmptyField;
                         }
                         return null;
                       },
@@ -135,14 +150,16 @@ class _TreatmentPlanComponentUpdateDialogState
                     const Padding(
                       padding: EdgeInsets.all(10),
                     ),
-                    const Text('Descripción'),
+                    Text(AppLocalizations.of(context)!
+                        .treatmentPlanUpdateDialogFieldDescription),
                     TextFormField(
                       initialValue: widget.dataToUpdate!.componentDescription,
-                      decoration: const InputDecoration(
-                          hintText: 'Descripción opcional'),
+                      decoration: InputDecoration(
+                          hintText: AppLocalizations.of(context)!
+                              .treatmentPlanUpdateDialogFieldDescriptionHint),
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'This field must not be empty';
+                          return AppLocalizations.of(context)!.errorEmptyField;
                         }
                         return null;
                       },
@@ -155,7 +172,8 @@ class _TreatmentPlanComponentUpdateDialogState
                     const Padding(
                       padding: EdgeInsets.all(10),
                     ),
-                    const Text('Campo requerido'),
+                    Text(AppLocalizations.of(context)!
+                        .treatmentPlanUpdateDialogFieldRequiredFieldTitle),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -165,7 +183,11 @@ class _TreatmentPlanComponentUpdateDialogState
                             isRequired = !isRequired;
                           }),
                         ),
-                        Text(isRequired ? 'Requerido' : 'Opcional')
+                        Text(isRequired
+                            ? AppLocalizations.of(context)!
+                                .treatmentPlanUpdateDialogFieldRequiredFieldOptionRequired
+                            : AppLocalizations.of(context)!
+                                .treatmentPlanUpdateDialogFieldRequiredFieldOptionOptional)
                       ],
                     ),
                     Row(
@@ -177,8 +199,11 @@ class _TreatmentPlanComponentUpdateDialogState
                             isMessurable = !isMessurable;
                           }),
                         ),
-                        Text(
-                            isMessurable ? 'Cuantificable' : 'No cuantificable')
+                        Text(isMessurable
+                            ? AppLocalizations.of(context)!
+                                .treatmentPlanUpdateDialogFieldMessurableTitle
+                            : AppLocalizations.of(context)!
+                                .treatmentPlanUpdateDialogFieldNotMessurableTitle)
                       ],
                     ),
                     Visibility(
@@ -189,7 +214,8 @@ class _TreatmentPlanComponentUpdateDialogState
                         children: [
                           Row(
                             children: [
-                              const Text('Lista de valores'),
+                              Text(AppLocalizations.of(context)!
+                                  .treatmentPlanUpdateDialogFieldListOfValues),
                               IconButton(
                                 onPressed: () => showDialog(
                                   context: context,
@@ -216,14 +242,16 @@ class _TreatmentPlanComponentUpdateDialogState
                               children: [
                                 Row(
                                   children: [
-                                    const Text('Valor: '),
+                                    Text(
+                                        '${AppLocalizations.of(context)!.treatmentPlanUpdateDialogFieldListOfValuesValueOption}: '),
                                     Text(
                                         optionTypeList[index].value.toString()),
                                   ],
                                 ),
                                 Row(
                                   children: [
-                                    const Text('Etiqueta: '),
+                                    Text(
+                                        '${AppLocalizations.of(context)!.treatmentPlanUpdateDialogFieldListOfValuesLabelOption}: '),
                                     Text(optionTypeList[index].title),
                                   ],
                                 ),
@@ -234,7 +262,8 @@ class _TreatmentPlanComponentUpdateDialogState
                       ),
                     ),
                     GenericMinimalButton(
-                      title: 'Actualizar componente',
+                      title: AppLocalizations.of(context)!
+                          .treatmentPlanUpdateDialogUpdateButtonTitle,
                       onTap: () {
                         widget.onComponentUpdated(
                           TreatmentPlanComponent(

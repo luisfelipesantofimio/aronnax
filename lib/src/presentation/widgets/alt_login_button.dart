@@ -2,7 +2,7 @@ import 'package:aronnax/src/presentation/main_menu/main_menu.dart';
 import 'package:flutter/material.dart';
 
 class LoginButton extends StatelessWidget {
-  const LoginButton({Key? key}) : super(key: key);
+  const LoginButton({super.key});
 
   @override
   Widget build(BuildContext context) {
