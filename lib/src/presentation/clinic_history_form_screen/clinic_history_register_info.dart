@@ -29,7 +29,7 @@ class ClinicHistoryRegisterInformation extends ConsumerWidget {
           padding: EdgeInsets.all(10),
         ),
         Text(
-          AppLocalizations.of(context)!.clinicHistoryInfoCreationDate,
+          AppLocalizations.of(context)!.clinicHistoryInfoRecordCode,
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
         Text(registerCode),

@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/providers/patients_provider.dart';
 import 'package:aronnax/src/domain/entities/session.dart';
 import 'package:aronnax/src/presentation/core/methods.dart';
@@ -32,8 +33,9 @@ class PatientSessionsList extends ConsumerWidget {
                   )
                   .toList();
               return filteredSessions.isEmpty
-                  ? const Center(
-                      child: Text('There are no sessions related to this case'),
+                  ? Center(
+                      child: Text(AppLocalizations.of(context)!
+                          .patientCaseSessionEmptyList),
                     )
                   : ListView.builder(
                       itemCount: filteredSessions.length,
@@ -62,7 +64,7 @@ class PatientSessionsList extends ConsumerWidget {
                                 Row(
                                   children: [
                                     Text(
-                                      'Session #${index + 1}',
+                                      '${AppLocalizations.of(context)!.genericSession} #${index + 1}',
                                       style: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 20),
@@ -104,8 +106,10 @@ class PatientSessionsList extends ConsumerWidget {
                                                         mainAxisSize:
                                                             MainAxisSize.min,
                                                         children: [
-                                                          const Text(
-                                                            'Explanation for this performance:',
+                                                          Text(
+                                                            AppLocalizations.of(
+                                                                    context)!
+                                                                .patientCaseSessionPerformanceExplanation,
                                                             style: TextStyle(
                                                                 fontWeight:
                                                                     FontWeight
@@ -128,7 +132,7 @@ class PatientSessionsList extends ConsumerWidget {
                                               );
                                             },
                                       child: Text(
-                                        'This was a ${AppMethods().getSessionPerformanceAsText(filteredSessions[index].sessionPerformance)} session',
+                                        '${AppLocalizations.of(context)!.genericThisWasPrefix} ${AppMethods().getSessionPerformanceAsText(filteredSessions[index].sessionPerformance)} ${AppLocalizations.of(context)!.genericSession.toLowerCase()}',
                                         style: TextStyle(
                                           fontSize: 15,
                                           color: AppMethods()
@@ -146,9 +150,10 @@ class PatientSessionsList extends ConsumerWidget {
                                 const Padding(
                                   padding: EdgeInsets.all(10),
                                 ),
-                                const Text(
-                                  'Session objectives: ',
-                                  style: TextStyle(
+                                Text(
+                                  AppLocalizations.of(context)!
+                                      .sessionFormFieldSessionGoal,
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -160,9 +165,10 @@ class PatientSessionsList extends ConsumerWidget {
                                 const Padding(
                                   padding: EdgeInsets.all(10),
                                 ),
-                                const Text(
-                                  'Session summary: ',
-                                  style: TextStyle(
+                                Text(
+                                  AppLocalizations.of(context)!
+                                      .sessionFormFieldSessionSummary,
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -174,9 +180,10 @@ class PatientSessionsList extends ConsumerWidget {
                                 const Padding(
                                   padding: EdgeInsets.all(10),
                                 ),
-                                const Text(
-                                  'Therapeutic archievements: ',
-                                  style: TextStyle(
+                                Text(
+                                  AppLocalizations.of(context)!
+                                      .sessionFormFieldTherapeuticArchievements,
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -196,9 +203,10 @@ class PatientSessionsList extends ConsumerWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      const Text(
-                                        'Notes:',
-                                        style: TextStyle(
+                                      Text(
+                                        AppLocalizations.of(context)!
+                                            .genericNotes,
+                                        style: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -220,7 +228,8 @@ class PatientSessionsList extends ConsumerWidget {
                         );
                       });
             },
-            error: (error, stackTrace) => const Text('Something went wrong'),
+            error: (error, stackTrace) =>
+                Text(AppLocalizations.of(context)!.genericErrorMessage),
             loading: () => const CircularProgressIndicator(),
           ),
         ),

@@ -1,4 +1,5 @@
 import 'package:aronnax/src/domain/entities/patient.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/presentation/patient_case_view/clinic_history_detail_view.dart';
 import 'package:aronnax/src/presentation/patient_case_view/patient_cases_list.dart';
 import 'package:flutter/material.dart';
@@ -26,9 +27,10 @@ class PatientCaseView extends StatelessWidget {
           ),
           Column(
             children: [
-              const Text(
-                'Clinic history',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
+              Text(
+                AppLocalizations.of(context)!.patientDataTitleClinicHistory,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
               ),
               const Padding(
                 padding: EdgeInsets.all(20),

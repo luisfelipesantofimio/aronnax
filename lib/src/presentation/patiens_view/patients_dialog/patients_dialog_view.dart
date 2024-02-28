@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/clinic_history_repository_interface.dart';
 import 'package:aronnax/src/data/interfaces/io_repository_interface.dart';
 import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
@@ -100,41 +100,51 @@ class _PatientsDialogViewState extends ConsumerState<PatientsDialogView> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             PatientDialogTextBody(
-                              title: 'ID',
+                              title: AppLocalizations.of(context)!
+                                  .patientDataTitleID,
                               body: widget.patientData.idNumber.toString(),
-                              title2: 'Contact number',
+                              title2: AppLocalizations.of(context)!
+                                  .patientDataTitleContactNumber,
                               body2:
                                   widget.patientData.contactNumber.toString(),
                               constrains: constrains,
                             ),
                             PatientDialogTextBody(
                               constrains: constrains,
-                              title: 'E-mail',
+                              title: AppLocalizations.of(context)!
+                                  .patientDataTitleEmail,
                               body: widget.patientData.mail,
-                              title2: 'Adress',
+                              title2: AppLocalizations.of(context)!
+                                  .patientDataTitleAdress,
                               body2: widget.patientData.adress,
                             ),
                             PatientDialogTextBody(
                               constrains: constrains,
-                              title: 'Educational level',
+                              title: AppLocalizations.of(context)!
+                                  .patientDataTitleEducationalAttainment,
                               body: widget.patientData.education,
-                              title2: 'Ocupation',
+                              title2: AppLocalizations.of(context)!
+                                  .patientDataTitleOcupation,
                               body2: widget.patientData.ocupation,
                             ),
                             PatientDialogTextBody(
                               constrains: constrains,
-                              title: 'Health provider',
+                              title: AppLocalizations.of(context)!
+                                  .patientDataTitleInsurance,
                               body: widget.patientData.insurance,
-                              title2: 'Emergency contact name',
+                              title2: AppLocalizations.of(context)!
+                                  .patientDataTitleEmergencyContactName,
                               body2: widget.patientData.emergencyContactName,
                             ),
                             Column(
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
-                                  'Emergency contact number',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                Text(
+                                  AppLocalizations.of(context)!
+                                      .patientDataTitleEmergencyContactNumber,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
                                 ),
                                 Text(
                                   widget.patientData.emergencyContactNumber
@@ -151,8 +161,10 @@ class _PatientsDialogViewState extends ConsumerState<PatientsDialogView> {
                                   children: [
                                     Text(
                                       widget.patientData.isActive
-                                          ? 'Active user'
-                                          : 'Inactive user',
+                                          ? AppLocalizations.of(context)!
+                                              .patientDataTitleActiveUser
+                                          : AppLocalizations.of(context)!
+                                              .patientDataTitleInactiveUser,
                                       style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -178,7 +190,8 @@ class _PatientsDialogViewState extends ConsumerState<PatientsDialogView> {
                                   padding: EdgeInsets.all(20),
                                 ),
                                 IconButton(
-                                  tooltip: 'Export patient data',
+                                  tooltip: AppLocalizations.of(context)!
+                                      .patientDataExportData,
                                   onPressed: () async {
                                     final sessionData = await ref
                                         .read(patientsRepositoryProvider)
@@ -226,21 +239,24 @@ class _PatientsDialogViewState extends ConsumerState<PatientsDialogView> {
                                         ),
                                       );
                                       ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          showCloseIcon: true,
-                                          duration: const Duration(minutes: 2),
-                                          backgroundColor: Colors.green,
-                                          content: Text(
-                                              'Data exported to ${contentsToFile.path.replaceFirst(fileName, '')}'),
-                                        ),
-                                      );
+                                          .showSnackBar(SnackBar(
+                                        showCloseIcon: true,
+                                        duration: const Duration(minutes: 2),
+                                        backgroundColor: Colors.green,
+                                        content: Text(
+                                            AppLocalizations.of(context)!
+                                                .patientDataExportConfirmation(
+                                                    contentsToFile.path
+                                                        .replaceFirst(
+                                                            fileName, ''))),
+                                      ));
                                     });
                                   },
                                   icon: const Icon(Icons.download),
                                 ),
                                 IconButton(
-                                  tooltip: 'Delete patient',
+                                  tooltip: AppLocalizations.of(context)!
+                                      .patientDataDeletePatient,
                                   onPressed: () {
                                     ref
                                         .read(patientsRepositoryProvider)
@@ -268,9 +284,10 @@ class _PatientsDialogViewState extends ConsumerState<PatientsDialogView> {
                                       ),
                                     );
                                   },
-                                  child: const Text(
-                                    'Create clinic history',
-                                    style: TextStyle(
+                                  child: Text(
+                                    AppLocalizations.of(context)!
+                                        .patientDataCreateClinicalHistory,
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black,
                                     ),
@@ -290,9 +307,10 @@ class _PatientsDialogViewState extends ConsumerState<PatientsDialogView> {
                                         );
                                         ref.invalidate(patientCaseListProvider);
                                       },
-                                      child: const Text(
-                                        'Create new case',
-                                        style: TextStyle(
+                                      child: Text(
+                                        AppLocalizations.of(context)!
+                                            .patientDataCreateCase,
+                                        style: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Colors.black,
                                         ),
@@ -314,9 +332,10 @@ class _PatientsDialogViewState extends ConsumerState<PatientsDialogView> {
                                         },
                                         child: SizedBox(
                                           width: constrains.minWidth * 0.3,
-                                          child: const Text(
-                                            'Go to current patient information',
-                                            style: TextStyle(
+                                          child: Text(
+                                            AppLocalizations.of(context)!
+                                                .patientDataGoToPatientProfile,
+                                            style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: Colors.black,
                                             ),
@@ -326,8 +345,9 @@ class _PatientsDialogViewState extends ConsumerState<PatientsDialogView> {
                                     ),
                                   ],
                                 ),
-                          error: (error, stackTrace) =>
-                              const Text('There was an error'),
+                          error: (error, stackTrace) => Text(
+                              AppLocalizations.of(context)!
+                                  .genericErrorMessage),
                           loading: () => const CircularProgressIndicator(),
                         ),
                       ],

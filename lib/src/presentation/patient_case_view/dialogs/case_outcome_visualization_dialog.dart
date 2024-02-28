@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/domain/entities/patient_case.dart';
 import 'package:aronnax/src/presentation/core/methods.dart';
 import 'package:flutter/material.dart';
@@ -19,9 +20,9 @@ class CaseOutcomeVisualizationDialog extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text(
-                'Outcome for this case',
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.patientCaseSeeCaseOutcomeTitle,
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
                 ),
@@ -63,9 +64,10 @@ class CaseOutcomeVisualizationDialog extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Why this outcome?',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                    Text(
+                      AppLocalizations.of(context)!
+                          .patientCaseDataOutcomeDialogTitle,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(caseData.treatmentPlanOutcomeExplanation ?? '')
                   ],

@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
 import 'package:aronnax/src/data/providers/patient_case_providers.dart';
 import 'package:aronnax/src/data/providers/treatment_plan_providers.dart';
@@ -56,7 +57,7 @@ class PatientCaseListElement extends ConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Case #${elementIndex + 1}',
+                        '${AppLocalizations.of(context)!.genericCase} #${elementIndex + 1}',
                         style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20),
                       ),
@@ -65,17 +66,18 @@ class PatientCaseListElement extends ConsumerWidget {
                   const Padding(
                     padding: EdgeInsets.all(10),
                   ),
-                  const Text(
-                    'Consultation reason',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  Text(
+                    AppLocalizations.of(context)!
+                        .caseCreationFormHintConsultationReason,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(caseData.consultationReason),
                   const Padding(
                     padding: EdgeInsets.all(10),
                   ),
-                  const Text(
-                    'Diagnostic',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  Text(
+                    AppLocalizations.of(context)!.genericDiagnostic,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(caseData.diagnostic),
                   const Padding(
@@ -85,9 +87,9 @@ class PatientCaseListElement extends ConsumerWidget {
                     visible: caseData.icdDiagnosticCode != null,
                     child: Row(
                       children: [
-                        const Text(
-                          'Diagnostic code: ',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                        Text(
+                          '${AppLocalizations.of(context)!.patientDataCaseDiagnosticCode}: ',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         Text(caseData.icdDiagnosticCode ?? ''),
                       ],
@@ -96,9 +98,10 @@ class PatientCaseListElement extends ConsumerWidget {
                   const Padding(
                     padding: EdgeInsets.all(10),
                   ),
-                  const Text(
-                    'Treatment proposal',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  Text(
+                    AppLocalizations.of(context)!
+                        .caseCreationFormTitleTreatmentProposotion,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(caseData.treatmentProposal),
                   const Padding(
@@ -109,9 +112,9 @@ class PatientCaseListElement extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Notes',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                        Text(
+                          AppLocalizations.of(context)!.genericNotes,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         Text(caseData.caseNotes ?? ''),
                       ],
@@ -121,9 +124,11 @@ class PatientCaseListElement extends ConsumerWidget {
                     data: (data) => caseData.treatmentPlanId != null
                         ? Row(
                             children: [
-                              const Text(
-                                'Treatment plan: ',
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                              Text(
+                                AppLocalizations.of(context)!
+                                    .genericTreatmentPlan,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
                               ),
                               Text(data
                                   .elementAt(
@@ -135,7 +140,7 @@ class PatientCaseListElement extends ConsumerWidget {
                           )
                         : const SizedBox(),
                     error: (error, stackTrace) =>
-                        const Text('Something went wrong'),
+                        Text(AppLocalizations.of(context)!.genericErrorMessage),
                     loading: () => const CircularProgressIndicator(),
                   ),
                   Row(
@@ -154,9 +159,10 @@ class PatientCaseListElement extends ConsumerWidget {
                                           caseData: caseData,
                                         ));
                               },
-                              child: const Text(
-                                'See results list',
-                                style: TextStyle(
+                              child: Text(
+                                AppLocalizations.of(context)!
+                                    .patientDataSeeResultsList,
+                                style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black),
                               ),
@@ -172,9 +178,10 @@ class PatientCaseListElement extends ConsumerWidget {
                                 ),
                               );
                             },
-                            child: const Text(
-                              'See sessions',
-                              style: TextStyle(
+                            child: Text(
+                              AppLocalizations.of(context)!
+                                  .patientDataSeeSessions,
+                              style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black),
                             ),
@@ -182,8 +189,10 @@ class PatientCaseListElement extends ConsumerWidget {
                           Visibility(
                             visible: !caseData.patientCaseClosed,
                             child: Text(caseData.isActive
-                                ? 'Active case'
-                                : 'Inactive case'),
+                                ? AppLocalizations.of(context)!
+                                    .patientCaseActiveCase
+                                : AppLocalizations.of(context)!
+                                    .patientCaseInactiveCase),
                           ),
                           Visibility(
                             visible: !caseData.patientCaseClosed,
@@ -202,7 +211,8 @@ class PatientCaseListElement extends ConsumerWidget {
                             ),
                           ),
                           IconButton(
-                            tooltip: 'Delete case',
+                            tooltip: AppLocalizations.of(context)!
+                                .patientCaseDeleteCase,
                             onPressed: () {
                               showDialog(
                                 context: context,
@@ -226,9 +236,10 @@ class PatientCaseListElement extends ConsumerWidget {
                                   },
                                 );
                               },
-                              child: const Text(
-                                'See case outcome',
-                                style: TextStyle(
+                              child: Text(
+                                AppLocalizations.of(context)!
+                                    .patientCaseSeeCaseOutcome,
+                                style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.red),
                               ),
@@ -242,9 +253,10 @@ class PatientCaseListElement extends ConsumerWidget {
                                   },
                                 );
                               },
-                              child: const Text(
-                                'Close current case',
-                                style: TextStyle(
+                              child: Text(
+                                AppLocalizations.of(context)!
+                                    .patientCaseCloseDialogCloseButton,
+                                style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black),
                               ),

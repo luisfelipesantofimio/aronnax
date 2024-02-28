@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
 import 'package:aronnax/src/data/providers/patient_case_providers.dart';
 import 'package:aronnax/src/domain/entities/patient_case.dart';
@@ -24,9 +25,9 @@ class CaseDeleteDialog extends ConsumerWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text(
-                    'Delete this case?',
-                    style: TextStyle(
+                  Text(
+                    AppLocalizations.of(context)!.patientCaseDeleteDialogTitle,
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
                     ),
@@ -35,26 +36,29 @@ class CaseDeleteDialog extends ConsumerWidget {
                     padding: EdgeInsets.all(10),
                   ),
                   SizedBox(
-                    width: constraints.maxWidth * 0.6,
-                    child: const Text(
-                        'If you delete this case, you are going to lose all the related data to it, as sessions and treatment plan results.'),
-                  ),
+                      width: constraints.maxWidth * 0.6,
+                      child: Text(
+                        AppLocalizations.of(context)!
+                            .patientCaseDeleteDialogDescription,
+                        textAlign: TextAlign.center,
+                      )),
                   const Padding(
                     padding: EdgeInsets.all(10),
                   ),
                   SizedBox(
                     width: constraints.maxWidth * 0.6,
                     child: GenericMinimalButton(
-                      title: 'Delete',
+                      title: AppLocalizations.of(context)!.genericDelete,
                       onTap: () {
                         ref
                             .read(patientsRepositoryProvider)
                             .deletePatientCase(ref, caseData.id);
                         ref.invalidate(patientCaseListProvider);
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
+                          SnackBar(
                             backgroundColor: Colors.red,
-                            content: Text('Case deleted!'),
+                            content: Text(AppLocalizations.of(context)!
+                                .patientCaseDeleteDialogDeleteConfirmation),
                           ),
                         );
                         Navigator.pop(context);

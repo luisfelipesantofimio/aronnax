@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
 import 'package:aronnax/src/data/providers/patient_case_providers.dart';
 import 'package:aronnax/src/domain/entities/patient_case.dart';
@@ -31,11 +32,11 @@ class _CaseCloseDialogState extends ConsumerState<CaseCloseDialog> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Align(
+              Align(
                 alignment: Alignment.center,
                 child: Text(
-                  'Close the current case?',
-                  style: TextStyle(
+                  AppLocalizations.of(context)!.patientCaseCloseDialogTitle,
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),
@@ -44,8 +45,9 @@ class _CaseCloseDialogState extends ConsumerState<CaseCloseDialog> {
               const Padding(
                 padding: EdgeInsets.all(10),
               ),
-              const Text(
-                  "Please choose an option that indicates the patient's condition upon completion of this process."),
+              Text(
+                AppLocalizations.of(context)!.patientCaseCloseDialogDescription,
+              ),
               SizedBox(
                 height: 40,
                 width: MediaQuery.of(context).size.width * 0.3,
@@ -79,8 +81,10 @@ class _CaseCloseDialogState extends ConsumerState<CaseCloseDialog> {
               ),
               TextFormField(
                 maxLines: 4,
-                decoration: const InputDecoration(
-                    hintText: 'Optional explanation of this outcome'),
+                decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context)!
+                      .patientCaseCloseDialogOptionalOutcome,
+                ),
                 onChanged: (value) {
                   setState(() {
                     outcomeDescription = value;
@@ -91,7 +95,8 @@ class _CaseCloseDialogState extends ConsumerState<CaseCloseDialog> {
                 padding: EdgeInsets.all(10),
               ),
               GenericMinimalButton(
-                title: 'Close this case',
+                title: AppLocalizations.of(context)!
+                    .patientCaseCloseDialogCloseButton,
                 onTap: () {
                   if (selectedCaseOutcome != null) {
                     ref
@@ -108,9 +113,10 @@ class _CaseCloseDialogState extends ConsumerState<CaseCloseDialog> {
                     Navigator.pop(context);
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
+                      SnackBar(
                         backgroundColor: Colors.red,
-                        content: Text('You must select an option!'),
+                        content: Text(AppLocalizations.of(context)!
+                            .patientCaseCloseDialogCloseNoOptionError),
                       ),
                     );
                   }

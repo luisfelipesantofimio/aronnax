@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';
 import 'package:aronnax/src/data/providers/patient_case_providers.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
@@ -22,8 +23,9 @@ class PatientCasesListView extends ConsumerWidget {
     return casesList.when(
       data: (data) => data.isEmpty
           ? Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('This user has no open cases'),
+                Text(AppLocalizations.of(context)!.patientDataCaseEmpty),
                 TextButton(
                   onPressed: () {
                     showDialog(
@@ -33,9 +35,9 @@ class PatientCasesListView extends ConsumerWidget {
                     );
                     ref.invalidate(patientCaseListProvider);
                   },
-                  child: const Text(
-                    'Create new case',
-                    style: TextStyle(
+                  child: Text(
+                    AppLocalizations.of(context)!.patientDataCaseCreateNew,
+                    style: const TextStyle(
                         fontWeight: FontWeight.bold, color: Colors.black),
                   ),
                 ),
@@ -57,7 +59,8 @@ class PatientCasesListView extends ConsumerWidget {
                 ),
               ),
             ),
-      error: (error, stackTrace) => Text('Something went wrong: $error'),
+      error: (error, stackTrace) =>
+          Text('${AppLocalizations.of(context)!.genericErrorMessage}: $error'),
       loading: () => const CircularProgressIndicator(),
     );
   }

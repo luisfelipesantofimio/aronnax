@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/providers/patients_provider.dart';
 import 'package:aronnax/src/domain/entities/patient_case.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_result.dart';
@@ -32,7 +33,7 @@ class _PatientTreatmentPlanResultsViewState
             .where((element) => element.caseId == widget.caseData.id)
             .toList();
         return filteredList.isEmpty
-            ? const Text('There is not data.')
+            ? Text(AppLocalizations.of(context)!.genericEmptyData)
             : ListView.builder(
                 itemCount: filteredList.length,
                 shrinkWrap: true,
@@ -46,7 +47,8 @@ class _PatientTreatmentPlanResultsViewState
                 },
               );
       },
-      error: (error, stackTrace) => Text('Something went wrong $error'),
+      error: (error, stackTrace) =>
+          Text('${AppLocalizations.of(context)!.genericErrorMessage}: $error'),
       loading: () => const CircularProgressIndicator(),
     );
   }
