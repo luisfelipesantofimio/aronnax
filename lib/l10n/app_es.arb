@@ -351,7 +351,7 @@
   "patientDataGoToPatientProfile": "Ir al perfil del paciente",
   "patientDataCreateClinicalHistory": "Crear historial clínico",
   "patientDataCreateCase": "Crear caso",
-  "patientDataTitleClinicHistory": "Historial clínico",
+  "patientDataTitleClinicHistory": "Historia clínica",
   "patientDataCaseEmpty": "Este paciente no tiene casos abiertos",
   "patientDataCaseCreateNew": "Crear nuevo caso",
   "patientDataCaseDiagnosticCode": "Código diagnóstico",
