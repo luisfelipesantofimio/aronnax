@@ -28,6 +28,33 @@ class LocalDatabase extends _$LocalDatabase {
   @override
   int get schemaVersion => 1;
 
+  @override
+  MigrationStrategy get migration => MigrationStrategy(
+        onCreate: (m) async {
+          await m.createAll();
+          await into(settings).insert(
+            const SettingsCompanion(
+              id: Value(0),
+              isDarkModeEnabled: Value(false),
+              isOfflineModeEnabled: Value(false),
+              isConfigured: Value(false),
+            ),
+          );
+        },
+        beforeOpen: (details) async {
+          if (details.wasCreated) {
+            await into(settings).insert(
+              const SettingsCompanion(
+                id: Value(0),
+                isDarkModeEnabled: Value(false),
+                isOfflineModeEnabled: Value(false),
+                isConfigured: Value(false),
+              ),
+            );
+          }
+        },
+      );
+
   //Data insertion
 
   Future<void> insertPatient(LocalPatientsCompanion data) {
