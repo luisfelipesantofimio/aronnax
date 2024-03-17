@@ -14,13 +14,13 @@ enum CalendarEventType {
 }
 
 class CalendarEvent {
-  final int id;
+  final String id;
   final DateTime date;
   final CalendarEventStates state;
   final CalendarEventType eventType;
   final String? description;
-  final int professionalID;
-  final int patientID;
+  final String professionalID;
+  final String patientID;
   CalendarEvent({
     required this.id,
     required this.date,
@@ -45,13 +45,13 @@ class CalendarEvent {
   }
 
   CalendarEvent copyWith({
-    int? id,
+    String? id,
     DateTime? date,
     CalendarEventStates? state,
     CalendarEventType? eventType,
     String? description,
-    int? professionalID,
-    int? patientID,
+    String? professionalID,
+    String? patientID,
   }) {
     return CalendarEvent(
       id: id ?? this.id,

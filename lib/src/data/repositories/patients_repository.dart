@@ -36,7 +36,7 @@ class PatientsRepository implements PatientsRepositoryInterface {
   @override
   void updateLocalPatientActiveState(
     WidgetRef ref,
-    int patientId,
+    String patientId,
     bool newState,
     bool isOffline,
   ) {
@@ -70,14 +70,14 @@ class PatientsRepository implements PatientsRepositoryInterface {
   void addPatientCase(
       WidgetRef ref,
       DateTime creationDate,
-      int patientId,
-      int professionalId,
+      String patientId,
+      String professionalId,
       String consultationReason,
       String treatmentProposal,
       String diagnostic,
       String? icdDiagnosticCode,
       String? caseNotes,
-      int? treatmentPlanId,
+      String? treatmentPlanId,
       int? treatmentPlanPhase,
       bool isOffline) {
     if (isOffline) {
@@ -115,7 +115,7 @@ class PatientsRepository implements PatientsRepositoryInterface {
       required String emergencyContactName,
       required int emergencyContactNumber,
       required DateTime creationDate,
-      required int professionalID}) async {
+      required String professionalID}) async {
     if (ref.read(offlineStatusProvider).value!) {
       ref.read(localDatabaseRepositoryProvider).addLocalPatient(
           names: names,
@@ -159,7 +159,7 @@ class PatientsRepository implements PatientsRepositoryInterface {
 
   @override
   Future<PatientCase?> getPatientActiveCase(
-      WidgetRef ref, int patientId) async {
+      WidgetRef ref, String patientId) async {
     //if (ref.read(offlineStatusProvider).value!) {
     LocalPatientCaseData? localCase = await ref
         .read(localDatabaseRepositoryProvider)
@@ -175,7 +175,8 @@ class PatientsRepository implements PatientsRepositoryInterface {
   }
 
   @override
-  Future<List<PatientCase>> getPatientCaseList(Ref ref, int patientId) async {
+  Future<List<PatientCase>> getPatientCaseList(
+      Ref ref, String patientId) async {
     if (ref.read(offlineStatusProvider).value!) {
       List<LocalPatientCaseData> localCasesList = await ref
           .read(localDatabaseRepositoryProvider)
@@ -188,7 +189,7 @@ class PatientsRepository implements PatientsRepositoryInterface {
 
   @override
   Future<List<PatientCase>> getPatientCaseListFromConsumer(
-      WidgetRef ref, int patientId) async {
+      WidgetRef ref, String patientId) async {
     if (ref.read(offlineStatusProvider).value!) {
       List<LocalPatientCaseData> localCasesList = await ref
           .read(localDatabaseRepositoryProvider)
@@ -200,8 +201,8 @@ class PatientsRepository implements PatientsRepositoryInterface {
   }
 
   @override
-  void updatePatientCaseActiveState(
-      WidgetRef ref, int patientId, int caseId, bool currentCaseState) async {
+  void updatePatientCaseActiveState(WidgetRef ref, String patientId,
+      String caseId, bool currentCaseState) async {
     if (ref.read(offlineStatusProvider).value!) {
       List<LocalPatientCaseData> localCasesList = await ref
           .read(localDatabaseRepositoryProvider)
@@ -222,14 +223,15 @@ class PatientsRepository implements PatientsRepositoryInterface {
   }
 
   @override
-  void deletePatientCase(WidgetRef ref, int caseId) {
+  void deletePatientCase(WidgetRef ref, String caseId) {
     if (ref.read(offlineStatusProvider).value!) {
       ref.read(localDatabaseRepositoryProvider).deleteLocalPatientCase(caseId);
     }
   }
 
   @override
-  void updatePatientCaseCurrentPhase(WidgetRef ref, int caseId, int newPhase) {
+  void updatePatientCaseCurrentPhase(
+      WidgetRef ref, String caseId, int newPhase) {
     if (ref.read(offlineStatusProvider).value!) {
       ref
           .read(localDatabaseRepositoryProvider)
@@ -239,7 +241,7 @@ class PatientsRepository implements PatientsRepositoryInterface {
 
   @override
   Future<List<Session>> getPatientSessionsList(
-      WidgetRef ref, int patientId) async {
+      WidgetRef ref, String patientId) async {
     //  if (ref.read(offlineStatusProvider).value!) {
     List<LocalSession> sessionsList = await ref
         .read(localDatabaseRepositoryProvider)
@@ -249,7 +251,8 @@ class PatientsRepository implements PatientsRepositoryInterface {
   }
 
   @override
-  Future<List<Session>> fetchPatientSessionsList(Ref ref, int patientId) async {
+  Future<List<Session>> fetchPatientSessionsList(
+      Ref ref, String patientId) async {
     //  if (ref.read(offlineStatusProvider).value!) {
     List<LocalSession> sessionsList = await ref
         .read(localDatabaseRepositoryProvider)
@@ -261,7 +264,7 @@ class PatientsRepository implements PatientsRepositoryInterface {
 
   @override
   Future<List<TreatmentPlanResult>> getTreatmentPlanResults(
-      Ref ref, int patientId) async {
+      Ref ref, String patientId) async {
     //  bool isOffline = ref.read(offlineStatusProvider).value!;
     // if (isOffline) {
     List<LocalTreatmentResult> localData = await ref
@@ -290,7 +293,7 @@ class PatientsRepository implements PatientsRepositoryInterface {
   Future<void> importPatientData({
     required WidgetRef ref,
     required String decryptedPatientData,
-    required int professionalId,
+    required String professionalId,
   }) async {
     List<Patient> patientsList = [];
     bool isOffline = ref.read(offlineStatusProvider).value!;
@@ -381,7 +384,7 @@ class PatientsRepository implements PatientsRepositoryInterface {
   }
 
   @override
-  void deletePatientData(WidgetRef ref, int patientId) async {
+  void deletePatientData(WidgetRef ref, String patientId) async {
     //Offline logic only
     //bool isOffline = ref.read(offlineStatusProvider).value!;
     List localPatientCase = await ref
@@ -413,8 +416,8 @@ class PatientsRepository implements PatientsRepositoryInterface {
   }
 
   @override
-  void closeCurrentPatientCase(
-      WidgetRef ref, int caseId, String outcome, String? outcomeDescription) {
+  void closeCurrentPatientCase(WidgetRef ref, String caseId, String outcome,
+      String? outcomeDescription) {
     if (ref.read(offlineStatusProvider).value!) {
       ref
           .read(localDatabaseRepositoryProvider)

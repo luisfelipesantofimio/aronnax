@@ -29,8 +29,8 @@ class MainViewRegister extends ConsumerWidget {
                     width: constraints.maxWidth * 0.20,
                     child: Text(
                       AppLocalizations.of(context)!.registerTitle,
-                      style:
-                          const TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          fontSize: 40, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
@@ -132,7 +132,7 @@ class MainViewRegister extends ConsumerWidget {
                                               professionalID: ref
                                                   .read(
                                                       globalUserInformationProvider)!
-                                                  .professionalID,
+                                                  .id,
                                             );
 
                                         if (patientData != null) {

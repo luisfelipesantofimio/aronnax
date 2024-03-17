@@ -15,7 +15,7 @@ final patientsListProvider =
 });
 
 final patientsSessionsProvider = FutureProvider.autoDispose
-    .family<List<Session>, int>((ref, patientId) async {
+    .family<List<Session>, String>((ref, patientId) async {
   return ref.read(patientsRepositoryProvider).fetchPatientSessionsList(
         ref,
         patientId,
@@ -23,7 +23,7 @@ final patientsSessionsProvider = FutureProvider.autoDispose
 });
 
 final patientsTreatmentPlanResultsProvider = FutureProvider.autoDispose
-    .family<List<TreatmentPlanResult>, int>((ref, patientId) async {
+    .family<List<TreatmentPlanResult>, String>((ref, patientId) async {
   return await ref
       .read(patientsRepositoryProvider)
       .getTreatmentPlanResults(ref, patientId);

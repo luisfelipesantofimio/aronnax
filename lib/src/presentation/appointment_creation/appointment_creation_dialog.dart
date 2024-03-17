@@ -183,7 +183,7 @@ class _AppointmentCreationDialogState
                                     ),
                                     professionalId: ref
                                         .read(globalUserInformationProvider)!
-                                        .personalID,
+                                        .id,
                                     patientId:
                                         ref.read(appointmentPatientIdProvider)!,
                                     description: ref

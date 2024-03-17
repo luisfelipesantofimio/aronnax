@@ -61,7 +61,7 @@ class CalendarRepository implements CalendarRepositoryInterface {
   }
 
   @override
-  void deleteEvent({required int eventID, required WidgetRef ref}) {
+  void deleteEvent({required String eventID, required WidgetRef ref}) {
     ref.read(localDatabaseRepositoryProvider).deleteAppointments(eventID);
   }
 

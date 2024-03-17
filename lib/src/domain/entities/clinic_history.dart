@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 
 class ClinicHistory {
-  final int id;
+  final String id;
   final String registerNumber;
   final DateTime creationDate;
   final String mentalExamination;
@@ -11,8 +11,8 @@ class ClinicHistory {
   final String psyAntecedents;
   final String familyHistory;
   final String personalHistory;
-  final int idNumber;
-  final int professionalId;
+  final String idNumber;
+  final String professionalId;
   ClinicHistory({
     required this.id,
     required this.registerNumber,
@@ -42,7 +42,7 @@ class ClinicHistory {
   }
 
   ClinicHistory copyWith({
-    int? id,
+    String? id,
     String? registerNumber,
     DateTime? creationDate,
     String? mentalExamination,
@@ -50,8 +50,8 @@ class ClinicHistory {
     String? psyAntecedents,
     String? familyHistory,
     String? personalHistory,
-    int? idNumber,
-    int? professionalId,
+    String? idNumber,
+    String? professionalId,
   }) {
     return ClinicHistory(
       id: id ?? this.id,
@@ -84,7 +84,7 @@ class ClinicHistory {
 
   factory ClinicHistory.fromMap(Map<String, dynamic> map) {
     return ClinicHistory(
-      id: map['id'] as int,
+      id: map['id'] as String,
       registerNumber: map['registerNumber'] as String,
       creationDate:
           DateTime.fromMillisecondsSinceEpoch(map['creationDate'] as int),
@@ -93,8 +93,8 @@ class ClinicHistory {
       psyAntecedents: map['psyAntecedents'] as String,
       familyHistory: map['familyHistory'] as String,
       personalHistory: map['personalHistory'] as String,
-      idNumber: map['idNumber'] as int,
-      professionalId: map['professionalId'] as int,
+      idNumber: map['idNumber'] as String,
+      professionalId: map['professionalId'] as String,
     );
   }
 

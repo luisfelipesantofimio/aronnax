@@ -12,7 +12,7 @@ class PatientTreatmentPlanResultsView extends ConsumerStatefulWidget {
     required this.patientId,
     required this.caseData,
   });
-  final int patientId;
+  final String patientId;
   final PatientCase caseData;
 
   @override

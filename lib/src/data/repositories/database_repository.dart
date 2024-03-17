@@ -30,7 +30,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
     required String emergencyContactName,
     required int emergencyContactNumber,
     required DateTime creationDate,
-    required int professionalID,
+    required String professionalID,
   }) {
     final entity = LocalPatientsCompanion(
         names: Value(names),
@@ -64,8 +64,8 @@ class DatabaseRepository implements LocalDatabaseInteface {
     String psiAntecedents,
     String familyHistory,
     String personalHistory,
-    int idNumber,
-    int professionalID,
+    String idNumber,
+    String professionalID,
   ) async {
     final entity = LocalClinicHistoryCompanion(
       registerNumber: Value(registerCode),
@@ -87,13 +87,13 @@ class DatabaseRepository implements LocalDatabaseInteface {
     String sessionSummary,
     String sessionObjectives,
     String therapeuticArchievements,
-    int idNumber,
-    int professionalID,
+    String idNumber,
+    String professionalID,
     DateTime sessionDate,
     String sessionNotes,
     int sessionPerformance,
     String sessionPerformanceExplanation,
-    int caseId,
+    String caseId,
   ) async {
     final entity = LocalSessionsCompanion(
       idNumber: Value(idNumber),
@@ -269,8 +269,8 @@ class DatabaseRepository implements LocalDatabaseInteface {
   @override
   Future<void> addLocalAppointMent(
       {required DateTime date,
-      required int professionalId,
-      required int patientId,
+      required String professionalId,
+      required String patientId,
       required String? description,
       required CalendarEventStates state,
       required CalendarEventType eventType}) async {
@@ -289,12 +289,12 @@ class DatabaseRepository implements LocalDatabaseInteface {
   }
 
   @override
-  void deleteAppointments(int eventId) async {
+  void deleteAppointments(String eventId) async {
     await localDB.deleteLocalEvent(eventId);
   }
 
   @override
-  void deleteTodo(int todoId) async {
+  void deleteTodo(String todoId) async {
     await localDB.deleteLocalTodo(todoId);
   }
 
@@ -304,7 +304,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
   }
 
   @override
-  Future updateTodoState(int todoId, bool newState) async {
+  Future updateTodoState(String todoId, bool newState) async {
     await localDB.updateTodoState(todoId, newState);
   }
 
@@ -313,7 +313,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
     required DateTime date,
     required String treatmentTitle,
     required String treatmentDescription,
-    required int professionalID,
+    required String professionalID,
     required String treatmentData,
   }) async {
     final data = LocalTreatmentPlansCompanion(
@@ -331,10 +331,10 @@ class DatabaseRepository implements LocalDatabaseInteface {
   void insertLocalTreatmentPlanResult({
     required int sessionNumber,
     required DateTime applicationDate,
-    required int treatmentPlanID,
-    required int patientID,
-    required int professionalID,
-    required int patientCaseID,
+    required String treatmentPlanID,
+    required String patientID,
+    required String professionalID,
+    required String patientCaseID,
     required int phaseNumber,
     required String treatmentResultData,
   }) async {
@@ -352,7 +352,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
   }
 
   @override
-  void deleteLocalTreatmentPlan(int treatmentId) {
+  void deleteLocalTreatmentPlan(String treatmentId) {
     localDB.deleteLocalTreatmentPlan(treatmentId);
   }
 
@@ -377,7 +377,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
   }
 
   @override
-  void updateLocalPatientActiveState(int patientId, bool newState) {
+  void updateLocalPatientActiveState(String patientId, bool newState) {
     localDB.updatePatientActiveState(
       patientId,
       newState,
@@ -387,14 +387,14 @@ class DatabaseRepository implements LocalDatabaseInteface {
   @override
   void insertPatientCase(
     DateTime creationDate,
-    int patientId,
-    int professionalId,
+    String patientId,
+    String professionalId,
     String consultationReason,
     String treatmentProposal,
     String diagnostic,
     String? icdDiagnosticCode,
     String? caseNotes,
-    int? treatmentPlanId,
+    String? treatmentPlanId,
     int? treatmentPlanPhase,
   ) {
     final data = LocalPatientCaseCompanion(
@@ -425,52 +425,53 @@ class DatabaseRepository implements LocalDatabaseInteface {
   }
 
   @override
-  void deleteLocalClinicHistory(int id) {
+  void deleteLocalClinicHistory(String id) {
     localDB.deleteLocalClinicHisoty(id);
   }
 
   @override
-  Future<List<LocalClinicHistoryData>> getClinicHistoryListById(int patientId) {
+  Future<List<LocalClinicHistoryData>> getClinicHistoryListById(
+      String patientId) {
     return localDB.clinicHistoryConsultation(patientId);
   }
 
   @override
-  Future<LocalClinicHistoryData> getSingleClinicHistoryById(int patientId) {
+  Future<LocalClinicHistoryData> getSingleClinicHistoryById(String patientId) {
     return localDB.getSingleClinicHistory(patientId);
   }
 
   @override
-  Future<LocalPatientCaseData?> getSinglePatientCase(int patientId) {
+  Future<LocalPatientCaseData?> getSinglePatientCase(String patientId) {
     return localDB.getSinglePatientCase(patientId);
   }
 
   @override
-  Future<List<LocalPatientCaseData>> getPatientCasesList(int patientId) {
+  Future<List<LocalPatientCaseData>> getPatientCasesList(String patientId) {
     return localDB.getPatientCases(patientId);
   }
 
   @override
-  void disactivatePatientCases(int caseId) {
+  void disactivatePatientCases(String caseId) {
     localDB.disactivatePatientCases(caseId);
   }
 
   @override
-  void activatePatientCase(int caseId) {
+  void activatePatientCase(String caseId) {
     localDB.activatePatientCases(caseId);
   }
 
   @override
-  void deleteLocalPatientCase(int caseId) {
+  void deleteLocalPatientCase(String caseId) {
     localDB.deleteLocalPatientCase(caseId);
   }
 
   @override
-  void updatePatientCaseCurrentPhase(int caseId, int newPhase) {
+  void updatePatientCaseCurrentPhase(String caseId, int newPhase) {
     localDB.updatePatientCasePhase(caseId, newPhase);
   }
 
   @override
-  Future<List<LocalSession>> getPatientSessionsList(int patientId) {
+  Future<List<LocalSession>> getPatientSessionsList(String patientId) {
     return localDB.getPatientSessionsList(patientId);
   }
 
@@ -498,36 +499,36 @@ class DatabaseRepository implements LocalDatabaseInteface {
   }
 
   @override
-  Future<List<LocalTreatmentResult>> getTreatmentPlanResults(int patientId) {
+  Future<List<LocalTreatmentResult>> getTreatmentPlanResults(String patientId) {
     return localDB.getTreatmentPlanResults(patientId);
   }
 
   @override
-  void deleteLocalPatient(int patientId) {
+  void deleteLocalPatient(String patientId) {
     localDB.deleteLocalPatient(patientId);
   }
 
   @override
-  void deleteLocalSession(int sessionId) {
+  void deleteLocalSession(String sessionId) {
     localDB.deleteLocalSession(sessionId);
   }
 
   @override
-  void updateProfessionalPassword(int userId, String password) {
+  void updateProfessionalPassword(String userId, String password) {
     localDB.updateLocalUserPassword(userId, password);
   }
 
   @override
   void updateProfessionalPasswordAndPin(
-      int userId, String password, String pin) {
+      String userId, String password, String pin) {
     localDB.updateLocalUserPasswordAndPin(userId, password, pin);
   }
 
   @override
   Future<void> addMultiLocalAppointMent({
     required DateTime date,
-    required int professionalId,
-    required int patientId,
+    required String professionalId,
+    required String patientId,
     required String? description,
     required CalendarEventStates state,
     required CalendarEventType eventType,
@@ -581,7 +582,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
 
   @override
   void closeLocalCurrentPatientCase(
-      int caseId, String outcome, String? outcomeDescription) async {
+      String caseId, String outcome, String? outcomeDescription) async {
     localDB.closeCurrentCase(caseId, outcome, outcomeDescription);
   }
 }

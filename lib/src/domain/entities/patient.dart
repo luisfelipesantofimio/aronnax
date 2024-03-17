@@ -4,7 +4,7 @@ import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/domain/entities/remote_model/remote_patient.dart';
 
 class Patient {
-  final int id;
+  final String id;
   final String names;
   final String lastNames;
   final int idNumber;
@@ -67,7 +67,7 @@ class Patient {
   }
   factory Patient.fromRemoteModel(RemotePatient data) {
     return Patient(
-      id: 0,
+      id: '',
       names: data.names,
       lastNames: data.lastNames,
       idNumber: data.idNumber,
@@ -113,7 +113,7 @@ class Patient {
 
   factory Patient.fromMap(Map<String, dynamic> map) {
     return Patient(
-      id: map['id'] as int,
+      id: map['id'] as String,
       names: map['names'] as String,
       lastNames: map['lastNames'] as String,
       idNumber: map['idNumber'] as int,
@@ -141,7 +141,7 @@ class Patient {
       Patient.fromMap(json.decode(source) as Map<String, dynamic>);
 
   Patient copyWith({
-    int? id,
+    String? id,
     String? names,
     String? lastNames,
     int? idNumber,

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class ResultsDialog extends StatelessWidget {
   const ResultsDialog(
       {super.key, required this.patientId, required this.caseData});
-  final int patientId;
+  final String patientId;
   final PatientCase caseData;
 
   @override

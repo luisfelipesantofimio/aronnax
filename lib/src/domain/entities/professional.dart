@@ -3,7 +3,7 @@ import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/domain/entities/remote_model/remote_professional.dart';
 
 class Professional {
-  final int id;
+  final String id;
   final int personalID;
   final String names;
   final String lastNames;
@@ -51,7 +51,7 @@ class Professional {
   }
   factory Professional.fromRemoteModel(RemoteProfessional data) {
     return Professional(
-        id: 0,
+        id: '',
         personalID: data.personalID,
         names: data.names,
         lastNames: data.lastNames,

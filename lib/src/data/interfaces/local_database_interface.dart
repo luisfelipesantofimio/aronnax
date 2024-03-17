@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class LocalDatabaseInteface {
+//TODO: Implement the correct types
   void addLocalPatient({
     required String names,
     required String lastNames,
@@ -24,7 +25,7 @@ abstract class LocalDatabaseInteface {
     required String emergencyContactName,
     required int emergencyContactNumber,
     required DateTime creationDate,
-    required int professionalID,
+    required String professionalID,
   });
 
   Future<void> addLocalClinicHistory(
@@ -35,21 +36,21 @@ abstract class LocalDatabaseInteface {
     String psiAntecedents,
     String familyHistory,
     String personalHistory,
-    int idNumber,
-    int professionalID,
+    String idNumber,
+    String professionalID,
   );
 
   Future<void> addLocalSession(
     String sessionSummary,
     String sessionObjectives,
     String therapeuticArchievements,
-    int idNumber,
-    int professionalID,
+    String idNumber,
+    String professionalID,
     DateTime sessionDate,
     String sessionNotes,
     int sessionPerformance,
     String sessionPerformanceExplanation,
-    int caseId,
+    String caseId,
   );
 
   void addLocalProfessional({
@@ -95,17 +96,17 @@ abstract class LocalDatabaseInteface {
     required DateTime date,
     required String treatmentTitle,
     required String treatmentDescription,
-    required int professionalID,
+    required String professionalID,
     required String treatmentData,
   });
 
   void insertLocalTreatmentPlanResult({
     required int sessionNumber,
     required DateTime applicationDate,
-    required int treatmentPlanID,
-    required int patientID,
-    required int professionalID,
-    required int patientCaseID,
+    required String treatmentPlanID,
+    required String patientID,
+    required String professionalID,
+    required String patientCaseID,
     required int phaseNumber,
     required String treatmentResultData,
   });
@@ -119,19 +120,18 @@ abstract class LocalDatabaseInteface {
     required bool isComplete,
   });
 
-  Future<void> addLocalAppointMent({
-    required DateTime date,
-    required int professionalId,
-    required int patientId,
-    required String? description,
-    required CalendarEventStates state,
-    required CalendarEventType eventType,
-  });
+  Future<void> addLocalAppointMent(
+      {required DateTime date,
+      required String professionalId,
+      required String patientId,
+      required String? description,
+      required CalendarEventStates state,
+      required CalendarEventType eventType});
 
   Future<void> addMultiLocalAppointMent({
     required DateTime date,
-    required int professionalId,
-    required int patientId,
+    required String professionalId,
+    required String patientId,
     required String? description,
     required CalendarEventStates state,
     required CalendarEventType eventType,
@@ -146,7 +146,7 @@ abstract class LocalDatabaseInteface {
 
   Future updateConnectionMode(bool isOfflineEnabled);
 
-  Future updateTodoState(int todoId, bool newState);
+  Future updateTodoState(String todoId, bool newState);
 
   Future<List<ServerDatabaseData>> getServerConfigurationList();
 
@@ -159,59 +159,60 @@ abstract class LocalDatabaseInteface {
   Future<List<LocalPatient>> getLocalPatientsList();
   Future<List<LocalTodo>> getLocalTodos();
 
-  void deleteAppointments(int eventId);
+  void deleteAppointments(String eventId);
 
-  void deleteTodo(int todoId);
+  void deleteTodo(String todoId);
 
   Future<List<LocalTreatmentPlan>> getLocalTreatmentPlans();
-  void deleteLocalTreatmentPlan(int treatmentId);
+  void deleteLocalTreatmentPlan(String treatmentId);
   void updateLocalTreatmentPlan(TreatmentPlan newTreatmentPlanData);
-  void updateLocalPatientActiveState(int patientId, bool newState);
+  void updateLocalPatientActiveState(String patientId, bool newState);
 
-  Future<List<LocalPatientCaseData>> getPatientCasesList(int patientId);
-  Future<LocalPatientCaseData?> getSinglePatientCase(int patientId);
+  Future<List<LocalPatientCaseData>> getPatientCasesList(String patientId);
+  Future<LocalPatientCaseData?> getSinglePatientCase(String patientId);
 
   void insertPatientCase(
     DateTime creationDate,
-    int patientId,
-    int professionalId,
+    String patientId,
+    String professionalId,
     String consultationReason,
     String treatmentProposal,
     String diagnostic,
     String? icdDiagnosticCode,
     String? caseNotes,
-    int? treatmentPlanId,
+    String? treatmentPlanId,
     int? treatmentPlanPhase,
   );
 
   Future<LocalPatient> getSinglePatient(int idNumber);
   Future<List<LocalPatient>> getPatientsListById(int idNumber);
-  void deleteLocalClinicHistory(int id);
+  void deleteLocalClinicHistory(String id);
 
-  Future<List<LocalClinicHistoryData>> getClinicHistoryListById(int patientId);
-  Future<LocalClinicHistoryData> getSingleClinicHistoryById(int patientId);
-  void disactivatePatientCases(int caseId);
-  void activatePatientCase(int caseId);
-  void deleteLocalPatientCase(int caseId);
+  Future<List<LocalClinicHistoryData>> getClinicHistoryListById(
+      String patientId);
+  Future<LocalClinicHistoryData> getSingleClinicHistoryById(String patientId);
+  void disactivatePatientCases(String caseId);
+  void activatePatientCase(String caseId);
+  void deleteLocalPatientCase(String caseId);
 
-  void updatePatientCaseCurrentPhase(int caseId, int newPhase);
+  void updatePatientCaseCurrentPhase(String caseId, int newPhase);
 
-  Future<List<LocalSession>> getPatientSessionsList(int patientId);
+  Future<List<LocalSession>> getPatientSessionsList(String patientId);
 
   void insertIcdData(IcdDataParser data);
   Future<List<SavedIcdDiagnosticDataData>> getDiagnosticData();
   void deleteSavedIcdData();
-  void deleteLocalPatient(int patientId);
-  void deleteLocalSession(int sessionId);
+  void deleteLocalPatient(String patientId);
+  void deleteLocalSession(String sessionId);
 
-  Future<List<LocalTreatmentResult>> getTreatmentPlanResults(int patientId);
+  Future<List<LocalTreatmentResult>> getTreatmentPlanResults(String patientId);
 
-  void updateProfessionalPassword(int userId, String password);
+  void updateProfessionalPassword(String userId, String password);
   void updateProfessionalPasswordAndPin(
-      int userId, String password, String pin);
+      String userId, String password, String pin);
 
   void closeLocalCurrentPatientCase(
-      int caseId, String outcome, String? outcomeDescription);
+      String caseId, String outcome, String? outcomeDescription);
 }
 
 final localDatabaseRepositoryProvider = Provider<LocalDatabaseInteface>(

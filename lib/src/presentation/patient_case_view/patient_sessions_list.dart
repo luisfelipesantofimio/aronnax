@@ -12,8 +12,8 @@ class PatientSessionsList extends ConsumerWidget {
     required this.patientId,
     required this.caseId,
   });
-  final int patientId;
-  final int caseId;
+  final String patientId;
+  final String caseId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -110,7 +110,7 @@ class PatientSessionsList extends ConsumerWidget {
                                                             AppLocalizations.of(
                                                                     context)!
                                                                 .patientCaseSessionPerformanceExplanation,
-                                                            style: TextStyle(
+                                                            style: const TextStyle(
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold),

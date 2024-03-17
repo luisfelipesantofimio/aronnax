@@ -22,7 +22,7 @@ abstract class CalendarRepositoryInterface {
   List<CalendarEvent> filterEventsByDate(
       List<CalendarEvent> snapshot, DateTime date);
   void deleteEvent({
-    required int eventID,
+    required String eventID,
     required WidgetRef ref,
   });
 

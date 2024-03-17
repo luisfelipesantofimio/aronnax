@@ -4,10 +4,10 @@ import 'dart:convert';
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 
 class PatientCase {
-  final int id;
+  final String id;
   final DateTime creationDate;
-  final int patientId;
-  final int professionalId;
+  final String patientId;
+  final String professionalId;
   final String consultationReason;
   final String diagnostic;
   final String? icdDiagnosticCode;
@@ -17,7 +17,7 @@ class PatientCase {
   final bool patientCaseClosed;
   final String? treatmentPlanOutcome;
   final String? treatmentPlanOutcomeExplanation;
-  final int? treatmentPlanId;
+  final String? treatmentPlanId;
   final int? currentTreatmentPlanPhase;
   PatientCase({
     required this.id,
@@ -59,11 +59,11 @@ class PatientCase {
 
   factory PatientCase.fromMap(Map<String, dynamic> map) {
     return PatientCase(
-      id: map['id'] as int,
+      id: map['id'] as String,
       creationDate:
           DateTime.fromMillisecondsSinceEpoch(map['creationDate'] as int),
-      patientId: map['patientId'] as int,
-      professionalId: map['professionalId'] as int,
+      patientId: map['patientId'] as String,
+      professionalId: map['professionalId'] as String,
       consultationReason: map['consultationReason'] as String,
       diagnostic: map['diagnostic'] as String,
       icdDiagnosticCode: map['icdDiagnosticCode'] != null
@@ -80,8 +80,9 @@ class PatientCase {
           map['treatmentPlanOutcomeExplanation'] != null
               ? map['treatmentPlanOutcomeExplanation'] as String
               : null,
-      treatmentPlanId:
-          map['treatmentPlanId'] != null ? map['treatmentPlanId'] as int : null,
+      treatmentPlanId: map['treatmentPlanId'] != null
+          ? map['treatmentPlanId'] as String
+          : null,
       currentTreatmentPlanPhase: map['currentTreatmentPlanPhase'] != null
           ? map['currentTreatmentPlanPhase'] as int
           : null,
@@ -113,10 +114,10 @@ class PatientCase {
       PatientCase.fromMap(json.decode(source) as Map<String, dynamic>);
 
   PatientCase copyWith({
-    int? id,
+    String? id,
     DateTime? creationDate,
-    int? patientId,
-    int? professionalId,
+    String? patientId,
+    String? professionalId,
     String? consultationReason,
     String? diagnostic,
     String? icdDiagnosticCode,
@@ -126,7 +127,7 @@ class PatientCase {
     bool? patientCaseClosed,
     String? treatmentPlanOutcome,
     String? treatmentPlanOutcomeExplanation,
-    int? treatmentPlanId,
+    String? treatmentPlanId,
     int? currentTreatmentPlanPhase,
   }) {
     return PatientCase(

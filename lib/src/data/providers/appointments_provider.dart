@@ -18,7 +18,7 @@ final appointmentsGlobalListProvider =
       ref.read(calendarRepositoryProvider).getCompleteEventsList(state),
 );
 
-final appointmentPatientIdProvider = StateProvider<int?>(
+final appointmentPatientIdProvider = StateProvider<String?>(
   (ref) => null,
 );
 final appointmentDescriptionProvider = StateProvider<String?>(
