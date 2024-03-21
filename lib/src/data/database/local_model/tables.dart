@@ -20,6 +20,8 @@ class LocalPatients extends Table {
   DateTimeColumn get creationDate => dateTime()();
   BoolColumn get isActive => boolean()();
   TextColumn get professionalID => text().references(LocalProfessional, #id)();
+  DateTimeColumn get createdAt =>
+      dateTime().clientDefault(() => DateTime.now())();
 
   @override
   Set<Column> get primaryKey => {id};
@@ -36,6 +38,8 @@ class LocalClinicHistory extends Table {
   TextColumn get personalHistory => text()();
   TextColumn get patientId => text().references(LocalPatients, #id)();
   TextColumn get professionalID => text().references(LocalProfessional, #id)();
+  DateTimeColumn get createdAt =>
+      dateTime().clientDefault(() => DateTime.now())();
 
   @override
   Set<Column> get primaryKey => {id};
@@ -63,6 +67,9 @@ class LocalPatientCase extends Table {
 
   IntColumn get localTreatmentPlanPhase => integer().nullable()();
 
+  DateTimeColumn get createdAt =>
+      dateTime().clientDefault(() => DateTime.now())();
+
   @override
   Set<Column> get primaryKey => {id};
 }
@@ -79,6 +86,8 @@ class LocalSessions extends Table {
   TextColumn get idNumber => text().references(LocalPatients, #id)();
   TextColumn get professionalID => text().references(LocalProfessional, #id)();
   TextColumn get caseId => text().references(LocalPatientCase, #id)();
+  DateTimeColumn get createdAt =>
+      dateTime().clientDefault(() => DateTime.now())();
 
   @override
   Set<Column> get primaryKey => {id};
@@ -98,6 +107,8 @@ class LocalProfessional extends Table {
   TextColumn get securityAnswers => text()();
   TextColumn get encodedRecoverPin => text()();
   TextColumn get password => text()();
+  DateTimeColumn get createdAt =>
+      dateTime().clientDefault(() => DateTime.now())();
 
   @override
   Set<Column> get primaryKey => {id};
@@ -113,6 +124,8 @@ class LocalTests extends Table {
   TextColumn get testReason => text()();
   TextColumn get category => text()();
   TextColumn get testData => text()();
+  DateTimeColumn get createdAt =>
+      dateTime().clientDefault(() => DateTime.now())();
 
   @override
   Set<Column> get primaryKey => {id};
@@ -126,6 +139,18 @@ class LocalTodos extends Table {
   TextColumn get category => text().nullable()();
   IntColumn get itemColor => integer()();
   BoolColumn get isComplete => boolean()();
+  DateTimeColumn get createdAt =>
+      dateTime().clientDefault(() => DateTime.now())();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+class LocalAppointmentGroup extends Table {
+  TextColumn get id => text()();
+  TextColumn get description => text().nullable()();
+  DateTimeColumn get createdAt =>
+      dateTime().clientDefault(() => DateTime.now())();
 
   @override
   Set<Column> get primaryKey => {id};
@@ -139,6 +164,10 @@ class LocalAppointments extends Table {
   TextColumn get description => text().nullable()();
   TextColumn get status => text()();
   TextColumn get sessionType => text()();
+  TextColumn get groupID =>
+      text().references(LocalAppointmentGroup, #id).nullable()();
+  DateTimeColumn get createdAt =>
+      dateTime().clientDefault(() => DateTime.now())();
 
   @override
   Set<Column> get primaryKey => {id};
@@ -151,6 +180,8 @@ class LocalTreatmentPlans extends Table {
   TextColumn get treatmentDescription => text()();
   TextColumn get treatmentData => text()();
   TextColumn get professionalID => text().references(LocalProfessional, #id)();
+  DateTimeColumn get createdAt =>
+      dateTime().clientDefault(() => DateTime.now()).nullable()();
 
   @override
   Set<Column> get primaryKey => {id};
@@ -167,29 +198,28 @@ class LocalTreatmentResults extends Table {
       text().references(LocalTreatmentPlans, #id)();
   TextColumn get patientCaseId => text().references(LocalPatientCase, #id)();
   TextColumn get treatmentResultsData => text()();
+  DateTimeColumn get createdAt =>
+      dateTime().clientDefault(() => DateTime.now())();
 
   @override
   Set<Column> get primaryKey => {id};
 }
 
 class SavedIcdDiagnosticData extends Table {
-  TextColumn get id => text()();
+  IntColumn get id => integer().autoIncrement()();
   TextColumn get title => text()();
   TextColumn get icdRelease => text()();
   TextColumn get definition => text().nullable()();
   TextColumn get categoryData => text()();
-
-  @override
-  Set<Column> get primaryKey => {id};
+  DateTimeColumn get createdAt =>
+      dateTime().clientDefault(() => DateTime.now())();
 }
 
 class Settings extends Table {
-  IntColumn get id => integer()();
+  IntColumn get id => integer().autoIncrement()();
   BoolColumn get isDarkModeEnabled => boolean()();
   BoolColumn get isOfflineModeEnabled => boolean()();
   BoolColumn get isConfigured => boolean()();
-  @override
-  Set<Column> get primaryKey => {id};
 }
 
 class ServerDatabase extends Table {

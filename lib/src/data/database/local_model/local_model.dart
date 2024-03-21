@@ -21,6 +21,7 @@ part 'local_model.g.dart';
   Settings,
   ServerDatabase,
   SavedIcdDiagnosticData,
+  LocalAppointmentGroup,
 ])
 class LocalDatabase extends _$LocalDatabase {
   LocalDatabase() : super(_openConnection());
@@ -34,7 +35,6 @@ class LocalDatabase extends _$LocalDatabase {
           await m.createAll();
           await into(settings).insert(
             const SettingsCompanion(
-              id: Value(0),
               isDarkModeEnabled: Value(false),
               isOfflineModeEnabled: Value(false),
               isConfigured: Value(false),
@@ -222,13 +222,13 @@ class LocalDatabase extends _$LocalDatabase {
   Future<List<LocalClinicHistoryData>> clinicHistoryConsultation(
       String patientId) {
     return (select(localClinicHistory)
-          ..where((tbl) => tbl.id.equals(patientId)))
+          ..where((tbl) => tbl.patientId.equals(patientId)))
         .get();
   }
 
   Future<LocalClinicHistoryData> getSingleClinicHistory(String patientId) {
     return (select(localClinicHistory)
-          ..where((tbl) => tbl.id.equals(patientId)))
+          ..where((tbl) => tbl.patientId.equals(patientId)))
         .getSingle();
   }
 
