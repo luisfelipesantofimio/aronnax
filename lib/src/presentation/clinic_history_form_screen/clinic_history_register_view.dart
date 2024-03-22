@@ -121,59 +121,69 @@ class _ClinicHistoryRegisterViewState
                                   onPressed: () {
                                     if (clinicHistoryKey.currentState!
                                         .validate()) {
-                                      isOfflineEnabled
-                                          ? ref
-                                              .read(
-                                                  clinicHistoryRepositoryProvider)
-                                              .addClinicHistory(
-                                                  ref,
-                                                  registerCode,
-                                                  DateTime.now(),
-                                                  ref.read(
-                                                      clinicHistoryMentalExaminationProvider),
-                                                  ref.read(
-                                                      clinicHistoryMedAntecedentsProvider),
-                                                  ref.read(
-                                                      clinicHistoryPsyAntecedentsProvider),
-                                                  ref.read(
-                                                      clinicHistoryFamilyHistoryProvider),
-                                                  ref.read(
-                                                      clinicHistoryPersonalHistoryProvider),
-                                                  widget.patientData.id,
-                                                  professionalID)
-                                          : insertClinicHistory(
-                                              registerCode,
-                                              DateTime.now(),
-                                              ref.read(
-                                                  clinicHistoryMentalExaminationProvider),
-                                              ref.read(
-                                                  clinicHistoryMedAntecedentsProvider),
-                                              ref.read(
-                                                  clinicHistoryPsyAntecedentsProvider),
-                                              ref.read(
-                                                  clinicHistoryFamilyHistoryProvider),
-                                              ref.read(
-                                                  clinicHistoryPersonalHistoryProvider),
-                                              ref.read(
-                                                  globalSelectedConsultantIDProvider),
-                                              professionalID);
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          backgroundColor: Colors.green,
-                                          content: Text(AppLocalizations.of(
-                                                  context)!
-                                              .clinicHistorySaveConfirmation),
-                                        ),
-                                      );
+                                      try {
+                                        isOfflineEnabled
+                                            ? ref
+                                                .read(
+                                                    clinicHistoryRepositoryProvider)
+                                                .addClinicHistory(
+                                                    ref,
+                                                    registerCode,
+                                                    DateTime.now(),
+                                                    ref.read(
+                                                        clinicHistoryMentalExaminationProvider),
+                                                    ref.read(
+                                                        clinicHistoryMedAntecedentsProvider),
+                                                    ref.read(
+                                                        clinicHistoryPsyAntecedentsProvider),
+                                                    ref.read(
+                                                        clinicHistoryFamilyHistoryProvider),
+                                                    ref.read(
+                                                        clinicHistoryPersonalHistoryProvider),
+                                                    widget.patientData.id,
+                                                    professionalID)
+                                            : insertClinicHistory(
+                                                registerCode,
+                                                DateTime.now(),
+                                                ref.read(
+                                                    clinicHistoryMentalExaminationProvider),
+                                                ref.read(
+                                                    clinicHistoryMedAntecedentsProvider),
+                                                ref.read(
+                                                    clinicHistoryPsyAntecedentsProvider),
+                                                ref.read(
+                                                    clinicHistoryFamilyHistoryProvider),
+                                                ref.read(
+                                                    clinicHistoryPersonalHistoryProvider),
+                                                ref.read(
+                                                    globalSelectedConsultantIDProvider),
+                                                professionalID);
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            backgroundColor: Colors.green,
+                                            content: Text(AppLocalizations.of(
+                                                    context)!
+                                                .clinicHistorySaveConfirmation),
+                                          ),
+                                        );
 
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const MainMenu(),
-                                        ),
-                                      );
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const MainMenu(),
+                                          ),
+                                        );
+                                      } catch (e) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            backgroundColor: Colors.red,
+                                            content: Text(e.toString()),
+                                          ),
+                                        );
+                                      }
                                     }
                                   },
                                 )
