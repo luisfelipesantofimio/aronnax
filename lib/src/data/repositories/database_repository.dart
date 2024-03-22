@@ -8,9 +8,12 @@ import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_pla
 import 'package:aronnax/src/presentation/core/methods.dart';
 import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 class DatabaseRepository implements LocalDatabaseInteface {
   LocalDatabase localDB = LocalDatabase();
+
+  static const Uuid _uuid = Uuid();
 
   @override
   addLocalPatient({
@@ -33,6 +36,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
     required String professionalID,
   }) {
     final entity = LocalPatientsCompanion(
+        id: Value(_uuid.v4()),
         names: Value(names),
         lastNames: Value(lastNames),
         birthDate: Value(birthDate),
@@ -68,6 +72,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
     String professionalID,
   ) async {
     final entity = LocalClinicHistoryCompanion(
+      id: Value(_uuid.v4()),
       registerNumber: Value(registerCode),
       currentDate: Value(dateTime),
       mentalExamination: Value(mentalExamn),
@@ -96,6 +101,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
     String caseId,
   ) async {
     final entity = LocalSessionsCompanion(
+      id: Value(_uuid.v4()),
       idNumber: Value(idNumber),
       professionalID: Value(professionalID),
       sessionDate: Value(sessionDate),
@@ -126,6 +132,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
     required String password,
   }) {
     final entity = LocalProfessionalCompanion(
+      id: Value(_uuid.v4()),
       userName: Value(userName),
       names: Value(names),
       lastNames: Value(lastNames),
@@ -242,6 +249,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
     required bool isComplete,
   }) {
     final data = LocalTodosCompanion(
+      id: Value(_uuid.v4()),
       todo: Value(todoTitle),
       description: Value(todoDescription),
       creationDate: Value(date),
@@ -277,6 +285,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
     String eventStatus = AppMethods().parseCalendarEventStateFromEnum(state);
     String type = AppMethods().parseCalendarEventTypeFromEnum(eventType);
     final data = LocalAppointmentsCompanion(
+      id: Value(_uuid.v4()),
       date: Value(date),
       description: Value(description),
       patientID: Value(patientId),
@@ -317,6 +326,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
     required String treatmentData,
   }) async {
     final data = LocalTreatmentPlansCompanion(
+      id: Value(_uuid.v4()),
       creationDate: Value(date),
       professionalID: Value(professionalID),
       treatmentTitle: Value(treatmentTitle),
@@ -339,6 +349,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
     required String treatmentResultData,
   }) async {
     final data = LocalTreatmentResultsCompanion(
+      id: Value(_uuid.v4()),
       patientCaseId: Value(patientCaseID),
       applicationDate: Value(applicationDate),
       patientID: Value(patientID),
@@ -398,6 +409,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
     int? treatmentPlanPhase,
   ) {
     final data = LocalPatientCaseCompanion(
+      id: Value(_uuid.v4()),
       creationDate: Value(creationDate),
       patientId: Value(patientId),
       professionalId: Value(professionalId),
@@ -538,6 +550,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
     String type = AppMethods().parseCalendarEventTypeFromEnum(eventType);
 
     final data = LocalAppointmentsCompanion(
+      id: Value(_uuid.v4()),
       date: Value(date),
       description: Value(description),
       patientID: Value(patientId),
@@ -551,6 +564,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
       DateTime previewsDay = date.copyWith(day: date.day + 7 * (i + 1));
 
       final newDate = LocalAppointmentsCompanion(
+        id: Value(_uuid.v4()),
         date: Value(previewsDay),
         description: Value(description),
         patientID: Value(patientId),
