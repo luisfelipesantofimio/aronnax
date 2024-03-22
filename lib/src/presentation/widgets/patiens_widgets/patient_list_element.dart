@@ -15,7 +15,6 @@ class PatientListElement extends StatelessWidget {
       onTap: () {
         showDialog(
           context: context,
-          //TODO: Fix dialog size
           builder: (context) => PatientsDialogView(patientData: patientData),
         );
       },
