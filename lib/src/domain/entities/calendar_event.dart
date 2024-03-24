@@ -21,6 +21,7 @@ class CalendarEvent {
   final String? description;
   final String professionalID;
   final String patientID;
+  final String? groupId;
   CalendarEvent({
     required this.id,
     required this.date,
@@ -29,19 +30,20 @@ class CalendarEvent {
     required this.description,
     required this.professionalID,
     required this.patientID,
+    required this.groupId,
   });
 
   factory CalendarEvent.fromLocalModel(LocalAppointment data) {
     return CalendarEvent(
-      id: data.id,
-      patientID: data.patientID,
-      professionalID: data.professionalID,
-      date: data.date,
-      state: AppMethods().parseCalendarEventStateFromString(data.status),
-      description: data.description,
-      eventType:
-          AppMethods().parseCalendarEventTypeFromString(data.sessionType),
-    );
+        id: data.id,
+        patientID: data.patientID,
+        professionalID: data.professionalID,
+        date: data.date,
+        state: AppMethods().parseCalendarEventStateFromString(data.status),
+        description: data.description,
+        eventType:
+            AppMethods().parseCalendarEventTypeFromString(data.sessionType),
+        groupId: data.groupID);
   }
 
   CalendarEvent copyWith({
@@ -52,6 +54,7 @@ class CalendarEvent {
     String? description,
     String? professionalID,
     String? patientID,
+    String? groupId,
   }) {
     return CalendarEvent(
       id: id ?? this.id,
@@ -61,12 +64,13 @@ class CalendarEvent {
       description: description ?? this.description,
       professionalID: professionalID ?? this.professionalID,
       patientID: patientID ?? this.patientID,
+      groupId: groupId ?? this.groupId,
     );
   }
 
   @override
   String toString() {
-    return 'CalendarEvent(id: $id, date: $date, state: $state, eventType: $eventType, description: $description, professionalID: $professionalID, patientID: $patientID)';
+    return 'CalendarEvent(id: $id, date: $date, state: $state, eventType: $eventType, description: $description, professionalID: $professionalID, patientID: $patientID, groupId: $groupId)';
   }
 
   @override
@@ -79,7 +83,8 @@ class CalendarEvent {
         other.eventType == eventType &&
         other.description == description &&
         other.professionalID == professionalID &&
-        other.patientID == patientID;
+        other.patientID == patientID &&
+        other.groupId == groupId;
   }
 
   @override
@@ -90,6 +95,7 @@ class CalendarEvent {
         eventType.hashCode ^
         description.hashCode ^
         professionalID.hashCode ^
-        patientID.hashCode;
+        patientID.hashCode ^
+        groupId.hashCode;
   }
 }

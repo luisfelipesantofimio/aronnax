@@ -105,6 +105,10 @@ class LocalDatabase extends _$LocalDatabase {
     return into(savedIcdDiagnosticData).insert(data);
   }
 
+  Future<void> insertAppointmentGroup(LocalAppointmentGroupCompanion data) {
+    return into(localAppointmentGroup).insert(data);
+  }
+
   // Data update
 
   Future updateThemeMode(bool currentThemeMode) async {
@@ -374,6 +378,12 @@ class LocalDatabase extends _$LocalDatabase {
   }
 
   //Delete
+
+  Future<int> deleteAppointmentsGroup({required String groupId}) {
+    return (delete(localAppointments)
+          ..where((tbl) => tbl.groupID.equals(groupId)))
+        .go();
+  }
 
   Future deleteLocalEvent(String eventId) {
     return (delete(localAppointments)

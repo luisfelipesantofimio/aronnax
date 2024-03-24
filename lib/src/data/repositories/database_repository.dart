@@ -549,31 +549,41 @@ class DatabaseRepository implements LocalDatabaseInteface {
     String eventStatus = AppMethods().parseCalendarEventStateFromEnum(state);
     String type = AppMethods().parseCalendarEventTypeFromEnum(eventType);
 
-    final data = LocalAppointmentsCompanion(
+    final newGroup = LocalAppointmentGroupCompanion(
       id: Value(_uuid.v4()),
-      date: Value(date),
       description: Value(description),
-      patientID: Value(patientId),
-      professionalID: Value(professionalId),
-      sessionType: Value(type),
-      status: Value(eventStatus),
     );
-    await localDB.insertAppointment(data);
 
-    for (var i = 0; i < numberOfRepetitions - 1; i++) {
-      DateTime previewsDay = date.copyWith(day: date.day + 7 * (i + 1));
-
-      final newDate = LocalAppointmentsCompanion(
+    await localDB.insertAppointmentGroup(newGroup).then((value) async {
+      final data = LocalAppointmentsCompanion(
         id: Value(_uuid.v4()),
-        date: Value(previewsDay),
+        date: Value(date),
         description: Value(description),
         patientID: Value(patientId),
         professionalID: Value(professionalId),
         sessionType: Value(type),
         status: Value(eventStatus),
+        groupID: newGroup.id,
       );
-      await localDB.insertAppointment(newDate);
-    }
+
+      await localDB.insertAppointment(data);
+
+      for (var i = 0; i < numberOfRepetitions - 1; i++) {
+        DateTime previewsDay = date.copyWith(day: date.day + 7 * (i + 1));
+
+        final newDate = LocalAppointmentsCompanion(
+          id: Value(_uuid.v4()),
+          date: Value(previewsDay),
+          description: Value(description),
+          patientID: Value(patientId),
+          professionalID: Value(professionalId),
+          sessionType: Value(type),
+          status: Value(eventStatus),
+          groupID: newGroup.id,
+        );
+        await localDB.insertAppointment(newDate);
+      }
+    });
   }
 
   @override
@@ -598,5 +608,10 @@ class DatabaseRepository implements LocalDatabaseInteface {
   void closeLocalCurrentPatientCase(
       String caseId, String outcome, String? outcomeDescription) async {
     localDB.closeCurrentCase(caseId, outcome, outcomeDescription);
+  }
+
+  @override
+  Future<int> deleteAppointmentsGroup({required String groupId}) async {
+    return await localDB.deleteAppointmentsGroup(groupId: groupId);
   }
 }

@@ -83,4 +83,12 @@ class CalendarRepository implements CalendarRepositoryInterface {
           .updateLocalAppointment(eventData: eventData);
     }
   }
+
+  @override
+  Future<int> deleteEventGroup(
+      {required WidgetRef ref, required String groupId}) async {
+    return await ref
+        .read(localDatabaseRepositoryProvider)
+        .deleteAppointmentsGroup(groupId: groupId);
+  }
 }

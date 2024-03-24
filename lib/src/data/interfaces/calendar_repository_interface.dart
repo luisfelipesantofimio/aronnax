@@ -21,12 +21,16 @@ abstract class CalendarRepositoryInterface {
 
   List<CalendarEvent> filterEventsByDate(
       List<CalendarEvent> snapshot, DateTime date);
+
   void deleteEvent({
     required String eventID,
     required WidgetRef ref,
   });
 
   void updateEvent(WidgetRef ref, CalendarEvent eventData);
+
+  Future<int> deleteEventGroup(
+      {required WidgetRef ref, required String groupId});
 }
 
 final calendarRepositoryProvider = Provider<CalendarRepositoryInterface>(
