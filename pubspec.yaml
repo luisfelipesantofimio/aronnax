@@ -22,7 +22,7 @@ dependencies:
   js: ^0.6.3
   provider: ^6.0.2
   mysql1: ^0.20.0
-  file_picker: ^6.1.1
+  file_picker: ^8.0.0+1
   pdf: ^3.6.5
   crypt: ^4.2.1
   font_awesome_flutter: ^10.1.0
