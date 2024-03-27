@@ -4,6 +4,7 @@ import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/remote_database/server_api.dart';
 import 'package:aronnax/src/domain/entities/calendar_event.dart';
 import 'package:aronnax/src/domain/entities/icd_data.dart';
+import 'package:aronnax/src/domain/entities/patient_companion.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan.dart';
 import 'package:aronnax/src/presentation/core/methods.dart';
 import 'package:drift/drift.dart';
@@ -34,27 +35,30 @@ class DatabaseRepository implements LocalDatabaseInteface {
     required int emergencyContactNumber,
     required DateTime creationDate,
     required String professionalID,
+    String? companionId,
   }) {
     final entity = LocalPatientsCompanion(
-        id: Value(_uuid.v4()),
-        names: Value(names),
-        lastNames: Value(lastNames),
-        birthDate: Value(birthDate),
-        gender: Value(gender),
-        idNumber: Value(idNumber),
-        contactNumber: Value(contactNumber),
-        mail: Value(mail),
-        city: Value(city),
-        state: Value(state),
-        adress: Value(adress),
-        insurance: Value(insurance),
-        education: Value(education),
-        ocupation: Value(ocupation),
-        emergencyContactName: Value(emergencyContactName),
-        emergencyContactNumber: Value(emergencyContactNumber),
-        isActive: const Value(true),
-        creationDate: Value(creationDate),
-        professionalID: Value(professionalID));
+      id: Value(_uuid.v4()),
+      names: Value(names),
+      lastNames: Value(lastNames),
+      birthDate: Value(birthDate),
+      gender: Value(gender),
+      idNumber: Value(idNumber),
+      contactNumber: Value(contactNumber),
+      mail: Value(mail),
+      city: Value(city),
+      state: Value(state),
+      adress: Value(adress),
+      insurance: Value(insurance),
+      education: Value(education),
+      ocupation: Value(ocupation),
+      emergencyContactName: Value(emergencyContactName),
+      emergencyContactNumber: Value(emergencyContactNumber),
+      isActive: const Value(true),
+      creationDate: Value(creationDate),
+      professionalID: Value(professionalID),
+      companionId: Value(companionId),
+    );
 
     localDB.insertPatient(entity);
   }
@@ -613,5 +617,27 @@ class DatabaseRepository implements LocalDatabaseInteface {
   @override
   Future<int> deleteAppointmentsGroup({required String groupId}) async {
     return await localDB.deleteAppointmentsGroup(groupId: groupId);
+  }
+
+  @override
+  Future<LocalPatientCompanionData> addLocalPatientCompanion(
+      PatientCompanionModel patientCompanion) async {
+    final data = LocalPatientCompanionData(
+        id: _uuid.v4(),
+        names: patientCompanion.names,
+        lastNames: patientCompanion.lastNames,
+        contactNumber: patientCompanion.contactNumber,
+        relationshipp: patientCompanion.relationshipp,
+        companionReason: patientCompanion.companionReason,
+        isActive: true);
+    final result =
+        await localDB.insertPatientCompanion(data).then((value) => data);
+    return result;
+  }
+
+  @override
+  Future<LocalPatientCompanionData> getLocalPatientCompanion(
+      String companionId) async {
+    return await localDB.getPatientCompanion(companionId);
   }
 }

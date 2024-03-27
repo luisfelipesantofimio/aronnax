@@ -2,6 +2,7 @@ import 'package:aronnax/src/data/repositories/patients_repository.dart';
 import 'package:aronnax/src/domain/entities/clinic_history.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:aronnax/src/domain/entities/patient_case.dart';
+import 'package:aronnax/src/domain/entities/patient_companion.dart';
 import 'package:aronnax/src/domain/entities/session.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_result.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -27,7 +28,9 @@ abstract class PatientsRepositoryInterface {
     required int emergencyContactNumber,
     required DateTime creationDate,
     required String professionalID,
+    PatientCompanionModel? patientCompanion,
   });
+
   List<Patient> queryPatients(List<Patient> patientsList, String query);
 
   void addPatientCase(

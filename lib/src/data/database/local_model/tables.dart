@@ -1,5 +1,11 @@
 import 'package:drift/drift.dart';
 
+enum CompanionReason {
+  disabled,
+  underage,
+  other,
+}
+
 class LocalPatients extends Table {
   TextColumn get id => text()();
   TextColumn get names => text()();
@@ -20,8 +26,29 @@ class LocalPatients extends Table {
   DateTimeColumn get creationDate => dateTime()();
   BoolColumn get isActive => boolean()();
   TextColumn get professionalID => text().references(LocalProfessional, #id)();
+  TextColumn get companionId =>
+      text().nullable().references(LocalPatientCompanion, #id)();
   DateTimeColumn get createdAt =>
       dateTime().clientDefault(() => DateTime.now())();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+class LocalPatientCompanion extends Table {
+  TextColumn get id => text()();
+  TextColumn get names => text()();
+  TextColumn get lastNames => text()();
+  IntColumn get idNumber => integer().unique().nullable()();
+  DateTimeColumn get birthDate => dateTime().nullable()();
+  IntColumn get contactNumber => integer()();
+  TextColumn get mail => text().nullable()();
+  TextColumn get relationshipp => text()();
+  TextColumn get companionReason => textEnum<CompanionReason>()
+      .clientDefault(() => CompanionReason.other.toString())();
+  DateTimeColumn get createdAt =>
+      dateTime().clientDefault(() => DateTime.now()).nullable()();
+  BoolColumn get isActive => boolean().clientDefault(() => true)();
 
   @override
   Set<Column> get primaryKey => {id};

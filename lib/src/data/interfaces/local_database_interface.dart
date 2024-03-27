@@ -2,12 +2,12 @@ import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/repositories/database_repository.dart';
 import 'package:aronnax/src/domain/entities/calendar_event.dart';
 import 'package:aronnax/src/domain/entities/icd_data.dart';
+import 'package:aronnax/src/domain/entities/patient_companion.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class LocalDatabaseInteface {
-//TODO: Implement the correct types
   void addLocalPatient({
     required String names,
     required String lastNames,
@@ -26,7 +26,11 @@ abstract class LocalDatabaseInteface {
     required int emergencyContactNumber,
     required DateTime creationDate,
     required String professionalID,
+    String? companionId,
   });
+
+  Future<LocalPatientCompanionData> addLocalPatientCompanion(
+      PatientCompanionModel patientCompanion);
 
   Future<void> addLocalClinicHistory(
     String registerCode,
@@ -215,6 +219,9 @@ abstract class LocalDatabaseInteface {
 
   void closeLocalCurrentPatientCase(
       String caseId, String outcome, String? outcomeDescription);
+
+  Future<LocalPatientCompanionData> getLocalPatientCompanion(
+      String companionId);
 }
 
 final localDatabaseRepositoryProvider = Provider<LocalDatabaseInteface>(

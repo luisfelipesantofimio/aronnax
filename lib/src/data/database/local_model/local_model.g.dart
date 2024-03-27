@@ -665,6 +665,559 @@ class LocalProfessionalCompanion
   }
 }
 
+class $LocalPatientCompanionTable extends LocalPatientCompanion
+    with TableInfo<$LocalPatientCompanionTable, LocalPatientCompanionData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $LocalPatientCompanionTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _namesMeta = const VerificationMeta('names');
+  @override
+  late final GeneratedColumn<String> names = GeneratedColumn<String>(
+      'names', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _lastNamesMeta =
+      const VerificationMeta('lastNames');
+  @override
+  late final GeneratedColumn<String> lastNames = GeneratedColumn<String>(
+      'last_names', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _idNumberMeta =
+      const VerificationMeta('idNumber');
+  @override
+  late final GeneratedColumn<int> idNumber = GeneratedColumn<int>(
+      'id_number', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'));
+  static const VerificationMeta _birthDateMeta =
+      const VerificationMeta('birthDate');
+  @override
+  late final GeneratedColumn<DateTime> birthDate = GeneratedColumn<DateTime>(
+      'birth_date', aliasedName, true,
+      type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  static const VerificationMeta _contactNumberMeta =
+      const VerificationMeta('contactNumber');
+  @override
+  late final GeneratedColumn<int> contactNumber = GeneratedColumn<int>(
+      'contact_number', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _mailMeta = const VerificationMeta('mail');
+  @override
+  late final GeneratedColumn<String> mail = GeneratedColumn<String>(
+      'mail', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _relationshippMeta =
+      const VerificationMeta('relationshipp');
+  @override
+  late final GeneratedColumn<String> relationshipp = GeneratedColumn<String>(
+      'relationshipp', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _companionReasonMeta =
+      const VerificationMeta('companionReason');
+  @override
+  late final GeneratedColumnWithTypeConverter<CompanionReason, String>
+      companionReason = GeneratedColumn<String>(
+              'companion_reason', aliasedName, false,
+              type: DriftSqlType.string,
+              requiredDuringInsert: false,
+              clientDefault: () => CompanionReason.other.toString())
+          .withConverter<CompanionReason>(
+              $LocalPatientCompanionTable.$convertercompanionReason);
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, true,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      clientDefault: () => DateTime.now());
+  static const VerificationMeta _isActiveMeta =
+      const VerificationMeta('isActive');
+  @override
+  late final GeneratedColumn<bool> isActive = GeneratedColumn<bool>(
+      'is_active', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_active" IN (0, 1))'),
+      clientDefault: () => true);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        names,
+        lastNames,
+        idNumber,
+        birthDate,
+        contactNumber,
+        mail,
+        relationshipp,
+        companionReason,
+        createdAt,
+        isActive
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'local_patient_companion';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<LocalPatientCompanionData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('names')) {
+      context.handle(
+          _namesMeta, names.isAcceptableOrUnknown(data['names']!, _namesMeta));
+    } else if (isInserting) {
+      context.missing(_namesMeta);
+    }
+    if (data.containsKey('last_names')) {
+      context.handle(_lastNamesMeta,
+          lastNames.isAcceptableOrUnknown(data['last_names']!, _lastNamesMeta));
+    } else if (isInserting) {
+      context.missing(_lastNamesMeta);
+    }
+    if (data.containsKey('id_number')) {
+      context.handle(_idNumberMeta,
+          idNumber.isAcceptableOrUnknown(data['id_number']!, _idNumberMeta));
+    }
+    if (data.containsKey('birth_date')) {
+      context.handle(_birthDateMeta,
+          birthDate.isAcceptableOrUnknown(data['birth_date']!, _birthDateMeta));
+    }
+    if (data.containsKey('contact_number')) {
+      context.handle(
+          _contactNumberMeta,
+          contactNumber.isAcceptableOrUnknown(
+              data['contact_number']!, _contactNumberMeta));
+    } else if (isInserting) {
+      context.missing(_contactNumberMeta);
+    }
+    if (data.containsKey('mail')) {
+      context.handle(
+          _mailMeta, mail.isAcceptableOrUnknown(data['mail']!, _mailMeta));
+    }
+    if (data.containsKey('relationshipp')) {
+      context.handle(
+          _relationshippMeta,
+          relationshipp.isAcceptableOrUnknown(
+              data['relationshipp']!, _relationshippMeta));
+    } else if (isInserting) {
+      context.missing(_relationshippMeta);
+    }
+    context.handle(_companionReasonMeta, const VerificationResult.success());
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    }
+    if (data.containsKey('is_active')) {
+      context.handle(_isActiveMeta,
+          isActive.isAcceptableOrUnknown(data['is_active']!, _isActiveMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  LocalPatientCompanionData map(Map<String, dynamic> data,
+      {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return LocalPatientCompanionData(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      names: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}names'])!,
+      lastNames: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}last_names'])!,
+      idNumber: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id_number']),
+      birthDate: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}birth_date']),
+      contactNumber: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}contact_number'])!,
+      mail: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}mail']),
+      relationshipp: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}relationshipp'])!,
+      companionReason: $LocalPatientCompanionTable.$convertercompanionReason
+          .fromSql(attachedDatabase.typeMapping.read(DriftSqlType.string,
+              data['${effectivePrefix}companion_reason'])!),
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at']),
+      isActive: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_active'])!,
+    );
+  }
+
+  @override
+  $LocalPatientCompanionTable createAlias(String alias) {
+    return $LocalPatientCompanionTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<CompanionReason, String, String>
+      $convertercompanionReason =
+      const EnumNameConverter<CompanionReason>(CompanionReason.values);
+}
+
+class LocalPatientCompanionData extends DataClass
+    implements Insertable<LocalPatientCompanionData> {
+  final String id;
+  final String names;
+  final String lastNames;
+  final int? idNumber;
+  final DateTime? birthDate;
+  final int contactNumber;
+  final String? mail;
+  final String relationshipp;
+  final CompanionReason companionReason;
+  final DateTime? createdAt;
+  final bool isActive;
+  const LocalPatientCompanionData(
+      {required this.id,
+      required this.names,
+      required this.lastNames,
+      this.idNumber,
+      this.birthDate,
+      required this.contactNumber,
+      this.mail,
+      required this.relationshipp,
+      required this.companionReason,
+      this.createdAt,
+      required this.isActive});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['names'] = Variable<String>(names);
+    map['last_names'] = Variable<String>(lastNames);
+    if (!nullToAbsent || idNumber != null) {
+      map['id_number'] = Variable<int>(idNumber);
+    }
+    if (!nullToAbsent || birthDate != null) {
+      map['birth_date'] = Variable<DateTime>(birthDate);
+    }
+    map['contact_number'] = Variable<int>(contactNumber);
+    if (!nullToAbsent || mail != null) {
+      map['mail'] = Variable<String>(mail);
+    }
+    map['relationshipp'] = Variable<String>(relationshipp);
+    {
+      map['companion_reason'] = Variable<String>($LocalPatientCompanionTable
+          .$convertercompanionReason
+          .toSql(companionReason));
+    }
+    if (!nullToAbsent || createdAt != null) {
+      map['created_at'] = Variable<DateTime>(createdAt);
+    }
+    map['is_active'] = Variable<bool>(isActive);
+    return map;
+  }
+
+  LocalPatientCompanionCompanion toCompanion(bool nullToAbsent) {
+    return LocalPatientCompanionCompanion(
+      id: Value(id),
+      names: Value(names),
+      lastNames: Value(lastNames),
+      idNumber: idNumber == null && nullToAbsent
+          ? const Value.absent()
+          : Value(idNumber),
+      birthDate: birthDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(birthDate),
+      contactNumber: Value(contactNumber),
+      mail: mail == null && nullToAbsent ? const Value.absent() : Value(mail),
+      relationshipp: Value(relationshipp),
+      companionReason: Value(companionReason),
+      createdAt: createdAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(createdAt),
+      isActive: Value(isActive),
+    );
+  }
+
+  factory LocalPatientCompanionData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return LocalPatientCompanionData(
+      id: serializer.fromJson<String>(json['id']),
+      names: serializer.fromJson<String>(json['names']),
+      lastNames: serializer.fromJson<String>(json['lastNames']),
+      idNumber: serializer.fromJson<int?>(json['idNumber']),
+      birthDate: serializer.fromJson<DateTime?>(json['birthDate']),
+      contactNumber: serializer.fromJson<int>(json['contactNumber']),
+      mail: serializer.fromJson<String?>(json['mail']),
+      relationshipp: serializer.fromJson<String>(json['relationshipp']),
+      companionReason: $LocalPatientCompanionTable.$convertercompanionReason
+          .fromJson(serializer.fromJson<String>(json['companionReason'])),
+      createdAt: serializer.fromJson<DateTime?>(json['createdAt']),
+      isActive: serializer.fromJson<bool>(json['isActive']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'names': serializer.toJson<String>(names),
+      'lastNames': serializer.toJson<String>(lastNames),
+      'idNumber': serializer.toJson<int?>(idNumber),
+      'birthDate': serializer.toJson<DateTime?>(birthDate),
+      'contactNumber': serializer.toJson<int>(contactNumber),
+      'mail': serializer.toJson<String?>(mail),
+      'relationshipp': serializer.toJson<String>(relationshipp),
+      'companionReason': serializer.toJson<String>($LocalPatientCompanionTable
+          .$convertercompanionReason
+          .toJson(companionReason)),
+      'createdAt': serializer.toJson<DateTime?>(createdAt),
+      'isActive': serializer.toJson<bool>(isActive),
+    };
+  }
+
+  LocalPatientCompanionData copyWith(
+          {String? id,
+          String? names,
+          String? lastNames,
+          Value<int?> idNumber = const Value.absent(),
+          Value<DateTime?> birthDate = const Value.absent(),
+          int? contactNumber,
+          Value<String?> mail = const Value.absent(),
+          String? relationshipp,
+          CompanionReason? companionReason,
+          Value<DateTime?> createdAt = const Value.absent(),
+          bool? isActive}) =>
+      LocalPatientCompanionData(
+        id: id ?? this.id,
+        names: names ?? this.names,
+        lastNames: lastNames ?? this.lastNames,
+        idNumber: idNumber.present ? idNumber.value : this.idNumber,
+        birthDate: birthDate.present ? birthDate.value : this.birthDate,
+        contactNumber: contactNumber ?? this.contactNumber,
+        mail: mail.present ? mail.value : this.mail,
+        relationshipp: relationshipp ?? this.relationshipp,
+        companionReason: companionReason ?? this.companionReason,
+        createdAt: createdAt.present ? createdAt.value : this.createdAt,
+        isActive: isActive ?? this.isActive,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('LocalPatientCompanionData(')
+          ..write('id: $id, ')
+          ..write('names: $names, ')
+          ..write('lastNames: $lastNames, ')
+          ..write('idNumber: $idNumber, ')
+          ..write('birthDate: $birthDate, ')
+          ..write('contactNumber: $contactNumber, ')
+          ..write('mail: $mail, ')
+          ..write('relationshipp: $relationshipp, ')
+          ..write('companionReason: $companionReason, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('isActive: $isActive')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, names, lastNames, idNumber, birthDate,
+      contactNumber, mail, relationshipp, companionReason, createdAt, isActive);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is LocalPatientCompanionData &&
+          other.id == this.id &&
+          other.names == this.names &&
+          other.lastNames == this.lastNames &&
+          other.idNumber == this.idNumber &&
+          other.birthDate == this.birthDate &&
+          other.contactNumber == this.contactNumber &&
+          other.mail == this.mail &&
+          other.relationshipp == this.relationshipp &&
+          other.companionReason == this.companionReason &&
+          other.createdAt == this.createdAt &&
+          other.isActive == this.isActive);
+}
+
+class LocalPatientCompanionCompanion
+    extends UpdateCompanion<LocalPatientCompanionData> {
+  final Value<String> id;
+  final Value<String> names;
+  final Value<String> lastNames;
+  final Value<int?> idNumber;
+  final Value<DateTime?> birthDate;
+  final Value<int> contactNumber;
+  final Value<String?> mail;
+  final Value<String> relationshipp;
+  final Value<CompanionReason> companionReason;
+  final Value<DateTime?> createdAt;
+  final Value<bool> isActive;
+  final Value<int> rowid;
+  const LocalPatientCompanionCompanion({
+    this.id = const Value.absent(),
+    this.names = const Value.absent(),
+    this.lastNames = const Value.absent(),
+    this.idNumber = const Value.absent(),
+    this.birthDate = const Value.absent(),
+    this.contactNumber = const Value.absent(),
+    this.mail = const Value.absent(),
+    this.relationshipp = const Value.absent(),
+    this.companionReason = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.isActive = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  LocalPatientCompanionCompanion.insert({
+    required String id,
+    required String names,
+    required String lastNames,
+    this.idNumber = const Value.absent(),
+    this.birthDate = const Value.absent(),
+    required int contactNumber,
+    this.mail = const Value.absent(),
+    required String relationshipp,
+    this.companionReason = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.isActive = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : id = Value(id),
+        names = Value(names),
+        lastNames = Value(lastNames),
+        contactNumber = Value(contactNumber),
+        relationshipp = Value(relationshipp);
+  static Insertable<LocalPatientCompanionData> custom({
+    Expression<String>? id,
+    Expression<String>? names,
+    Expression<String>? lastNames,
+    Expression<int>? idNumber,
+    Expression<DateTime>? birthDate,
+    Expression<int>? contactNumber,
+    Expression<String>? mail,
+    Expression<String>? relationshipp,
+    Expression<String>? companionReason,
+    Expression<DateTime>? createdAt,
+    Expression<bool>? isActive,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (names != null) 'names': names,
+      if (lastNames != null) 'last_names': lastNames,
+      if (idNumber != null) 'id_number': idNumber,
+      if (birthDate != null) 'birth_date': birthDate,
+      if (contactNumber != null) 'contact_number': contactNumber,
+      if (mail != null) 'mail': mail,
+      if (relationshipp != null) 'relationshipp': relationshipp,
+      if (companionReason != null) 'companion_reason': companionReason,
+      if (createdAt != null) 'created_at': createdAt,
+      if (isActive != null) 'is_active': isActive,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  LocalPatientCompanionCompanion copyWith(
+      {Value<String>? id,
+      Value<String>? names,
+      Value<String>? lastNames,
+      Value<int?>? idNumber,
+      Value<DateTime?>? birthDate,
+      Value<int>? contactNumber,
+      Value<String?>? mail,
+      Value<String>? relationshipp,
+      Value<CompanionReason>? companionReason,
+      Value<DateTime?>? createdAt,
+      Value<bool>? isActive,
+      Value<int>? rowid}) {
+    return LocalPatientCompanionCompanion(
+      id: id ?? this.id,
+      names: names ?? this.names,
+      lastNames: lastNames ?? this.lastNames,
+      idNumber: idNumber ?? this.idNumber,
+      birthDate: birthDate ?? this.birthDate,
+      contactNumber: contactNumber ?? this.contactNumber,
+      mail: mail ?? this.mail,
+      relationshipp: relationshipp ?? this.relationshipp,
+      companionReason: companionReason ?? this.companionReason,
+      createdAt: createdAt ?? this.createdAt,
+      isActive: isActive ?? this.isActive,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (names.present) {
+      map['names'] = Variable<String>(names.value);
+    }
+    if (lastNames.present) {
+      map['last_names'] = Variable<String>(lastNames.value);
+    }
+    if (idNumber.present) {
+      map['id_number'] = Variable<int>(idNumber.value);
+    }
+    if (birthDate.present) {
+      map['birth_date'] = Variable<DateTime>(birthDate.value);
+    }
+    if (contactNumber.present) {
+      map['contact_number'] = Variable<int>(contactNumber.value);
+    }
+    if (mail.present) {
+      map['mail'] = Variable<String>(mail.value);
+    }
+    if (relationshipp.present) {
+      map['relationshipp'] = Variable<String>(relationshipp.value);
+    }
+    if (companionReason.present) {
+      map['companion_reason'] = Variable<String>($LocalPatientCompanionTable
+          .$convertercompanionReason
+          .toSql(companionReason.value));
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (isActive.present) {
+      map['is_active'] = Variable<bool>(isActive.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LocalPatientCompanionCompanion(')
+          ..write('id: $id, ')
+          ..write('names: $names, ')
+          ..write('lastNames: $lastNames, ')
+          ..write('idNumber: $idNumber, ')
+          ..write('birthDate: $birthDate, ')
+          ..write('contactNumber: $contactNumber, ')
+          ..write('mail: $mail, ')
+          ..write('relationshipp: $relationshipp, ')
+          ..write('companionReason: $companionReason, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('isActive: $isActive, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $LocalPatientsTable extends LocalPatients
     with TableInfo<$LocalPatientsTable, LocalPatient> {
   @override
@@ -786,6 +1339,15 @@ class $LocalPatientsTable extends LocalPatients
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
           'REFERENCES local_professional (id)'));
+  static const VerificationMeta _companionIdMeta =
+      const VerificationMeta('companionId');
+  @override
+  late final GeneratedColumn<String> companionId = GeneratedColumn<String>(
+      'companion_id', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES local_patient_companion (id)'));
   static const VerificationMeta _createdAtMeta =
       const VerificationMeta('createdAt');
   @override
@@ -815,6 +1377,7 @@ class $LocalPatientsTable extends LocalPatients
         creationDate,
         isActive,
         professionalID,
+        companionId,
         createdAt
       ];
   @override
@@ -950,6 +1513,12 @@ class $LocalPatientsTable extends LocalPatients
     } else if (isInserting) {
       context.missing(_professionalIDMeta);
     }
+    if (data.containsKey('companion_id')) {
+      context.handle(
+          _companionIdMeta,
+          companionId.isAcceptableOrUnknown(
+              data['companion_id']!, _companionIdMeta));
+    }
     if (data.containsKey('created_at')) {
       context.handle(_createdAtMeta,
           createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
@@ -1003,6 +1572,8 @@ class $LocalPatientsTable extends LocalPatients
           .read(DriftSqlType.bool, data['${effectivePrefix}is_active'])!,
       professionalID: attachedDatabase.typeMapping.read(
           DriftSqlType.string, data['${effectivePrefix}professional_i_d'])!,
+      companionId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}companion_id']),
       createdAt: attachedDatabase.typeMapping
           .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
     );
@@ -1034,6 +1605,7 @@ class LocalPatient extends DataClass implements Insertable<LocalPatient> {
   final DateTime creationDate;
   final bool isActive;
   final String professionalID;
+  final String? companionId;
   final DateTime createdAt;
   const LocalPatient(
       {required this.id,
@@ -1055,6 +1627,7 @@ class LocalPatient extends DataClass implements Insertable<LocalPatient> {
       required this.creationDate,
       required this.isActive,
       required this.professionalID,
+      this.companionId,
       required this.createdAt});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -1078,6 +1651,9 @@ class LocalPatient extends DataClass implements Insertable<LocalPatient> {
     map['creation_date'] = Variable<DateTime>(creationDate);
     map['is_active'] = Variable<bool>(isActive);
     map['professional_i_d'] = Variable<String>(professionalID);
+    if (!nullToAbsent || companionId != null) {
+      map['companion_id'] = Variable<String>(companionId);
+    }
     map['created_at'] = Variable<DateTime>(createdAt);
     return map;
   }
@@ -1103,6 +1679,9 @@ class LocalPatient extends DataClass implements Insertable<LocalPatient> {
       creationDate: Value(creationDate),
       isActive: Value(isActive),
       professionalID: Value(professionalID),
+      companionId: companionId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(companionId),
       createdAt: Value(createdAt),
     );
   }
@@ -1132,6 +1711,7 @@ class LocalPatient extends DataClass implements Insertable<LocalPatient> {
       creationDate: serializer.fromJson<DateTime>(json['creationDate']),
       isActive: serializer.fromJson<bool>(json['isActive']),
       professionalID: serializer.fromJson<String>(json['professionalID']),
+      companionId: serializer.fromJson<String?>(json['companionId']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
     );
   }
@@ -1158,6 +1738,7 @@ class LocalPatient extends DataClass implements Insertable<LocalPatient> {
       'creationDate': serializer.toJson<DateTime>(creationDate),
       'isActive': serializer.toJson<bool>(isActive),
       'professionalID': serializer.toJson<String>(professionalID),
+      'companionId': serializer.toJson<String?>(companionId),
       'createdAt': serializer.toJson<DateTime>(createdAt),
     };
   }
@@ -1182,6 +1763,7 @@ class LocalPatient extends DataClass implements Insertable<LocalPatient> {
           DateTime? creationDate,
           bool? isActive,
           String? professionalID,
+          Value<String?> companionId = const Value.absent(),
           DateTime? createdAt}) =>
       LocalPatient(
         id: id ?? this.id,
@@ -1204,6 +1786,7 @@ class LocalPatient extends DataClass implements Insertable<LocalPatient> {
         creationDate: creationDate ?? this.creationDate,
         isActive: isActive ?? this.isActive,
         professionalID: professionalID ?? this.professionalID,
+        companionId: companionId.present ? companionId.value : this.companionId,
         createdAt: createdAt ?? this.createdAt,
       );
   @override
@@ -1228,33 +1811,36 @@ class LocalPatient extends DataClass implements Insertable<LocalPatient> {
           ..write('creationDate: $creationDate, ')
           ..write('isActive: $isActive, ')
           ..write('professionalID: $professionalID, ')
+          ..write('companionId: $companionId, ')
           ..write('createdAt: $createdAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(
-      id,
-      names,
-      lastNames,
-      idNumber,
-      birthDate,
-      contactNumber,
-      mail,
-      city,
-      state,
-      gender,
-      adress,
-      education,
-      ocupation,
-      insurance,
-      emergencyContactName,
-      emergencyContactNumber,
-      creationDate,
-      isActive,
-      professionalID,
-      createdAt);
+  int get hashCode => Object.hashAll([
+        id,
+        names,
+        lastNames,
+        idNumber,
+        birthDate,
+        contactNumber,
+        mail,
+        city,
+        state,
+        gender,
+        adress,
+        education,
+        ocupation,
+        insurance,
+        emergencyContactName,
+        emergencyContactNumber,
+        creationDate,
+        isActive,
+        professionalID,
+        companionId,
+        createdAt
+      ]);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -1278,6 +1864,7 @@ class LocalPatient extends DataClass implements Insertable<LocalPatient> {
           other.creationDate == this.creationDate &&
           other.isActive == this.isActive &&
           other.professionalID == this.professionalID &&
+          other.companionId == this.companionId &&
           other.createdAt == this.createdAt);
 }
 
@@ -1301,6 +1888,7 @@ class LocalPatientsCompanion extends UpdateCompanion<LocalPatient> {
   final Value<DateTime> creationDate;
   final Value<bool> isActive;
   final Value<String> professionalID;
+  final Value<String?> companionId;
   final Value<DateTime> createdAt;
   final Value<int> rowid;
   const LocalPatientsCompanion({
@@ -1323,6 +1911,7 @@ class LocalPatientsCompanion extends UpdateCompanion<LocalPatient> {
     this.creationDate = const Value.absent(),
     this.isActive = const Value.absent(),
     this.professionalID = const Value.absent(),
+    this.companionId = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
@@ -1346,6 +1935,7 @@ class LocalPatientsCompanion extends UpdateCompanion<LocalPatient> {
     required DateTime creationDate,
     required bool isActive,
     required String professionalID,
+    this.companionId = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.rowid = const Value.absent(),
   })  : id = Value(id),
@@ -1387,6 +1977,7 @@ class LocalPatientsCompanion extends UpdateCompanion<LocalPatient> {
     Expression<DateTime>? creationDate,
     Expression<bool>? isActive,
     Expression<String>? professionalID,
+    Expression<String>? companionId,
     Expression<DateTime>? createdAt,
     Expression<int>? rowid,
   }) {
@@ -1412,6 +2003,7 @@ class LocalPatientsCompanion extends UpdateCompanion<LocalPatient> {
       if (creationDate != null) 'creation_date': creationDate,
       if (isActive != null) 'is_active': isActive,
       if (professionalID != null) 'professional_i_d': professionalID,
+      if (companionId != null) 'companion_id': companionId,
       if (createdAt != null) 'created_at': createdAt,
       if (rowid != null) 'rowid': rowid,
     });
@@ -1437,6 +2029,7 @@ class LocalPatientsCompanion extends UpdateCompanion<LocalPatient> {
       Value<DateTime>? creationDate,
       Value<bool>? isActive,
       Value<String>? professionalID,
+      Value<String?>? companionId,
       Value<DateTime>? createdAt,
       Value<int>? rowid}) {
     return LocalPatientsCompanion(
@@ -1460,6 +2053,7 @@ class LocalPatientsCompanion extends UpdateCompanion<LocalPatient> {
       creationDate: creationDate ?? this.creationDate,
       isActive: isActive ?? this.isActive,
       professionalID: professionalID ?? this.professionalID,
+      companionId: companionId ?? this.companionId,
       createdAt: createdAt ?? this.createdAt,
       rowid: rowid ?? this.rowid,
     );
@@ -1527,6 +2121,9 @@ class LocalPatientsCompanion extends UpdateCompanion<LocalPatient> {
     if (professionalID.present) {
       map['professional_i_d'] = Variable<String>(professionalID.value);
     }
+    if (companionId.present) {
+      map['companion_id'] = Variable<String>(companionId.value);
+    }
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
     }
@@ -1558,6 +2155,7 @@ class LocalPatientsCompanion extends UpdateCompanion<LocalPatient> {
           ..write('creationDate: $creationDate, ')
           ..write('isActive: $isActive, ')
           ..write('professionalID: $professionalID, ')
+          ..write('companionId: $companionId, ')
           ..write('createdAt: $createdAt, ')
           ..write('rowid: $rowid')
           ..write(')'))
@@ -7025,6 +7623,8 @@ abstract class _$LocalDatabase extends GeneratedDatabase {
   _$LocalDatabase(QueryExecutor e) : super(e);
   late final $LocalProfessionalTable localProfessional =
       $LocalProfessionalTable(this);
+  late final $LocalPatientCompanionTable localPatientCompanion =
+      $LocalPatientCompanionTable(this);
   late final $LocalPatientsTable localPatients = $LocalPatientsTable(this);
   late final $LocalClinicHistoryTable localClinicHistory =
       $LocalClinicHistoryTable(this);
@@ -7051,6 +7651,7 @@ abstract class _$LocalDatabase extends GeneratedDatabase {
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [
         localProfessional,
+        localPatientCompanion,
         localPatients,
         localClinicHistory,
         localTreatmentPlans,

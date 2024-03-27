@@ -22,6 +22,7 @@ part 'local_model.g.dart';
   ServerDatabase,
   SavedIcdDiagnosticData,
   LocalAppointmentGroup,
+  LocalPatientCompanion,
 ])
 class LocalDatabase extends _$LocalDatabase {
   LocalDatabase() : super(_openConnection());
@@ -107,6 +108,10 @@ class LocalDatabase extends _$LocalDatabase {
 
   Future<void> insertAppointmentGroup(LocalAppointmentGroupCompanion data) {
     return into(localAppointmentGroup).insert(data);
+  }
+
+  Future<int> insertPatientCompanion(LocalPatientCompanionData data) {
+    return into(localPatientCompanion).insert(data);
   }
 
   // Data update
@@ -277,6 +282,12 @@ class LocalDatabase extends _$LocalDatabase {
     return (select(localTreatmentResults)
           ..where((tbl) => tbl.patientID.equals(patientId)))
         .get();
+  }
+
+  Future<LocalPatientCompanionData> getPatientCompanion(String patientId) {
+    return (select(localPatientCompanion)
+          ..where((tbl) => tbl.id.equals(patientId)))
+        .getSingle();
   }
 
   //Update

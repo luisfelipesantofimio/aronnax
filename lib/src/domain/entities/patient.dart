@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
+import 'package:aronnax/src/domain/entities/patient_companion.dart';
 import 'package:aronnax/src/domain/entities/remote_model/remote_patient.dart';
 
 class Patient {
@@ -22,6 +23,7 @@ class Patient {
   final int emergencyContactNumber;
   final DateTime creationDate;
   final bool isActive;
+  final PatientCompanionModel? patientCompanion;
   Patient({
     required this.id,
     required this.names,
@@ -41,6 +43,7 @@ class Patient {
     required this.emergencyContactNumber,
     required this.creationDate,
     required this.isActive,
+    this.patientCompanion,
   });
 
   factory Patient.fromLocalModel(LocalPatient data) {
@@ -159,6 +162,7 @@ class Patient {
     int? emergencyContactNumber,
     DateTime? creationDate,
     bool? isActive,
+    PatientCompanionModel? patientCompanion,
   }) {
     return Patient(
       id: id ?? this.id,
@@ -180,6 +184,7 @@ class Patient {
           emergencyContactNumber ?? this.emergencyContactNumber,
       creationDate: creationDate ?? this.creationDate,
       isActive: isActive ?? this.isActive,
+      patientCompanion: patientCompanion ?? this.patientCompanion,
     );
   }
 

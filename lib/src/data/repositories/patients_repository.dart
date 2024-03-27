@@ -10,6 +10,7 @@ import 'package:aronnax/src/data/providers/patients_provider.dart';
 import 'package:aronnax/src/domain/entities/clinic_history.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:aronnax/src/domain/entities/patient_case.dart';
+import 'package:aronnax/src/domain/entities/patient_companion.dart';
 import 'package:aronnax/src/domain/entities/patient_global_data.dart';
 import 'package:aronnax/src/domain/entities/session.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_result.dart';
@@ -25,9 +26,19 @@ class PatientsRepository implements PatientsRepositoryInterface {
           .getLocalPatientsList();
 
       for (var element in localPatientsList) {
-        patientsList.add(
-          Patient.fromLocalModel(element),
-        );
+        PatientCompanionModel? companion;
+        Patient patientData = Patient.fromLocalModel(element);
+        if (element.companionId != null) {
+          companion = await ref
+              .read(localDatabaseRepositoryProvider)
+              .getLocalPatientCompanion(element.companionId!)
+              .then(
+                (value) => PatientCompanionModel.fromLocalModel(value),
+              );
+          patientData.copyWith(patientCompanion: companion);
+        }
+
+        patientsList.add(patientData);
       }
     }
     return patientsList;
@@ -115,26 +126,37 @@ class PatientsRepository implements PatientsRepositoryInterface {
       required String emergencyContactName,
       required int emergencyContactNumber,
       required DateTime creationDate,
-      required String professionalID}) async {
+      required String professionalID,
+      PatientCompanionModel? patientCompanion}) async {
     if (ref.read(offlineStatusProvider).value!) {
+      String? newCompanionId;
+      if (patientCompanion != null) {
+        newCompanionId = await ref
+            .read(localDatabaseRepositoryProvider)
+            .addLocalPatientCompanion(patientCompanion)
+            .then((value) => value.id);
+      }
       ref.read(localDatabaseRepositoryProvider).addLocalPatient(
-          names: names,
-          lastNames: lastNames,
-          birthDate: birthDate,
-          gender: gender,
-          idNumber: idNumber,
-          contactNumber: contactNumber,
-          mail: mail,
-          city: city,
-          state: state,
-          adress: adress,
-          insurance: insurance,
-          education: education,
-          ocupation: ocupation,
-          emergencyContactName: emergencyContactName,
-          emergencyContactNumber: emergencyContactNumber,
-          creationDate: creationDate,
-          professionalID: professionalID);
+            names: names,
+            lastNames: lastNames,
+            birthDate: birthDate,
+            gender: gender,
+            idNumber: idNumber,
+            contactNumber: contactNumber,
+            mail: mail,
+            city: city,
+            state: state,
+            adress: adress,
+            insurance: insurance,
+            education: education,
+            ocupation: ocupation,
+            emergencyContactName: emergencyContactName,
+            emergencyContactNumber: emergencyContactNumber,
+            creationDate: creationDate,
+            professionalID: professionalID,
+            companionId: newCompanionId,
+          );
+
       return Patient.fromLocalModel(
         await ref
             .read(localDatabaseRepositoryProvider)
