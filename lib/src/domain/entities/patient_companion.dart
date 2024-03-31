@@ -6,9 +6,9 @@ class PatientCompanionModel {
   final String lastNames;
   final int? idNumber;
   final DateTime? birthDate;
-  final int contactNumber;
+  final int? contactNumber;
   final String? mail;
-  final String relationshipp;
+  final CompanionRelationship relationshipp;
   final CompanionReason companionReason;
 
   PatientCompanionModel(
