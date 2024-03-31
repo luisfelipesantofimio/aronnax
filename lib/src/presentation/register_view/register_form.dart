@@ -1,3 +1,4 @@
+import 'package:aronnax/src/presentation/register_view/companion_form.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
 import 'package:aronnax/src/data/providers/forms_providers/register_form_provider.dart';
@@ -25,6 +26,7 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
   String selectedCity = '';
   List<Gender> genders = [];
   bool patientFound = false;
+  bool activePatientCompanion = false;
   @override
   void didChangeDependencies() {
     setState(() {
@@ -515,6 +517,78 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                   return AppLocalizations.of(context)!.errorEmptyField;
                 }
                 return null;
+              },
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.all(10),
+          ),
+          Row(
+            children: [
+              Checkbox(
+                  value: activePatientCompanion,
+                  onChanged: (value) {
+                    setState(() {
+                      activePatientCompanion = !activePatientCompanion;
+                    });
+                  }),
+              Text(AppLocalizations.of(context)!
+                  .patientRegisterRequireCompanion),
+            ],
+          ),
+          const Padding(
+            padding: EdgeInsets.all(10),
+          ),
+          Visibility(
+            visible: activePatientCompanion,
+            child: CompanionForm(
+              onCompanionName: (value) {
+                ref
+                    .read(registerCompanionNameProvider.notifier)
+                    .update((state) => value);
+                basicKey.currentState!.validate();
+              },
+              onCompanionLastName: (value) {
+                ref
+                    .read(registerCompanionLastNameProvider.notifier)
+                    .update((state) => value);
+                basicKey.currentState!.validate();
+              },
+              onCompanionEmail: (value) {
+                ref
+                    .read(registerCompanionEmailProvider.notifier)
+                    .update((state) => value);
+                basicKey.currentState!.validate();
+              },
+              onCompanionDateTime: (value) {
+                ref
+                    .read(registerCompanionBirthDateProvider.notifier)
+                    .update((state) => value);
+                basicKey.currentState!.validate();
+              },
+              onCompanionRelationship: (value) {
+                ref
+                    .read(registerCompanionRelationshipProvider.notifier)
+                    .update((state) => value);
+                basicKey.currentState!.validate();
+              },
+              onCompanionReason: (value) {
+                ref
+                    .read(registerCompanionReasonProvider.notifier)
+                    .update((state) => value);
+                basicKey.currentState!.validate();
+              },
+              onCompanionPhone: (String value) {
+                ref
+                    .read(registerCompanionPhoneProvider.notifier)
+                    .update((state) => value);
+                basicKey.currentState!.validate();
+              },
+              onCompanionIdentification: (String value) {
+                ref
+                    .read(registerCompanionIdentificationProvider.notifier)
+                    .update((state) => value);
+                basicKey.currentState!.validate();
               },
             ),
           ),

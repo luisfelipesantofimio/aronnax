@@ -1,3 +1,5 @@
+import 'package:aronnax/src/data/database/local_model/tables.dart';
+import 'package:aronnax/src/domain/entities/patient_companion.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
 import 'package:aronnax/src/data/providers/forms_providers/register_form_provider.dart';
@@ -92,7 +94,37 @@ class MainViewRegister extends ConsumerWidget {
                                         .registerSaveButtonTitle,
                                     onPressed: () async {
                                       if (basicKey.currentState!.validate()) {
-                                        basicKey.currentState!.save();
+                                        PatientCompanionModel? companionData;
+
+                                        if (ref.read(
+                                            activePatientCompanionProvider)) {
+                                          companionData = PatientCompanionModel(
+                                            names: ref.read(
+                                                    registerCompanionNameProvider) ??
+                                                '',
+                                            lastNames: ref.read(
+                                                    registerCompanionLastNameProvider) ??
+                                                '',
+                                            idNumber: int.tryParse(ref.read(
+                                                    registerCompanionIdentificationProvider) ??
+                                                ''),
+                                            birthDate: ref.read(
+                                                registerCompanionBirthDateProvider),
+                                            contactNumber: int.tryParse(ref.read(
+                                                    registerCompanionPhoneProvider) ??
+                                                ''),
+                                            mail: ref.read(
+                                                registerCompanionEmailProvider),
+                                            relationshipp: ref.read(
+                                                    registerCompanionRelationshipProvider) ??
+                                                CompanionRelationship.other,
+                                            companionReason: ref.read(
+                                                    registerCompanionReasonProvider) ??
+                                                CompanionReason.other,
+                                          );
+                                        } else {
+                                          companionData = null;
+                                        }
 
                                         Patient? patientData = await ref
                                             .read(patientsRepositoryProvider)
@@ -133,6 +165,7 @@ class MainViewRegister extends ConsumerWidget {
                                                   .read(
                                                       globalUserInformationProvider)!
                                                   .id,
+                                              patientCompanion: companionData,
                                             );
 
                                         if (patientData != null) {
