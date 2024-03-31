@@ -1,8 +1,18 @@
 import 'package:drift/drift.dart';
 
+/// Represents the reason the patient requieres the companion
 enum CompanionReason {
   disabled,
   underage,
+  other,
+}
+
+/// Represents the relationship of the companion
+enum CompanionRelationship {
+  friend,
+  parent,
+  relative,
+  partner,
   other,
 }
 
@@ -41,9 +51,10 @@ class LocalPatientCompanion extends Table {
   TextColumn get lastNames => text()();
   IntColumn get idNumber => integer().unique().nullable()();
   DateTimeColumn get birthDate => dateTime().nullable()();
-  IntColumn get contactNumber => integer()();
+  IntColumn get contactNumber => integer().nullable()();
   TextColumn get mail => text().nullable()();
-  TextColumn get relationshipp => text()();
+  TextColumn get relationshipp => textEnum<CompanionRelationship>()
+      .clientDefault(() => CompanionRelationship.other.toString())();
   TextColumn get companionReason => textEnum<CompanionReason>()
       .clientDefault(() => CompanionReason.other.toString())();
   DateTimeColumn get createdAt =>
