@@ -705,8 +705,8 @@ class $LocalPatientCompanionTable extends LocalPatientCompanion
       const VerificationMeta('contactNumber');
   @override
   late final GeneratedColumn<int> contactNumber = GeneratedColumn<int>(
-      'contact_number', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+      'contact_number', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
   static const VerificationMeta _mailMeta = const VerificationMeta('mail');
   @override
   late final GeneratedColumn<String> mail = GeneratedColumn<String>(
@@ -715,9 +715,14 @@ class $LocalPatientCompanionTable extends LocalPatientCompanion
   static const VerificationMeta _relationshippMeta =
       const VerificationMeta('relationshipp');
   @override
-  late final GeneratedColumn<String> relationshipp = GeneratedColumn<String>(
-      'relationshipp', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+  late final GeneratedColumnWithTypeConverter<CompanionRelationship, String>
+      relationshipp = GeneratedColumn<String>(
+              'relationshipp', aliasedName, false,
+              type: DriftSqlType.string,
+              requiredDuringInsert: false,
+              clientDefault: () => CompanionRelationship.other.toString())
+          .withConverter<CompanionRelationship>(
+              $LocalPatientCompanionTable.$converterrelationshipp);
   static const VerificationMeta _companionReasonMeta =
       const VerificationMeta('companionReason');
   @override
@@ -802,21 +807,12 @@ class $LocalPatientCompanionTable extends LocalPatientCompanion
           _contactNumberMeta,
           contactNumber.isAcceptableOrUnknown(
               data['contact_number']!, _contactNumberMeta));
-    } else if (isInserting) {
-      context.missing(_contactNumberMeta);
     }
     if (data.containsKey('mail')) {
       context.handle(
           _mailMeta, mail.isAcceptableOrUnknown(data['mail']!, _mailMeta));
     }
-    if (data.containsKey('relationshipp')) {
-      context.handle(
-          _relationshippMeta,
-          relationshipp.isAcceptableOrUnknown(
-              data['relationshipp']!, _relationshippMeta));
-    } else if (isInserting) {
-      context.missing(_relationshippMeta);
-    }
+    context.handle(_relationshippMeta, const VerificationResult.success());
     context.handle(_companionReasonMeta, const VerificationResult.success());
     if (data.containsKey('created_at')) {
       context.handle(_createdAtMeta,
@@ -847,11 +843,12 @@ class $LocalPatientCompanionTable extends LocalPatientCompanion
       birthDate: attachedDatabase.typeMapping
           .read(DriftSqlType.dateTime, data['${effectivePrefix}birth_date']),
       contactNumber: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}contact_number'])!,
+          .read(DriftSqlType.int, data['${effectivePrefix}contact_number']),
       mail: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}mail']),
-      relationshipp: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}relationshipp'])!,
+      relationshipp: $LocalPatientCompanionTable.$converterrelationshipp
+          .fromSql(attachedDatabase.typeMapping.read(
+              DriftSqlType.string, data['${effectivePrefix}relationshipp'])!),
       companionReason: $LocalPatientCompanionTable.$convertercompanionReason
           .fromSql(attachedDatabase.typeMapping.read(DriftSqlType.string,
               data['${effectivePrefix}companion_reason'])!),
@@ -867,6 +864,9 @@ class $LocalPatientCompanionTable extends LocalPatientCompanion
     return $LocalPatientCompanionTable(attachedDatabase, alias);
   }
 
+  static JsonTypeConverter2<CompanionRelationship, String, String>
+      $converterrelationshipp = const EnumNameConverter<CompanionRelationship>(
+          CompanionRelationship.values);
   static JsonTypeConverter2<CompanionReason, String, String>
       $convertercompanionReason =
       const EnumNameConverter<CompanionReason>(CompanionReason.values);
@@ -879,9 +879,9 @@ class LocalPatientCompanionData extends DataClass
   final String lastNames;
   final int? idNumber;
   final DateTime? birthDate;
-  final int contactNumber;
+  final int? contactNumber;
   final String? mail;
-  final String relationshipp;
+  final CompanionRelationship relationshipp;
   final CompanionReason companionReason;
   final DateTime? createdAt;
   final bool isActive;
@@ -891,7 +891,7 @@ class LocalPatientCompanionData extends DataClass
       required this.lastNames,
       this.idNumber,
       this.birthDate,
-      required this.contactNumber,
+      this.contactNumber,
       this.mail,
       required this.relationshipp,
       required this.companionReason,
@@ -909,11 +909,17 @@ class LocalPatientCompanionData extends DataClass
     if (!nullToAbsent || birthDate != null) {
       map['birth_date'] = Variable<DateTime>(birthDate);
     }
-    map['contact_number'] = Variable<int>(contactNumber);
+    if (!nullToAbsent || contactNumber != null) {
+      map['contact_number'] = Variable<int>(contactNumber);
+    }
     if (!nullToAbsent || mail != null) {
       map['mail'] = Variable<String>(mail);
     }
-    map['relationshipp'] = Variable<String>(relationshipp);
+    {
+      map['relationshipp'] = Variable<String>($LocalPatientCompanionTable
+          .$converterrelationshipp
+          .toSql(relationshipp));
+    }
     {
       map['companion_reason'] = Variable<String>($LocalPatientCompanionTable
           .$convertercompanionReason
@@ -937,7 +943,9 @@ class LocalPatientCompanionData extends DataClass
       birthDate: birthDate == null && nullToAbsent
           ? const Value.absent()
           : Value(birthDate),
-      contactNumber: Value(contactNumber),
+      contactNumber: contactNumber == null && nullToAbsent
+          ? const Value.absent()
+          : Value(contactNumber),
       mail: mail == null && nullToAbsent ? const Value.absent() : Value(mail),
       relationshipp: Value(relationshipp),
       companionReason: Value(companionReason),
@@ -957,9 +965,10 @@ class LocalPatientCompanionData extends DataClass
       lastNames: serializer.fromJson<String>(json['lastNames']),
       idNumber: serializer.fromJson<int?>(json['idNumber']),
       birthDate: serializer.fromJson<DateTime?>(json['birthDate']),
-      contactNumber: serializer.fromJson<int>(json['contactNumber']),
+      contactNumber: serializer.fromJson<int?>(json['contactNumber']),
       mail: serializer.fromJson<String?>(json['mail']),
-      relationshipp: serializer.fromJson<String>(json['relationshipp']),
+      relationshipp: $LocalPatientCompanionTable.$converterrelationshipp
+          .fromJson(serializer.fromJson<String>(json['relationshipp'])),
       companionReason: $LocalPatientCompanionTable.$convertercompanionReason
           .fromJson(serializer.fromJson<String>(json['companionReason'])),
       createdAt: serializer.fromJson<DateTime?>(json['createdAt']),
@@ -975,9 +984,11 @@ class LocalPatientCompanionData extends DataClass
       'lastNames': serializer.toJson<String>(lastNames),
       'idNumber': serializer.toJson<int?>(idNumber),
       'birthDate': serializer.toJson<DateTime?>(birthDate),
-      'contactNumber': serializer.toJson<int>(contactNumber),
+      'contactNumber': serializer.toJson<int?>(contactNumber),
       'mail': serializer.toJson<String?>(mail),
-      'relationshipp': serializer.toJson<String>(relationshipp),
+      'relationshipp': serializer.toJson<String>($LocalPatientCompanionTable
+          .$converterrelationshipp
+          .toJson(relationshipp)),
       'companionReason': serializer.toJson<String>($LocalPatientCompanionTable
           .$convertercompanionReason
           .toJson(companionReason)),
@@ -992,9 +1003,9 @@ class LocalPatientCompanionData extends DataClass
           String? lastNames,
           Value<int?> idNumber = const Value.absent(),
           Value<DateTime?> birthDate = const Value.absent(),
-          int? contactNumber,
+          Value<int?> contactNumber = const Value.absent(),
           Value<String?> mail = const Value.absent(),
-          String? relationshipp,
+          CompanionRelationship? relationshipp,
           CompanionReason? companionReason,
           Value<DateTime?> createdAt = const Value.absent(),
           bool? isActive}) =>
@@ -1004,7 +1015,8 @@ class LocalPatientCompanionData extends DataClass
         lastNames: lastNames ?? this.lastNames,
         idNumber: idNumber.present ? idNumber.value : this.idNumber,
         birthDate: birthDate.present ? birthDate.value : this.birthDate,
-        contactNumber: contactNumber ?? this.contactNumber,
+        contactNumber:
+            contactNumber.present ? contactNumber.value : this.contactNumber,
         mail: mail.present ? mail.value : this.mail,
         relationshipp: relationshipp ?? this.relationshipp,
         companionReason: companionReason ?? this.companionReason,
@@ -1056,9 +1068,9 @@ class LocalPatientCompanionCompanion
   final Value<String> lastNames;
   final Value<int?> idNumber;
   final Value<DateTime?> birthDate;
-  final Value<int> contactNumber;
+  final Value<int?> contactNumber;
   final Value<String?> mail;
-  final Value<String> relationshipp;
+  final Value<CompanionRelationship> relationshipp;
   final Value<CompanionReason> companionReason;
   final Value<DateTime?> createdAt;
   final Value<bool> isActive;
@@ -1083,18 +1095,16 @@ class LocalPatientCompanionCompanion
     required String lastNames,
     this.idNumber = const Value.absent(),
     this.birthDate = const Value.absent(),
-    required int contactNumber,
+    this.contactNumber = const Value.absent(),
     this.mail = const Value.absent(),
-    required String relationshipp,
+    this.relationshipp = const Value.absent(),
     this.companionReason = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.isActive = const Value.absent(),
     this.rowid = const Value.absent(),
   })  : id = Value(id),
         names = Value(names),
-        lastNames = Value(lastNames),
-        contactNumber = Value(contactNumber),
-        relationshipp = Value(relationshipp);
+        lastNames = Value(lastNames);
   static Insertable<LocalPatientCompanionData> custom({
     Expression<String>? id,
     Expression<String>? names,
@@ -1131,9 +1141,9 @@ class LocalPatientCompanionCompanion
       Value<String>? lastNames,
       Value<int?>? idNumber,
       Value<DateTime?>? birthDate,
-      Value<int>? contactNumber,
+      Value<int?>? contactNumber,
       Value<String?>? mail,
-      Value<String>? relationshipp,
+      Value<CompanionRelationship>? relationshipp,
       Value<CompanionReason>? companionReason,
       Value<DateTime?>? createdAt,
       Value<bool>? isActive,
@@ -1179,7 +1189,9 @@ class LocalPatientCompanionCompanion
       map['mail'] = Variable<String>(mail.value);
     }
     if (relationshipp.present) {
-      map['relationshipp'] = Variable<String>(relationshipp.value);
+      map['relationshipp'] = Variable<String>($LocalPatientCompanionTable
+          .$converterrelationshipp
+          .toSql(relationshipp.value));
     }
     if (companionReason.present) {
       map['companion_reason'] = Variable<String>($LocalPatientCompanionTable
