@@ -10,6 +10,13 @@
       }
     }
   },
+  "disabled": "Discapacidad",
+  "underage": "Menor de edad",
+  "friend": "Amigo",
+  "parent": "Padre",
+  "relative": "Pariente",
+  "partner": "Pareja",
+  "other": "Otro",
   "genericTitle": "Título",
   "genericEdit": "Editar",
   "genericDelete": "Eliminar",
@@ -350,6 +357,7 @@
       }
     }
   },
+  "patientRegisterRequireCompanion": "¿Requiere acompaniante?",
   "patientDataDeletePatient": "Eliminar paciente",
   "patientDataGoToPatientProfile": "Ir al perfil del paciente",
   "patientDataCreateClinicalHistory": "Crear historial clínico",
@@ -376,5 +384,7 @@
   "patientCaseCloseDialogCloseConfirmation": "Caso cerrado",
   "patientCaseCloseDialogCloseNoOptionError": "Debes seleccionar una opción",
   "patientCaseSeeCaseOutcome": "Ver resultado del caso",
-  "patientCaseSeeCaseOutcomeTitle": "Resultado del caso"
+  "patientCaseSeeCaseOutcomeTitle": "Resultado del caso",
+  "patientCompanionRelation": "Relación con el paciente",
+  "patientCompanionReason": "Razón del acompañamiento"
 }
