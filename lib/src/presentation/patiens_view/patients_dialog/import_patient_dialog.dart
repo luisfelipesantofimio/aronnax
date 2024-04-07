@@ -103,15 +103,16 @@ class _ImportPatientDataDialogState
                     title: 'Done',
                     onTap: () async {
                       if (selectedFile != null && passwordToDecrypt != null) {
-                        File decryptedFile = await ref
-                            .read(ioRepositoryProvider)
-                            .decryptFile(
-                                encryptedFilePath: selectedFile!.path,
-                                encryptionKey: passwordToDecrypt!);
-                        String decryptedFileContents = await ref
-                            .read(ioRepositoryProvider)
-                            .readFromTextFile(decryptedFile.path, true);
                         try {
+                          File decryptedFile = await ref
+                              .read(ioRepositoryProvider)
+                              .decryptFile(
+                                  encryptedFilePath: selectedFile!.path,
+                                  encryptionKey: passwordToDecrypt!);
+                          String decryptedFileContents = await ref
+                              .read(ioRepositoryProvider)
+                              .readFromTextFile(decryptedFile.path, true);
+
                           await ref
                               .read(patientsRepositoryProvider)
                               .importPatientData(
@@ -123,7 +124,7 @@ class _ImportPatientDataDialogState
                           Future(
                             () => Navigator.pop(context),
                           );
-                        } on Exception catch (e) {
+                        } catch (e) {
                           Future(
                             () {
                               ScaffoldMessenger.of(context).showSnackBar(
