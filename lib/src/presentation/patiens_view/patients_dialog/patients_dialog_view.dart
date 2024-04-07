@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
