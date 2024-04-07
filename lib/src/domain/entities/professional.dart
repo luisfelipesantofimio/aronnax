@@ -65,4 +65,22 @@ class Professional {
         encodedSecurityAnswer: '',
         securityQuestion: '');
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'personalID': personalID,
+      'names': names,
+      'lastNames': lastNames,
+      'countryCode': countryCode,
+      'securityQuestion': securityQuestion,
+      'encodedSecurityAnswer': encodedSecurityAnswer,
+      'encodedRecoverPin': encodedRecoverPin,
+      'adress': adress,
+      'email': email,
+      'professionalID': professionalID,
+      'userName': userName,
+      'password': password,
+    };
+  }
 }
