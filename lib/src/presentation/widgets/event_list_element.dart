@@ -23,7 +23,7 @@ class EventListElement extends ConsumerStatefulWidget {
   final CalendarEventStates eventStates;
   final CalendarEventType calendarEventType;
   final String? description;
-  final int patientId;
+  final String patientId;
   final VoidCallback onDelete;
   final VoidCallback onUpdate;
 

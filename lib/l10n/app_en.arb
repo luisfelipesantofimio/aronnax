@@ -10,6 +10,13 @@
       }
     }
   },
+  "disabled": "Disabled",
+  "underage": "Underage",
+  "friend": "Friend",
+  "parent": "Parent",
+  "relative": "Relative",
+  "partner": "Partner",
+  "other": "Other",
   "genericTitle": "Title",
   "genericEdit": "Edit",
   "genericDelete": "Delete",
@@ -230,6 +237,9 @@
   "calendarEventScheduleButtonTitle": "Schedule",
   "calendarEventCreationConfirmationText": "Event created",
   "calendarEventUpdateConfirmationText": "Event updated",
+  "calendarEventMultideleteTitle": "Delete all related events",
+  "calendarEventMultideleteDialogDescription": "Are you sure you want to delete all events?",
+  "calendarEventMultideleteDialogDeleteConfirmation": "events deleted",
   "caseCreationTitle": "New case",
   "caseCreationWithTreatment": "Case with treatment plan",
   "caseCreationWithoutTreatment": "Case without treatment plan",
@@ -347,6 +357,7 @@
       }
     }
   },
+  "patientRegisterRequireCompanion": "Patient requires companion?",
   "patientDataDeletePatient": "Delete patient",
   "patientDataGoToPatientProfile": "Go to patient profile",
   "patientDataCreateClinicalHistory": "Create clinical history",
@@ -373,5 +384,7 @@
   "patientCaseCloseDialogCloseConfirmation": "Case closed",
   "patientCaseCloseDialogCloseNoOptionError": "You must select an option",
   "patientCaseSeeCaseOutcome": "See case outcome",
-  "patientCaseSeeCaseOutcomeTitle": "Case outcome"
+  "patientCaseSeeCaseOutcomeTitle": "Case outcome",
+  "patientCompanionRelation": "Companion relation with patient",
+  "patientCompanionReason": "Reason for companion"
 }

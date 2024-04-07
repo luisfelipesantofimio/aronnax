@@ -21,12 +21,40 @@ part 'local_model.g.dart';
   Settings,
   ServerDatabase,
   SavedIcdDiagnosticData,
+  LocalAppointmentGroup,
+  LocalPatientCompanion,
 ])
 class LocalDatabase extends _$LocalDatabase {
   LocalDatabase() : super(_openConnection());
 
   @override
   int get schemaVersion => 1;
+
+  @override
+  MigrationStrategy get migration => MigrationStrategy(
+        onCreate: (m) async {
+          await m.createAll();
+          await into(settings).insert(
+            const SettingsCompanion(
+              isDarkModeEnabled: Value(false),
+              isOfflineModeEnabled: Value(false),
+              isConfigured: Value(false),
+            ),
+          );
+        },
+        beforeOpen: (details) async {
+          if (details.wasCreated) {
+            await into(settings).insert(
+              const SettingsCompanion(
+                id: Value(0),
+                isDarkModeEnabled: Value(false),
+                isOfflineModeEnabled: Value(false),
+                isConfigured: Value(false),
+              ),
+            );
+          }
+        },
+      );
 
   //Data insertion
 
@@ -78,6 +106,14 @@ class LocalDatabase extends _$LocalDatabase {
     return into(savedIcdDiagnosticData).insert(data);
   }
 
+  Future<void> insertAppointmentGroup(LocalAppointmentGroupCompanion data) {
+    return into(localAppointmentGroup).insert(data);
+  }
+
+  Future<int> insertPatientCompanion(LocalPatientCompanionData data) {
+    return into(localPatientCompanion).insert(data);
+  }
+
   // Data update
 
   Future updateThemeMode(bool currentThemeMode) async {
@@ -96,7 +132,7 @@ class LocalDatabase extends _$LocalDatabase {
     );
   }
 
-  Future updateLocalUserPassword(int userID, String newEncodedValue) async {
+  Future updateLocalUserPassword(String userID, String newEncodedValue) async {
     return (update(localProfessional)..where((t) => t.id.equals(userID))).write(
       LocalProfessionalCompanion(
         password: Value(newEncodedValue),
@@ -105,7 +141,7 @@ class LocalDatabase extends _$LocalDatabase {
   }
 
   Future updateLocalUserPasswordAndPin(
-      int userID, String newEncodedPassword, String newEncodedPin) async {
+      String userID, String newEncodedPassword, String newEncodedPin) async {
     return (update(localProfessional)..where((t) => t.id.equals(userID))).write(
       LocalProfessionalCompanion(
         password: Value(newEncodedPassword),
@@ -144,7 +180,7 @@ class LocalDatabase extends _$LocalDatabase {
         .getSingle();
   }
 
-  Future<List<LocalPatientCaseData>> getPatientCases(int patientId) {
+  Future<List<LocalPatientCaseData>> getPatientCases(String patientId) {
     return (select(localPatientCase)
           ..where(
             (tbl) => tbl.patientId.equals(patientId),
@@ -152,7 +188,7 @@ class LocalDatabase extends _$LocalDatabase {
         .get();
   }
 
-  Future<List<LocalPatientCaseData>> getFilteredPatientCases(int patientId) {
+  Future<List<LocalPatientCaseData>> getFilteredPatientCases(String patientId) {
     return (select(localPatientCase)
           ..where(
             (tbl) =>
@@ -161,7 +197,7 @@ class LocalDatabase extends _$LocalDatabase {
         .get();
   }
 
-  Future<LocalPatientCaseData?> getSinglePatientCase(int patientId) {
+  Future<LocalPatientCaseData?> getSinglePatientCase(String patientId) {
     return (select(localPatientCase)
           ..where(
             (tbl) =>
@@ -193,19 +229,19 @@ class LocalDatabase extends _$LocalDatabase {
   }
 
   Future<List<LocalClinicHistoryData>> clinicHistoryConsultation(
-      int patientId) {
+      String patientId) {
     return (select(localClinicHistory)
-          ..where((tbl) => tbl.id.equals(patientId)))
+          ..where((tbl) => tbl.patientId.equals(patientId)))
         .get();
   }
 
-  Future<LocalClinicHistoryData> getSingleClinicHistory(int patientId) {
+  Future<LocalClinicHistoryData> getSingleClinicHistory(String patientId) {
     return (select(localClinicHistory)
-          ..where((tbl) => tbl.id.equals(patientId)))
+          ..where((tbl) => tbl.patientId.equals(patientId)))
         .getSingle();
   }
 
-  Future<List<LocalSession>> getPatientSessionsList(int patientId) {
+  Future<List<LocalSession>> getPatientSessionsList(String patientId) {
     return (select(localSessions)
           ..where(
             (tbl) => tbl.idNumber.equals(patientId),
@@ -242,10 +278,16 @@ class LocalDatabase extends _$LocalDatabase {
     return (select(savedIcdDiagnosticData)).get();
   }
 
-  Future<List<LocalTreatmentResult>> getTreatmentPlanResults(int patientId) {
+  Future<List<LocalTreatmentResult>> getTreatmentPlanResults(String patientId) {
     return (select(localTreatmentResults)
           ..where((tbl) => tbl.patientID.equals(patientId)))
         .get();
+  }
+
+  Future<LocalPatientCompanionData> getPatientCompanion(String patientId) {
+    return (select(localPatientCompanion)
+          ..where((tbl) => tbl.id.equals(patientId)))
+        .getSingle();
   }
 
   //Update
@@ -258,7 +300,7 @@ class LocalDatabase extends _$LocalDatabase {
     );
   }
 
-  Future updateTodoState(int todoId, bool newState) {
+  Future updateTodoState(String todoId, bool newState) {
     return (update(localTodos)..where((tbl) => tbl.id.equals(todoId))).write(
       LocalTodosCompanion(
         isComplete: Value(newState),
@@ -274,7 +316,7 @@ class LocalDatabase extends _$LocalDatabase {
         .write(newData);
   }
 
-  Future updatePatientActiveState(int patientId, bool newState) {
+  Future updatePatientActiveState(String patientId, bool newState) {
     return (update(localPatients)
           ..where(
             (tbl) => tbl.id.equals(patientId),
@@ -286,7 +328,7 @@ class LocalDatabase extends _$LocalDatabase {
     );
   }
 
-  Future updatePatientCasePhase(int caseId, int newPhase) {
+  Future updatePatientCasePhase(String caseId, int newPhase) {
     return (update(localPatientCase)
           ..where(
             (tbl) => tbl.id.equals(caseId),
@@ -298,7 +340,7 @@ class LocalDatabase extends _$LocalDatabase {
     );
   }
 
-  Future disactivatePatientCases(int caseId) {
+  Future disactivatePatientCases(String caseId) {
     return (update(localPatientCase)
           ..where(
             (tbl) => tbl.id.equals(caseId),
@@ -310,7 +352,7 @@ class LocalDatabase extends _$LocalDatabase {
     );
   }
 
-  Future activatePatientCases(int caseId) {
+  Future activatePatientCases(String caseId) {
     return (update(localPatientCase)
           ..where(
             (tbl) => tbl.id.equals(caseId),
@@ -323,7 +365,7 @@ class LocalDatabase extends _$LocalDatabase {
   }
 
   Future closeCurrentCase(
-      int caseId, String outcome, String? outcomeDescription) {
+      String caseId, String outcome, String? outcomeDescription) {
     return (update(localPatientCase)
           ..where(
             (tbl) => tbl.id.equals(caseId),
@@ -338,7 +380,7 @@ class LocalDatabase extends _$LocalDatabase {
   }
 
   Future updateLocalAppointment(
-      LocalAppointmentsCompanion data, int appointmentId) {
+      LocalAppointmentsCompanion data, String appointmentId) {
     return (update(localAppointments)
           ..where(
             (tbl) => tbl.id.equals(appointmentId),
@@ -348,7 +390,13 @@ class LocalDatabase extends _$LocalDatabase {
 
   //Delete
 
-  Future deleteLocalEvent(int eventId) {
+  Future<int> deleteAppointmentsGroup({required String groupId}) {
+    return (delete(localAppointments)
+          ..where((tbl) => tbl.groupID.equals(groupId)))
+        .go();
+  }
+
+  Future deleteLocalEvent(String eventId) {
     return (delete(localAppointments)
           ..where(
             (tbl) => tbl.id.equals(eventId),
@@ -356,7 +404,7 @@ class LocalDatabase extends _$LocalDatabase {
         .go();
   }
 
-  Future deleteLocalTodo(int todoId) {
+  Future deleteLocalTodo(String todoId) {
     return (delete(localTodos)
           ..where(
             (tbl) => tbl.id.equals(todoId),
@@ -364,7 +412,7 @@ class LocalDatabase extends _$LocalDatabase {
         .go();
   }
 
-  Future deleteLocalTreatmentPlan(int treatmentId) {
+  Future deleteLocalTreatmentPlan(String treatmentId) {
     return (delete(localTreatmentPlans)
           ..where(
             (tbl) => tbl.id.equals(treatmentId),
@@ -372,7 +420,7 @@ class LocalDatabase extends _$LocalDatabase {
         .go();
   }
 
-  Future deleteLocalClinicHisoty(int patientId) {
+  Future deleteLocalClinicHisoty(String patientId) {
     return (delete(localClinicHistory)
           ..where(
             (tbl) => tbl.patientId.equals(patientId),
@@ -380,7 +428,7 @@ class LocalDatabase extends _$LocalDatabase {
         .go();
   }
 
-  Future deleteLocalPatientCase(int id) {
+  Future deleteLocalPatientCase(String id) {
     return (delete(localPatientCase)
           ..where(
             (tbl) => tbl.id.equals(id),
@@ -392,7 +440,7 @@ class LocalDatabase extends _$LocalDatabase {
     return (delete(savedIcdDiagnosticData)).go();
   }
 
-  Future deleteLocalSession(int sessionId) {
+  Future deleteLocalSession(String sessionId) {
     return (delete(localSessions)
           ..where(
             (tbl) => tbl.id.equals(sessionId),
@@ -400,7 +448,7 @@ class LocalDatabase extends _$LocalDatabase {
         .go();
   }
 
-  Future deleteLocalPatient(int patientId) {
+  Future deleteLocalPatient(String patientId) {
     return (delete(localPatients)
           ..where(
             (tbl) => tbl.id.equals(patientId),

@@ -86,7 +86,6 @@ class _AppointmentCreationDialogState
   Widget build(BuildContext context) {
     return Dialog(
       child: Container(
-        // height: MediaQuery.of(context).size.height * 0.5,
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(
             Radius.circular(10),
@@ -183,7 +182,7 @@ class _AppointmentCreationDialogState
                                     ),
                                     professionalId: ref
                                         .read(globalUserInformationProvider)!
-                                        .personalID,
+                                        .id,
                                     patientId:
                                         ref.read(appointmentPatientIdProvider)!,
                                     description: ref

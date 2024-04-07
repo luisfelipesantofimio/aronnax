@@ -8,7 +8,6 @@ import 'package:aronnax/src/domain/entities/patient_case.dart';
 import 'package:aronnax/src/domain/entities/session.dart';
 
 ///Data model intended to be used as a global intermediary of all related patient data.
-
 class PatientGlobalData {
   final Patient patient;
   final ClinicHistory clinicHistory;
@@ -35,6 +34,7 @@ class PatientGlobalData {
     );
   }
 
+  //TODO: Add companion
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'patient': patient.toMap(),
@@ -64,7 +64,8 @@ class PatientGlobalData {
   String toJson() => json.encode(toMap());
 
   factory PatientGlobalData.fromJson(String source) =>
-      PatientGlobalData.fromMap(json.decode(source) as Map<String, dynamic>);
+      PatientGlobalData.fromMap(
+          json.decode((json.decode(source) as Map<String, dynamic>)['data']));
 
   @override
   String toString() {

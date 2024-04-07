@@ -1,3 +1,4 @@
+import 'package:aronnax/src/data/database/local_model/tables.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final registerNamesProvider = StateProvider<String>(
@@ -60,4 +61,41 @@ final registerEmergencyContactNameProvider = StateProvider<String>(
 
 final registerEmergencyContactNumberProvider = StateProvider<int>(
   (ref) => 0,
+);
+
+final registerCompanionNameProvider = StateProvider<String?>(
+  (ref) => null,
+);
+
+final registerCompanionLastNameProvider = StateProvider<String?>(
+  (ref) => null,
+);
+
+final registerCompanionIdentificationProvider = StateProvider<String?>(
+  (ref) => null,
+);
+
+final registerCompanionEmailProvider = StateProvider<String?>(
+  (ref) => null,
+);
+
+final registerCompanionBirthDateProvider = StateProvider<DateTime?>(
+  (ref) => null,
+);
+
+final registerCompanionPhoneProvider = StateProvider<String?>(
+  (ref) => null,
+);
+
+final registerCompanionRelationshipProvider =
+    StateProvider<CompanionRelationship?>(
+  (ref) => null,
+);
+
+final registerCompanionReasonProvider = StateProvider<CompanionReason?>(
+  (ref) => null,
+);
+
+final activePatientCompanionProvider = StateProvider<bool>(
+  (ref) => false,
 );

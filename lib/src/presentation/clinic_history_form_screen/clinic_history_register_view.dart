@@ -45,7 +45,8 @@ class _ClinicHistoryRegisterViewState
   Widget build(BuildContext context) {
     bool isOfflineEnabled = ref.watch(offlineStatusProvider).value!;
 
-    int professionalID = ref.watch(globalUserInformationProvider)!.personalID;
+    String professionalID = ref.watch(globalUserInformationProvider)!.id;
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 166, 211, 227),
       body: Stack(
@@ -120,59 +121,69 @@ class _ClinicHistoryRegisterViewState
                                   onPressed: () {
                                     if (clinicHistoryKey.currentState!
                                         .validate()) {
-                                      isOfflineEnabled
-                                          ? ref
-                                              .read(
-                                                  clinicHistoryRepositoryProvider)
-                                              .addClinicHistory(
-                                                  ref,
-                                                  registerCode,
-                                                  DateTime.now(),
-                                                  ref.read(
-                                                      clinicHistoryMentalExaminationProvider),
-                                                  ref.read(
-                                                      clinicHistoryMedAntecedentsProvider),
-                                                  ref.read(
-                                                      clinicHistoryPsyAntecedentsProvider),
-                                                  ref.read(
-                                                      clinicHistoryFamilyHistoryProvider),
-                                                  ref.read(
-                                                      clinicHistoryPersonalHistoryProvider),
-                                                  widget.patientData.id,
-                                                  professionalID)
-                                          : insertClinicHistory(
-                                              registerCode,
-                                              DateTime.now(),
-                                              ref.read(
-                                                  clinicHistoryMentalExaminationProvider),
-                                              ref.read(
-                                                  clinicHistoryMedAntecedentsProvider),
-                                              ref.read(
-                                                  clinicHistoryPsyAntecedentsProvider),
-                                              ref.read(
-                                                  clinicHistoryFamilyHistoryProvider),
-                                              ref.read(
-                                                  clinicHistoryPersonalHistoryProvider),
-                                              ref.read(
-                                                  globalSelectedConsultantIDProvider),
-                                              professionalID);
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          backgroundColor: Colors.green,
-                                          content: Text(AppLocalizations.of(
-                                                  context)!
-                                              .clinicHistorySaveConfirmation),
-                                        ),
-                                      );
+                                      try {
+                                        isOfflineEnabled
+                                            ? ref
+                                                .read(
+                                                    clinicHistoryRepositoryProvider)
+                                                .addClinicHistory(
+                                                    ref,
+                                                    registerCode,
+                                                    DateTime.now(),
+                                                    ref.read(
+                                                        clinicHistoryMentalExaminationProvider),
+                                                    ref.read(
+                                                        clinicHistoryMedAntecedentsProvider),
+                                                    ref.read(
+                                                        clinicHistoryPsyAntecedentsProvider),
+                                                    ref.read(
+                                                        clinicHistoryFamilyHistoryProvider),
+                                                    ref.read(
+                                                        clinicHistoryPersonalHistoryProvider),
+                                                    widget.patientData.id,
+                                                    professionalID)
+                                            : insertClinicHistory(
+                                                registerCode,
+                                                DateTime.now(),
+                                                ref.read(
+                                                    clinicHistoryMentalExaminationProvider),
+                                                ref.read(
+                                                    clinicHistoryMedAntecedentsProvider),
+                                                ref.read(
+                                                    clinicHistoryPsyAntecedentsProvider),
+                                                ref.read(
+                                                    clinicHistoryFamilyHistoryProvider),
+                                                ref.read(
+                                                    clinicHistoryPersonalHistoryProvider),
+                                                ref.read(
+                                                    globalSelectedConsultantIDProvider),
+                                                professionalID);
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            backgroundColor: Colors.green,
+                                            content: Text(AppLocalizations.of(
+                                                    context)!
+                                                .clinicHistorySaveConfirmation),
+                                          ),
+                                        );
 
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const MainMenu(),
-                                        ),
-                                      );
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const MainMenu(),
+                                          ),
+                                        );
+                                      } catch (e) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            backgroundColor: Colors.red,
+                                            content: Text(e.toString()),
+                                          ),
+                                        );
+                                      }
                                     }
                                   },
                                 )

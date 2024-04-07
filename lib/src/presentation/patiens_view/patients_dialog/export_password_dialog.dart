@@ -15,7 +15,6 @@ class ExportPasswordDialog extends StatelessWidget {
     return Dialog(
       child: Container(
           margin: const EdgeInsets.all(20),
-          height: MediaQuery.of(context).size.height * 0.2,
           width: MediaQuery.of(context).size.width * 0.4,
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(
@@ -27,6 +26,7 @@ class ExportPasswordDialog extends StatelessWidget {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
                     'Your key for the file $fileName.encrypted',

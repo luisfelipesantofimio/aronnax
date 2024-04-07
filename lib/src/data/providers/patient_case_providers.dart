@@ -3,7 +3,7 @@ import 'package:aronnax/src/domain/entities/patient_case.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final patientCaseListProvider =
-    FutureProvider.family.autoDispose<List<PatientCase>, int>(
+    FutureProvider.family.autoDispose<List<PatientCase>, String>(
   (ref, patientId) =>
       ref.read(patientsRepositoryProvider).getPatientCaseList(ref, patientId),
 );

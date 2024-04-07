@@ -5,11 +5,11 @@ import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/section.dart';
 
 class TreatmentPlan {
-  final int id;
+  final String id;
   final String title;
   final String description;
   final DateTime creationDate;
-  final int creatorId;
+  final String creatorId;
   final List<Section> sectionsList;
   TreatmentPlan({
     required this.id,
@@ -62,18 +62,13 @@ class TreatmentPlan {
         )
         .toList();
     return TreatmentPlan(
-      id: map['id'] as int,
+      id: map['id'] as String,
       title: map['title'] as String,
       description: map['description'] as String,
       creationDate:
           DateTime.fromMillisecondsSinceEpoch(map['creationDate'] as int),
-      creatorId: map['creatorId'] as int,
+      creatorId: map['creatorId'] as String,
       sectionsList: parsedSectionList,
-      // List<Section>.from(
-      //   (map['sectionsList'] as List<int>).map<Section>(
-      //     (x) => Section.fromMap(x as Map<String, dynamic>),
-      //   ),
-      // ),
     );
   }
 
@@ -83,11 +78,11 @@ class TreatmentPlan {
       TreatmentPlan.fromMap(json.decode(source) as Map<String, dynamic>);
 
   TreatmentPlan copyWith({
-    int? id,
+    String? id,
     String? title,
     String? description,
     DateTime? creationDate,
-    int? creatorId,
+    String? creatorId,
     List<Section>? sectionsList,
   }) {
     return TreatmentPlan(

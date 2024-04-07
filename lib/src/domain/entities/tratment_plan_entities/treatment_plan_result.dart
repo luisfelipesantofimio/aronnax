@@ -7,13 +7,13 @@ import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_result_value.dart';
 
 class TreatmentPlanResult {
-  final int? id;
+  final String? id;
   final DateTime applicationDate;
   final int sessionNumber;
-  final int patientId;
-  final int professionalId;
-  final int treatmentPlanId;
-  final int caseId;
+  final String patientId;
+  final String professionalId;
+  final String treatmentPlanId;
+  final String caseId;
   final int phaseNumber;
   final List<TreatmentPlanResultValue> results;
   TreatmentPlanResult({
@@ -29,13 +29,13 @@ class TreatmentPlanResult {
   });
 
   TreatmentPlanResult copyWith({
-    int? id,
+    String? id,
     DateTime? applicationDate,
     int? sessionNumber,
-    int? patientId,
-    int? professionalId,
-    int? treatmentPlanId,
-    int? caseId,
+    String? patientId,
+    String? professionalId,
+    String? treatmentPlanId,
+    String? caseId,
     int? phaseNumber,
     List<TreatmentPlanResultValue>? results,
   }) {
@@ -68,14 +68,14 @@ class TreatmentPlanResult {
 
   factory TreatmentPlanResult.fromMap(Map<String, dynamic> map) {
     return TreatmentPlanResult(
-      id: map['id'] != null ? map['id'] as int : null,
+      id: map['id'] != null ? map['id'] as String : null,
       applicationDate:
           DateTime.fromMillisecondsSinceEpoch(map['applicationDate'] as int),
       sessionNumber: map['sessionNumber'] as int,
-      patientId: map['patientId'] as int,
-      professionalId: map['professionalId'] as int,
-      treatmentPlanId: map['treatmentPlanId'] as int,
-      caseId: map['caseId'] as int,
+      patientId: map['patientId'] as String,
+      professionalId: map['professionalId'] as String,
+      treatmentPlanId: map['treatmentPlanId'] as String,
+      caseId: map['caseId'] as String,
       phaseNumber: map['phaseNumber'] as int,
       results: List<TreatmentPlanResultValue>.from(
         (map['results'] as List<int>).map<TreatmentPlanResultValue>(

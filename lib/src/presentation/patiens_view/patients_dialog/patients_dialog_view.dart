@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/clinic_history_repository_interface.dart';
 import 'package:aronnax/src/data/interfaces/io_repository_interface.dart';
@@ -206,6 +207,7 @@ class _PatientsDialogViewState extends ConsumerState<PatientsDialogView> {
                                         .read(patientsRepositoryProvider)
                                         .getPatientCaseListFromConsumer(
                                             ref, widget.patientData.id);
+                                    //TODO: Implement compation json encoding
                                     String result = ref
                                         .read(patientsRepositoryProvider)
                                         .encodePatientData(
@@ -220,6 +222,8 @@ class _PatientsDialogViewState extends ConsumerState<PatientsDialogView> {
                                           fileName:
                                               '${widget.patientData.names}-${widget.patientData.lastNames}-data',
                                           contents: result,
+                                          professionalData: ref.read(
+                                              globalUserInformationProvider)!,
                                         );
                                     String fileKey =
                                         AppMethods().codeGeneration(32);

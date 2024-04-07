@@ -3,12 +3,13 @@ import 'package:aronnax/src/domain/entities/clinic_history.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class ClinicHistoryRepositoryInterface {
-  Future<List<ClinicHistory>> getClinicHistoryListById(Ref ref, int patientId);
-  Future<ClinicHistory> getPatientClinicHistory(Ref ref, int patientId);
+  Future<List<ClinicHistory>> getClinicHistoryListById(
+      Ref ref, String patientId);
+  Future<ClinicHistory> getPatientClinicHistory(Ref ref, String patientId);
 
   ///Intended to be used as an alternative to [getPatientClinicHistory] from a [ConsumerWidget] instead of a [Provider].
   Future<ClinicHistory> getPatientClinicHistoryFromConsumer(
-      WidgetRef ref, int patientId);
+      WidgetRef ref, String patientId);
   void addClinicHistory(
     WidgetRef ref,
     String registerCode,
@@ -18,10 +19,10 @@ abstract class ClinicHistoryRepositoryInterface {
     String psiAntecedents,
     String familyHistory,
     String personalHistory,
-    int idNumber,
-    int professionalID,
+    String idNumber,
+    String professionalID,
   );
-  void deleteClinicHistory(WidgetRef ref, int clinicHistoryId);
+  void deleteClinicHistory(WidgetRef ref, String clinicHistoryId);
 }
 
 final clinicHistoryRepositoryProvider = Provider(

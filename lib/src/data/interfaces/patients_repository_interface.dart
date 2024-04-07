@@ -2,6 +2,7 @@ import 'package:aronnax/src/data/repositories/patients_repository.dart';
 import 'package:aronnax/src/domain/entities/clinic_history.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
 import 'package:aronnax/src/domain/entities/patient_case.dart';
+import 'package:aronnax/src/domain/entities/patient_companion.dart';
 import 'package:aronnax/src/domain/entities/session.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_result.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,50 +27,53 @@ abstract class PatientsRepositoryInterface {
     required String emergencyContactName,
     required int emergencyContactNumber,
     required DateTime creationDate,
-    required int professionalID,
+    required String professionalID,
+    PatientCompanionModel? patientCompanion,
   });
+
   List<Patient> queryPatients(List<Patient> patientsList, String query);
 
   void addPatientCase(
       WidgetRef ref,
       DateTime creationDate,
-      int patientId,
-      int professionalId,
+      String patientId,
+      String professionalId,
       String consultationReason,
       String treatmentProposal,
       String diagnostic,
       String? icdDiagnosticCode,
       String? caseNotes,
-      int? treatmentPlanId,
+      String? treatmentPlanId,
       int? treatmentPlanPhase,
       bool isOffline);
 
   void updateLocalPatientActiveState(
     WidgetRef ref,
-    int patientId,
+    String patientId,
     bool newState,
     bool isOffline,
   );
 
-  void updatePatientCaseCurrentPhase(WidgetRef ref, int caseId, int newPhase);
+  void updatePatientCaseCurrentPhase(
+      WidgetRef ref, String caseId, int newPhase);
 
   Future<List<Patient>> getPatient(WidgetRef ref, int idNumber);
 
-  Future<List<PatientCase>> getPatientCaseList(Ref ref, int patientId);
+  Future<List<PatientCase>> getPatientCaseList(Ref ref, String patientId);
 
   ///Intended to be used as an alternative to [getPatientCaseList] from a [ConsumerWidget] instead of a [Provider].
   Future<List<PatientCase>> getPatientCaseListFromConsumer(
-      WidgetRef ref, int patientId);
-  Future<PatientCase?> getPatientActiveCase(WidgetRef ref, int patientId);
+      WidgetRef ref, String patientId);
+  Future<PatientCase?> getPatientActiveCase(WidgetRef ref, String patientId);
   void updatePatientCaseActiveState(
-      WidgetRef ref, int patientId, int caseId, bool currentCaseState);
+      WidgetRef ref, String patientId, String caseId, bool currentCaseState);
 
-  void deletePatientCase(WidgetRef ref, int caseId);
-  Future<List<Session>> getPatientSessionsList(WidgetRef ref, int patientId);
-  Future<List<Session>> fetchPatientSessionsList(Ref ref, int patientId);
+  void deletePatientCase(WidgetRef ref, String caseId);
+  Future<List<Session>> getPatientSessionsList(WidgetRef ref, String patientId);
+  Future<List<Session>> fetchPatientSessionsList(Ref ref, String patientId);
 
   Future<List<TreatmentPlanResult>> getTreatmentPlanResults(
-      Ref ref, int patientId);
+      Ref ref, String patientId);
 
   ///Method for receiving patient related data sources and returning their json variants
   String encodePatientData(
@@ -81,12 +85,12 @@ abstract class PatientsRepositoryInterface {
   Future<void> importPatientData({
     required WidgetRef ref,
     required String decryptedPatientData,
-    required int professionalId,
+    required String professionalId,
   });
 
-  void deletePatientData(WidgetRef ref, int patientId);
+  void deletePatientData(WidgetRef ref, String patientId);
   void closeCurrentPatientCase(
-      WidgetRef ref, int caseId, String outcome, String? outcomeDescription);
+      WidgetRef ref, String caseId, String outcome, String? outcomeDescription);
 }
 
 final patientsRepositoryProvider = Provider<PatientsRepositoryInterface>(

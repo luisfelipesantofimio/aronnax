@@ -6,7 +6,7 @@ import 'package:aronnax/src/domain/entities/todo.dart';
 
 class TodosRepository implements TodosRepositoryInterface {
   @override
-  Future<void> deleteTodo(WidgetRef ref, int todoId) async {
+  Future<void> deleteTodo(WidgetRef ref, String todoId) async {
     ref.read(localDatabaseRepositoryProvider).deleteTodo(todoId);
   }
 
@@ -19,7 +19,8 @@ class TodosRepository implements TodosRepositoryInterface {
   }
 
   @override
-  Future<void> updateTodoDoneState(WidgetRef ref, int todoId, bool newState) {
+  Future<void> updateTodoDoneState(
+      WidgetRef ref, String todoId, bool newState) {
     return ref
         .read(localDatabaseRepositoryProvider)
         .updateTodoState(todoId, newState);

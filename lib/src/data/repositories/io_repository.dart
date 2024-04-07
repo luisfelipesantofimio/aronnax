@@ -1,6 +1,9 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:aronnax/src/data/interfaces/io_repository_interface.dart';
+import 'package:aronnax/src/domain/entities/metadata.dart';
+import 'package:aronnax/src/domain/entities/professional.dart';
 import 'package:encrypt/encrypt.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
@@ -8,44 +11,54 @@ import 'package:path/path.dart' as p;
 class IoRepository implements IoRepositoryInterface {
   @override
   Future<File> exportToTextFile(
-      {required String fileName, required String contents}) async {
+      {required String fileName,
+      required String contents,
+      required Professional professionalData}) async {
     final documentsPath = await getApplicationDocumentsDirectory();
     final path = Directory('${documentsPath.path}/aronnax_exports/');
+
+    final hydrated =
+        FileMetadata(professionalData: professionalData, encodedData: contents)
+            .toJsonString();
     if (!await path.exists()) {
       await path.create();
     }
     final File file = File(
       p.join(documentsPath.path, 'aronnax_exports/$fileName.arnx'),
     );
-    return file.writeAsString(contents);
+    return file.writeAsBytes(utf8.encode(hydrated));
   }
 
   @override
   Future<String> readFromTextFile(String pathToFile, bool privateFile) async {
-    String result = '';
     File file = File(pathToFile);
-    result = await file.readAsString();
+    final decoded = utf8.decode(file.readAsBytesSync());
     if (privateFile) {
       file.delete();
     }
-    return result;
+    return decoded;
   }
 
   @override
   Future<File> decryptFile(
       {required String encryptedFilePath,
       required String encryptionKey}) async {
-    final key = Key.fromUtf8(encryptionKey);
-    final iv = IV.fromLength(16);
-    final encrypter = Encrypter(AES(key));
-    final encryptedFile = File(encryptedFilePath);
-    final decryptedContents = encrypter
-        .decryptBytes(Encrypted(encryptedFile.readAsBytesSync()), iv: iv);
+    try {
+      final key = Key.fromUtf8(encryptionKey);
+      final iv = IV.fromLength(16); //TODO: Validate better IV
+      final encrypter = Encrypter(AES(key));
+      final encryptedFile = File(encryptedFilePath);
+      final decryptedContents = encrypter
+          .decryptBytes(Encrypted(encryptedFile.readAsBytesSync()), iv: iv);
 
-    final decryptedFile = File(encryptedFilePath.replaceAll('.encrypted', ''));
-    await decryptedFile.writeAsBytes(decryptedContents);
+      final decryptedFile =
+          File(encryptedFilePath.replaceAll('.encrypted', ''));
+      await decryptedFile.writeAsBytes(decryptedContents);
 
-    return decryptedFile;
+      return decryptedFile;
+    } catch (e) {
+      rethrow;
+    }
   }
 
   @override
@@ -53,7 +66,7 @@ class IoRepository implements IoRepositoryInterface {
     final encryptedFile = File('${input.path}.encrypted');
 
     final key = Key.fromUtf8(encryptionKey);
-    final iv = IV.fromLength(16);
+    final iv = IV.fromLength(16); //TODO: Validate better IV
 
     final encrypter = Encrypter(AES(key));
 

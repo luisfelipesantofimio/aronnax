@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 
 class Session {
-  final int id;
+  final String id;
   final DateTime sessionDate;
   final String sessionSummary;
   final String sessionObjectives;
@@ -11,9 +11,9 @@ class Session {
   final String? sessionNotes;
   final int sessionPerformance;
   final String? sessionPerformanceExplanation;
-  final int patientId;
-  final int professionalId;
-  final int caseId;
+  final String patientId;
+  final String professionalId;
+  final String caseId;
   Session({
     required this.id,
     required this.sessionDate,
@@ -44,7 +44,7 @@ class Session {
   }
 
   Session copyWith({
-    int? id,
+    String? id,
     DateTime? sessionDate,
     String? sessionSummary,
     String? sessionObjectives,
@@ -52,9 +52,9 @@ class Session {
     String? sessionNotes,
     int? sessionPerformance,
     String? sessionPerformanceExplanation,
-    int? patientId,
-    int? professionalId,
-    int? caseId,
+    String? patientId,
+    String? professionalId,
+    String? caseId,
   }) {
     return Session(
       id: id ?? this.id,
@@ -128,7 +128,7 @@ class Session {
 
   factory Session.fromMap(Map<String, dynamic> map) {
     return Session(
-      id: map['id'] as int,
+      id: map['id'] as String,
       sessionDate:
           DateTime.fromMillisecondsSinceEpoch(map['sessionDate'] as int),
       sessionSummary: map['sessionSummary'] as String,
@@ -141,9 +141,9 @@ class Session {
           map['sessionPerformanceExplanation'] != null
               ? map['sessionPerformanceExplanation'] as String
               : null,
-      patientId: map['patientId'] as int,
-      professionalId: map['professionalId'] as int,
-      caseId: map['caseId'] as int,
+      patientId: map['patientId'] as String,
+      professionalId: map['professionalId'] as String,
+      caseId: map['caseId'] as String,
     );
   }
 

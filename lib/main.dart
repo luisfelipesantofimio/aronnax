@@ -1,5 +1,4 @@
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/providers/theme_provider.dart';
 import 'package:aronnax/src/presentation/loading_screen/loading_screen.dart';
 import 'package:aronnax/src/presentation/themes/custom_themes.dart';
@@ -24,27 +23,8 @@ class MyApp extends ConsumerStatefulWidget {
 
 class MyAppState extends ConsumerState<MyApp> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   void didChangeDependencies() {
     ref.read(themeProvider.notifier).getCurrentTheme(ref);
-    Future(
-      () async {
-        if (await ref
-                .read(localDatabaseRepositoryProvider)
-                .verifySettingsData() ==
-            null) {
-          ref.read(localDatabaseRepositoryProvider).insertSettings(
-              id: 0,
-              darkModeEnabled: false,
-              offlineEnabled: false,
-              isConfigured: false);
-        }
-      },
-    );
     super.didChangeDependencies();
   }
 

@@ -10,6 +10,13 @@
       }
     }
   },
+  "disabled": "Discapacidad",
+  "underage": "Menor de edad",
+  "friend": "Amigo",
+  "parent": "Padre",
+  "relative": "Pariente",
+  "partner": "Pareja",
+  "other": "Otro",
   "genericTitle": "Título",
   "genericEdit": "Editar",
   "genericDelete": "Eliminar",
@@ -230,6 +237,9 @@
   "calendarEventScheduleButtonTitle": "Programar",
   "calendarEventCreationConfirmationText": "Evento creado",
   "calendarEventUpdateConfirmationText": "Evento actualizado",
+  "calendarEventMultideleteTitle": "Eliminar todos los eventos relacionados",
+  "calendarEventMultideleteDialogDescription": "¿Estas seguro de querer eliminar todos los eventos?",
+  "calendarEventMultideleteDialogDeleteConfirmation": "eventos eliminados",
   "caseCreationTitle": "Nuevo caso",
   "caseCreationWithTreatment": "Caso con plan de tratamiento",
   "caseCreationWithoutTreatment": "Caso sin plan de tratamiento",
@@ -347,11 +357,12 @@
       }
     }
   },
+  "patientRegisterRequireCompanion": "¿Requiere acompaniante?",
   "patientDataDeletePatient": "Eliminar paciente",
   "patientDataGoToPatientProfile": "Ir al perfil del paciente",
   "patientDataCreateClinicalHistory": "Crear historial clínico",
   "patientDataCreateCase": "Crear caso",
-  "patientDataTitleClinicHistory": "Historial clínico",
+  "patientDataTitleClinicHistory": "Historia clínica",
   "patientDataCaseEmpty": "Este paciente no tiene casos abiertos",
   "patientDataCaseCreateNew": "Crear nuevo caso",
   "patientDataCaseDiagnosticCode": "Código diagnóstico",
@@ -373,5 +384,7 @@
   "patientCaseCloseDialogCloseConfirmation": "Caso cerrado",
   "patientCaseCloseDialogCloseNoOptionError": "Debes seleccionar una opción",
   "patientCaseSeeCaseOutcome": "Ver resultado del caso",
-  "patientCaseSeeCaseOutcomeTitle": "Resultado del caso"
+  "patientCaseSeeCaseOutcomeTitle": "Resultado del caso",
+  "patientCompanionRelation": "Relación con el paciente",
+  "patientCompanionReason": "Razón del acompañamiento"
 }

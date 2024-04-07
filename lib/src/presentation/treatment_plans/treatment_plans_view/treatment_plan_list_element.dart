@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:aronnax/src/presentation/core/user_global_values.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/io_repository_interface.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
@@ -7,7 +8,6 @@ import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_pla
 import 'package:aronnax/src/presentation/treatment_plans/treatment_plan_creation/treatment_plan_creation_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class TreatmentPlanListElement extends ConsumerWidget {
   const TreatmentPlanListElement({super.key, required this.treatmentPlanData});
@@ -61,10 +61,10 @@ class TreatmentPlanListElement extends ConsumerWidget {
                             .exportToTextFile(
                               fileName: treatmentPlanData.title,
                               contents: treatmentPlanData.toJson(),
+                              professionalData:
+                                  ref.read(globalUserInformationProvider)!,
                             );
 
-                        final Uri path = result.uri;
-                        await launchUrl(path);
                         Future(() {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(

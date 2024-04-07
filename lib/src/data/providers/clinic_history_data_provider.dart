@@ -101,14 +101,14 @@ final professionalID = StateProvider<int>(
 
 // Clinic history data providers
 final clinicHistoryListByIdProvider =
-    FutureProvider.family.autoDispose<List<ClinicHistory>, int>(
+    FutureProvider.family.autoDispose<List<ClinicHistory>, String>(
   (ref, patientId) => ref
       .read(clinicHistoryRepositoryProvider)
       .getClinicHistoryListById(ref, patientId),
 );
 
 final clinicHistoryByIdProvider =
-    FutureProvider.family.autoDispose<ClinicHistory?, int>(
+    FutureProvider.family.autoDispose<ClinicHistory?, String>(
   (ref, patientId) => ref
       .read(clinicHistoryRepositoryProvider)
       .getPatientClinicHistory(ref, patientId),

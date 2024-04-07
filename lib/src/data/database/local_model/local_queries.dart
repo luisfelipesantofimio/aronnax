@@ -7,10 +7,10 @@ Future<void> addLocalSession({
   required String sessionSummary,
   required String sessionObjectives,
   required String therapeuticArchievements,
-  required int idNumber,
-  required int professionalID,
+  required String idNumber,
+  required String professionalID,
   required DateTime sessionDate,
-  required int caseId,
+  required String caseId,
   required String? sessionNotes,
   required int sessionPerformance,
   required String? sessionPerformanceExplanation,
@@ -53,12 +53,12 @@ void updateConnectionMode(bool currentConnectionMode) {
   localDB.updateConnectionMode(currentConnectionMode);
 }
 
-void updateLocalUserPassword(int userID, String newEncodedValue) {
+void updateLocalUserPassword(String userID, String newEncodedValue) {
   localDB.updateLocalUserPassword(userID, newEncodedValue);
 }
 
 void updateLocalUserPasswordAndPin(
-    int userID, String newEncodedValue, String newEncodedPin) {
+    String userID, String newEncodedValue, String newEncodedPin) {
   localDB.updateLocalUserPasswordAndPin(userID, newEncodedValue, newEncodedPin);
 }
 

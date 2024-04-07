@@ -1,9 +1,13 @@
+import 'package:aronnax/src/data/interfaces/calendar_repository_interface.dart';
+import 'package:aronnax/src/data/providers/appointments_provider.dart';
+import 'package:aronnax/src/presentation/widgets/calendar_components/multi_event_delete_dialog.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/domain/entities/calendar_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class EventDaysSelector extends StatefulWidget {
+class EventDaysSelector extends ConsumerStatefulWidget {
   const EventDaysSelector({
     super.key,
     required this.eventData,
@@ -15,10 +19,10 @@ class EventDaysSelector extends StatefulWidget {
   final void Function(bool multipleEvents) onMultiEventSelection;
 
   @override
-  State<EventDaysSelector> createState() => _EventDaysSelectorState();
+  ConsumerState<EventDaysSelector> createState() => _EventDaysSelectorState();
 }
 
-class _EventDaysSelectorState extends State<EventDaysSelector> {
+class _EventDaysSelectorState extends ConsumerState<EventDaysSelector> {
   bool multiEventSelection = false;
   int numberOfWeeks = 1;
   @override
@@ -33,6 +37,48 @@ class _EventDaysSelectorState extends State<EventDaysSelector> {
         ),
         const Padding(
           padding: EdgeInsets.all(10),
+        ),
+        Visibility(
+          visible:
+              widget.eventData != null && widget.eventData!.groupId != null,
+          child: TextButton(
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return MultiEventDeleteDialog(onDelete: () async {
+                      try {
+                        final result = await ref
+                            .read(calendarRepositoryProvider)
+                            .deleteEventGroup(
+                              ref: ref,
+                              groupId: widget.eventData?.groupId ?? '',
+                            );
+                        ref.invalidate(appointmentsGlobalListProvider);
+                        Future(() {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                '$result ${AppLocalizations.of(context)!.calendarEventMultideleteDialogDeleteConfirmation}',
+                              ),
+                            ),
+                          );
+                          Navigator.pop(context);
+                        });
+                      } catch (e) {
+                        Future(() {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(
+                                '${AppLocalizations.of(context)!.genericErrorMessage}: ${e.toString()}'),
+                          ));
+                        });
+                      }
+                    });
+                  });
+            },
+            child: Text(
+                AppLocalizations.of(context)!.calendarEventMultideleteTitle),
+          ),
         ),
         Visibility(
           visible: widget.eventData == null,

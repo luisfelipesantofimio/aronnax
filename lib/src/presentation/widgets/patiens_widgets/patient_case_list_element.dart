@@ -22,7 +22,7 @@ class PatientCaseListElement extends ConsumerWidget {
 
   final PatientCase caseData;
   final int elementIndex;
-  final int patientId;
+  final String patientId;
   final bool isOffline;
 
   @override

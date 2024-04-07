@@ -1,7 +1,7 @@
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 
 class Todo {
-  final int id;
+  final String id;
   final DateTime date;
   final String todo;
   final String? description;
