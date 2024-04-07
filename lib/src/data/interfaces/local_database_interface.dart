@@ -97,6 +97,7 @@ abstract class LocalDatabaseInteface {
   });
 
   void insertLocalTreatmentPlan({
+    String? id,
     required DateTime date,
     required String treatmentTitle,
     required String treatmentDescription,
