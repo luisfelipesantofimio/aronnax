@@ -323,6 +323,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
 
   @override
   void insertLocalTreatmentPlan({
+    String? id,
     required DateTime date,
     required String treatmentTitle,
     required String treatmentDescription,
@@ -330,7 +331,7 @@ class DatabaseRepository implements LocalDatabaseInteface {
     required String treatmentData,
   }) async {
     final data = LocalTreatmentPlansCompanion(
-      id: Value(_uuid.v4()),
+      id: Value(id ?? _uuid.v4()),
       creationDate: Value(date),
       professionalID: Value(professionalID),
       treatmentTitle: Value(treatmentTitle),

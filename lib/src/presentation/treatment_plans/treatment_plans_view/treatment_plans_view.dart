@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:aronnax/src/domain/entities/metadata.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/io_repository_interface.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
@@ -55,13 +58,16 @@ class TreatmentPlansView extends ConsumerWidget {
                   );
                   if (result != null) {
                     TreatmentPlan data = TreatmentPlan.fromJson(
-                      await ref
-                          .read(ioRepositoryProvider)
-                          .readFromTextFile(result.files.first.path!, false),
+                      jsonDecode(await ref
+                              .read(ioRepositoryProvider)
+                              .readFromTextFile(
+                                  result.files.first.path!, false))['data']
+                          .toString(),
                     );
                     ref
                         .read(localDatabaseRepositoryProvider)
                         .insertLocalTreatmentPlan(
+                          id: data.id,
                           date: data.creationDate,
                           treatmentTitle: data.title,
                           treatmentDescription: data.description,
