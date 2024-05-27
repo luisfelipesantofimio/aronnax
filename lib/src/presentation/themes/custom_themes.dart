@@ -51,7 +51,6 @@ class GlobalThemes {
     );
   }
 
-//TODO: Fix switch and colors
   static ThemeData get lightTheme {
     return ThemeData(
       dialogTheme: const DialogTheme(
@@ -65,20 +64,19 @@ class GlobalThemes {
         shadowColor: Colors.grey,
       ),
       colorScheme: const ColorScheme(
-          brightness: Brightness.light,
-          primary: CustomLightColors.primary,
-          onPrimary: Colors.black,
-          secondary: CustomLightColors.secondary,
-          onSecondary: Colors.black,
-          error: Colors.red,
-          onError: Colors.white,
-          background: CustomLightColors.background,
-          onBackground: Colors.black,
-          surface: CustomLightColors.background,
-          onSurface: Colors.black),
-      primaryColor: CustomLightColors.primary,
-      scaffoldBackgroundColor: CustomLightColors.background,
-      iconTheme: const IconThemeData(color: CustomLightColors.textColor),
+        brightness: Brightness.light,
+        primary: CustomLightColors.primary,
+        onPrimary: Colors.black,
+        secondary: CustomLightColors.secondary,
+        onSecondary: Colors.black,
+        error: Colors.red,
+        onError: Colors.white,
+        surface: CustomLightColors.background,
+        onSurface: Colors.black,
+        // primaryColor: CustomLightColors.primary,
+        // scaffoldBackgroundColor: CustomLightColors.background,
+        // iconTheme: const IconThemeData(color: CustomLightColors.textColor),
+      ),
       //Form custom theme
       inputDecorationTheme: const InputDecorationTheme(
         errorBorder: OutlineInputBorder(
