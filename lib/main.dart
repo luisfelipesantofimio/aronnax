@@ -1,12 +1,22 @@
+import 'package:aronnax/src/presentation/core/constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/providers/theme_provider.dart';
 import 'package:aronnax/src/presentation/loading_screen/loading_screen.dart';
 import 'package:aronnax/src/presentation/themes/custom_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  if (!(AppConstants.supabaseUrl == "" || AppConstants.supabaseKey == "")) {
+    await Supabase.initialize(
+      url: AppConstants.supabaseUrl,
+      anonKey: AppConstants.supabaseKey,
+    );
+  }
+
   runApp(
     const ProviderScope(
       child: MyApp(),
