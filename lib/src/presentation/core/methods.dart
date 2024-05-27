@@ -5,7 +5,7 @@ import 'package:aronnax/src/domain/entities/calendar_event.dart';
 import 'package:aronnax/src/domain/entities/session.dart';
 import 'package:aronnax/src/presentation/settings/configOptions/icd_data_repair.dart';
 import 'package:aronnax/src/presentation/settings/configOptions/localdb_selection.dart';
-import 'package:aronnax/src/presentation/settings/configOptions/theme_select.dart';
+import 'package:aronnax/src/presentation/settings/configOptions/support_screen.dart';
 import 'package:aronnax/src/presentation/settings/setting_options_view_profile.dart';
 import 'package:crypt/crypt.dart';
 import 'package:email_validator/email_validator.dart';
@@ -65,11 +65,8 @@ class AppMethods {
 
       case 1:
         return const IcdDataRepair();
-      // return const ProfessionalForm();
       case 2:
-        return ThemeSelector(
-          settingsData: settings,
-        );
+        return const SupportScreen();
       case 3:
         return LocalDBActivationScreen(
           settingsData: settings,
