@@ -23,7 +23,7 @@ class _SettingsHeaderBarState extends State<SettingsHeaderBar> {
                 padding: const EdgeInsets.all(15.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.background,
+                    color: Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   height: double.maxFinite,
@@ -96,69 +96,23 @@ class _SettingsHeaderBarState extends State<SettingsHeaderBar> {
                           ),
                         ),
                       ),
-                      // Padding(
-                      //   padding: const EdgeInsets.all(30),
-                      //   child: TextButton(
-                      //     onPressed: () {
-                      //       setState(() {
-                      //         currentView.value = 1;
-                      //       });
-                      //     },
-                      //     child: Center(
-                      //       child: Column(
-                      //         mainAxisAlignment: MainAxisAlignment.center,
-                      //         children: [
-                      //           Text(
-                      //             "Crear usuario",
-                      //             style: Theme.of(context).textTheme.bodyMedium,
-                      //           ),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-                      // Padding(
-                      //   padding: const EdgeInsets.all(30),
-                      //   child: TextButton(
-                      //     onPressed: () {
-                      //       setState(() {
-                      //         currentView.value = 2;
-                      //       });
-                      //     },
-                      //     child: Center(
-                      //       child: Column(
-                      //         mainAxisAlignment: MainAxisAlignment.center,
-                      //         children: [
-                      //           Text(
-                      //             "Tema oscuro",
-                      //             style: Theme.of(context).textTheme.bodyMedium,
-                      //           ),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-                      // Padding(
-                      //   padding: const EdgeInsets.all(30),
-                      //   child: TextButton(
-                      //     onPressed: () {
-                      //       setState(() {
-                      //         currentView.value = 3;
-                      //       });
-                      //     },
-                      //     child: Center(
-                      //       child: Column(
-                      //         mainAxisAlignment: MainAxisAlignment.center,
-                      //         children: [
-                      //           Text(
-                      //             "Base de datos local",
-                      //             style: Theme.of(context).textTheme.bodyMedium,
-                      //           ),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
+                      Padding(
+                        padding: const EdgeInsets.all(30),
+                        child: TextButton(
+                          onPressed: () {
+                            setState(() {
+                              currentView.value = 2;
+                            });
+                          },
+                          child: Center(
+                            child: Text(
+                              AppLocalizations.of(context)!.genericSupport,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),
