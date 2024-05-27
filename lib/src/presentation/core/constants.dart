@@ -3,12 +3,15 @@
 import 'package:flutter/material.dart';
 
 class AppConstants {
-  static const String globalVersion = "0.0.1";
-  static const String compilationDate = "12/06/2022";
+  static const String globalVersion = String.fromEnvironment("version");
 
   //ICD API keys enviroment variables
   static const clientId = String.fromEnvironment("clientId");
   static const String clientSecret = String.fromEnvironment("clientSecret");
+
+  //Supabase enviroment
+  static const String supabaseUrl = String.fromEnvironment("supaEndpoint");
+  static const String supabaseKey = String.fromEnvironment("supaKey");
 }
 
 //Form controllers
