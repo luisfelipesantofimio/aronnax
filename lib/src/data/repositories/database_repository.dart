@@ -641,4 +641,14 @@ class DatabaseRepository implements LocalDatabaseInteface {
       String companionId) async {
     return await localDB.getPatientCompanion(companionId);
   }
+
+  @override
+  Future<int> updateTelemetrySettings(
+      bool isTelemetryEnabled, String installationId) async {
+    String? foundInstallation =
+        await localDB.getLocalSettings().then((value) => value.installationId);
+    foundInstallation ??= installationId;
+    return localDB.updateTelemetrySettings(
+        currentStatus: isTelemetryEnabled, installationId: foundInstallation);
+  }
 }

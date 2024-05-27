@@ -223,6 +223,9 @@ abstract class LocalDatabaseInteface {
 
   Future<LocalPatientCompanionData> getLocalPatientCompanion(
       String companionId);
+
+  Future<int> updateTelemetrySettings(
+      bool isTelemetryEnabled, String installationId);
 }
 
 final localDatabaseRepositoryProvider = Provider<LocalDatabaseInteface>(
