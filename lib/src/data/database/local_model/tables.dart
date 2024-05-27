@@ -258,6 +258,8 @@ class Settings extends Table {
   BoolColumn get isDarkModeEnabled => boolean()();
   BoolColumn get isOfflineModeEnabled => boolean()();
   BoolColumn get isConfigured => boolean()();
+  TextColumn get installationId => text().nullable()();
+  BoolColumn get isTelemetryEnabled => boolean().clientDefault(() => false)();
 }
 
 class ServerDatabase extends Table {
