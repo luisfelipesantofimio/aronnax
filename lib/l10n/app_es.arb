@@ -45,6 +45,11 @@
   "genericSaveTitle": "Guardar",
   "genericPatientTitle": "Paciente",
   "genericEmptyData": "No hay datos para mostrar",
+  "genericThanks": "Gracias",
+  "genericSend": "Enviar",
+  "genericCancel": "Cancelar",
+  "genericAccept": "Aceptar",
+  "genericSupport": "Soporte",
   "continueButton": "Continuar",
   "tryAgain": "Intentar de nuevo",
   "errorEmptyField": "El campo está vacío",
@@ -357,7 +362,7 @@
       }
     }
   },
-  "patientRegisterRequireCompanion": "¿Requiere acompaniante?",
+  "patientRegisterRequireCompanion": "¿Requiere acompañante?",
   "patientDataDeletePatient": "Eliminar paciente",
   "patientDataGoToPatientProfile": "Ir al perfil del paciente",
   "patientDataCreateClinicalHistory": "Crear historial clínico",
@@ -386,5 +391,21 @@
   "patientCaseSeeCaseOutcome": "Ver resultado del caso",
   "patientCaseSeeCaseOutcomeTitle": "Resultado del caso",
   "patientCompanionRelation": "Relación con el paciente",
-  "patientCompanionReason": "Razón del acompañamiento"
+  "patientCompanionReason": "Razón del acompañamiento",
+  "supportFeedbackTitle": "Feedback",
+  "supportFeedbackDescription": "Por favor, dinos lo que piensas",
+  "supportFeedbackSendButton": "Enviar comentarios",
+  "supportFeedbackSuccess": "¡Dinos tu opinión!",
+  "supportReportTitle": "Informe de error",
+  "supportReportDescription": "Por favor, describe tu error",
+  "supportReportSendButton": "Enviar informe",
+  "supportReportSuccess": "¡Dinos tu opinión!",
+  "supportReportErrorDescription": "Este reporte no recibirá seguimiento y se utilizará para identificar problemas comunes/críticos a resolver en futuras versiones",
+  "supportReportErrorHint": "Por favor, describe tu problema con el mayor detalle posible",
+  "supportReportErrorSent": "Informe enviado",
+  "supportReportErrorAknowledgement": "¡Gracias por tu contribución! Esperamos resolver tu problema en la próxima versión",
+  "telemetryDialogTitle": "¿Te gustaría habilitar la telemetría?",
+  "telemetryDialogDescription": "Si aceptas, nos ayudarás a entender el uso de Aronnax, establecer prioridades para implementar funcionalidades y a rastrear errores a través de datos anónimos y respetuosos de tu actividad.",
+  "telemetryDialogRejectMessage": "Entendido, la telemetría no será habilitada",
+  "telemetryDialogAcceptMessage": "Gracias, la telemetría será habilitada"
 }
