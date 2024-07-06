@@ -6739,9 +6739,31 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
       requiredDuringInsert: true,
       defaultConstraints: GeneratedColumn.constraintIsAlways(
           'CHECK ("is_configured" IN (0, 1))'));
+  static const VerificationMeta _installationIdMeta =
+      const VerificationMeta('installationId');
   @override
-  List<GeneratedColumn> get $columns =>
-      [id, isDarkModeEnabled, isOfflineModeEnabled, isConfigured];
+  late final GeneratedColumn<String> installationId = GeneratedColumn<String>(
+      'installation_id', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _isTelemetryEnabledMeta =
+      const VerificationMeta('isTelemetryEnabled');
+  @override
+  late final GeneratedColumn<bool> isTelemetryEnabled = GeneratedColumn<bool>(
+      'is_telemetry_enabled', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("is_telemetry_enabled" IN (0, 1))'),
+      clientDefault: () => false);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        isDarkModeEnabled,
+        isOfflineModeEnabled,
+        isConfigured,
+        installationId,
+        isTelemetryEnabled
+      ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -6779,6 +6801,18 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
     } else if (isInserting) {
       context.missing(_isConfiguredMeta);
     }
+    if (data.containsKey('installation_id')) {
+      context.handle(
+          _installationIdMeta,
+          installationId.isAcceptableOrUnknown(
+              data['installation_id']!, _installationIdMeta));
+    }
+    if (data.containsKey('is_telemetry_enabled')) {
+      context.handle(
+          _isTelemetryEnabledMeta,
+          isTelemetryEnabled.isAcceptableOrUnknown(
+              data['is_telemetry_enabled']!, _isTelemetryEnabledMeta));
+    }
     return context;
   }
 
@@ -6796,6 +6830,10 @@ class $SettingsTable extends Settings with TableInfo<$SettingsTable, Setting> {
           data['${effectivePrefix}is_offline_mode_enabled'])!,
       isConfigured: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}is_configured'])!,
+      installationId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}installation_id']),
+      isTelemetryEnabled: attachedDatabase.typeMapping.read(
+          DriftSqlType.bool, data['${effectivePrefix}is_telemetry_enabled'])!,
     );
   }
 
@@ -6810,11 +6848,15 @@ class Setting extends DataClass implements Insertable<Setting> {
   final bool isDarkModeEnabled;
   final bool isOfflineModeEnabled;
   final bool isConfigured;
+  final String? installationId;
+  final bool isTelemetryEnabled;
   const Setting(
       {required this.id,
       required this.isDarkModeEnabled,
       required this.isOfflineModeEnabled,
-      required this.isConfigured});
+      required this.isConfigured,
+      this.installationId,
+      required this.isTelemetryEnabled});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -6822,6 +6864,10 @@ class Setting extends DataClass implements Insertable<Setting> {
     map['is_dark_mode_enabled'] = Variable<bool>(isDarkModeEnabled);
     map['is_offline_mode_enabled'] = Variable<bool>(isOfflineModeEnabled);
     map['is_configured'] = Variable<bool>(isConfigured);
+    if (!nullToAbsent || installationId != null) {
+      map['installation_id'] = Variable<String>(installationId);
+    }
+    map['is_telemetry_enabled'] = Variable<bool>(isTelemetryEnabled);
     return map;
   }
 
@@ -6831,6 +6877,10 @@ class Setting extends DataClass implements Insertable<Setting> {
       isDarkModeEnabled: Value(isDarkModeEnabled),
       isOfflineModeEnabled: Value(isOfflineModeEnabled),
       isConfigured: Value(isConfigured),
+      installationId: installationId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(installationId),
+      isTelemetryEnabled: Value(isTelemetryEnabled),
     );
   }
 
@@ -6843,6 +6893,8 @@ class Setting extends DataClass implements Insertable<Setting> {
       isOfflineModeEnabled:
           serializer.fromJson<bool>(json['isOfflineModeEnabled']),
       isConfigured: serializer.fromJson<bool>(json['isConfigured']),
+      installationId: serializer.fromJson<String?>(json['installationId']),
+      isTelemetryEnabled: serializer.fromJson<bool>(json['isTelemetryEnabled']),
     );
   }
   @override
@@ -6853,6 +6905,8 @@ class Setting extends DataClass implements Insertable<Setting> {
       'isDarkModeEnabled': serializer.toJson<bool>(isDarkModeEnabled),
       'isOfflineModeEnabled': serializer.toJson<bool>(isOfflineModeEnabled),
       'isConfigured': serializer.toJson<bool>(isConfigured),
+      'installationId': serializer.toJson<String?>(installationId),
+      'isTelemetryEnabled': serializer.toJson<bool>(isTelemetryEnabled),
     };
   }
 
@@ -6860,12 +6914,17 @@ class Setting extends DataClass implements Insertable<Setting> {
           {int? id,
           bool? isDarkModeEnabled,
           bool? isOfflineModeEnabled,
-          bool? isConfigured}) =>
+          bool? isConfigured,
+          Value<String?> installationId = const Value.absent(),
+          bool? isTelemetryEnabled}) =>
       Setting(
         id: id ?? this.id,
         isDarkModeEnabled: isDarkModeEnabled ?? this.isDarkModeEnabled,
         isOfflineModeEnabled: isOfflineModeEnabled ?? this.isOfflineModeEnabled,
         isConfigured: isConfigured ?? this.isConfigured,
+        installationId:
+            installationId.present ? installationId.value : this.installationId,
+        isTelemetryEnabled: isTelemetryEnabled ?? this.isTelemetryEnabled,
       );
   @override
   String toString() {
@@ -6873,14 +6932,16 @@ class Setting extends DataClass implements Insertable<Setting> {
           ..write('id: $id, ')
           ..write('isDarkModeEnabled: $isDarkModeEnabled, ')
           ..write('isOfflineModeEnabled: $isOfflineModeEnabled, ')
-          ..write('isConfigured: $isConfigured')
+          ..write('isConfigured: $isConfigured, ')
+          ..write('installationId: $installationId, ')
+          ..write('isTelemetryEnabled: $isTelemetryEnabled')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, isDarkModeEnabled, isOfflineModeEnabled, isConfigured);
+  int get hashCode => Object.hash(id, isDarkModeEnabled, isOfflineModeEnabled,
+      isConfigured, installationId, isTelemetryEnabled);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -6888,7 +6949,9 @@ class Setting extends DataClass implements Insertable<Setting> {
           other.id == this.id &&
           other.isDarkModeEnabled == this.isDarkModeEnabled &&
           other.isOfflineModeEnabled == this.isOfflineModeEnabled &&
-          other.isConfigured == this.isConfigured);
+          other.isConfigured == this.isConfigured &&
+          other.installationId == this.installationId &&
+          other.isTelemetryEnabled == this.isTelemetryEnabled);
 }
 
 class SettingsCompanion extends UpdateCompanion<Setting> {
@@ -6896,17 +6959,23 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
   final Value<bool> isDarkModeEnabled;
   final Value<bool> isOfflineModeEnabled;
   final Value<bool> isConfigured;
+  final Value<String?> installationId;
+  final Value<bool> isTelemetryEnabled;
   const SettingsCompanion({
     this.id = const Value.absent(),
     this.isDarkModeEnabled = const Value.absent(),
     this.isOfflineModeEnabled = const Value.absent(),
     this.isConfigured = const Value.absent(),
+    this.installationId = const Value.absent(),
+    this.isTelemetryEnabled = const Value.absent(),
   });
   SettingsCompanion.insert({
     this.id = const Value.absent(),
     required bool isDarkModeEnabled,
     required bool isOfflineModeEnabled,
     required bool isConfigured,
+    this.installationId = const Value.absent(),
+    this.isTelemetryEnabled = const Value.absent(),
   })  : isDarkModeEnabled = Value(isDarkModeEnabled),
         isOfflineModeEnabled = Value(isOfflineModeEnabled),
         isConfigured = Value(isConfigured);
@@ -6915,6 +6984,8 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     Expression<bool>? isDarkModeEnabled,
     Expression<bool>? isOfflineModeEnabled,
     Expression<bool>? isConfigured,
+    Expression<String>? installationId,
+    Expression<bool>? isTelemetryEnabled,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -6922,6 +6993,9 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
       if (isOfflineModeEnabled != null)
         'is_offline_mode_enabled': isOfflineModeEnabled,
       if (isConfigured != null) 'is_configured': isConfigured,
+      if (installationId != null) 'installation_id': installationId,
+      if (isTelemetryEnabled != null)
+        'is_telemetry_enabled': isTelemetryEnabled,
     });
   }
 
@@ -6929,12 +7003,16 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
       {Value<int>? id,
       Value<bool>? isDarkModeEnabled,
       Value<bool>? isOfflineModeEnabled,
-      Value<bool>? isConfigured}) {
+      Value<bool>? isConfigured,
+      Value<String?>? installationId,
+      Value<bool>? isTelemetryEnabled}) {
     return SettingsCompanion(
       id: id ?? this.id,
       isDarkModeEnabled: isDarkModeEnabled ?? this.isDarkModeEnabled,
       isOfflineModeEnabled: isOfflineModeEnabled ?? this.isOfflineModeEnabled,
       isConfigured: isConfigured ?? this.isConfigured,
+      installationId: installationId ?? this.installationId,
+      isTelemetryEnabled: isTelemetryEnabled ?? this.isTelemetryEnabled,
     );
   }
 
@@ -6954,6 +7032,12 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
     if (isConfigured.present) {
       map['is_configured'] = Variable<bool>(isConfigured.value);
     }
+    if (installationId.present) {
+      map['installation_id'] = Variable<String>(installationId.value);
+    }
+    if (isTelemetryEnabled.present) {
+      map['is_telemetry_enabled'] = Variable<bool>(isTelemetryEnabled.value);
+    }
     return map;
   }
 
@@ -6963,7 +7047,9 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
           ..write('id: $id, ')
           ..write('isDarkModeEnabled: $isDarkModeEnabled, ')
           ..write('isOfflineModeEnabled: $isOfflineModeEnabled, ')
-          ..write('isConfigured: $isConfigured')
+          ..write('isConfigured: $isConfigured, ')
+          ..write('installationId: $installationId, ')
+          ..write('isTelemetryEnabled: $isTelemetryEnabled')
           ..write(')'))
         .toString();
   }

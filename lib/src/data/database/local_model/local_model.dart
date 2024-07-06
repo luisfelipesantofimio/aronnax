@@ -36,23 +36,12 @@ class LocalDatabase extends _$LocalDatabase {
           await m.createAll();
           await into(settings).insert(
             const SettingsCompanion(
+              id: Value(0),
               isDarkModeEnabled: Value(false),
               isOfflineModeEnabled: Value(false),
               isConfigured: Value(false),
             ),
           );
-        },
-        beforeOpen: (details) async {
-          if (details.wasCreated) {
-            await into(settings).insert(
-              const SettingsCompanion(
-                id: Value(0),
-                isDarkModeEnabled: Value(false),
-                isOfflineModeEnabled: Value(false),
-                isConfigured: Value(false),
-              ),
-            );
-          }
         },
       );
 
@@ -338,6 +327,15 @@ class LocalDatabase extends _$LocalDatabase {
         localTreatmentPlanPhase: Value(newPhase),
       ),
     );
+  }
+
+  Future<int> updateTelemetrySettings(
+      {required bool currentStatus, required String installationId}) {
+    return (update(settings)..where((t) => t.id.equals(0)))
+        .write(SettingsCompanion(
+      isTelemetryEnabled: Value(currentStatus),
+      installationId: Value(installationId),
+    ));
   }
 
   Future disactivatePatientCases(String caseId) {
