@@ -378,7 +378,7 @@
   "welcomeScreenDatabaseDescription": "Aronnax requiere una base de datos para almacenar toda la información que registres en tus consultas. Puedes conectar con un servidor externo con una base de datos SQL preconfigurada o simplemente almacenar la base de datos directamente en tu computadora.",
   "welcomeScreenErrorPasswordLenght": "La contraseña debe tener al menos ocho caracteres.",
   "welcomeScreenFinishConfigFinish": "Eso es todo",
-  "welcomeScreenFinishConfigImageDescription": "Ahora puedes iniciar sesión y comenzar a mejorar la calidad de vida de tus clientes.",
+  "welcomeScreenFinishConfigImageDescription": "Ahora puedes iniciar sesión y comenzar a mejorar la calidad de vida de tus consultantes.",
   "welcomeScreenFinishConfigStartUsingAronnax": "Empezar a usar Aronnax",
   "welcomeScreenImageDescription": "Bienvenido a Aronnax, un software de gestión de historias clínicas para psicólogos. Antes de empezar, necesitas configurar la base de datos donde Aronnax almacenará toda la información sobre tus consultantes.",
   "welcomeScreenLastNames": "Apellidos",
