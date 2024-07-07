@@ -54,7 +54,7 @@
   "clinicHistoryInfoRecordCode": "Código único del registro",
   "clinicHistorySaveConfirmation": "Registro guardado",
   "clinicHistorySaveRegister": "Guardar registro",
-  "clinicHistoryTitle": "Registro",
+  "clinicHistoryTitle": "Historia clínica",
   "continueButton": "Continuar",
   "disabled": "Discapacidad",
   "errorEmptyField": "El campo está vacío",
