@@ -1,3 +1,4 @@
+import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/database/local_model/local_queries.dart';
 import 'package:aronnax/src/data/providers/forms_providers/session_form_provider.dart';
@@ -123,22 +124,26 @@ class _SessionPerformanceDialogState
                       if (selectedItem != null) {
                         // isOfflineEnabled
                         //     ?
-                        addLocalSession(
-                          sessionSummary: ref.read(sessionSummaryProvider),
-                          sessionObjectives:
-                              ref.read(sessionObjectivesProvider),
-                          therapeuticArchievements:
-                              ref.read(sessionTherapeuticArchievementsProvider),
-                          idNumber: widget.patientData.id,
-                          professionalID:
-                              ref.read(globalUserInformationProvider)!.id,
-                          sessionDate: DateTime.now(),
-                          caseId: widget.patientCaseData.id,
-                          sessionNotes: ref.read(sessionNotesProvider),
-                          sessionPerformance: selectedItem!,
-                          sessionPerformanceExplanation: performanceExplanation,
-                        );
-                        Navigator.push(
+                        ref
+                            .read(localDatabaseRepositoryProvider)
+                            .addLocalSession(
+                              sessionSummary: ref.read(sessionSummaryProvider),
+                              sessionObjectives:
+                                  ref.read(sessionObjectivesProvider),
+                              therapeuticArchievements: ref.read(
+                                  sessionTherapeuticArchievementsProvider),
+                              idNumber: widget.patientData.id,
+                              professionalID:
+                                  ref.read(globalUserInformationProvider)!.id,
+                              sessionDate: DateTime.now(),
+                              caseId: widget.patientCaseData.id,
+                              sessionNotes: ref.read(sessionNotesProvider),
+                              sessionPerformance: selectedItem!,
+                              sessionPerformanceExplanation:
+                                  performanceExplanation ?? "",
+                            );
+
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                             builder: (context) => const MainMenu(),

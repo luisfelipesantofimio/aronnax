@@ -25,10 +25,13 @@ class FirstWelcome extends StatelessWidget {
               height: 300,
               image: AssetImage("assets/img/welcome.png"),
             ),
-            Text(
-              AppLocalizations.of(context)!.welcomeScreenImageDescription,
-              style: GoogleFonts.montserrat(fontSize: 15),
-              textAlign: TextAlign.center,
+            SizedBox(
+              width: MediaQuery.sizeOf(context).width * 0.6,
+              child: Text(
+                AppLocalizations.of(context)!.welcomeScreenImageDescription,
+                style: GoogleFonts.montserrat(fontSize: 15),
+                textAlign: TextAlign.center,
+              ),
             ),
             TextButton(
               onPressed: () {

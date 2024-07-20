@@ -136,13 +136,6 @@ class _ComponentSelectionItemState extends State<ComponentSelectionItem> {
                             hintText: AppLocalizations.of(context)!
                                 .treatmentPlanComponentDescriptionFieldDescription,
                           ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return AppLocalizations.of(context)!
-                                  .errorEmptyField;
-                            }
-                            return null;
-                          },
                           onChanged: (value) {
                             setState(() {
                               componentDescription = value;
@@ -256,22 +249,27 @@ class _ComponentSelectionItemState extends State<ComponentSelectionItem> {
                         GenericMinimalButton(
                           title: 'Añadir componente',
                           onTap: () {
-                            widget.onComponentSelected(
-                              TreatmentPlanComponent(
-                                treatmentPlanPhase: widget.sectionIndex,
-                                componentType: selectedComponent!.componentType,
-                                componentTitle: componentTitle!,
-                                messurable: isMessurable,
-                                componentDescription: componentDescription!,
-                                isRequired: isRequired,
-                                optionsList: optionTypeList
-                                    .map(
-                                      (e) => TreatmentPlanOption(
-                                          value: e.value, optionName: e.title),
-                                    )
-                                    .toList(),
-                              ),
-                            );
+                            if (formKey.currentState!.validate()) {
+                              widget.onComponentSelected(
+                                TreatmentPlanComponent(
+                                  treatmentPlanPhase: widget.sectionIndex,
+                                  componentType:
+                                      selectedComponent!.componentType,
+                                  componentTitle: componentTitle!,
+                                  messurable: isMessurable,
+                                  componentDescription:
+                                      componentDescription ?? "",
+                                  isRequired: isRequired,
+                                  optionsList: optionTypeList
+                                      .map(
+                                        (e) => TreatmentPlanOption(
+                                            value: e.value,
+                                            optionName: e.title),
+                                      )
+                                      .toList(),
+                                ),
+                              );
+                            }
                           },
                         ),
                       ],

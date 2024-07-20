@@ -101,7 +101,7 @@
   "genericTitle": "Título",
   "genericTitleYourTitle": "Tu título",
   "genericTreatmentPlan": "Plan de tratamiento",
-  "helpScreenAronnaxPoweredBy": "Aronnax está alimentado por Flutter",
+  "helpScreenAronnaxPoweredBy": "Desarrollado con Flutter",
   "helpScreenDescriptionText": "Un software de gestión de pacientes y registros médicos, minimalista y eficiente.\nHecho por psicólogos, para psicólogos.",
   "helpScreenDevelopedBy": "Desarrollado por",
   "helpScreenLegalInformationTitle": "Información legal",
@@ -127,7 +127,7 @@
   "mainMenuAddEventTooltip": "Agregar evento",
   "mainMenuEventsForDefinedDate": "Eventos para",
   "mainMenuEventsForToday": "Eventos para hoy",
-  "mainMenuOptionsBarAlertCaseNotFound": "Este usuario no tiene ningún caso abierto. Ve al perfil de ${patientNames} y crea o habilita un caso.",
+  "mainMenuOptionsBarAlertCaseNotFound": "Este usuario no tiene ningún caso abierto. Ve al perfil de {patientNames} y crea o habilita un caso.",
   "@mainMenuOptionsBarAlertCaseNotFound": {
     "placeholders": {
       "patientNames": {
@@ -380,7 +380,7 @@
   "welcomeScreenFinishConfigFinish": "Eso es todo",
   "welcomeScreenFinishConfigImageDescription": "Ahora puedes iniciar sesión y comenzar a mejorar la calidad de vida de tus consultantes.",
   "welcomeScreenFinishConfigStartUsingAronnax": "Empezar a usar Aronnax",
-  "welcomeScreenImageDescription": "Bienvenido a Aronnax, un software de gestión de historias clínicas para psicólogos. Antes de empezar, necesitas configurar la base de datos donde Aronnax almacenará toda la información sobre tus consultantes.",
+  "welcomeScreenImageDescription": "Te damos la bienvenida a Aronnax, un software de gestión de historias clínicas para psicólogos. Antes de empezar, necesitas configurar la base de datos donde Aronnax almacenará toda la información sobre tus consultantes.",
   "welcomeScreenLastNames": "Apellidos",
   "welcomeScreenMessage": "Configuremos algunas cosas",
   "welcomeScreenNames": "Nombres",

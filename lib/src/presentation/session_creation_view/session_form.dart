@@ -1,12 +1,13 @@
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/providers/forms_providers/session_form_provider.dart';
 import 'package:aronnax/src/domain/entities/patient.dart';
-import 'package:aronnax/src/presentation/core/controllers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SessionsForm extends ConsumerStatefulWidget {
-  const SessionsForm({super.key, required this.patientData});
+  const SessionsForm(
+      {super.key, required this.patientData, required this.sessionFormKey});
+  final GlobalKey<FormState> sessionFormKey;
   final Patient patientData;
 
   @override
@@ -19,7 +20,7 @@ class SessionsFormState extends ConsumerState<SessionsForm> {
     return ListView(
       children: [
         Form(
-          key: sessionFormKey,
+          key: widget.sessionFormKey,
           child: Column(
             children: [
               Container(

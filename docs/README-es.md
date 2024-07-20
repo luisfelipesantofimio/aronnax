@@ -1,47 +1,28 @@
 ![Cover](/docs/img/Cover_ES.png)
 
-<p><a href="https://flutter.dev" target="_blank"><img alt="Hecho con Flutter" src="https://img.shields.io/badge/Hecho%20con-Flutter-blue"></a></p>
+<p><a href="https://flutter.dev" target="_blank"><img alt="Hecho con Flutter" src="https://img.shields.io/badge/Made%20with-Flutter-blue"></a></p>
 
 # Aronnax
 
-Un software de gestión de pacientes e historias clínicas, minimalista y eficiente, desarrollado con Flutter.
+Un software de gestion de historias clínicas para psicólogos, minimalista y eficiente. Hecho para psicólogos por psicólogos.
 
-Hecho por psicólogos, para psicólogos.
+[English documentation](README.md)
 
-[English documentation](/README.md)
+Aronnax es un EMR (electronic medical record) de código abierto para psicólogos enfocado en la simplicidad y tratamientos basados en evidencia. Funciona 100% offline y te ayuda a mantener tus datos bajo tu control.
 
-## Índice
-1. [Requerimientos](#requerimientos)
-2. [La forma sencilla](#la-forma-más-sencilla-para-muchos)
-3. [Futuras características](#futuras-características)
+## Compilación
 
-## Primeros pasos
+Asegúrate de usar Flutter `3.22.3` con la API de Dart `'>=3.4.4 <4.0.0'`
 
-Para inicializar el proyecto, ``git clone`` este repositorio, ``cd`` al directorio creado y ejecuta el siguiente comando: ``flutter run``
+Aronnax usa Supabase para gestionar telemetría básica para entender el uso de la herramienta, pero puedes omitir las variables de entorno definidas para su inicialización en el archivo [constants.dart](./lib/src/presentation/core/constants.dart).
 
-## Requerimientos
-Aronnax depende de una base de datos SQL para el correcto almacenamiento y seguridad de la información.
+> [!NOTE]
+> La telemetría estará presente hasta que el proyecto alcance la versión completa 1.0.0.
 
-Si utilizas un hosting remoto, puedes saltarte el proceso de instalación e ir directo a la configuración de la base de datos.
+Si deseas obtener una copia local del CIE-11 para apoyar tus impresiones diagnósticas, necesitarás crear una cuenta en [plataforma de API de la OMS](https://icd.who.int/icdapi/Account/Register) para obtener tu **clientId** y **clientSecret**.
 
-- Si quieres usar la base de datos en tu equipo, puedes seguir los pasos en la documentación de la base de datos que elijas entre <a href="https://dev.mysql.com/doc/mysql-getting-started/en/" target="_blank">MySQL</a> o <a href="https://mariadb.com/kb/en/installing-mariadb-msi-packages-on-windows/" target="_blank">MariaDB</a>.
+Finalmente, ejecuta:
 
-- [Flutter SDK](https://docs.flutter.dev/get-started/install) para compilar la app en tu sistema.
-
-
-- Opcional: [PhpMyAdmin](https://docs.phpmyadmin.net/en/latest/setup.html) para manipular la base de datos de forma gráfica.
-
-## La forma más sencilla para muchos
-
-Una mejor forma de configurar la base de datos en tu equipo es descargar <a href="https://www.apachefriends.org/download.html" target="_blank">XAMPP</a>. Este configurará un servidor local con MySQL y PhpMyAdmin incluidos. Puedes acceder a la base de datos a través de ``localhost`` al configurar Aronnax.
-
-También puedes descargar una versión precompilada de Aronnax para Windows y Linux (pronto para MacOS), si quieres evitar el proceso de compilar el software por tu cuenta.
-
-## Futuras características
-
-Aronnax se encuentra en constante desarrollo y aumentando sus características para mejorar la experiencia del profesional en consulta. Estas son algunas de las características que se planean incorporar.
-
-- Imprimir historias clínicas en PDF
-- Implementar test de tamizaje para aplicar durante las consultas
-- Traducir completamente al inglés
-- Base de datos local preconfigurada para profesionales que trabajen por su cuenta y no requieran una base de datos externa.
+```bash
+flutter build {PLATFORM} --dart-define=clientId={clientId} --dart-define=clientSecret={clientSecret} --dart-define=version={version}
+```

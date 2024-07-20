@@ -6,7 +6,7 @@ publish_to: "none"
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.4.0 <4.0.0"
+  sdk: ">=3.4.4 <4.0.0"
 
 dependencies:
   flutter:
@@ -54,16 +54,9 @@ flutter:
 
   uses-material-design: true
   assets:
-    - assets/img/planta.png
-    - assets/img/unknown-user.png
-    - assets/img/flutter.png
     - assets/img/welcome.png
     - assets/img/choose.png
     - assets/img/create.png
-    - assets/img/finish.png
-    - assets/img/flowers_cover.png
-    - assets/img/flowers2.png
-    - assets/img/contact.png
     - assets/img/aronnax-icon-light.png
     - assets/img/aronnax-icon-dark.png
 

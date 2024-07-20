@@ -7,7 +7,6 @@ import 'package:aronnax/src/domain/entities/patient_case.dart';
 import 'package:aronnax/src/presentation/treatment_plans/treatment_plan_application/treatment_plan_application_view.dart';
 import 'package:aronnax/src/presentation/widgets/note_creation_dialog.dart';
 import 'package:aronnax/src/presentation/session_creation_view/session_form.dart';
-import 'package:aronnax/src/presentation/core/controllers.dart';
 import 'package:aronnax/src/presentation/session_creation_view/session_information_view.dart';
 import 'package:aronnax/src/presentation/widgets/generic_global_button.dart';
 import 'package:aronnax/src/presentation/widgets/generic_icon_button.dart';
@@ -33,6 +32,7 @@ class SessionFormView extends ConsumerStatefulWidget {
 }
 
 class _SessionFormViewState extends ConsumerState<SessionFormView> {
+  final sessionFormKey = GlobalKey<FormState>();
   bool treatmentPlanResultsSaved = false;
 
   @override
@@ -207,6 +207,7 @@ class _SessionFormViewState extends ConsumerState<SessionFormView> {
                                     ),
                                     child: SessionsForm(
                                       patientData: widget.patientData,
+                                      sessionFormKey: sessionFormKey,
                                     ),
                                   ),
                                 ),

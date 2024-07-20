@@ -125,8 +125,7 @@ class PatientCaseListElement extends ConsumerWidget {
                         ? Row(
                             children: [
                               Text(
-                                AppLocalizations.of(context)!
-                                    .genericTreatmentPlan,
+                                "${AppLocalizations.of(context)!.genericTreatmentPlan}: ",
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold),
                               ),

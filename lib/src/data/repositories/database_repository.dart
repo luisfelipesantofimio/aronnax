@@ -92,18 +92,18 @@ class DatabaseRepository implements LocalDatabaseInteface {
   }
 
   @override
-  Future<void> addLocalSession(
-    String sessionSummary,
-    String sessionObjectives,
-    String therapeuticArchievements,
-    String idNumber,
-    String professionalID,
-    DateTime sessionDate,
-    String sessionNotes,
-    int sessionPerformance,
-    String sessionPerformanceExplanation,
-    String caseId,
-  ) async {
+  Future<void> addLocalSession({
+    required String sessionSummary,
+    required String sessionObjectives,
+    required String therapeuticArchievements,
+    required String idNumber,
+    required String professionalID,
+    required DateTime sessionDate,
+    required String? sessionNotes,
+    required int sessionPerformance,
+    required String sessionPerformanceExplanation,
+    required String caseId,
+  }) async {
     final entity = LocalSessionsCompanion(
       id: Value(_uuid.v4()),
       idNumber: Value(idNumber),

@@ -44,18 +44,18 @@ abstract class LocalDatabaseInteface {
     String professionalID,
   );
 
-  Future<void> addLocalSession(
-    String sessionSummary,
-    String sessionObjectives,
-    String therapeuticArchievements,
-    String idNumber,
-    String professionalID,
-    DateTime sessionDate,
-    String sessionNotes,
-    int sessionPerformance,
-    String sessionPerformanceExplanation,
-    String caseId,
-  );
+  Future<void> addLocalSession({
+    required String sessionSummary,
+    required String sessionObjectives,
+    required String therapeuticArchievements,
+    required String idNumber,
+    required String professionalID,
+    required DateTime sessionDate,
+    required String? sessionNotes,
+    required int sessionPerformance,
+    required String sessionPerformanceExplanation,
+    required String caseId,
+  });
 
   void addLocalProfessional({
     required String names,

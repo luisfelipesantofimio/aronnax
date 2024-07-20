@@ -46,9 +46,9 @@ class _EventDateTimeSelectionState extends State<EventDateTimeSelection> {
                   firstDate: DateTime(DateTime.now().year - 10),
                   lastDate: DateTime(DateTime.now().year + 10),
                 );
-                widget.onSelectedDate(selectedDate);
-
-                setState(() {});
+                if (selectedDate != null) {
+                  widget.onSelectedDate(selectedDate);
+                }
               },
               child: Text(
                 AppLocalizations.of(context)!.genericSelectTitle,
@@ -77,8 +77,9 @@ class _EventDateTimeSelectionState extends State<EventDateTimeSelection> {
                   context: context,
                   initialTime: selectedHour ?? TimeOfDay.now(),
                 );
-                widget.onSelectedTime(selectedHour);
-                setState(() {});
+                if (selectedHour != null) {
+                  widget.onSelectedTime(selectedHour);
+                }
               },
               child: Text(
                 AppLocalizations.of(context)!.genericSelectTitle,

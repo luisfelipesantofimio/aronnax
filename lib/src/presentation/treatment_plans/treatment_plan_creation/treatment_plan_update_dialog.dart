@@ -32,7 +32,7 @@ class _TreatmentPlanComponentUpdateDialogState
   String? componentTitle;
   String? componentDescription;
   final formKey = GlobalKey<FormState>();
-//TODO: Fix section component constrains with listview
+
   @override
   void didChangeDependencies() {
     componentTypeList.addAll([
@@ -57,6 +57,12 @@ class _TreatmentPlanComponentUpdateDialogState
         componentType: 'task',
       )
     ]);
+
+    selectedComponent = componentTypeList.elementAt(
+      componentTypeList.indexWhere((element) =>
+          element.componentType == widget.dataToUpdate!.componentType),
+    );
+
     super.didChangeDependencies();
   }
 
@@ -65,10 +71,6 @@ class _TreatmentPlanComponentUpdateDialogState
     setState(() {
       componentTitle = widget.dataToUpdate!.componentTitle;
       componentDescription = widget.dataToUpdate!.componentDescription;
-      selectedComponent = componentTypeList.elementAt(
-        componentTypeList.indexWhere((element) =>
-            element.componentType == widget.dataToUpdate!.componentType),
-      );
       optionTypeList = widget.dataToUpdate!.optionsList!
           .map((e) => OptionType(value: e.value, title: e.optionName))
           .toList();
@@ -157,12 +159,6 @@ class _TreatmentPlanComponentUpdateDialogState
                       decoration: InputDecoration(
                           hintText: AppLocalizations.of(context)!
                               .treatmentPlanUpdateDialogFieldDescriptionHint),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return AppLocalizations.of(context)!.errorEmptyField;
-                        }
-                        return null;
-                      },
                       onChanged: (value) {
                         setState(() {
                           componentDescription = value;
@@ -265,23 +261,25 @@ class _TreatmentPlanComponentUpdateDialogState
                       title: AppLocalizations.of(context)!
                           .treatmentPlanUpdateDialogUpdateButtonTitle,
                       onTap: () {
-                        widget.onComponentUpdated(
-                          TreatmentPlanComponent(
-                            treatmentPlanPhase: widget.sectionIndex,
-                            componentType: selectedComponent!.componentType,
-                            componentTitle: componentTitle!,
-                            componentDescription: componentDescription!,
-                            isRequired: isRequired,
-                            messurable: isMessurable,
-                            optionsList: optionTypeList
-                                .map(
-                                  (e) => TreatmentPlanOption(
-                                      value: e.value, optionName: e.title),
-                                )
-                                .toList(),
-                          ),
-                        );
-                        Navigator.pop(context);
+                        if (formKey.currentState!.validate()) {
+                          widget.onComponentUpdated(
+                            TreatmentPlanComponent(
+                              treatmentPlanPhase: widget.sectionIndex,
+                              componentType: selectedComponent!.componentType,
+                              componentTitle: componentTitle!,
+                              componentDescription: componentDescription!,
+                              isRequired: isRequired,
+                              messurable: isMessurable,
+                              optionsList: optionTypeList
+                                  .map(
+                                    (e) => TreatmentPlanOption(
+                                        value: e.value, optionName: e.title),
+                                  )
+                                  .toList(),
+                            ),
+                          );
+                          Navigator.pop(context);
+                        }
                       },
                     ),
                   ],

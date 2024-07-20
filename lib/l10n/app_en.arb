@@ -127,7 +127,7 @@
   "mainMenuAddEventTooltip": "Add event",
   "mainMenuEventsForDefinedDate": "Events for",
   "mainMenuEventsForToday": "Events for today",
-  "mainMenuOptionsBarAlertCaseNotFound": "This user does not have any open case. Go to ${patientNames}s profile and create or enable a case.",
+  "mainMenuOptionsBarAlertCaseNotFound": "This user does not have any open case. Go to {patientNames}s profile and create or enable a case.",
   "@mainMenuOptionsBarAlertCaseNotFound": {
     "placeholders": {
       "patientNames": {

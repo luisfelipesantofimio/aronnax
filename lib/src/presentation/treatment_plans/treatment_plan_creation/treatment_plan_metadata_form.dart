@@ -29,20 +29,11 @@ class _TreatmentPlanMetadataFormState extends State<TreatmentPlanMetadataForm> {
     if (widget.treatmentPlanData != null) {
       setState(() {
         titleValue = AppLocalizations.of(context)!.treatmentPlansTemplateTile;
-      });
-    }
-    super.didChangeDependencies();
-  }
-
-  @override
-  void initState() {
-    if (widget.treatmentPlanData != null) {
-      setState(() {
         titleValue = widget.treatmentPlanData!.title;
         description = widget.treatmentPlanData!.description;
       });
     }
-    super.initState();
+    super.didChangeDependencies();
   }
 
   @override
@@ -68,7 +59,7 @@ class _TreatmentPlanMetadataFormState extends State<TreatmentPlanMetadataForm> {
             },
             onChanged: (value) {
               widget.onTitleChanged(value);
-              treatmentPlanMetadataFormKey.currentState!.validate();
+              treatmentPlanMetadataFormKey.currentState?.validate();
             },
           ),
           TextFormField(
@@ -90,7 +81,7 @@ class _TreatmentPlanMetadataFormState extends State<TreatmentPlanMetadataForm> {
             },
             onChanged: (value) {
               widget.onDescriptionChanged(value);
-              treatmentPlanMetadataFormKey.currentState!.validate();
+              treatmentPlanMetadataFormKey.currentState?.validate();
             },
           ),
         ],

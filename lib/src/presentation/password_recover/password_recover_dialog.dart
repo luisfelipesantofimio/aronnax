@@ -28,7 +28,6 @@ class _PasswordRecoverDialogState extends ConsumerState<PasswordRecoverDialog> {
       ),
       elevation: 20,
       child: SizedBox(
-        //TODO: continue testing components and creating their own themes
         width: MediaQuery.of(context).size.width * 0.4,
         child: Form(
           key: formKey,

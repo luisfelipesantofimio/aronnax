@@ -101,7 +101,7 @@ class _TreatmentPlanCreationViewState
                                       editionComponent: true,
                                       onDelete: () {
                                         selectedSectionIndex =
-                                            selectedSectionIndex - 1;
+                                            index == 0 ? 0 : index - 1;
                                         if (sectionList.length > 1) {
                                           sectionList.removeAt(index);
                                           setState(() {});
@@ -405,11 +405,16 @@ class _TreatmentPlanCreationViewState
                               );
                               Navigator.pop(context);
                             } else {
+                              final newTreatmentplan = widget.treatmentPlanData
+                                  ?.copyWith(
+                                      title: treatmentPlanTitle,
+                                      description: treatmentPlanDescription);
+
                               ref
                                   .read(treatmentPlanRepositoryProvider)
                                   .updateTreatmentPlan(
                                       ref.read(offlineStatusProvider).value!,
-                                      widget.treatmentPlanData!,
+                                      newTreatmentplan!,
                                       ref);
                               ref.invalidate(treatmentPlanListProvider);
                               Navigator.pop(context);

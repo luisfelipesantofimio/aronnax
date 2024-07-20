@@ -21,11 +21,11 @@ class _NoteCreationDialogState extends ConsumerState<NoteCreationDialog> {
       alignment: Alignment.bottomLeft,
       backgroundColor: const Color.fromRGBO(235, 204, 145, 1),
       child: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.35,
         width: MediaQuery.of(context).size.width * 0.4,
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Row(
                 children: [
