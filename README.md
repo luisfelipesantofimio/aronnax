@@ -9,7 +9,6 @@ EMR for psychologists, minimalistic and eficient. Made for psychologists by psyc
 [Documentación en español](/docs/README-es.md)
 
 Aronnax is an open-source EMR for psychologists focused on simplicity and evidence based treatments. It works 100% offline and helps you keeping your data under your control.
-'>=3.4.4 <4.0.0'
 
 ## Build
 
