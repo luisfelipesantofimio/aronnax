@@ -55,7 +55,6 @@ flutter:
   assets:
     - assets/img/welcome.png
     - assets/img/choose.png
-    - assets/img/create.png
     - assets/img/aronnax-icon-light.png
     - assets/img/aronnax-icon-dark.png
     - assets/img/finish.png
