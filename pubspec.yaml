@@ -58,6 +58,7 @@ flutter:
     - assets/img/create.png
     - assets/img/aronnax-icon-light.png
     - assets/img/aronnax-icon-dark.png
+    - assets/img/finish.png
 
 icons_launcher:
   image_path: "assets/img/aronnax-icon-light.png"

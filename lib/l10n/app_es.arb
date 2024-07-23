@@ -395,7 +395,7 @@
   "welcomeScreenStartButton": "¡Vamos!",
   "welcomeScreenStoreInfoOnMyComputer": "Guardaré la información en mi computadora.",
   "welcomeScreenUsername": "Nombre de usuario",
-  "welcomeScreenWelcomeGreeting": "Hola {name}",
+  "welcomeScreenWelcomeGreeting": "¡Hola, {name}!",
   "@welcomeScreenWelcomeGreeting": {
     "placeholders": {
       "name": {
