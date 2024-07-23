@@ -12,6 +12,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AppMethods {
   bool isPasswordValid(String serverPassword, String inputPassword) {
@@ -44,15 +45,17 @@ class AppMethods {
     return result;
   }
 
-  String showMainMenuGreet(int hour) {
+  String showMainMenuGreet(BuildContext context, int hour, String name) {
     if (hour > 23 || hour < 12) {
-      return "Buenos días";
+      return AppLocalizations.of(context)!.menuGreetMorning(name);
     }
     if (hour >= 12 && hour < 19) {
-      return "Buenas tardes";
-    } else {
-      return "Buenas noches";
+      return AppLocalizations.of(context)!.menuGreetAfternoon(name);
     }
+    if (hour >= 19 && hour < 23) {
+      return AppLocalizations.of(context)!.menuGreetEvening(name);
+    }
+    return AppLocalizations.of(context)!.menuGreetMorning(name);
   }
 
   Widget settingsScreenIndex(

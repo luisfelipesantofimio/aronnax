@@ -407,5 +407,8 @@
   "welcomeScreenYourAddress": "Tu dirección",
   "welcomeScreenYourAnswer": "Tu respuesta",
   "welcomeScreenYourEmail": "Tu correo electrónico",
-  "welcomeScreenYourPassword": "Tu contraseña"
+  "welcomeScreenYourPassword": "Tu contraseña",
+  "menuGreetMorning": "¡Buenos días, {name}!",
+  "menuGreetAfternoon": "¡Buenas tardes, {name}!",
+  "menuGreetEvening": "¡Buenas noches, {name}!"
 }

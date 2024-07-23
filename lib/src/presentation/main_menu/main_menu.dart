@@ -75,7 +75,8 @@ class MainMenuState extends ConsumerState<MainMenu> {
   @override
   Widget build(BuildContext context) {
     String professionalNames = ref.read(globalUserInformationProvider)!.names;
-    String finalGreet = AppMethods().showMainMenuGreet(DateTime.now().hour);
+    String finalGreet = AppMethods()
+        .showMainMenuGreet(context, DateTime.now().hour, professionalNames);
 
     final eventsList = ref.watch(appointmentsGlobalListProvider(ref));
     final todosList = ref.watch(todosListProvider);
@@ -120,10 +121,17 @@ class MainMenuState extends ConsumerState<MainMenu> {
                                   ]),
                               child: Padding(
                                 padding: const EdgeInsets.all(20),
-                                child: Text(
-                                  '$finalGreet $professionalNames!',
-                                  style:
-                                      Theme.of(context).textTheme.headlineSmall,
+                                child: SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.25,
+                                  child: Center(
+                                    child: Text(
+                                      finalGreet,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineSmall,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
