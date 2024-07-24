@@ -1,55 +1,52 @@
-import 'package:aronnax/src/Pages/settings/ServerConfigForms/Welcome/Views/first.dart';
-import 'package:aronnax/src/database/model.dart';
-import 'package:aronnax/src/themes/custom_themes.dart';
+import 'package:aronnax/src/presentation/core/constants.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:aronnax/src/data/providers/theme_provider.dart';
+import 'package:aronnax/src/presentation/loading_screen/loading_screen.dart';
+import 'package:aronnax/src/presentation/themes/custom_themes.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-
-import 'src/Pages/LoginScreen/login_main_view.dart';
-
-late Box localdb;
-late Box settingsdb;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
-  await Hive.initFlutter();
-  Hive.registerAdapter(ServerSettingsAdapter());
-  Hive.registerAdapter(LocalSettingsAdapter());
-  localdb = await Hive.openBox<ServerSettings>("ServerSettings");
-  settingsdb = await Hive.openBox<LocalSettings>("SettingsDB");
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+
+  if (!(AppConstants.supabaseUrl == "" || AppConstants.supabaseKey == "")) {
+    await Supabase.initialize(
+      url: AppConstants.supabaseUrl,
+      anonKey: AppConstants.supabaseKey,
+    );
+  }
+
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MyApp extends ConsumerStatefulWidget {
+  const MyApp({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  MyAppState createState() => MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class MyAppState extends ConsumerState<MyApp> {
   @override
-  void initState() {
-    super.initState();
-    currentTheme.areSettingsEmpty();
-    currentTheme.addListener(() {
-      setState(() {});
-    });
+  void didChangeDependencies() {
+    ref.read(themeProvider.notifier).getCurrentTheme(ref);
+    super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       theme: GlobalThemes.lightTheme,
       darkTheme: GlobalThemes.darkTheme,
-      themeMode: currentTheme.currentTheme,
-      home: verifyLocalData(),
+      themeMode: ref.watch(themeProvider),
+      home: const LoadingScreen(),
     );
-  }
-}
-
-verifyLocalData() {
-  if (localdb.isEmpty) {
-    return const FirstWelcome();
-  } else {
-    return const LoginScreen();
   }
 }
