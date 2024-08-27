@@ -12,17 +12,28 @@ Aronnax es un EMR (electronic medical record) de código abierto para psicólogo
 
 ## Compilación
 
-Asegúrate de usar Flutter `3.22.3` con la API de Dart `'>=3.4.4 <4.0.0'`
+Asegúrate de usar Flutter `3.24.1` con la API de Dart `^3.5.1`
 
 Aronnax usa Supabase para gestionar telemetría básica para entender el uso de la herramienta, pero puedes omitir las variables de entorno definidas para su inicialización en el archivo [constants.dart](./lib/src/presentation/core/constants.dart).
 
 > [!NOTE]
 > La telemetría estará presente hasta que el proyecto alcance la versión completa 1.0.0.
 
-Si deseas obtener una copia local del CIE-11 para apoyar tus impresiones diagnósticas, necesitarás crear una cuenta en [plataforma de API de la OMS](https://icd.who.int/icdapi/Account/Register) para obtener tu **clientId** y **clientSecret**.
+### 1. Obtén la información base del CIE-11
 
-Finalmente, ejecuta:
+He creado un programa para copiar los datos ICD-11 del API WHO. Ve al repositorio [ICD data fetch](https://github.com/luisfelipesantofimio/icd_data_fetch) y sigue las instrucciones
+para generar los archivos requeridos.
+
+Una vez que tengas los archivos `icd_data_en.json` y `icd_data_es.json` puedes copiarlos a la carpeta `assets/icd_data/`.
+
+### 2. Genera las traducciones
 
 ```bash
-flutter build {PLATFORM} --dart-define=clientId={clientId} --dart-define=clientSecret={clientSecret} --dart-define=version={version}
+flutter gen-l10n
+```
+
+### 3. Compila el proyecto
+
+```bash
+flutter build {PLATFORM} --dart-define=version={version}
 ```

@@ -15,7 +15,7 @@ class CaseCreationForm extends ConsumerStatefulWidget {
 }
 
 class _CaseCreationFormState extends ConsumerState<CaseCreationForm> {
-  IcdDataCategory? selectedIcdCategory;
+  IcdData? selectedIcdCategory;
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
