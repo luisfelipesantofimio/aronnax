@@ -1,9 +1,9 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/domain/entities/calendar_event.dart';
 import 'package:aronnax/src/domain/entities/session.dart';
-import 'package:aronnax/src/presentation/settings/configOptions/icd_data_repair.dart';
 import 'package:aronnax/src/presentation/settings/configOptions/localdb_selection.dart';
 import 'package:aronnax/src/presentation/settings/configOptions/support_screen.dart';
 import 'package:aronnax/src/presentation/settings/setting_options_view_profile.dart';
@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
 
 class AppMethods {
   bool isPasswordValid(String serverPassword, String inputPassword) {
@@ -67,10 +68,8 @@ class AppMethods {
         );
 
       case 1:
-        return const IcdDataRepair();
-      case 2:
         return const SupportScreen();
-      case 3:
+      case 2:
         return LocalDBActivationScreen(
           settingsData: settings,
         );
@@ -311,5 +310,13 @@ class AppMethods {
       default:
         return Colors.white;
     }
+  }
+
+  ///Returns an expected string for the current locale used on
+  ///reading ICD data from a localized json file.
+  static String sanitizeCurrentLocale() {
+    final localeIsEs = Platform.localeName.contains("es");
+
+    return localeIsEs ? "es" : "en";
   }
 }

@@ -493,19 +493,6 @@ class DatabaseRepository implements LocalDatabaseInteface {
   }
 
   @override
-  void insertIcdData(IcdDataParser data) async {
-    final dataToSave = SavedIcdDiagnosticDataCompanion(
-      title: Value(data.title),
-      definition: Value(data.definition),
-      icdRelease: Value(data.icdRelease),
-      categoryData: Value(
-        data.child.map((e) => e.toJson()).toList().toString(),
-      ),
-    );
-    await localDB.insertIcdDiagnosticData(dataToSave);
-  }
-
-  @override
   Future<List<SavedIcdDiagnosticDataData>> getDiagnosticData() async {
     return await localDB.getIcdCategories();
   }

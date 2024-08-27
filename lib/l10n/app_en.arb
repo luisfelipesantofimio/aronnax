@@ -410,5 +410,8 @@
   "welcomeScreenYourPassword": "Your Password",
   "menuGreetMorning": "Good morning {name}!",
   "menuGreetAfternoon": "Good afternoon {name}!",
-  "menuGreetEvening": "Good evening {name}!"
+  "menuGreetEvening": "Good evening {name}!",
+  "icdSelectorTitle": "ICD-11 diagnostic code selector",
+  "icdSearchHint": "Filter elements in",
+  "icdOpenBrowser": "See more about"
 }

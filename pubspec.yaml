@@ -3,10 +3,10 @@ description: Especialized EMR for psychologists.
 
 publish_to: "none"
 
-version: 0.1.1+1
+version: 0.1.2+1
 
 environment:
-  sdk: ">=3.4.4 <4.0.0"
+  sdk: ^3.5.1
 
 dependencies:
   flutter:
@@ -58,6 +58,8 @@ flutter:
     - assets/img/aronnax-icon-light.png
     - assets/img/aronnax-icon-dark.png
     - assets/img/finish.png
+    - assets/icd_data/icd_data_es.json
+    - assets/icd_data/icd_data_en.json
 
 icons_launcher:
   image_path: "assets/img/aronnax-icon-light.png"

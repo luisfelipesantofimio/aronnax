@@ -49,5 +49,7 @@ app.*.map.json
 /android/app/release
 
 #Platform folders
-
 /web/
+
+# ICD source files
+/assets/icd_data/*

@@ -127,6 +127,7 @@ class _CaseCreationDialogState extends ConsumerState<CaseCreationDialog> {
                 title: AppLocalizations.of(context)!.genericSaveTitle,
                 onTap: () {
                   if (caseCreationFormKey.currentState!.validate()) {
+                    // TODO: Review if something changed
                     ref.read(patientsRepositoryProvider).addPatientCase(
                         ref,
                         DateTime.now(),
@@ -139,11 +140,12 @@ class _CaseCreationDialogState extends ConsumerState<CaseCreationDialog> {
                         ref.read(caseFormCaseNotesProvider),
                         ref.read(caseFormTreatmentPlanProvider)?.id,
                         ref
-                                .read(caseFormTreatmentPlanProvider)?.sectionsList
-                                .indexOf(ref
-                                    .read(caseFormTreatmentPlanProvider)!
-                                    .sectionsList
-                                    .first),
+                            .read(caseFormTreatmentPlanProvider)
+                            ?.sectionsList
+                            .indexOf(ref
+                                .read(caseFormTreatmentPlanProvider)!
+                                .sectionsList
+                                .first),
                         ref.read(offlineStatusProvider).value!);
 
                     ScaffoldMessenger.of(context).showSnackBar(

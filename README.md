@@ -12,7 +12,7 @@ Aronnax is an open-source EMR for psychologists focused on simplicity and eviden
 
 ## Build
 
-Make sure to use Flutter `3.22.3` with the Dart api `'>=3.4.4 <4.0.0'`
+Make sure to use Flutter `3.24.1` with the Dart api `^3.5.1`
 
 Aronnax uses Supabase for managing basic telemetry for understandig the use of the tool, but you can omit the environment variables defined for its initialization
 in the [constants.dart](./lib/src/presentation/core/constants.dart) file.
@@ -20,10 +20,21 @@ in the [constants.dart](./lib/src/presentation/core/constants.dart) file.
 > [!NOTE]
 > Telemetry will be present until the project reaches a comprete 1.0.0 version.
 
-If you want to get a local copy of the ICD-11 for supporting your diagnostic impressions, you will need to create an account on [WHO ICD api platform](https://icd.who.int/icdapi/Account/Register) to get your **clientId** and **clientSecret**.
+### 1. Get the ICD-11 required data
 
-Finally, run:
+I have created a little program for copying the ICD-11 data from WHO API. Go to the [ICD data fetch](https://github.com/luisfelipesantofimio/icd_data_fetch) repository and follow
+the instructions to generate the required files.
+
+Once you have the files `icd_data_en.json` and `icd_data_es.json` you can copy them to `assets/icd_data/` folder.
+
+### 2. Generate the localization files
 
 ```bash
-flutter build {PLATFORM} --dart-define=clientId={clientId} --dart-define=clientSecret={clientSecret} --dart-define=version={version}
+flutter gen-l10n
+```
+
+### 3. Compile the project
+
+```bash
+flutter build {PLATFORM} --dart-define=version={version}
 ```

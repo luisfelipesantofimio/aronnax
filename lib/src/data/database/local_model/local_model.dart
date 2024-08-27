@@ -20,7 +20,7 @@ part 'local_model.g.dart';
   LocalTreatmentResults,
   Settings,
   ServerDatabase,
-  SavedIcdDiagnosticData,
+  SavedIcdDiagnosticDataData,
   LocalAppointmentGroup,
   LocalPatientCompanion,
 ])
@@ -28,10 +28,22 @@ class LocalDatabase extends _$LocalDatabase {
   LocalDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
+        beforeOpen: (details) async {
+          await customStatement('PRAGMA foreign_keys = ON');
+        },
+        onUpgrade: (Migrator m, int from, int to) async {
+          await customStatement('PRAGMA foreign_keys = OFF');
+          await transaction(() async {
+            if (from < 2) {
+              String tableName = savedIcdDiagnosticData.actualTableName;
+              await m.deleteTable(tableName);
+            }
+          });
+        },
         onCreate: (m) async {
           await m.createAll();
           await into(settings).insert(
