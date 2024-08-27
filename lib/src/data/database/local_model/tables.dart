@@ -243,6 +243,7 @@ class LocalTreatmentResults extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+// TODO: To be removed on v0.1.3
 class SavedIcdDiagnosticData extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get title => text()();
