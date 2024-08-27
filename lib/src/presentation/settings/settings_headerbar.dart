@@ -83,28 +83,6 @@ class _SettingsHeaderBarState extends State<SettingsHeaderBar> {
                             });
                           },
                           child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  AppLocalizations.of(context)!
-                                      .settingsScreenBarTitleDbRepair,
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(30),
-                        child: TextButton(
-                          onPressed: () {
-                            setState(() {
-                              currentView.value = 2;
-                            });
-                          },
-                          child: Center(
                             child: Text(
                               AppLocalizations.of(context)!.genericSupport,
                               style: Theme.of(context).textTheme.bodyMedium,
