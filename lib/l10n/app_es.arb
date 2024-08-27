@@ -410,5 +410,8 @@
   "welcomeScreenYourPassword": "Tu contraseña",
   "menuGreetMorning": "¡Buenos días, {name}!",
   "menuGreetAfternoon": "¡Buenas tardes, {name}!",
-  "menuGreetEvening": "¡Buenas noches, {name}!"
+  "menuGreetEvening": "¡Buenas noches, {name}!",
+  "icdSelectorTitle": "Buscador de códigos CIE-11",
+  "icdSearchHint": "Filtrar elementos de",
+  "icdOpenBrowser": "See more about"
 }
