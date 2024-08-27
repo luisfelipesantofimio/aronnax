@@ -206,7 +206,6 @@ abstract class LocalDatabaseInteface {
 
   Future<List<LocalSession>> getPatientSessionsList(String patientId);
 
-  void insertIcdData(IcdDataParser data);
   Future<List<SavedIcdDiagnosticDataData>> getDiagnosticData();
   void deleteSavedIcdData();
   void deleteLocalPatient(String patientId);
