@@ -413,5 +413,7 @@
   "menuGreetEvening": "Good evening {name}!",
   "icdSelectorTitle": "ICD-11 diagnostic code selector",
   "icdSearchHint": "Filter elements in",
-  "icdOpenBrowser": "See more about"
+  "icdOpenBrowser": "See more about",
+  "updateItemTitle": "There is an update available",
+  "updateItemGetButton": "Get the update"
 }

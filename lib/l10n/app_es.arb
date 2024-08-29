@@ -413,5 +413,7 @@
   "menuGreetEvening": "¡Buenas noches, {name}!",
   "icdSelectorTitle": "Buscador de códigos CIE-11",
   "icdSearchHint": "Filtrar elementos de",
-  "icdOpenBrowser": "See more about"
+  "icdOpenBrowser": "See more about",
+  "updateItemTitle": "Hay una nueva actualización",
+  "updateItemGetButton": "Descargar la actualización"
 }
