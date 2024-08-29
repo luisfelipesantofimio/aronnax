@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/interfaces/telemetry.dart';
+import 'package:aronnax/src/data/providers/updates_provider.dart';
 import 'package:aronnax/src/presentation/main_menu/widgets/telemetry_dialog.dart';
+import 'package:aronnax/src/presentation/widgets/update_item.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/calendar_repository_interface.dart';
 import 'package:aronnax/src/data/providers/appointments_provider.dart';
@@ -80,6 +82,7 @@ class MainMenuState extends ConsumerState<MainMenu> {
 
     final eventsList = ref.watch(appointmentsGlobalListProvider(ref));
     final todosList = ref.watch(todosListProvider);
+    final updateData = ref.watch(updateDataProvider);
 
     return Scaffold(
       body: SizedBox(
@@ -333,6 +336,32 @@ class MainMenuState extends ConsumerState<MainMenu> {
               ],
             ),
             const MenuOptionsBar(),
+            Visibility(
+              visible: ref.watch(displayUpdateAnoucement),
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: updateData.when(
+                  data: (data) {
+                    if (data != null) {
+                      return UpdateItem(updateData: data);
+                    } else {
+                      return const SizedBox();
+                    }
+                  },
+                  error: (error, stackTrace) => const SizedBox(),
+                  loading: () => Container(
+                    width: MediaQuery.of(context).size.width * 0.1,
+                    height: MediaQuery.of(context).size.height * 0.1,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white),
+                    child: const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
