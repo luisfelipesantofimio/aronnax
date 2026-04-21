@@ -1,4 +1,4 @@
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:aronnax/l10n/app_localizations.dart';
 import 'package:aronnax/src/presentation/professional_register/local_professional_register_view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

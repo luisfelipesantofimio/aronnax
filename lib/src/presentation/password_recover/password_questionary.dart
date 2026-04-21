@@ -1,4 +1,4 @@
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:aronnax/l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/auth_repository_interface.dart';
 import 'package:aronnax/src/domain/entities/professional.dart';
 import 'package:aronnax/src/presentation/password_recover/password_recover_form.dart';

@@ -1,11 +1,11 @@
 import 'dart:async';
 
+import 'package:aronnax/l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/interfaces/telemetry.dart';
 import 'package:aronnax/src/data/providers/updates_provider.dart';
 import 'package:aronnax/src/presentation/main_menu/widgets/telemetry_dialog.dart';
 import 'package:aronnax/src/presentation/widgets/update_item.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/calendar_repository_interface.dart';
 import 'package:aronnax/src/data/providers/appointments_provider.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';

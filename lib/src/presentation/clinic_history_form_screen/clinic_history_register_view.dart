@@ -1,4 +1,4 @@
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:aronnax/l10n/app_localizations.dart';
 import 'package:aronnax/src/Pages/Formulary/widgets/consultant_selection_dialog.dart';
 import 'package:aronnax/src/data/interfaces/clinic_history_repository_interface.dart';
 import 'package:aronnax/src/data/providers/connection_state_provider.dart';

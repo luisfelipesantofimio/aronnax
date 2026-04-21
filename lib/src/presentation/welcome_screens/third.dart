@@ -1,4 +1,4 @@
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:aronnax/l10n/app_localizations.dart';
 import 'package:aronnax/src/data/remote_database/server_api.dart';
 import 'package:aronnax/src/presentation/welcome_screens/professional_create.dart';
 import 'package:flutter/material.dart';

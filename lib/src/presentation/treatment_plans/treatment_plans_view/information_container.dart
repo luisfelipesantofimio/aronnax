@@ -1,5 +1,5 @@
+import 'package:aronnax/l10n/app_localizations.dart';
 import 'package:aronnax/src/presentation/themes/color_scheme.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class ScreenInformationContainer extends StatelessWidget {

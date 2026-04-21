@@ -1,3 +1,4 @@
+import 'package:aronnax/l10n/app_localizations.dart';
 import 'package:aronnax/src/data/providers/updates_provider.dart';
 import 'package:aronnax/src/domain/entities/update_data.dart';
 import 'package:aronnax/src/presentation/core/constants.dart';
@@ -5,7 +6,6 @@ import 'package:aronnax/src/presentation/core/methods.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UpdateItem extends ConsumerWidget {
   const UpdateItem({super.key, required this.updateData});

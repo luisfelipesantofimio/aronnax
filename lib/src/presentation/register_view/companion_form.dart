@@ -1,8 +1,8 @@
+import 'package:aronnax/l10n/app_localizations.dart';
 import 'package:aronnax/src/data/database/local_model/tables.dart';
 import 'package:aronnax/src/domain/entities/companion_reason.dart';
 import 'package:aronnax/src/domain/entities/companion_relationship.dart';
 import 'package:aronnax/src/presentation/widgets/date_selector.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/presentation/core/methods.dart';
 import 'package:flutter/material.dart';
 

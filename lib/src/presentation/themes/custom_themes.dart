@@ -53,7 +53,7 @@ class GlobalThemes {
 
   static ThemeData get lightTheme {
     return ThemeData(
-      dialogTheme: const DialogTheme(
+      dialogTheme: const DialogThemeData(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(10),

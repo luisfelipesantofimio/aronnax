@@ -1,4 +1,4 @@
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:aronnax/l10n/app_localizations.dart';
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/interfaces/auth_repository_interface.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';

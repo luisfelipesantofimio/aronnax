@@ -1,4 +1,4 @@
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:aronnax/l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/providers/todos_provider.dart';
 import 'package:aronnax/src/presentation/widgets/todo_creation_dialog/todo_category_item.dart';

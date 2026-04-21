@@ -1,6 +1,6 @@
 import 'dart:io';
+import 'package:aronnax/l10n/app_localizations.dart';
 import 'package:aronnax/src/presentation/core/user_global_values.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/clinic_history_repository_interface.dart';
 import 'package:aronnax/src/data/interfaces/io_repository_interface.dart';
 import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';

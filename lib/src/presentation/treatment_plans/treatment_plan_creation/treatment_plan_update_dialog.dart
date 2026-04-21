@@ -1,4 +1,4 @@
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:aronnax/l10n/app_localizations.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/component_type.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/option_type.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan_component.dart';

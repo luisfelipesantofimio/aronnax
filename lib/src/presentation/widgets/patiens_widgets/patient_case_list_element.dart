@@ -1,4 +1,4 @@
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:aronnax/l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/patients_repository_interface.dart';
 import 'package:aronnax/src/data/providers/patient_case_providers.dart';
 import 'package:aronnax/src/data/providers/treatment_plan_providers.dart';

@@ -1,7 +1,7 @@
+import 'package:aronnax/l10n/app_localizations.dart';
 import 'package:aronnax/src/presentation/appointment_creation/widgets/event_date_time_selection.dart';
 import 'package:aronnax/src/presentation/appointment_creation/widgets/event_days_selector.dart';
 import 'package:aronnax/src/presentation/appointment_creation/widgets/patient_evet_selection.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/calendar_repository_interface.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/providers/appointments_provider.dart';

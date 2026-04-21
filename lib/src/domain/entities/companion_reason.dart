@@ -1,6 +1,6 @@
+import 'package:aronnax/l10n/app_localizations.dart';
 import 'package:aronnax/src/data/database/local_model/tables.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 ///Represents the reason of the companion and provides an open String name and
 ///the [CompanionReason] value

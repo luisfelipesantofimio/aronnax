@@ -1,8 +1,8 @@
+import 'package:aronnax/l10n/app_localizations.dart';
 import 'package:aronnax/src/domain/entities/icd_data.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SubcategoryItem extends StatefulWidget {
   const SubcategoryItem(

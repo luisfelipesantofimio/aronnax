@@ -1,4 +1,4 @@
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:aronnax/l10n/app_localizations.dart';
 import 'package:aronnax/src/data/interfaces/calendar_repository_interface.dart';
 import 'package:aronnax/src/data/providers/appointments_provider.dart';
 import 'package:aronnax/src/domain/entities/calendar_event.dart';

@@ -1,4 +1,4 @@
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:aronnax/l10n/app_localizations.dart';
 import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/presentation/settings/configOptions/update_password.dart';
 import 'package:aronnax/src/presentation/core/user_global_values.dart';

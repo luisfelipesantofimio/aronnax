@@ -1,7 +1,7 @@
+import 'package:aronnax/l10n/app_localizations.dart';
 import 'package:aronnax/src/domain/entities/icd_data.dart';
 import 'package:aronnax/src/presentation/widgets/icd_selection_widgets/subcategory_list_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class IcdCategoryItem extends StatefulWidget {
   const IcdCategoryItem({
