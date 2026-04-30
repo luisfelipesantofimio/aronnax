@@ -117,7 +117,7 @@ class _TreatmentPlanComponentUpdateDialogState
                             ),
                           )
                           .toList(),
-                      value: componentTypeList.elementAt(
+                      initialValue: componentTypeList.elementAt(
                           componentTypeList.indexWhere((element) =>
                               element.componentType ==
                               widget.dataToUpdate!.componentType)),

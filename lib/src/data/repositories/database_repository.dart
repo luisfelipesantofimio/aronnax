@@ -3,7 +3,6 @@ import 'package:aronnax/src/data/database/local_model/local_model.dart';
 import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
 import 'package:aronnax/src/data/remote_database/server_api.dart';
 import 'package:aronnax/src/domain/entities/calendar_event.dart';
-import 'package:aronnax/src/domain/entities/icd_data.dart';
 import 'package:aronnax/src/domain/entities/patient_companion.dart';
 import 'package:aronnax/src/domain/entities/tratment_plan_entities/treatment_plan.dart';
 import 'package:aronnax/src/presentation/core/methods.dart';

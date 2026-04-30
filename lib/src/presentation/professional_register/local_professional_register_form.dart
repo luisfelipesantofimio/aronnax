@@ -223,7 +223,7 @@ class LocalProfessionalRegisterState
                             ),
                           )
                           .toList(),
-                      value: selectedCountryCode == null
+                      initialValue: selectedCountryCode == null
                           ? null
                           : data.elementAt(data.indexWhere((element) =>
                               element.isoCode == selectedCountryCode)),

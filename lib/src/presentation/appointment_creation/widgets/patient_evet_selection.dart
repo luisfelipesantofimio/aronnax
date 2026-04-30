@@ -39,7 +39,7 @@ class PatientEventSelection extends ConsumerWidget {
                 ),
               )
               .toList(),
-          value: eventData != null
+          initialValue: eventData != null
               ? data.elementAt(
                   data.indexWhere(
                       (element) => element.id == eventData!.patientID),

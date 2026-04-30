@@ -32,7 +32,7 @@ class ThemeSelector extends ConsumerWidget {
                         .read(settingsRepositoryProvider)
                         .switchCurrentTheme(ref, data.isDarkModeEnabled);
                   },
-                  activeColor: Colors.blueGrey,
+                  activeThumbColor: Colors.blueGrey,
                   activeTrackColor: Colors.green,
                 ),
                 Text(

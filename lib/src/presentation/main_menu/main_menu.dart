@@ -1,10 +1,6 @@
-import 'dart:async';
 
 import 'package:aronnax/l10n/app_localizations.dart';
-import 'package:aronnax/src/data/interfaces/local_database_interface.dart';
-import 'package:aronnax/src/data/interfaces/telemetry.dart';
 import 'package:aronnax/src/data/providers/updates_provider.dart';
-import 'package:aronnax/src/presentation/main_menu/widgets/telemetry_dialog.dart';
 import 'package:aronnax/src/presentation/widgets/update_item.dart';
 import 'package:aronnax/src/data/interfaces/calendar_repository_interface.dart';
 import 'package:aronnax/src/data/providers/appointments_provider.dart';
@@ -47,31 +43,6 @@ class MainMenuState extends ConsumerState<MainMenu> {
     }
 
     super.didChangeDependencies();
-  }
-
-  @override
-  void initState() {
-    Future(() async {
-      final settings =
-          await ref.read(localDatabaseRepositoryProvider).getLocalSettings();
-      final ableToShowTelemetryDialog =
-          settings.installationId == null && !settings.isTelemetryEnabled;
-      if (ableToShowTelemetryDialog) {
-        Future.delayed(
-          const Duration(seconds: 2),
-          () => showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return const TelemetryDialog();
-            },
-          ),
-        );
-      }
-      if (settings.installationId != null && settings.isTelemetryEnabled) {
-        await ref.read(telemetryRepositoryProvider).updateUserStats();
-      }
-    });
-    super.initState();
   }
 
   @override

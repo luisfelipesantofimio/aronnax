@@ -62,7 +62,7 @@ class LocalDBActivationScreenState
                     //   );
                     // }
                   },
-                  activeColor: Colors.blueGrey,
+                  activeThumbColor: Colors.blueGrey,
                   activeTrackColor: Colors.green,
                 ),
                 Text(

@@ -268,7 +268,7 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                   data: (data) => DropdownButtonFormField(
                     isExpanded: true,
                     style: Theme.of(context).textTheme.bodyMedium,
-                    value: data.elementAt(0),
+                    initialValue: data.elementAt(0),
                     items: data
                         .map(
                           (e) => DropdownMenuItem(
@@ -312,7 +312,7 @@ class RegisterFormState extends ConsumerState<RegisterForm> {
                 child: citiesList.when(
                   data: (data) => DropdownButtonFormField(
                     style: Theme.of(context).textTheme.bodyMedium,
-                    value: data.isNotEmpty ? data.elementAt(0) : null,
+                    initialValue: data.isNotEmpty ? data.elementAt(0) : null,
                     items: data
                         .map(
                           (e) => DropdownMenuItem(

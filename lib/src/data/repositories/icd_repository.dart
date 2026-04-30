@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:aronnax/src/data/interfaces/icd_repository_interface.dart';
 import 'package:aronnax/src/domain/entities/icd_data.dart';
